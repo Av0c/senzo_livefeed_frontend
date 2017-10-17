@@ -1,0 +1,20 @@
+@import "../variables.less";
+
+.notification {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -40px;
+  height: 40px;
+  background-color: @background-medium-blue;
+  -webkit-transition: top 300ms ease-in-out; /* Safari */
+  transition: top 300ms ease-in-out;
+
+  &.success, &.fail {
+    top: 0px;
+  }
+  .body {
+    text-align: center;
+    line-height: 40px;
+  }
+}

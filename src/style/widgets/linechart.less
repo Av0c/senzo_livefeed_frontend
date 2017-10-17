@@ -1,0 +1,33 @@
+@import "../variables.less";
+
+.chart {
+  position: relative;
+  margin: 1em 1em 6em 1em;
+
+  #chart-legend {
+    ul {
+      list-style: none;
+      li {
+        &:before {
+          content: '';
+          width: 30px;
+          display: inline-block;
+          height: 2px;
+          margin-bottom: 4px;
+          margin-right: 3px;
+        }
+
+        &:first-child {
+          &:before {
+            background-color: @color-highlight-green;
+          }
+        }
+        &:last-child {
+          &:before {
+            background-color: @color-highlight-light-blue;
+          }
+        }
+      }
+    }
+  }
+}

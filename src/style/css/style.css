@@ -1,0 +1,500 @@
+@import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import url("https://fonts.googleapis.com/css?family=Catamaran");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
+body {
+  background: #f6f7f9;
+  font-family: 'Roboto';
+  color: #585858;
+  padding-bottom: 80px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Roboto';
+  margin: 0;
+  padding: 0;
+}
+
+h2.new{
+  font-family: 'Roboto';
+  margin: 0;
+  padding: 0
+}
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: #585e66;
+}
+.button {
+  font-family: 'Catamaran';
+  font-size: 16px;
+  line-height: 26px;
+  color: #585e66;
+  border: 1px solid #979797;
+  border-radius: 7px;
+  padding: 4px 10px 2px 10px;
+  display: block;
+  float: left;
+  text-align: center;
+  transition: all 0.3s;
+}
+.button-sm {
+  font-family: 'Catamaran';
+  font-size: 16px;
+  line-height: 20px;
+  color: #585e66;
+  border: 1px solid #979797;
+  border-radius: 7px;
+  padding: 4px 10px 2px;
+  text-align: center;
+  transition: all 0.3s;
+  display: block;
+}
+.button:hover,
+.button-sm:hover {
+  color: #7ec443;
+  border: 1px solid #7ec443;
+  transition: all 0.3s;
+}
+.button.active {
+  background: #7ec443;
+  border: 1px solid #7ec443;
+  color: #fff;
+}
+.dropdown {
+  background: #fff;
+  border-top: 3px solid #7ec443;
+  box-shadow: 0px 2px 3px 0px rgba(210,210,210,0.5);
+  padding: 10px 10px;
+  position: absolute;
+  width: 100%;
+  top: 25px;
+  z-index: 9999;
+}
+.dropdown ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+.dropdown ul li {
+  margin-bottom: 3px;
+}
+.dropdown a {
+  color: #585858;
+}
+.all-areas a {
+  color: #959aa2;
+}
+.stats-area-dropdown {
+  top: 30px;
+}
+header {
+  height: 62px;
+  background: #fff;
+  box-shadow: 0px 2px 3px 0px rgba(210,210,210,0.5);
+}
+.location-block {
+  margin-top: 18px;
+}
+.location-name {
+  font-family: 'Catamaran';
+  font-size: 16px;
+  line-height: 33px;
+  padding-left: 6px;
+  color: #585e66;
+}
+.header-logo {
+  width: 200px;
+  margin: auto;
+  margin-top: 12px;
+}
+.user-block {
+  margin-top: 18px;
+}
+.user-icon img,
+.location-icon img {
+  width: 30px;
+}
+.user-name {
+  font-family: 'Catamaran';
+  font-size: 16px;
+  line-height: 30px;
+  padding-right: 6px;
+  color: #585e66;
+}
+.main-menu {
+  margin-top: 16px;
+}
+.main-menu-left a:first-of-type {
+  margin-right: 10px;
+}
+.main-menu-time li {
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
+.main-menu-time li:last-of-type {
+  margin-right: 0;
+}
+.datepicker-parent {
+  position: relative;
+}
+.datepicker {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  background: #fff;
+  height: 60px;
+  width: 300px;
+  -webkit-box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+  -moz-box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+  box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+  border-radius: 16px;
+  padding-top: 15px;
+  padding-left: 14px;
+}
+.datepicker-circle {
+  background: #fff;
+  height: 18px;
+  width: 18px;
+  border-radius: 8px;
+  position: absolute;
+  top: -6px;
+  right: 10px;
+  transform: rotate(90deg);
+  -webkit-box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+  -moz-box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+  box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+  z-index: -1;
+}
+.start-date,
+.end-date {
+  color: #585858;
+  font-family: 'Roboto';
+  font-size: 14px;
+  width: 109px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding-left: 6px;
+  background: url("../../assets/images/calendar.svg") no-repeat;
+  background-position: 85px 6px;
+}
+
+.login-logo {
+  width: 200px;
+  height: 37px;
+  background-image: url(../../assets/images/header-logo.svg);
+}
+.start-date:focus,
+.end-date:focus {
+  outline-color: #7ec443;
+}
+.date-divider {
+  color: #585858;
+  margin: -4px 10px 0;
+  font-size: 30px;
+}
+.timepicker-icon {
+  margin-left: 8px;
+  margin-top: 4px;
+}
+body.login-page {
+  padding: 0;
+}
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.login-card {
+  padding: 27px 26px 22px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
+  width: 480px;
+  margin-top: -60px;
+}
+.welcome-message {
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 33px;
+  margin-bottom: 10px;
+}
+.recover-message {
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 20px;
+  margin-bottom: 4px;
+}
+.recover-message:last-of-type {
+  margin-bottom: 20px;
+}
+input[type="email"],
+input[type="password"] {
+  width: 230px;
+  height: 36px;
+  padding-left: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #dfdfdf;
+  border-radius: 6px;
+  box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+}
+input[type="submit"] {
+  font-family: 'Catamaran';
+  font-size: 18px;
+  background: #fff;
+  border: 1px solid #585858;
+  border-radius: 7px;
+  padding: 4px 18px;
+  margin-top: 17px;
+}
+input[type="submit"]:hover {
+  border: 1px solid #7ec443;
+  color: #7ec443;
+}
+input[type="checkbox"] {
+  margin-right: 6px;
+}
+input:focus {
+  outline-color: #7ec443;
+}
+.forgot-password {
+  margin-top: 20px;
+}
+.forgot-password a {
+  color: #577590;
+  font-size: 16px;
+}
+.overview-block {
+  margin-top: 60px;
+}
+.the-card {
+  padding: 12px 26px 42px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
+  max-width: 400px;
+  margin: auto;
+}
+.card-shape {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
+  max-width: 1200px;
+  margin: auto;
+}
+.card-location {
+  text-align: center;
+  font-size: 28px;
+}
+.card-inner-location {
+  font-size: 16px;
+  position: relative;
+}
+.nav-stats {
+  margin-right: 10px;
+}
+.total-desks-number,
+.total-rooms-number {
+  font-weight: bold;
+  font-size: 26px;
+}
+.total-desks-inuse,
+.total-rooms-inuse {
+  color: #a7a6a6;
+}
+.card-buttons {
+  margin-top: 20px;
+}
+.card-stats-numeric {
+  margin-top: 20px;
+}
+.card-bottom-menu {
+  margin-top: 25px;
+}
+.add-cart-zone {
+  cursor: pointer;
+  height: 683px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+}
+.add-card img {
+  width: 100px;
+}
+.add-card .add-card-descr {
+  color: #bfbfbf;
+  font-size: 20px;
+  font-family: 'Catamaran';
+  font-weight: normal;
+  margin-top: 10px;
+}
+.card-settings-sticker {
+  background: #ff6868;
+  border-radius: 100px;
+  display: block;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: -5px;
+  right: 36px;
+  line-height: 16px;
+}
+.maintenence-number {
+  color: #fff;
+  font-size: 12px;
+  line-height: 12px;
+}
+.card-gauge-block {
+  height: 240px;
+  background: #c9c9c9;
+  margin-top: 20px;
+}
+.card-marks-block {
+  margin-top: 14px;
+  height: 120px;
+  background: #c9c9c9;
+}
+.comparison-wrapper {
+  margin-top: 60px;
+}
+.comparison-title-card {
+  font-family: 'Catamaran';
+}
+.comparison-title-card h2 {
+  font-size: 22px;
+  line-height: 42px;
+  color: #585858;
+}
+.comparison-stats-card {
+  padding: 30px;
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 20px;
+}
+.comparison-export {
+  margin-top: 20px;
+}
+.comparison-stats-card span {
+  font-weight: normal;
+}
+.comparison-location-title-card {
+  margin-bottom: 20px;
+}
+.comparison-location-title-card h2 {
+  font-size: 22px;
+  line-height: 42px;
+  display: inline-block;
+}
+.toggle-button img {
+  width: 32px;
+  padding-top: 6px;
+}
+.comparison-first-location,
+.comparison-second-location {
+  width: 45%;
+  float: left;
+}
+.toggle-wrapper {
+  width: 10%;
+  float: left;
+}
+.comparison-graph-card {
+  padding: 22px 10px;
+  margin-top: 40px;
+  min-height: 400px;
+}
+.stats-graph-card {
+  padding: 28px 10px 60px;
+  margin-top: 40px;
+  min-height: 400px;
+}
+.comparison-graph-card h2 {
+  font-size: 22px;
+  padding-left: 70px;
+}
+.stats-graph-card h2 {
+  font-size: 28px;
+  padding-left: 70px;
+  text-align: center;
+}
+.graph-options {
+  font-size: 18px;
+  margin-right: 40px;
+}
+.graph-options div {
+  margin-right: 24px;
+}
+.graph-options div:last-of-type {
+  margin-right: 0;
+}
+.the-graph {
+  background: #d8d8d8;
+  height: 400px;
+  margin-top: 25px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.the-graph-legend {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.legend-location-box {
+  margin-right: 20px;
+}
+.legend-location-color {
+  height: 40px;
+  width: 40px;
+}
+.location-color-green {
+  background: #aad44c;
+}
+.location-color-blue {
+  background: #64adef;
+}
+.legend-location-name {
+  font-family: 'Catamaran';
+  font-size: 18px;
+  margin-left: 8px;
+  padding-top: 10px;
+}
+.stats-menu {
+  padding-top: 20px;
+}
+.stats-title h1 {
+  font-size: 24px;
+}
+.stats-select {
+  padding-top: 4px;
+  margin-left: 30px;
+  font-size: 16px;
+  position: relative;
+}
+.stats-export img {
+  width: 27px;
+}
+.stats-header-wrapper {
+  padding-bottom: 10px;
+  background: #fff;
+  box-shadow: 0px 2px 3px 0px rgba(210,210,210,0.5);
+}
+#sticky-header {
+  z-index: 999;
+  width: 100%;
+  transition: all 0.3s;
+}
+.stats-live-btn {
+  margin-left: 30px;
+}
+.stats-export {
+  margin-left: 30px;
+}

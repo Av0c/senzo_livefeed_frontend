@@ -1,0 +1,50 @@
+.single-bar-chart {
+  width: 100%;
+  heiht: 100%;
+  padding-top: 20px;
+  padding-bottom: 0px;
+  &.high {
+    .bar-base {
+      background: @color-high-utilization-background;
+    }
+    .bar-fill {
+      background: @color-high-utilization;
+    }
+    .description .value {
+      color: @color-high-utilization;
+    }
+  }
+  &.low {
+    .bar-base {
+      background: @color-low-utilization-background;
+    }
+    .bar-fill {
+      background: @color-low-utilization;
+    }
+    .description .value {
+      color: @color-low-utilization;
+    }
+  }
+  .bar-base {
+    position: relative;
+    height: 0.57em;
+    margin-bottom: 10px;
+    .bar-fill {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      z-index: 10;
+      -webkit-transition: width 1s; /* Safari */
+      transition: width 1s;
+
+    }
+  }
+  .description {
+    & > div {
+      display: inline-block;
+    }
+    .value:after {
+      content: "\00a0";
+    }
+  }
+}

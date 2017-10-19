@@ -34,7 +34,7 @@ class Login extends React.Component {
             <div className="login-box">
               <form action="#">
                 <div className="user_email">
-                  <input type="email" id="username" placeholder="Username" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
+                  <input type="username" id="username" placeholder="Username" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
                 </div>
                 <div className="user_password">
                   <input type="password" placeholder="Password" id="password" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />

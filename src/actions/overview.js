@@ -14,6 +14,9 @@ export const FETCHING_OVERVIEW_SITE_DATA = 'FETCHING_OVERVIEW_SITE_DATA';
 export const RECEIVE_OVERVIEW_DATA = 'RECEIVE_OVERVIEW_DATA';
 export const RECEIVE_OVERVIEW_SITE_DATA = 'RECEIVE_OVERVIEW_SITE_DATA';
 
+export const FETCH_TREE_OVERVIEW = 'FETCH_TREE_OVERVIEW';
+export const RECEIVE_TREE_OVERVIEW = 'RECEIVE_TREE_OVERVIEW';
+
 export const FETCHING_FAILED = 'FETCHING_FAILED';
 
 export function fetchCustomerOverview() {
@@ -48,4 +51,26 @@ export function fetchingFailed() {
     type: FETCHING_FAILED
   }
 
+}
+
+export function fetchTreeOverview() {
+  return {
+    type: FETCH_TREE_OVERVIEW
+  }
+}
+
+export function receiveTreeOverview(data) {
+  return {
+    type: RECEIVE_TREE_OVERVIEW,
+    data: data
+  }
+}
+
+export function loadTreeOverview(id) {
+  return dispatch => {
+    dispatch(fetchTreeOverview());
+    axios.get(config.api.root + '/node/structure/' + id).then((reponse) => {
+      dispatch(receiveTreeOverview(response.data));
+    });
+  }
 }

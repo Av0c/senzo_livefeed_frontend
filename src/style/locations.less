@@ -1,0 +1,82 @@
+@import "variables.less";
+
+.locations {
+  height: 100%;
+
+  .content-right {
+    .settings {
+      display: flex;
+      flex: 1;
+      .dropdown {
+        margin-right: 2px;
+        button {
+          text-transform: uppercase;
+        }
+      }
+      .dropdown:first-child {
+        flex: 40;
+      }
+      .dropdown:nth-child(2) {
+        flex: 20;
+      }
+      .dropdown:last-child {
+        flex: 40;
+        margin: 0;
+      }
+    }
+    .reach-section {
+      display: inline-block;
+    }
+    .chart-container {
+      width: 100%;
+    }
+  }
+
+  .floorplan-upload-page {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    .floorplan-image-container {
+      width: 50em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      #image-preview {
+        height: 100%;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: 50%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        &:not(.has-image)::after {
+          content: "No image uploaded";
+        }
+        .remove-image {
+          display: none;
+        }
+        &.has-image {
+          .remove-image {
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            color:@color-highlight-red;
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      .actions {
+        width: 50%;
+        margin-bottom: 50px;
+      }
+    }
+  }
+}
+

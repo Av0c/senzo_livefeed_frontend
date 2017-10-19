@@ -1,0 +1,73 @@
+@import "variables.less";
+
+.floorplan-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  .floorplan-image-container {
+    position: relative;
+    #floorplan-image {
+      height: 100%;
+      width: 100%;
+      vertical-align: middle;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: 50%;
+    }
+    div#floorplan-image {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .point {
+    background-color: limegreen;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    border-radius: 30px;
+    -ms-transform: translate(-10px, -10px); /* IE 9 */
+    -webkit-transform: translate(-10px, -10px); /* Safari */
+    transform: translate(-10px, -10px);
+
+    &.faulty {
+      background-color: @color-highlight-red;
+    }
+    &.inuse:not(.faulty) {
+      background-color: blue;
+      animation: pulsate 1s ease-out;
+      animation-iteration-count: infinite;
+      -webkit-animation: pulsate 1s ease-out;
+      -webkit-animation-iteration-count: infinite;
+      opacity: 0.0;
+      &:hover {
+        -webkit-animation: none;
+        animation:         none;
+        opacity: 1;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+    .selected {
+      background-color: green;
+    }
+  }
+}
+
+
+.content-right-floormap{
+  padding: 20px;
+  padding-top: 0;
+}
+.hidden{
+  display: none;
+}
+
+@-webkit-keyframes pulsate {
+  0% { opacity: 0.0; }
+  50% { opacity: 1.0; }
+  100% { opacity: 0.0; }
+}

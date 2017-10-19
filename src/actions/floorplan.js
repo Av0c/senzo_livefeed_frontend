@@ -9,9 +9,9 @@ export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 export const FETCH_IMAGE = 'FETCH_IMAGE';
 export const RECEIVE_IMAGE = 'RECEIVE_IMAGE';
 
-export function uploadImage (data){
+export function uploadImage(data) {
   return {
-    type:UPLOAD_IMAGE,
+    type: UPLOAD_IMAGE,
     data
   }
 }
@@ -54,7 +54,7 @@ export const REMOVE_SENSOR = 'REMOVE_SENSOR';
 export const REMOVE_SENSOR_COMPLETED = 'REMOVE_SENSOR_SUCCESFUL';
 export const REMOVE_SENSOR_FAILED = 'REMOVE_SENSOR_FAILED';
 export const REMOVE_SENSOR_FROM_LIST = 'REMOVE_SENSOR_FROM_LIST';
-export const REMOVING_SENSOR_INPROGRESS= 'REMOVING_SENSOR_INPROGRESS';
+export const REMOVING_SENSOR_INPROGRESS = 'REMOVING_SENSOR_INPROGRESS';
 export const SAVE_SENSOR = 'SAVE_SENSOR';
 export const SAVE_SENSOR_COMPLETED = 'SAVE_SENSOR_COMPLETED';
 export const SAVE_SENSOR_FAILED = 'SAVE_SENSOR_FAILED';
@@ -64,14 +64,14 @@ export const UPDATE_SENSOR = 'UPDATE_SENSOR';
 export const UPDATE_SENSOR_COMPLETED = 'UPDATE_SENSOR_COMPLETED';
 export const SELECT_SENSOR = 'SELECT_SENSOR';
 
-export function updateSensor (sensor){
+export function updateSensor(sensor) {
   return {
     type: UPDATE_SENSOR,
     sensor
   }
 }
 
-export function fetchSensors (siteId){
+export function fetchSensors(siteId) {
   return {
     type: FETCH_SENSORS,
     siteId
@@ -98,68 +98,68 @@ export function uiUpdateCompleted() {
   }
 }
 
-export function saveSensor(sensor){
+export function saveSensor(sensor) {
   return {
     type: SAVE_SENSOR,
     sensor
   }
 }
 
-export function saveSensorCompleted(sensor){
-  return{
+export function saveSensorCompleted(sensor) {
+  return {
     type: SAVE_SENSOR_COMPLETED,
     sensor
   }
 }
 
-export function updateSensorCompleted(){
-  return{
+export function updateSensorCompleted() {
+  return {
     type: UPDATE_SENSOR_COMPLETED
   }
 }
 
-export function receiveSensors(result,areaId){
-  return{
+export function receiveSensors(result, areaId) {
+  return {
     type: RECEIVE_SENSORS,
     sensors: result.data,
     areaId
   }
 }
 
-export function saveSensorFailed(){
-  return{
+export function saveSensorFailed() {
+  return {
     type: SAVE_SENSOR_FAILED
   }
 }
 
-export function removeSensor(sensor){
+export function removeSensor(sensor) {
   return {
     type: REMOVE_SENSOR,
     sensor
   }
 }
 
-export function removeSensorFromList(sensor){
+export function removeSensorFromList(sensor) {
   return {
     type: REMOVE_SENSOR_FROM_LIST,
     sensor
   }
 }
 
-export function removeSensorCompleted(){
-  return{
+export function removeSensorCompleted() {
+  return {
     type: REMOVE_SENSOR_COMPLETED
   }
 }
 
-export function removeSensorFailed(){
-  return{
+export function removeSensorFailed() {
+  return {
     type: REMOVE_SENSOR_FAILED
   }
 }
 
-export function removingSensorInprogress(){
-  return{
+export function removingSensorInprogress() {
+  return {
     type: REMOVING_SENSOR_INPROGRESS
   }
 }

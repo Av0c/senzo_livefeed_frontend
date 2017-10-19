@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { createUser } from 'actions/user';
 
-export default class CreateUser extends React.Component {
+export class CreateUser extends React.Component {
 
   constructor() {
     super();

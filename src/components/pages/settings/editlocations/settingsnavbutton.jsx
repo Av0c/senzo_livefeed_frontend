@@ -13,7 +13,7 @@ import AddArea from './addarea';
 import AddSubLocationElement from './addsublocationelement';
 import LocationEditElement from './locationeditelement'
 
-export default class SettingsNavbutton extends React.Component {
+export class SettingsNavbutton extends React.Component {
     constructor(props) {
       super(props);
       this.state = {

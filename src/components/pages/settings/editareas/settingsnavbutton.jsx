@@ -4,7 +4,7 @@ import {createLocation, createArea, uiUpdateCompleted,
   updateLocation, updateArea, removeLocation} from 'actions/editlocations';
 import SettingsArea from './settingsarea';
 
-export default class SettingsNavbutton extends React.Component {
+export class SettingsNavbutton extends React.Component {
     constructor(props) {
       super(props);
       this.state = {

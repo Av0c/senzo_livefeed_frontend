@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {fetchUser, updateUser, formDataChanged} from 'actions/user';
 
 
-export default class EditUser extends React.Component {
+export class EditUser extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(fetchUser(this.props.params.id))

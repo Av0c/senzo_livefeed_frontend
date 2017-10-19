@@ -7,17 +7,21 @@ var config = {};
 console.info('Build environment: ' + env);
 
 switch (env) {
-  case 'development':{
+  case 'development': {
     config = require('./config/development');
+    break;
   }
   case 'staging': {
     config = require('./config/base');
+    break;
   }
   case 'production': {
-    config = require('./config/production')
+    config = require('./config/production');
+    break;
   }
   default: {
     config = require('./config/base');
+    break;
   }
 }
 

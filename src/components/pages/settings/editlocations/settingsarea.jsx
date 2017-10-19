@@ -4,7 +4,7 @@ import AreaEditElement from './areaeditelement';
 import DeleteArea from './deletearea';
 import { removeArea } from 'actions/editlocations';
 
-export default class SettingsArea extends React.Component {
+export class SettingsArea extends React.Component {
   constructor(props) {
     super(props);
     let updatedAreaType = '';

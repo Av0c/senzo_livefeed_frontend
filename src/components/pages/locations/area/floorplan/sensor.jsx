@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {selectSensor} from 'actions/floorplan'
 
-export default class Sensor extends React.Component{
+export class Sensor extends React.Component{
   constructor(props){
     super(props);
   }

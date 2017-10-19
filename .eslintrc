@@ -1,19 +1,29 @@
 {
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
   "plugins": [
     "react"
   ],
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "env": {
+    "es6": true,
     "browser": true,
-    "amd": true,
-    "es6": true
+    "node": true,
+    "jquery": true,
+    "mocha": true
   },
   "rules": {
     "comma-dangle": 1,
-    "quotes": [ 1, "single" ],
+    "quotes": 0,
     "no-undef": 1,
     "global-strict": 0,
     "no-extra-semi": 1,
@@ -25,6 +35,7 @@
     "no-alert": 0,
     "react/jsx-uses-react": 1,
     "indent": [2, 2,{"SwitchCase": 1}], //NOTE: using "Warning/Error" does not work with current eslint version. 2=error here
-    "space-after-keywords": 2
+    "keyword-spacing": 2,
+    "import/no-unresolved": 0
   }
 }

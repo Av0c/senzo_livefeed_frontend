@@ -12,7 +12,7 @@ import {
   selectSensor
 } from 'actions/floorplan';
 
-export default class FloorPlanIndex extends React.Component {
+export class FloorPlanIndex extends React.Component {
 
   componentWillMount(){
     this.props.fetchInfo(this.props.params.id);

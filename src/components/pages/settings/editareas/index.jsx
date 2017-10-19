@@ -5,7 +5,7 @@ import SettingsNavbutton from './settingsnavbutton'
 import {fetchCustomerOrganization} from 'actions/organization';
 import {updateLocation, uiUpdateCompleted} from 'actions/editlocations';
 
-export default class EditLocations extends React.Component {
+export class EditLocations extends React.Component {
   constructor() {
     super();
     this.displayName = 'EditAreas'

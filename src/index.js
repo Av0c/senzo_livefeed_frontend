@@ -1,4 +1,4 @@
-/*eslint-disable import/default */ 
+/*eslint-disable import/default */
 /*eslint-disable import/namespace */
 import React from 'react';
 import ReactDOM from 'react-dom';

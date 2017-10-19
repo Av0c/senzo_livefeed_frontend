@@ -1,0 +1,30 @@
+@icon-plus: url("../img/icons/plus.png");
+@icon-minus: url("../img/icons/minus.png");
+@icon-arrow-down: url("../img/icons/down-arrow.png");
+@icon-arrow-up: url("../img/icons/up-arrow.png");
+
+
+
+
+.icon {
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+
+  &.plus {
+    background-image: @icon-plus;
+  }
+  &.minus {
+    background-image: @icon-minus;
+  }
+  &.arrow-down {
+     background-image: @icon-arrow-down;
+  }
+  &.arrow-up {
+    background-image: @icon-arrow-up;
+  }
+
+
+}

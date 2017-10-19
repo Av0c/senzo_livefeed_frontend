@@ -1,0 +1,71 @@
+.toolbar {
+
+  .logo{
+    background-image: url("../img/logo.png");
+    margin-top: 3.57em;
+    line-height: 2.5em;
+    height: 35px;
+    width: 54.04px;
+    background-size: 100% 100%;
+  }
+
+  .tools {
+    display: flex;
+    font-size: 0.86em;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 8px;
+    border-bottom: 3px solid @background-lighter-blue;
+    padding-bottom: 0.82em;
+    margin-top: 2.9em;
+
+    .link {
+      margin-right: 30px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .navigation {
+      display: flex;
+    }
+
+    .static {
+      display: flex;
+      position: relative;
+      top: 0em;
+      z-index: 2;
+      .link:hover > ul {
+        display: block;
+      }
+      .link:last-child {
+        margin-right: 0;
+      }
+      .link ul {
+        border: 1px solid black;
+        margin-left: -2em;
+        margin-top: 0.5em;
+      }
+      .link li{
+        height: 2.7em;
+        line-height: 1.2em;
+        border-bottom: 1px solid black;
+        tex-allign: center;
+        background-color: @background-lighter-blue;
+      }
+      .link li:last-child{
+        border:none;
+      }
+      .submenu-container {
+          list-style: none;
+          padding: 0;
+          a{
+            display: block;
+            padding:10px;
+          }
+      }
+      .closed > ul {
+        display: none;
+      }
+    }
+  }
+}

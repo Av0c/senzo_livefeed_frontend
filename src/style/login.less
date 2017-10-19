@@ -1,0 +1,92 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 300px;
+  min-width: 200px;
+}
+body {
+  /*background-image: url("../img/bg.jpg"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8em;
+}
+
+.login-box,.add-sensor-container {
+  display: flex;
+  flex-direction: column;
+  width: 17em;
+  margin: auto;
+  input {
+    border:none;
+    background-color: rgba(200,200,200,0.3);
+    width: 90%;
+    border-radius: 2em;
+    margin: auto;
+    margin-bottom: 1.5em;
+    margin-top: 0.5em;
+    padding: 1em;
+    color: white;
+  }
+  input[type="file"] {
+    border:none;
+    background: none;
+    width: 90%;
+    border-radius: 2em;
+    margin: auto;
+    padding: 1em;
+    color: white;
+  }
+}
+.login-box a {
+  display: block;
+  color: white;
+  text-align: center;
+}
+.login-box label {
+  margin-left: 2em;
+  margin-bottom: 0.5em;
+}
+.login-box-wrapper {
+  display: flex;
+  height: auto;
+  flex: 30;
+}
+.logo {
+  flex: 1;
+}
+input:focus {
+  outline: none;
+}
+input[type="button"] {
+  background-color: @color-base-2;
+  color: white;
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+.login-page-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#app {
+  height: 100%;
+}
+.error-message{
+  color: @color-highlight-red;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+.hover-button{
+  cursor: pointer;
+  font-weight: bold;
+  &:hover{
+    background-color: @color-base-1;
+  }
+}

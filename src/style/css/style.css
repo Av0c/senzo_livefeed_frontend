@@ -236,9 +236,10 @@ body.login-page {
 .recover-message:last-of-type {
   margin-bottom: 20px;
 }
-input[type="email"],
+input[type="username"],
 input[type="password"] {
   width: 230px;
+  font-size: 16px;
   height: 36px;
   padding-left: 10px;
   margin-bottom: 18px;
@@ -261,6 +262,10 @@ input[type="submit"]:hover {
 }
 input[type="checkbox"] {
   margin-right: 6px;
+  font-size: 16px;
+}
+.keep_me_logged_in span {
+  font-size: 16px;
 }
 input:focus {
   outline-color: #7ec443;

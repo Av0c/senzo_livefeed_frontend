@@ -2,7 +2,7 @@ import React from 'react';
 import { updateArea } from 'actions/editlocations';
 import { connect } from 'react-redux';
 
-export default class AreaEditElement extends React.Component {
+export class AreaEditElement extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

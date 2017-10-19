@@ -6,7 +6,7 @@ import {clearToken} from 'actions/authentication';
 import './style/main.less';
 import 'react-date-picker/index.css'
 
-export default class Frame extends React.Component {
+export class Frame extends React.Component {
   render() {
     return (
       <div className="container">

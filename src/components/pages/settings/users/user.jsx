@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import Delete from './delete';
 import {removeUser} from 'actions/user';
 
-export default class User extends React.Component {
+export class User extends React.Component {
 
     constructor(){
       super();

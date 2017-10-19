@@ -12,7 +12,7 @@ var config = {
   devtool: 'source-map',
   output: {
     path: PATHS.output,
-    filename: 'bundle.min.js',
+    filename: 'bundle.min.js'
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -32,7 +32,7 @@ var config = {
         include: path.join(__dirname, 'src'),
         loader: 'eslint-loader'
       },
-      { test: /\.json$/, loader: 'json' },
+      { test: /\.json$/, loader: 'json' }
     ],
     loaders: [
       {
@@ -60,11 +60,13 @@ var config = {
           'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
         ]
       },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, 
-        loader: "file" 
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "file"
       },
-      { test: /\.(woff|woff2)$/, 
-        loader: "url?prefix=font/&limit=5000" 
+      {
+        test: /\.(woff|woff2)$/,
+        loader: "url?prefix=font/&limit=5000"
       },
       {
         test: /\/favicon.ico$/,
@@ -73,7 +75,7 @@ var config = {
         query: {
           name: 'favicon.ico?[hash:8]'
         }
-      },
+      }
     ]
   },
   plugins: [

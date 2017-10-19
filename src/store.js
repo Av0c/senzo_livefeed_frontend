@@ -16,8 +16,8 @@ import settingsPageReducer from 'reducers/settings';
 import floorPlanReducer from 'reducers/floorplan';
 import commonReducer from 'reducers/common';
 
-import {clearToken} from 'actions/authentication';
-import {showNotification} from 'actions/common';
+import { clearToken } from 'actions/authentication';
+import { showNotification } from 'actions/common';
 
 const reducer = combineReducers({
   organizationReducer,
@@ -42,7 +42,7 @@ const store = createStore(
   )
 );
 
-axios.interceptors.request.use( config => {
+axios.interceptors.request.use(config => {
   config.headers['Authorization'] = `Bearer ${store.getState().authReducer.token}`;
   return config
 });
@@ -52,10 +52,10 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
   if (error.status == 401) {
     store.dispatch(clearToken())
-  }else if (error.status > 400) {
+  } else if (error.status > 400) {
     return Promise.reject(error);
   } else {
-    return Promise.reject({statusText: error})
+    return Promise.reject({ statusText: error })
   }
 
 });

@@ -4,7 +4,7 @@ import {removeSensorFromList} from 'actions/floorplan'
 import SettingsArea from './settingsarea';
 import DeleteSensor from './deletesensor';
 
-export default class SettingsNavbutton extends React.Component {
+export class SettingsNavbutton extends React.Component {
     constructor(props) {
       super(props);
       this.state = {

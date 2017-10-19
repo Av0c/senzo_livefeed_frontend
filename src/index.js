@@ -1,3 +1,5 @@
+/*eslint-disable import/default */ 
+/*eslint-disable import/namespace */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import favIcon from './favicon.ico';
@@ -8,7 +10,7 @@ import register from './containers/register';
 import Settings from './components/pages/settings/settings';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, Link, hashHistory, useRouterHistory } from 'react-router';
-import { requireAuthentication} from 'components/common/authenticatedComponent';
+import { requireAuthentication } from 'components/common/authenticatedComponent';
 import appHistory from 'components/common/appHistory';
 
 import Locations from 'components/pages/locations/';
@@ -40,11 +42,11 @@ import AddFloorPlan from 'components/pages/addfloorplan';
 
 ReactDOM.render((
   <Provider store={Store}>
-    <Router history={appHistory} onUpdate={() => window.scrollTo(0,0)}>
+    <Router history={appHistory} onUpdate={() => window.scrollTo(0, 0)}>
       <Route path="/" component={requireAuthentication(Frame)}>
-        <IndexRoute component={Overview}/>
+        <IndexRoute component={Overview} />
         <Route path="/locations" component={Locations}>
-          <IndexRoute component={LocationsIntroPage}/>
+          <IndexRoute component={LocationsIntroPage} />
           <Route path="/locations/site/:id" component={SiteView} />
           <Route path="/locations/area/:id" component={AreaView} />
           <Route path="/locations/meetingroom/:id" component={MeetingRoomView} />

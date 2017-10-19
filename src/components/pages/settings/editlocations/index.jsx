@@ -9,7 +9,7 @@ import {
 }
   from 'actions/editlocations';
 
-export default class Index extends React.Component {
+export class Index extends React.Component {
   constructor() {
     super();
     this.displayName = 'EditLocations'

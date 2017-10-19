@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import SettingsNavigation from './settingsnavigation';
 import {fetchCustomerOrganization} from 'actions/organization';
 
-export default class EditLocations extends React.Component {
+export class EditLocations extends React.Component {
   constructor() {
     super();
     this.displayName = 'EditLocations'

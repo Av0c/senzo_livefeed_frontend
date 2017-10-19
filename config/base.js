@@ -46,8 +46,8 @@ var config = {
         include: PATHS.input
       },
       {
-        test: /\.css$/,
-        loader: "style-loader!css-loader"
+        test: /(\.css)$/,
+        loaders: ['style', 'css']
       },
       {
         test: /\.(ttf)$/,

@@ -42,9 +42,9 @@ function loginFailed(data) {
 export function login(credentials) {
   return dispatch => {
     dispatch(loginInProgress());
-    axios.post(config.api.root + '/api/login', credentials)
+    axios.post(config.api.root + '/login', credentials)
       .then( (response) => {
-        dispatch(loginSuccessful(response.data.token))
+        dispatch(loginSuccessful(response.data.token));
         appHistory.push('/');
       })
     .catch(function (response) {

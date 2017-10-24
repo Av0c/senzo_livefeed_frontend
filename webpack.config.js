@@ -1,7 +1,7 @@
 
 var appName = 'app';
 var outputFile = appName + '.js';
-var env = process.env.NODE_ENV;
+var env = process.env.NODE_ENV || 'development';
 
 var config = {};
 console.info('Build environment: ' + env);

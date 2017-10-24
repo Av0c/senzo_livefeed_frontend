@@ -19,9 +19,10 @@ export const RECEIVE_TREE_OVERVIEW = 'RECEIVE_TREE_OVERVIEW';
 
 export const FETCHING_FAILED = 'FETCHING_FAILED';
 
-export function fetchCustomerOverview() {
+export function fetchCustomerOverview(id) {
   return {
-    type: FETCH_CUSTOMER_OVERVIEW
+    type: FETCH_CUSTOMER_OVERVIEW,
+    id
   };
 }
 

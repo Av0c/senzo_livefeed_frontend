@@ -3,17 +3,19 @@ import Loading from 'components/common/loading';
 import Section from 'components/common/section';
 import SingleBarChart from 'components/common/graphs/singlebarchart';
 import BigText from 'components/common/bigtext';
-import {fetchCustomerOverview} from 'actions/overview';
+import { fetchCustomerOverview } from 'actions/overview';
 import { connect } from 'react-redux';
 
 class OverviewLeft extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchCustomerOverview());
+    this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
   }
 
-  render (){
-    var overviewData = this.props;
+  render() {
+    var overviewData = this.props.overview;
+    console.log(this.props.user);
+    console.log(overviewData);
 
     return (
       <div className="content-left">
@@ -27,23 +29,25 @@ class OverviewLeft extends React.Component {
           <div>Sensors needing maintenance: <span className='red-text'>{overviewData.sensorStatistics.maintenance}</span></div>
         </Section>
         <Section boldHeader="TOTAL QUARTERLY " header="Average Utilization">
-          <SingleBarChart value={overviewData.quarterlyUtilization} description="this Quarter so far"/>
-          <SingleBarChart value={overviewData.previousQuarterUtilization} description="last Quarter"/>
+          <SingleBarChart value={overviewData.quarterlyUtilization} description="this Quarter so far" />
+          <SingleBarChart value={overviewData.previousQuarterUtilization} description="last Quarter" />
         </Section>
       </div>
     )
   }
 }
 
-function mapStateToProps(state){
-  return state.overviewReducer.customerOverview
-}
-
-function mapDispatchToProps(dispatch) {
+function mapStateToProps(state) {
   return {
-    dispatch
-  }
+    overview: state.overviewReducer.customerOverview,
+    user: state.authReducer.user
+  };
 }
+  function mapDispatchToProps(dispatch) {
+    return {
+      dispatch
+    }
+  }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OverviewLeft);
+  export default connect(mapStateToProps, mapDispatchToProps)(OverviewLeft);
 

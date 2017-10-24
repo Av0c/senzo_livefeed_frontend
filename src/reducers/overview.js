@@ -23,7 +23,7 @@ const initialState = {
       sensorsInUse: 0,
       desks: 0,
       meetingRooms: 0,
-      maintenance: 0,
+      maintenance: 0
     }
   },
   utilizationOverview: {
@@ -43,13 +43,13 @@ const initialState = {
     },
     sensorStatistics: {
       desks: 0,
-      meetingRooms: 0,
+      meetingRooms: 0
     }
   }
 };
 
-function fetchCustomerOverview() {
-  return axios.get(config.api.root + `/api/overview`)
+function fetchCustomerOverview(id) {
+  return axios.get(config.api.root + `/node/structure/${id}`)
     .then(receiveCustomerOverview)
     .catch(fetchingFailed)
 }
@@ -60,26 +60,26 @@ function fetchUtilizationOverview(settings) {
     .catch(fetchingFailed)
 }
 
-export default (state = initialState, action ) => {
+export default (state = initialState, action) => {
 
   switch (action.type) {
     case FETCH_CUSTOMER_OVERVIEW: {
-      return loop (
-        Object.assign({}, state, {loading: true}),
-        Effects.promise(fetchCustomerOverview)
+      return loop(
+        Object.assign({}, state, { loading: true }),
+        Effects.promise(fetchCustomerOverview, action.id)
       );
     }
 
     case RECEIVE_CUSTOMER_OVERVIEW: {
       return Object.assign({}, state, {
         loading: false,
-        customerOverview: action.data,
+        customerOverview: action.data
       })
     }
 
     case FETCH_UTILIZATION_OVERVIEW: {
-      return loop (
-        Object.assign({}, state, {loading: true}),
+      return loop(
+        Object.assign({}, state, { loading: true }),
         Effects.promise(fetchUtilizationOverview, action.settings)
       )
     }

@@ -20,7 +20,9 @@ function decodeToken(token) {
     return {
       username: decoded.username,
       id: decoded.id,
-      role: decoded.role
+      role: decoded.role,
+      companyid: decoded.companyid,
+      rootnodeid: decoded.rootnodeid
     }
   } else {
     return {
@@ -50,7 +52,6 @@ export default (state = initialState, action ) => {
     }
 
     case LOGIN_SUCCESSFUL: {
-      console(action.token);
       localStorage.setItem("token",  action.token);
       var decoded = decodeToken(action.token);
       return Object.assign({}, state, {

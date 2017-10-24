@@ -50,6 +50,7 @@ export default (state = initialState, action ) => {
     }
 
     case LOGIN_SUCCESSFUL: {
+      console(action.token);
       localStorage.setItem("token",  action.token);
       var decoded = decodeToken(action.token);
       return Object.assign({}, state, {

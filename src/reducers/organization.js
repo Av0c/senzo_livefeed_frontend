@@ -15,7 +15,7 @@ import {
 import lodash from 'lodash';
 
 const initialState = {
-  customer: "Futurice Oy",
+  customer: "Senzoit Oy",
   selectedSite: {
     name: '',
     id: 0
@@ -57,7 +57,7 @@ export default (state = initialState, action ) => {
       };
       let stack = buildBreadcrumbPath(customerRoot, action.data[0].id, []);
       return Object.assign({}, initialState, {
-        organization: customerRoot.children,
+        organization: [customerRoot.children],
         breadcrumbs: stack
       })
     }

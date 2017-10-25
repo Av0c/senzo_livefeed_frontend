@@ -52,12 +52,49 @@ function fetchCustomerOverview(id) {
   return axios.get(config.api.root + `/node/structure/${id}`)
     .then(receiveCustomerOverview)
     .catch(fetchingFailed)
-}
+} 
 
 function fetchUtilizationOverview(settings) {
   return axios.get(config.api.root + `/api/utilization/overview?period=${settings.period.code}&mode=${settings.mode.code}`)
     .then(receiveUtilizationOverview)
     .catch(fetchingFailed)
+}
+function countTreeStatistic(root) {
+  var statistic = {
+    allRooms: 0,
+    meetingRooms: 0,
+    workingRooms: 0,
+    allSensors: 0,
+    meetingSensors: 0,
+    workingSensors: 0
+  };
+
+  count(root, statistic)
+  return statistic;
+}
+function count(root, statistic) {
+  root.children.forEach(function (node) {
+    if (node.type != 'meeting_room' && node.type != 'open_area') {
+      count(node, statistic);
+    }
+    else if (node.children === null) {
+      return;
+    }
+    else {
+      statistic.allRooms++;
+      let len = node.children.length;
+      if (node.type == 'meeting_room') {
+        statistic.meetingRooms++;
+        statistic.meetingSensors += len;
+      }
+      else {
+        statistic.workingRooms++;
+        statistic.workingSensors += len;
+      }
+      statistic.allSensors += len;
+    }
+  });
+
 }
 
 export default (state = initialState, action) => {
@@ -71,9 +108,11 @@ export default (state = initialState, action) => {
     }
 
     case RECEIVE_CUSTOMER_OVERVIEW: {
+      let statistic = countTreeStatistic(action.data);
       return Object.assign({}, state, {
         loading: false,
-        customerOverview: action.data
+        customerOverview: action.data,
+        treeStatistic: statistic
       })
     }
 
@@ -84,6 +123,7 @@ export default (state = initialState, action) => {
       )
     }
     case RECEIVE_UTILIZATION_OVERVIEW: {
+      
       return Object.assign({}, state, {
         loading: false,
         utilizationOverview: action.data

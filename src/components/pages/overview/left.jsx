@@ -16,6 +16,7 @@ class OverviewLeft extends React.Component {
     var overviewData = this.props.overview;
     console.log(this.props.user);
     console.log(overviewData);
+    console.log(this.props.statistic);
 
     return (
       <div className="content-left">
@@ -40,6 +41,7 @@ class OverviewLeft extends React.Component {
 function mapStateToProps(state) {
   return {
     overview: state.overviewReducer.customerOverview,
+    statistic: state.overviewReducer.treeStatistic,
     user: state.authReducer.user
   };
 }

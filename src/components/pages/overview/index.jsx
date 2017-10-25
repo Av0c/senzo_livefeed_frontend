@@ -8,8 +8,7 @@ export default class Overview extends React.Component {
   render (){
     return (
       <div className="overview">
-        <OverviewLeft />
-        <OverviewRight />
+
       </div>
     )
   }

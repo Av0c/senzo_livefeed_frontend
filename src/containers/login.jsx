@@ -20,7 +20,7 @@ class Login extends React.Component {
 
   handleKeyDown(e) {
     if (e.key === 'Enter') {
-      this.props.dispatch(login(this.state))
+      this.props.dispatch(login(this.state));
     }
   }
 
@@ -58,7 +58,7 @@ class Login extends React.Component {
   }
 
   submit() {
-    this.props.dispatch(login(this.state))
+    this.props.dispatch(login(this.state));
   }
 }
 

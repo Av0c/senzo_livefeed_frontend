@@ -7,7 +7,7 @@
     "start": "npm-run-all --parallel develop lint:watch",
     "develop": "./node_modules/.bin/webpack-dev-server --host 0.0.0.0 --port 1337",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production webpack",
+    "build": "webpack",
     "lint": "node_modules/.bin/esw webpack.config.* src config *.js",
     "lint:watch": "npm run lint -- --watch"
   },
@@ -28,6 +28,7 @@
     "cheerio": "0.22.0",
     "colors": "1.1.2",
     "compression": "1.6.1",
+    "copy-webpack-plugin": "^4.2.0",
     "cross-env": "1.0.7",
     "css-loader": "0.23.1",
     "enzyme": "2.2.0",

@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
 
 var PATHS = {
@@ -96,7 +97,10 @@ var config = {
       {
         template: 'src/index.html'
       }
-    )
+    ),
+    new CopyWebpackPlugin([
+      { from: 'src/assets', to: 'src/assets' }
+    ]),
 
   ]
 };

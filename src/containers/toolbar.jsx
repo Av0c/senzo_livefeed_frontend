@@ -5,22 +5,21 @@ export default class Toolbar extends React.Component {
 
   render() {
     return (
-      <div className="toolbar">
-          <div className="logo">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-xs-4">
+            <div className="location-block clearfix">
+              <div className="location-icon pull-left"><img src="src/assets/images/location-icon.svg" alt="Location"/></div>
+              <div className="location-name pull-left"><span>Microsoft </span></div>
+            </div>
           </div>
-        <div className="tools">
-          <div className="navigation">
-            <Link className="link" to="" activeClassName="selected">{this.props.companyName} OVERVIEW</Link>
-            <Link className="link" to="locations" activeClassName="selected">LOCATIONS</Link>
-            {/*DYNAMIC NAVIGATION BREADCRUMBS HERE*/}
+          <div className="col-xs-4">
+            <div className="header-logo"><img src="src/assets/images/header-logo.svg" alt="SenzoLive"/></div>
           </div>
-          <div className="static">
-            <div className="link">Help</div>
-            <Link className="link" to="/settings">Settings</Link>
-            <div className="link closed " >Hi, {this.props.user.username}
-              <ul className='submenu-container'>
-                <li className="submenu-item"><a className="link" onClick={this.props.actions.logout} href="javascript:void(0);">Log out</a></li>
-              </ul>
+          <div className="col-xs-4">
+            <div className="user-block">
+              <div className="user-icon pull-right"><img src="src/assets/images/user-settings.svg" alt="Settings"/></div>
+              <div className="user-name pull-right"><span>John Doe</span></div>
             </div>
           </div>
         </div>

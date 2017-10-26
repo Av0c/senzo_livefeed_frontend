@@ -9,8 +9,7 @@ import 'react-date-picker/index.css'
 export class Frame extends React.Component {
   render() {
     return (
-      <div className="container">
-        <Notification />
+      <div style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px', width: '100%', maxWidth: '100%' }} className="container">
         <Toolbar user={this.props.user} actions={{logout: this.props.logout}} companyName={this.props.companyName} />
         <div className="content">
             {this.props.children}
@@ -23,7 +22,8 @@ export class Frame extends React.Component {
 function mapStateToProps(state){
   return {
     user: state.authReducer.user,
-    companyName: state.overviewReducer.customerOverview.companyName
+    companyName: state.overviewReducer.customerOverview.info.name,
+    tree: state.overviewReducer.customerOverview
   }
 }
 

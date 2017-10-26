@@ -503,3 +503,70 @@ input:focus {
 .stats-export {
   margin-left: 30px;
 }
+
+.location-dropdown-root {
+  position: absolute;
+  background: #fff;
+  z-index: 99;
+  top: 35px;
+  width: 200px;
+}
+.location-dropdown-root ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+/* Flyout CSS menu */
+}
+.location-dropdown-root ul,
+.location-dropdown-root li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+.location-dropdown-root ul {
+  border-top: 3px solid #7ec443;
+  box-shadow: 0px 2px 3px 0px rgba(210,210,210,0.5);
+}
+.location-dropdown-root ul li.hover,
+.location-dropdown-root ul li:hover {
+  position: relative;
+  z-index: 599;
+}
+.location-dropdown-root ul ul {
+  visibility: hidden;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 598;
+}
+.location-dropdown-root ul li:hover > ul {
+  visibility: visible;
+}
+.location-dropdown-root ul ul {
+  top: 0;
+  left: 100%;
+}
+.location-dropdown-root span,
+.location-dropdown-root a {
+  display: inline-block;
+  text-decoration: none;
+}
+.location-dropdown-root li {
+  background: #fff;
+}
+.location-dropdown-root li:hover,
+.location-dropdown-root li.active {
+  background: #fff;
+}
+.location-dropdown-root a {
+  color: #585e66;
+  line-height: 160%;
+  padding: 10px 8px 10px 18px;
+  width: 164px;
+}
+.location-dropdown-root ul ul li {
+  background: #fff;
+/* Flyout CSS menu */
+}

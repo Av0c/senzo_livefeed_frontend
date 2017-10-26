@@ -23,7 +23,8 @@ var config = {
       reducers: PATHS.input + '/reducers',
       components: PATHS.input + '/components',
       containers: PATHS.input + '/containers',
-      images: PATHS.input + '/img'
+      images: PATHS.input + '/img',
+      assets: PATHS.input + '/assets'
     }
   },
   module: {
@@ -100,8 +101,7 @@ var config = {
     ),
     new CopyWebpackPlugin([
       { from: 'src/assets', to: 'src/assets' }
-    ]),
-
+    ])
   ]
 };
 

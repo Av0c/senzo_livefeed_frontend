@@ -24,6 +24,9 @@ const initialState = {
       desks: 0,
       meetingRooms: 0,
       maintenance: 0
+    },
+    info: {
+      name: ''
     }
   },
   utilizationOverview: {
@@ -52,13 +55,14 @@ function fetchCustomerOverview(id) {
   return axios.get(config.api.root + `/node/structure/${id}`)
     .then(receiveCustomerOverview)
     .catch(fetchingFailed)
-} 
+}
 
 function fetchUtilizationOverview(settings) {
   return axios.get(config.api.root + `/api/utilization/overview?period=${settings.period.code}&mode=${settings.mode.code}`)
     .then(receiveUtilizationOverview)
     .catch(fetchingFailed)
 }
+
 function countTreeStatistic(root) {
   var statistic = {
     allRooms: 0,
@@ -72,6 +76,7 @@ function countTreeStatistic(root) {
   count(root, statistic)
   return statistic;
 }
+
 function count(root, statistic) {
   root.children.forEach(function (node) {
     if (node.type != 'meeting_room' && node.type != 'open_area') {
@@ -123,7 +128,7 @@ export default (state = initialState, action) => {
       )
     }
     case RECEIVE_UTILIZATION_OVERVIEW: {
-      
+
       return Object.assign({}, state, {
         loading: false,
         utilizationOverview: action.data

@@ -16,7 +16,7 @@ export default class Toolbar extends React.Component {
             <div className="location-block clearfix">
               <div className="location-icon pull-left"><img src="src/assets/images/location-icon.svg" alt="Location" /></div>
               <div className="location-name pull-left"><span>{this.props.companyName}</span></div>
-              <div className="location-dropdown-root" >
+              <div style={{ marginTop: '17px' }} className="location-dropdown-root" >
               <Tree tree={this.props.tree} />
               </div>
             </div>

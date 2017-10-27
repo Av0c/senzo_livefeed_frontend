@@ -1,48 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router';
+import Tree from 'containers/tree';
 
 export default class Toolbar extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      choosing: true
-    };
-  }
+  componentWillMount(){
 
-  renderLocation(event){
-    event.preventDefault();
-    console.log("clicked");
-    this.setState({choosing: !this.state.choosing});
   }
 
   render() {
-
-    let choose = this.state.choosing ? 'block' : '';
-    console.log(choose);
     return (
       <div style={{ width: '100%', backgroundColor: 'white', paddingBottom: '15px' }} className="container-fluid">
         <div className="row">
           <div className="col-xs-4">
             <div className="location-block clearfix">
-              <div onClick={this.renderLocation.bind(this)} className="location-icon pull-left"><img src="src/assets/images/location-icon.svg" alt="Location" /></div>
-              <div onClick={this.renderLocation.bind(this)} className="location-name pull-left"><span>{this.props.companyName}</span></div>
-              <div className={"location-dropdown-root " +choose}>
-                <ul>
-                  <li><a href="#">Manchester</a></li>
-                  <li><a href="#">Glasgow  </a>
-                    <ul>
-                      <li><a className="all-item" href="#">All Locations</a></li>
-                      <li><a href="#">Office 1</a>
-                        <ul>
-                          <li><a className="all-item" href="#">All Locations</a></li>
-                          <li> <a href="#">Department 1</a></li>
-                          <li><a href="#">Department 2    </a></li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
+              <div className="location-icon pull-left"><img src="src/assets/images/location-icon.svg" alt="Location" /></div>
+              <div className="location-name pull-left"><span>{this.props.companyName}</span></div>
+              <div className="location-dropdown-root" >
+              <Tree tree={this.props.tree} />
               </div>
             </div>
           </div>

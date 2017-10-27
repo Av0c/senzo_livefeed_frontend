@@ -27,7 +27,8 @@ const initialState = {
     },
     info: {
       name: ''
-    }
+    },
+    children: []
   },
   utilizationOverview: {
     deskUtilization: {

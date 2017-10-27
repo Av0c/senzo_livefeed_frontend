@@ -1,3 +1,7 @@
-.block {
+.location-block .location-dropdown-root {
     display: none;
+}
+
+.location-block:hover .location-dropdown-root{
+    display: block;
 }

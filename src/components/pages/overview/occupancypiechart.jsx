@@ -6,7 +6,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const RADIAN = Math.PI / 180;
 
-export default class SimplePieChart extends React.Component {
+export default class OccupancyPieChart extends React.Component {
     render() {
         return (
             <PieChart width={800} height={400} onMouseEnter={this.onPieEnter}>

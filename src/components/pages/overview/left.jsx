@@ -53,14 +53,14 @@ class OverviewLeft extends React.Component {
                 </div>
                 <div className="card-bottom-menu">
                   <div className="row">
-                    <div className="col-xs-4 text-center"><a className="card-settings" href="#"><img src="assets/images/card-settings.svg" /></a></div>
-                    <div className="col-xs-4 text-center"><a className="card-export" href="#"><img src="assets/images/export.svg" /></a></div>
-                    <div className="col-xs-4 text-center"><a className="card-settings" href="#"><img src="assets/images/maintenance.svg" /></a></div>
+                    <div className="col-xs-4 text-center"><a className="card-settings" href="#"><img src="src/assets/images/card-settings.svg" /></a></div>
+                    <div className="col-xs-4 text-center"><a className="card-export" href="#"><img src="src/assets/images/export.svg" /></a></div>
+                    <div className="col-xs-4 text-center"><a className="card-settings" href="#"><img src="src/assets/images/maintenance.svg" /></a></div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-sm-8 col-xs-12 text-center add-cart-zone"><a className="add-card"> <img src="assets/images/plus.svg" />
+            <div className="col-sm-8 col-xs-12 text-center add-cart-zone"><a className="add-card"> <img src="src/assets/images/plus.svg" />
               <div className="add-card-descr">Add Location</div></a></div>
           </div>
         </div>

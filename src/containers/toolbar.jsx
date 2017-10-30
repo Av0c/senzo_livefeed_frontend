@@ -4,10 +4,6 @@ import Tree from 'containers/tree';
 
 export default class Toolbar extends React.Component {
 
-  componentWillMount(){
-
-  }
-
   render() {
     return (
       <div style={{ width: '100%', backgroundColor: 'white', paddingBottom: '15px' }} className="container-fluid">

@@ -17,7 +17,16 @@ export const RECEIVE_OVERVIEW_SITE_DATA = 'RECEIVE_OVERVIEW_SITE_DATA';
 export const FETCH_TREE_OVERVIEW = 'FETCH_TREE_OVERVIEW';
 export const RECEIVE_TREE_OVERVIEW = 'RECEIVE_TREE_OVERVIEW';
 
+export const GET_NODE_STATISTIC = 'GET_NODE_STATISTIC';
+
 export const FETCHING_FAILED = 'FETCHING_FAILED';
+
+export function getNodeStatistic(node){
+  return {
+    type: GET_NODE_STATISTIC,
+    node
+  };
+}
 
 export function fetchCustomerOverview(id) {
   return {

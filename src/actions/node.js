@@ -1,0 +1,2 @@
+export const FETCH_LIVE_DATA = "FETCH_LIVE_DATA";
+export const RECEIVE_LIVE_DATA = "RECEIVE_LIVE_DATA";

@@ -16,7 +16,6 @@ const initialState = {
 function decodeToken(token) {
   if (token) {
     var decoded = jwtDecode(token);
-    console.log(decoded);
     return {
       username: decoded.username,
       id: decoded.id,
@@ -67,8 +66,7 @@ export default (state = initialState, action ) => {
         token: undefined
       })
     }
-
-
+    
     default: {
       return state;
     }

@@ -3,7 +3,7 @@ import Loading from 'components/common/loading';
 import Section from 'components/common/section';
 import SingleBarChart from 'components/common/graphs/singlebarchart';
 import BigText from 'components/common/bigtext';
-import { fetchCustomerOverview } from 'actions/overview';
+import { fetchCustomerOverview, getNodeStatistic } from 'actions/overview';
 import { connect } from 'react-redux';
 
 class OverviewLeft extends React.Component {
@@ -14,10 +14,6 @@ class OverviewLeft extends React.Component {
 
   render() {
     var overviewData = this.props.overview;
-    console.log(this.props.user);
-    console.log(overviewData);
-    console.log(this.props.statistic);
-
     return (
       <div style={{marginTop:'20px'}} className="overview-block">
         <div className="container-fluid">

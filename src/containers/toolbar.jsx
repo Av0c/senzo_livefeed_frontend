@@ -13,7 +13,7 @@ export default class Toolbar extends React.Component {
               <div className="location-icon pull-left"><img src="src/assets/images/location-icon.svg" alt="Location" /></div>
               <div className="location-name pull-left"><span>{this.props.companyName}</span></div>
               <div style={{ marginTop: '17px' }} className="location-dropdown-root" >
-              <Tree tree={this.props.tree} />
+              <Tree tree={this.props.tree} statistic={this.props.statistic} />
               </div>
             </div>
           </div>

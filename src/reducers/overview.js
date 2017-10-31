@@ -9,7 +9,8 @@ import {
   FETCH_UTILIZATION_OVERVIEW,
   RECEIVE_UTILIZATION_OVERVIEW,
   receiveUtilizationOverview,
-  fetchingFailed
+  fetchingFailed,
+  GET_NODE_STATISTIC
 } from 'actions/overview'
 
 const initialState = {
@@ -73,23 +74,16 @@ function countTreeStatistic(root) {
     meetingSensors: 0,
     workingSensors: 0
   };
-
-  count(root, statistic)
+  count(root, statistic);
   return statistic;
 }
 
 function count(root, statistic) {
-  root.children.forEach(function (node) {
-    if (node.type != 'meeting_room' && node.type != 'open_area') {
-      count(node, statistic);
-    }
-    else if (node.children === null) {
-      return;
-    }
-    else {
+  if (root.children != null && root.children.length >0){
+    if (root.type == 'meeting_room' || root.type == 'open_area'){
       statistic.allRooms++;
-      let len = node.children.length;
-      if (node.type == 'meeting_room') {
+      let len = root.children.length;
+      if (root.type == 'meeting_room') {
         statistic.meetingRooms++;
         statistic.meetingSensors += len;
       }
@@ -99,8 +93,12 @@ function count(root, statistic) {
       }
       statistic.allSensors += len;
     }
-  });
-
+    else {
+      root.children.forEach(function (node) {
+        count(node, statistic);
+      });
+    }
+  }
 }
 
 export default (state = initialState, action) => {
@@ -129,11 +127,17 @@ export default (state = initialState, action) => {
       )
     }
     case RECEIVE_UTILIZATION_OVERVIEW: {
-
       return Object.assign({}, state, {
         loading: false,
         utilizationOverview: action.data
       })
+    }
+    case GET_NODE_STATISTIC: {
+      let statistic = countTreeStatistic(action.node);
+      console.log(statistic);
+      return Object.assign({}, state, {
+        treeStatistic: statistic
+      });
     }
 
     default: {

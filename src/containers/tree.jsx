@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router';
+import Node from 'containers/node'
 
 export default class Tree extends React.Component {
 
     render() {
         var childNodes;
-        var style = {};    
+        var style = {};
+        var self = this;    
         if (this.props.tree.children != null && this.props.tree.type!='meeting_room' && this.props.tree.type!='open_area') {
             if(this.props.tree.children.length >7){
                 style ={
@@ -14,9 +16,8 @@ export default class Tree extends React.Component {
                     maxHeight: '200px'
                 };
             }
-            console.log(style);
             childNodes = this.props.tree.children.map(function(node, index) {
-                return <li key={index}><a href="#">{node.info.name}</a><Tree tree={node} /></li>
+                return <Node node={node} key={index} statistic={self.props.statistic.bind(this)}><Tree statistic={self.props.statistic.bind(this)} tree={node} /></Node>
             });
         }
         return (

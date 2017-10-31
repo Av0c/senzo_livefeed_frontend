@@ -34,7 +34,7 @@
     "no-unreachable": 1,
     "no-alert": 0,
     "react/jsx-uses-react": 1,
-    "indent": [2, 2,{"SwitchCase": 1}], //NOTE: using "Warning/Error" does not work with current eslint version. 2=error here
+    "indent": 0,
     "keyword-spacing": 2,
     "import/no-unresolved": 0
   }

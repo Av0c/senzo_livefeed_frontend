@@ -1,10 +1,18 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Tree from 'containers/tree';
+import { fetchLiveData }from 'actions/node'; 
 
-export default class Toolbar extends React.Component {
+export class Toolbar extends React.Component {
+
+  componentWillMount() {
+    console.log("hereee");
+    this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));
+  }
 
   render() {
+    console.log(this.props.currentSensor);
     return (
       <div style={{ width: '100%', backgroundColor: 'white', paddingBottom: '15px' }} className="container-fluid">
         <div className="row">
@@ -31,3 +39,17 @@ export default class Toolbar extends React.Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    currentSensor: state.nodeReducer.map
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+

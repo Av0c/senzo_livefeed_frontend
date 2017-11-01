@@ -4,16 +4,65 @@ import Section from 'components/common/section';
 import SingleBarChart from 'components/common/graphs/singlebarchart';
 import BigText from 'components/common/bigtext';
 import { fetchCustomerOverview, getNodeStatistic } from 'actions/overview';
+import { fetchLiveData }from 'actions/node';
 import { connect } from 'react-redux';
 
 class OverviewLeft extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
+    this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));
+    this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
+  }
+
+  countTreeStatistic(root, map) {
+    var statistic = {
+      allRooms: 0,
+      meetingRooms: 0,
+      workingRooms: 0,
+      allSensors: 0,
+      roomsInUse: 0,
+      desksInUse: 0
+    };
+    this.count(root, statistic, map);
+    statistic.allSensors += map.size;
+    console.log(statistic);
+    return statistic;
+  }
+
+  count(root, statistic, map) {
+    var self = this;
+    if (root.children != null && root.children.length > 0){
+      if (root.type == 'meeting_room' || root.type == 'open_area'){
+        statistic.allRooms++;
+        let occupied = false;
+        root.children.forEach((sensor) => {
+          if(map.get(sensor.id).inuse){
+            occupied = true;
+            statistic.desksInUse++;
+          }
+        });
+        if (occupied) {
+          statistic.roomsInUse++;
+        }
+        let len = root.children.length;
+        if (root.type == 'meeting_room') {
+          statistic.meetingRooms++;
+        }
+        else {
+          statistic.workingRooms++;
+        }
+      }
+      else {
+        root.children.forEach(function (node) {
+          self.count(node, statistic, map);
+        });
+      }
+    }
   }
 
   render() {
     var overviewData = this.props.overview;
+    this.countTreeStatistic(this.props.currentNode, this.props.currentSensor);
     return (
       <div style={{marginTop:'20px'}} className="overview-block">
         <div className="container-fluid">
@@ -69,7 +118,9 @@ function mapStateToProps(state) {
   return {
     overview: state.overviewReducer.customerOverview,
     statistic: state.overviewReducer.treeStatistic,
-    user: state.authReducer.user
+    user: state.authReducer.user,
+    currentSensor: state.nodeReducer.map,
+    currentNode: state.overviewReducer.currentNode || state.overviewReducer.customerOverview
   };
 }
 function mapDispatchToProps(dispatch) {

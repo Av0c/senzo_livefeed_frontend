@@ -28,10 +28,11 @@ export function getNodeStatistic(node){
   };
 }
 
-export function fetchCustomerOverview(id) {
+export function fetchCustomerOverview(id, map) {
   return {
     type: FETCH_CUSTOMER_OVERVIEW,
-    id
+    id,
+    map
   };
 }
 
@@ -42,10 +43,11 @@ export function fetchUtilizationOverview(settings) {
   }
 }
 
-export function receiveCustomerOverview(result) {
+export function receiveCustomerOverview(result, map) {
   return {
     type: RECEIVE_CUSTOMER_OVERVIEW,
-    data: result.data
+    data: result.data,
+    map: map
   }
 }
 
@@ -79,7 +81,7 @@ export function receiveTreeOverview(data) {
 export function loadTreeOverview(id) {
   return dispatch => {
     dispatch(fetchTreeOverview());
-    axios.get(config.api.root + '/node/structure/' + id).then((reponse) => {
+    axios.get(config.api.root + '/node/structure/' + id).then((response) => {
       dispatch(receiveTreeOverview(response.data));
     });
   }

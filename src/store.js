@@ -15,6 +15,7 @@ import querySettingsReducer from 'reducers/querysettings';
 import settingsPageReducer from 'reducers/settings';
 import floorPlanReducer from 'reducers/floorplan';
 import commonReducer from 'reducers/common';
+import nodeReducer from 'reducers/node';
 
 import { clearToken } from 'actions/authentication';
 import { showNotification } from 'actions/common';
@@ -31,7 +32,8 @@ const reducer = combineReducers({
   querySettingsReducer,
   settingsPageReducer,
   floorPlanReducer,
-  commonReducer
+  commonReducer,
+  nodeReducer
 });
 
 const store = createStore(

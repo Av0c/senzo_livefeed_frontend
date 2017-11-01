@@ -15,6 +15,7 @@ import {
 
 const initialState = {
   loading: false,
+  currentNode: null,
   customerOverview: {
     companyName: '',
     quarterlyUtilization: 0,
@@ -53,10 +54,14 @@ const initialState = {
   }
 };
 
-function fetchCustomerOverview(id) {
+function fetchCustomerOverview(id, map) {
   return axios.get(config.api.root + `/node/structure/${id}`)
-    .then(receiveCustomerOverview)
-    .catch(fetchingFailed)
+    .then((response) => {
+      console.log(map);
+      return receiveCustomerOverview(response, map);
+    }).catch((error) => {
+      return fetchingFailed(error);
+    });
 }
 
 function fetchUtilizationOverview(settings) {
@@ -112,6 +117,7 @@ export default (state = initialState, action) => {
     }
 
     case RECEIVE_CUSTOMER_OVERVIEW: {
+      console.log(action.map);
       let statistic = countTreeStatistic(action.data);
       return Object.assign({}, state, {
         loading: false,
@@ -136,10 +142,10 @@ export default (state = initialState, action) => {
       let statistic = countTreeStatistic(action.node);
       console.log(statistic);
       return Object.assign({}, state, {
-        treeStatistic: statistic
+        treeStatistic: statistic,
+        currentNode: action.node
       });
     }
-
     default: {
       return state
     }

@@ -4,6 +4,7 @@ import Notification from 'components/common/notification';
 import { connect } from 'react-redux';
 import {clearToken} from 'actions/authentication';
 import { getNodeStatistic} from 'actions/overview';
+import { fetchLiveData }from 'actions/node';
 import './style/main.less';
 import 'react-date-picker/index.css'
 
@@ -11,7 +12,8 @@ export class Frame extends React.Component {
   render() {
     return (
       <div style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px', width: '100%', maxWidth: '100%' }} className="container">
-        <Toolbar user={this.props.user} actions={{logout: this.props.logout}} companyName={this.props.companyName} tree={this.props.tree}/>
+        <Toolbar user={this.props.user} actions={{logout: this.props.logout}} companyName={this.props.companyName} tree={this.props.tree}
+        statistic={this.props.getNodeStatistic} />
         <div className="content">
             {this.props.children}
         </div>
@@ -31,7 +33,10 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch) {
   return {
     logout: () => dispatch(clearToken()),
-    getNodeStatistic: (node) => dispatch(getNodeStatistic(node))
+    getNodeStatistic: (node) => {
+      dispatch(fetchLiveData(node.id));
+      dispatch(getNodeStatistic(node));
+    }
   }
 }
 

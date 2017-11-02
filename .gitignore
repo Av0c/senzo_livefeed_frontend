@@ -5,3 +5,5 @@ build/*
 yarn.lock
 
 *.log
+
+.vscode/*

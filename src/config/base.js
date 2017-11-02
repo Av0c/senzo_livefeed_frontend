@@ -36,5 +36,23 @@ export default {
       code: "peak",
       title: "PEAK UTILIZATION"
     }
+  },
+  room: {
+    MEETINGROOM: {
+      type: "Meeting rooms",
+      code: 'meeting_room'
+    },
+    WORKINGAREA: {
+      type: "Working areas",
+      code: 'working_area'
+    },
+    OPENAREA: {
+      type: "Open areas",
+      code: "open_area"
+    },
+    ALLAREA: {
+      type: "All areas",
+      code: 'all_areas'
+    }
   }
 }

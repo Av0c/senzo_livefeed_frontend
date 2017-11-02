@@ -67,12 +67,8 @@ a:active {
 }
 .dropdown {
   background: #fff;
-  border-top: 3px solid #7ec443;
-  box-shadow: 0px 2px 3px 0px rgba(210,210,210,0.5);
-  padding: 10px 10px;
   position: absolute;
   width: 100%;
-  top: 25px;
   z-index: 9999;
 }
 .dropdown ul {

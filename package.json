@@ -85,7 +85,9 @@
     "redux": "^3.3.1",
     "redux-loop": "^2.1.1",
     "redux-thunk": "^2.0.1",
-    "webpack-fail-plugin": "^1.0.4"
+    "webpack-fail-plugin": "^1.0.4",
+    "zingchart": "^2.6.1",
+    "zingchart-react": "^1.0.6"
   },
   "author": "Ngoc Vo",
   "license": "ISC"

@@ -9,10 +9,13 @@ import { connect } from 'react-redux';
 import RoomTypeSelector from 'components/common/roomtypeselector';
 import LocationStats from 'components/common/locationstats';
 import LocationBottomMenu from 'components/common/locationbottommenu';
+import Gauge from 'components/common/gauge';
+import DateSelector from 'components/common/dateselector';
 
 class OverviewLeft extends React.Component {
 
   componentDidMount() {
+    console.log(this.props.user.rootnodeid);
     this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));
     this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
   }
@@ -42,14 +45,14 @@ class OverviewLeft extends React.Component {
             }
           }
         });
-        statistic.allSensors+= root.children.length;
+        statistic.allSensors += root.children.length;
         if (occupied) {
           statistic.roomsInUse++;
         }
       }
       else {
         root.children.forEach(function (node) {
-          self.count(node, statistic, map,type);
+          self.count(node, statistic, map, type);
         });
       }
     }
@@ -61,6 +64,31 @@ class OverviewLeft extends React.Component {
     return (
       <div style={{ marginTop: '20px' }} className="overview-block">
         <div className="container-fluid">
+          <div style={{ marginBottom: '30px' }} className="row">
+            <div className="col-md-12">
+              <div className="main-menu-left pull-left">
+                <a className="button active" href="#"> <i className="fa fa-home" aria-hidden="true"></i><span> Overview   </span></a>
+                <a className="button" href="#"> <i className="fa fa-bar-chart" aria-hidden="true"></i><span> Comparison  </span></a>
+              </div>
+              <div className="main-menu-time pull-right">
+                <ul>
+                  <li><a className="button" href="#"> <span>Today</span></a></li>
+                  <li><a className="button" href="#"> <span>This Week</span></a></li>
+                  <li><a className="button" href="#"> <span>This Month</span></a></li>
+                  <li><a className="button" href="#"> <span>This Year</span></a></li>
+                  {/*  <li className="datepicker-parent"><a className="button active custom-time" href="#"><span>Custom</span></a>
+                    <div className="datepicker">
+                      <input className="start-date pull-left" type="text" placeholder="01.01.2017" />
+                      <div className="date-divider pull-left">-</div>
+                      <input className="end-date pull-left" type="text" placeholder="01.10.2017" />
+                      <div className="datepicker-circle"></div><a className="timepicker-icon pull-left"><img src="src/assets/images/icon-clock.svg" /></a>
+                    </div>
+                  </li> */}
+                </ul>
+                
+              </div>
+            </div>
+          </div>
           <div className="row">
             <div className="col-sm-4 col-xs-12">
               <div className="the-card clearfix">
@@ -71,7 +99,9 @@ class OverviewLeft extends React.Component {
                   </div>
                   <div className="card-nav pull-right"><a className="button-sm pull-right" href="#">LIVE </a><a className="button-sm pull-right nav-stats" href="#">Stats</a></div>
                 </div>
-                <div className="card-gauge-block"></div>
+                <div className="card-gauge-block">
+                  <Gauge />
+                </div>
                 <div className="card-marks-block"> </div>
                 <LocationStats stats={stats} />
                 <LocationBottomMenu />
@@ -82,7 +112,6 @@ class OverviewLeft extends React.Component {
             </div>
           </div>
         </div>
-
       </div>
     )
   }

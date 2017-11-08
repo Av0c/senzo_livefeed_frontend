@@ -57,7 +57,6 @@ const initialState = {
 function fetchCustomerOverview(id, map) {
   return axios.get(config.api.root + `/node/structure/${id}`)
     .then((response) => {
-      console.log(map);
       return receiveCustomerOverview(response, map);
     }).catch((error) => {
       return fetchingFailed(error);
@@ -84,8 +83,8 @@ function countTreeStatistic(root) {
 }
 
 function count(root, statistic) {
-  if (root.children != null && root.children.length >0){
-    if (root.type == 'meeting_room' || root.type == 'open_area'){
+  if (root.children != null && root.children.length > 0) {
+    if (root.type == 'meeting_room' || root.type == 'open_area') {
       statistic.allRooms++;
       let len = root.children.length;
       if (root.type == 'meeting_room') {
@@ -117,7 +116,6 @@ export default (state = initialState, action) => {
     }
 
     case RECEIVE_CUSTOMER_OVERVIEW: {
-      console.log(action.map);
       let statistic = countTreeStatistic(action.data);
       return Object.assign({}, state, {
         loading: false,
@@ -140,7 +138,6 @@ export default (state = initialState, action) => {
     }
     case GET_NODE_STATISTIC: {
       let statistic = countTreeStatistic(action.node);
-      console.log(statistic);
       return Object.assign({}, state, {
         treeStatistic: statistic,
         currentNode: action.node

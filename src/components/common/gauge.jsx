@@ -6,8 +6,11 @@ export default class Gauge extends React.Component {
     render() {
         var myConfig = {
             type: "gauge",
+            scale: {
+                sizeFactor:"100%" 
+            },
             scaleR: {
-                aperture: 200,
+                aperture: 180,
                 values: "0:100:25",
                 center: {
                     size: 10,
@@ -16,7 +19,7 @@ export default class Gauge extends React.Component {
                 },
 
                 ring: {
-                    size: 10,
+                    size: 5,
                     rules: [
                         {
                             rule: "%v >= 0 && %v <= 25",
@@ -56,7 +59,7 @@ export default class Gauge extends React.Component {
 
         return (
             <div>
-                <Core id="myChart" height="300" width="600" data={myConfig} />
+                <Core id="myChart" data={myConfig} />
             </div>
         );
     }

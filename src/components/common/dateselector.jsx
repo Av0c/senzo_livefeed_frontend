@@ -5,6 +5,8 @@ import moment from 'moment';
 import { DateField } from 'react-date-picker'
 import { applyDates } from 'actions/querysettings';
 import { connect } from 'react-redux';
+import DatePicker from 'react-bootstrap-date-picker';
+import PeriodButton from 'components/common/periodbutton';
 
 
 class DateSelector extends React.Component {
@@ -14,38 +16,66 @@ class DateSelector extends React.Component {
     this.state = {
       from: moment().subtract(1, 'days').format('YYYY-MM-DD'),
       to: moment().format('YYYY-MM-DD'),
-      show: false
+      show: true,
+      active: "This week"
     }
+    this.handleClick = this.handleClick.bind(this);
   }
 
   showDatePickers() {
-    console.log(this.state.show);
+    this.setState({ active: "Custom" });
     this.setState({ show: !this.state.show });
   }
 
-  render() {
-    return (
-      <div>
-        <li onClick={this.showDatePickers.bind(this)} className="datepicker-parent"><a className="button active custom-time" href="#"><span>Custom</span></a>
-        </li>
+  handleClick(value) {
+    this.setState({ show: !this.setState.show });
+    this.setState({ active: value });
+    if (value == "Today") {
+      this.setState({
+        from: moment().format('YYYY-MM-DD'),
+        to: moment().format('YYYY-MM-DD')
+      });
+    }
 
-        {this.state.show || <div><DropdownItem>
-          From:
-          <DateField
-            dateFormat="YYYY-MM-DD"
-            defaultValue={this.state.from}
-            onChange={this.setStartDate.bind(this)}
-          />
-        </DropdownItem>
-          <DropdownItem>
-            To:
-          <DateField
+    else if(value == "This week") {
+      this.setState({
+        from: moment().moment().startOf('week').format('YYYY-MM-DD'),
+        to: moment().startOf('isoweek').format('YYYY-MM-DD')
+      });
+    }
+  }
+
+  render() {
+    console.log(this.state);
+    return (
+      <div className="main-menu-time pull-right">
+        <ul>
+          <PeriodButton handleClick={this.handleClick} active={this.state.active} value="Today" />
+          <PeriodButton handleClick={this.handleClick} active={this.state.active} value="This week" />
+          <PeriodButton handleClick={this.handleClick} active={this.state.active} value="This Month" />
+          <PeriodButton handleClick={this.handleClick} active={this.state.active} value="This year" />
+          <li onClick={this.showDatePickers.bind(this)} className="datepicker-parent">
+            <a className={"button custom-time" + (this.state.active == "Custom" ? " active" : "")} href="#">
+              <span>Custom</span></a>
+          </li>
+          {this.state.show || <div style={{ marginRight: '180px' }} className="datepicker">
+            <DateField className="start-date pull-left"
+              dateFormat="YYYY-MM-DD"
+              defaultValue={this.state.from}
+              onChange={this.setStartDate.bind(this)}
+            />
+            <div className="date-divider pull-left">-</div>
+            <DateField className="end-date pull-left"
               dateFormat="YYYY-MM-DD"
               defaultValue={this.state.to}
               onChange={this.setEndDate.bind(this)}
             />
-          </DropdownItem> </div>}
+          </div>}
+
+        </ul>
+
       </div>
+
     )
   }
 
@@ -54,7 +84,6 @@ class DateSelector extends React.Component {
     this.setState({ from: datestring }, () =>
       this.props.dispatch(applyDates(this.state))
     );
-
   }
 
   setEndDate(datestring) {

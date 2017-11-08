@@ -12,9 +12,7 @@ const initialState = {
 };
 
 function fetchLiveData(id) {
-  console.log("live: " + id);
-  let rootnode = id;
-  return axios.get(config.api.root + "/sensor/live/" + rootnode)
+  return axios.get(config.api.root + `/sensor/live/${id}`)
     .then(receiveLiveData)
     .catch(fetchFailed);
 }

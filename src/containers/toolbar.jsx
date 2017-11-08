@@ -6,11 +6,6 @@ import { fetchLiveData }from 'actions/node';
 
 export class Toolbar extends React.Component {
 
-  componentWillMount() {
-    console.log("hereee");
-    this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));
-  }
-
   render() {
     console.log(this.props.currentSensor);
     return (

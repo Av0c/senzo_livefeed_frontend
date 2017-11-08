@@ -2,6 +2,6 @@ import base from './base';
 
 export default Object.assign(base, {
   api: {
-    root: 'https://backend.senzolive.com'
+    root: 'https://senzodata.com/api'
   }
 });

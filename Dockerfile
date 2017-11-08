@@ -1,14 +1,12 @@
 
-FROM node:6.11.3-alpine
-
-EXPOSE 5050
+FROM node:6.11.3
 
 WORKDIR /app
 
-COPY package.json /app
+RUN npm install -g http-server
 
-RUN npm install
+COPY build /app
 
-COPY . /app
+EXPOSE 1337
 
-CMD ["npm", "start"]
+CMD ["http-server","-p","1337"]

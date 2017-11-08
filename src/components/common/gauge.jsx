@@ -54,9 +54,6 @@ export default class Gauge extends React.Component {
                 { values: [87] }
             ]
         };
-
-        console.log(myConfig);
-
         return (
             <div>
                 <Core id="myChart" data={myConfig} />

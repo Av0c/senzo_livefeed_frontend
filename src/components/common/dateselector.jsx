@@ -46,7 +46,6 @@ class DateSelector extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="main-menu-time pull-right">
         <ul>

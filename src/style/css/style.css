@@ -248,7 +248,7 @@ input[type="password"] {
   border-radius: 6px;
   box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
 }
-input[type="submit"] {
+.login-wrapper input[type="button"] {
   font-family: 'Catamaran';
   font-size: 18px;
   background: #fff;
@@ -257,7 +257,7 @@ input[type="submit"] {
   padding: 4px 18px;
   margin-top: 17px;
 }
-input[type="submit"]:hover {
+.login-wrapper input[type="button"]:hover {
   border: 1px solid #7ec443;
   color: #7ec443;
 }

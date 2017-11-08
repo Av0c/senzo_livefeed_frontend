@@ -15,7 +15,6 @@ import DateSelector from 'components/common/dateselector';
 class OverviewLeft extends React.Component {
 
   componentDidMount() {
-    console.log(this.props.user);
     this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));
     this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
   }

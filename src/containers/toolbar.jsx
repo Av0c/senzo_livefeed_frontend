@@ -7,7 +7,6 @@ import { fetchLiveData }from 'actions/node';
 export class Toolbar extends React.Component {
 
   render() {
-    console.log(this.props.currentSensor);
     return (
       <div style={{ width: '100%', backgroundColor: 'white', paddingBottom: '15px' }} className="container-fluid">
         <div className="row">

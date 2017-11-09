@@ -40,7 +40,9 @@ export default {
   room: {
     MEETINGROOM: {
       type: "Meeting rooms",
-      code: 'meeting_room'
+      code: 'meeting_room',
+      occupancyTag: 'MRO',
+      efficiencyTag: 'MRE'
     },
     WORKINGAREA: {
       type: "Working areas",
@@ -48,11 +50,13 @@ export default {
     },
     OPENAREA: {
       type: "Open areas",
-      code: "open_area"
+      code: "open_area",
+      occupancyTag: "OAO"
     },
     ALLAREA: {
       type: "All areas",
-      code: 'all_areas'
+      code: 'all_areas',
+      occupancyTag: "TTO"
     }
   }
 }

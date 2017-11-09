@@ -11,12 +11,16 @@ import LocationStats from 'components/common/locationstats';
 import LocationBottomMenu from 'components/common/locationbottommenu';
 import Gauge from 'components/common/gauge';
 import DateSelector from 'components/common/dateselector';
+import LineChart from 'components/common/linechart';
+import { Link } from 'react-router';
+import { selectNodeStats } from 'actions/node';
+
 
 class OverviewLeft extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));
-    this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
+
   }
 
   countTreeStatistic(root, map, type) {
@@ -32,7 +36,7 @@ class OverviewLeft extends React.Component {
 
   count(root, statistic, map, type) {
     var self = this;
-    if (root.children != null && root.children.length > 0) {
+    if (root != null && root.children != null && root.children.length > 0) {
       if (((root.type == 'meeting_room' || root.type == 'open_area') && type == 'all_areas') || root.type == type) {
         statistic.allRooms++;
         let occupied = false;
@@ -58,7 +62,7 @@ class OverviewLeft extends React.Component {
   }
 
   render() {
-    var overviewData = this.props.oveövkphimrview;
+    console.log(this.props.overview);
     var stats = this.countTreeStatistic(this.props.currentNode, this.props.currentSensor, this.props.roomType.code);
     return (
       <div style={{ marginTop: '20px' }} className="overview-block">
@@ -80,7 +84,8 @@ class OverviewLeft extends React.Component {
                   <div className="card-inner-location pull-left">
                     <RoomTypeSelector />
                   </div>
-                  <div className="card-nav pull-right"><a className="button-sm pull-right" href="#">LIVE </a><a className="button-sm pull-right nav-stats" href="#">Stats</a></div>
+                  <div className="card-nav pull-right"><a className="button-sm pull-right" href="#">LIVE </a>
+                    <a className="button-sm pull-right nav-stats" href="#">Stats</a></div>
                 </div>
                 <div className="card-gauge-block">
                   <Gauge />
@@ -90,8 +95,13 @@ class OverviewLeft extends React.Component {
                 <LocationBottomMenu />
               </div>
             </div>
-            <div className="col-sm-8 col-xs-12 text-center add-cart-zone"><a className="add-card"> <img src="src/assets/images/plus.svg" />
-              <div className="add-card-descr">Add Location</div></a>
+            <div className="col-sm-8 col-xs-12 text-center add-cart-zone">
+              <a className="add-card"> <img src="src/assets/images/plus.svg" />
+                <div className="add-card-descr">
+                  Add Location</div>
+                <LineChart id="occunpancy" />
+              </a>
+
             </div>
           </div>
         </div>
@@ -104,12 +114,13 @@ function mapStateToProps(state) {
   return {
     user: state.authReducer.user,
     currentSensor: state.nodeReducer.map,
-    currentNode: state.overviewReducer.currentNode || state.overviewReducer.customerOverview,
+    currentNode: state.overviewReducer.currentNode,
     roomType: state.querySettingsReducer.room
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
+    selectStats: (node) => dispatch()
     dispatch
   }
 }

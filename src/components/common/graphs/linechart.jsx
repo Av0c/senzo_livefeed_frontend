@@ -90,7 +90,6 @@ export default class LineChart extends React.Component {
   createLabels(props) {
     switch (props.dateType) {
       case 'day': {
-        // Hour difference to fill the gaps
         let startDate = moment(props.timeSeries.startDate) || moment({hour: 23, minute: 59, seconds: 59}).format('x') ;
         let endDate = moment(props.timeSeries.endDate) || moment({hour: 0, minute: 0, seconds: 1}).format('x') ;
 

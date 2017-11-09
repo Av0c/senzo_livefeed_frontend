@@ -15,7 +15,19 @@ import {
 
 const initialState = {
   loading: false,
-  currentNode: null,
+  currentNode: {
+    sensorStatistics: {
+      sensors: 0,
+      sensorsInUse: 0,
+      desks: 0,
+      meetingRooms: 0,
+      maintenance: 0
+    },
+    info: {
+      name: ''
+    },
+    children: []
+  },
   customerOverview: {
     companyName: '',
     quarterlyUtilization: 0,
@@ -120,6 +132,7 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {
         loading: false,
         customerOverview: action.data,
+        currentNode: action.data,
         treeStatistic: statistic
       })
     }

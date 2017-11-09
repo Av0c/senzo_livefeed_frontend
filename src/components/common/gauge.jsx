@@ -56,7 +56,7 @@ export default class Gauge extends React.Component {
         };
         return (
             <div>
-                <Core id="myChart" data={myConfig} />
+                <Core id="myChart" data={myConfig}  />
             </div>
         );
     }

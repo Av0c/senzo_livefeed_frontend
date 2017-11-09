@@ -14,8 +14,8 @@ class DateSelector extends React.Component {
   constructor() {
     super();
     this.state = {
-      from: moment().subtract(1, 'days').format('YYYY-MM-DD'),
-      to: moment().format('YYYY-MM-DD'),
+      from: moment().subtract(1, 'days').format('DD-MM-YYYY'),
+      to: moment().format('DD-MM-YYYY'),
       show: true,
       active: "This week"
     }
@@ -32,15 +32,15 @@ class DateSelector extends React.Component {
     this.setState({ active: value });
     if (value == "Today") {
       this.setState({
-        from: moment().format('YYYY-MM-DD'),
-        to: moment().format('YYYY-MM-DD')
+        from: moment().format('DD-MM-YYYY'),
+        to: moment().format('DD-MM-YYYY')
       });
     }
 
     else if(value == "This week") {
       this.setState({
-        from: moment().moment().startOf('week').format('YYYY-MM-DD'),
-        to: moment().startOf('isoweek').format('YYYY-MM-DD')
+        from: moment().moment().startOf('week').format('DD-MM-YYYY'),
+        to: moment().startOf('isoweek').format('DD-MM-YYYY')
       });
     }
   }
@@ -59,13 +59,13 @@ class DateSelector extends React.Component {
           </li>
           {this.state.show || <div style={{ marginRight: '180px' }} className="datepicker">
             <DateField className="start-date pull-left"
-              dateFormat="YYYY-MM-DD"
+              dateFormat="DD-MM-YYYY"
               defaultValue={this.state.from}
               onChange={this.setStartDate.bind(this)}
             />
             <div className="date-divider pull-left">-</div>
             <DateField className="end-date pull-left"
-              dateFormat="YYYY-MM-DD"
+              dateFormat="DD-MM-YYYY"
               defaultValue={this.state.to}
               onChange={this.setEndDate.bind(this)}
             />

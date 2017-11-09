@@ -1,10 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { fetchCustomerOverview } from 'actions/overview';
 import Tree from 'containers/tree';
 import { fetchLiveData }from 'actions/node'; 
 
 export class Toolbar extends React.Component {
+
+  componentDidMount() {
+    this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
+  }
 
   render() {
     return (
@@ -36,6 +41,7 @@ export class Toolbar extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    user: state.authReducer.user,
     currentSensor: state.nodeReducer.map
   };
 }

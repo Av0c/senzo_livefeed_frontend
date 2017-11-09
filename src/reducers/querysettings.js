@@ -6,33 +6,19 @@ const initialState = {
     type: "All areas",
     code: "all_areas"
   },
-  period: config.time.period.DAY,
-  mode: config.mode.AVERAGE,
-  from: '',
-  to: ''
+  startdate: '',
+  enddate: '',
+  id: -1,
+  tag: 'TTO',
+  starthour: 8,
+  endhour: 17,
+  startweekday: 1,
+  endweekday: 5,
+  marks: [0.2, 0.9]
 };
 
 export default (state = initialState, action) => {
-  switch (action.type) {
-
-    case SELECT_PERIOD: {
-      return Object.assign({}, state, { period: action.period })
-    }
-    case SELECT_MODE: {
-      return Object.assign({}, state, { mode: action.mode })
-    }
-    case APPLY_DATES: {
-      return Object.assign({}, state, {
-        period: config.time.period.CUSTOM,
-        from: action.dates.from,
-        to: action.dates.to
-      })
-    }
-    case SELECT_ROOM_TYPE: {
-      return Object.assign({}, state, {
-        room: action.room
-      })
-    }
+  switch (action.type) { 
     default:
       return state;
   }

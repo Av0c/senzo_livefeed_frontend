@@ -46,7 +46,7 @@ ReactDOM.render((
     <Router history={appHistory} onUpdate={() => window.scrollTo(0, 0)}>
       <Route path="/" component={requireAuthentication(Frame)}>
         <IndexRoute component={Overview} />
-        <Route path="/stats" component={Stats} />
+
         <Route path="/locations" component={Locations}>
           <IndexRoute component={LocationsIntroPage} />
           <Route path="/locations/site/:id" component={SiteView} />
@@ -56,7 +56,8 @@ ReactDOM.render((
           <Route path="/locations/area/:id/sensor/:sensorId" component={FloorPlan} />
         </Route>
         <Route path="/profile" component={Profile} />
-        
+        <Route path="/statistic/:id" component={Stats} />
+
         <Route path="/locations/area/:id/floorplan/add" component={AddFloorPlan} />
         <Route path="/settings" component={Settings}>
           <Route path="/settings/myaccount/password" component={Password} />

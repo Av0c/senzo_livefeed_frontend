@@ -14,6 +14,7 @@ import DateSelector from 'components/common/dateselector';
 import LineChart from 'components/common/linechart';
 import { Link } from 'react-router';
 import { selectNodeStats } from 'actions/node';
+import appHistory from 'components/common/appHistory';
 
 
 class OverviewLeft extends React.Component {
@@ -62,7 +63,7 @@ class OverviewLeft extends React.Component {
   }
 
   render() {
-    console.log(this.props.overview);
+    console.log(this.props.currentNode);
     var stats = this.countTreeStatistic(this.props.currentNode, this.props.currentSensor, this.props.roomType.code);
     return (
       <div style={{ marginTop: '20px' }} className="overview-block">
@@ -85,7 +86,7 @@ class OverviewLeft extends React.Component {
                     <RoomTypeSelector />
                   </div>
                   <div className="card-nav pull-right"><a className="button-sm pull-right" href="#">LIVE </a>
-                    <a className="button-sm pull-right nav-stats" href="#">Stats</a></div>
+                    <Link className='button-sm pull-right nav-stats' to={'/statistic/'+ this.props.currentNode.id}> Stats</Link></div>
                 </div>
                 <div className="card-gauge-block">
                   <Gauge />
@@ -120,7 +121,6 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    selectStats: (node) => dispatch()
     dispatch
   }
 }

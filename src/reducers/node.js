@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from 'config';
 import { Effects, loop } from 'redux-loop';
 
-import { FETCH_LIVE_DATA, RECEIVE_LIVE_DATA, receiveLiveData, fetchFailed, FETCH_FAILED } from 'actions/node';
+import { FETCH_LIVE_DATA, RECEIVE_LIVE_DATA, receiveLiveData, fetchFailed, FETCH_FAILED, SELECT_NODE_STATS } from 'actions/node';
 
 const initialState = {
   loading: false,
@@ -39,6 +39,12 @@ export default function (state = initialState, action) {
     case FETCH_FAILED: {
       return Object.assign({}, state, {
         error: action.data
+      });
+    }
+
+    case SELECT_NODE_STATS: {
+      return Object.assign({}, state, {
+        loading: true
       });
     }
 

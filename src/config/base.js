@@ -58,5 +58,13 @@ export default {
       code: 'all_areas',
       occupancyTag: "TTO"
     }
+  },
+  tag: {
+    OCCUPANCY: {
+      type: 'Occupancy'
+    },
+    EFFICIENCY: {
+      type: 'Efficiency'
+    }
   }
 }

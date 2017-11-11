@@ -6,10 +6,13 @@ const initialState = {
     type: "All areas",
     code: "all_areas"
   },
+  tag: {
+    type: "Occupancy",
+    tag: "O"
+  },
   startdate: '',
   enddate: '',
   id: -1,
-  tag: 'TTO',
   starthour: 8,
   endhour: 17,
   startweekday: 1,
@@ -18,7 +21,12 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  switch (action.type) { 
+  switch (action.type) {
+    case SELECT_ROOM_TYPE: {
+      return Object.assign({}, state, {
+        room: action.room
+      });
+    }
     default:
       return state;
   }

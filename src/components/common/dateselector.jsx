@@ -28,6 +28,7 @@ class DateSelector extends React.Component {
   }
 
   handleClick(value) {
+    console.log(this.state);
     this.setState({ show: !this.setState.show });
     this.setState({ active: value });
     if (value == "Today") {
@@ -37,9 +38,9 @@ class DateSelector extends React.Component {
       });
     }
 
-    else if(value == "This week") {
+    else if (value == "This week") {
       this.setState({
-        from: moment().moment().startOf('week').format('DD-MM-YYYY'),
+        from: moment().startOf('week').format('DD-MM-YYYY'),
         to: moment().startOf('isoweek').format('DD-MM-YYYY')
       });
     }
@@ -54,10 +55,10 @@ class DateSelector extends React.Component {
           <PeriodButton handleClick={this.handleClick} active={this.state.active} value="This Month" />
           <PeriodButton handleClick={this.handleClick} active={this.state.active} value="This year" />
           <li onClick={this.showDatePickers.bind(this)} className="datepicker-parent">
-            <a className={"button custom-time" + (this.state.active == "Custom" ? " active" : "")} href="#">
+            <a className={"button custom-time" + (this.state.active == "Custom" ? " active" : "")}>
               <span>Custom</span></a>
           </li>
-          {this.state.show || <div style={{ marginRight: '180px' }} className="datepicker">
+          {this.state.show || <div style={{ marginRight: '180px', zIndex: 10 }} className="datepicker">
             <DateField className="start-date pull-left"
               dateFormat="DD-MM-YYYY"
               defaultValue={this.state.from}

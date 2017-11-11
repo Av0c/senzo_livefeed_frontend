@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from 'config';
-import history from 'components/common/appHistory';
+import appHistory from 'components/common/appHistory';
 
 export const FETCH_LIVE_DATA = "FETCH_LIVE_DATA";
 export const RECEIVE_LIVE_DATA = "RECEIVE_LIVE_DATA";
@@ -9,11 +9,7 @@ export const SELECT_NODE_STATS = "SELECT_NODE_STATS";
 
 
 export function selectNodeStats(node) {
-  history.push(`/stats/${node.id}`);
-  return {
-    type: SELECT_NODE_STATS,
-    node
-  }; 
+  appHistory.push("/statistic");
 }
 
 export function fetchLiveData(id) {

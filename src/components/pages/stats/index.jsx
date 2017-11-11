@@ -1,12 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import DateSelector from 'components/common/dateselector';
+import StatsMenu from 'components/common/statsmenu';
 
-export default class Stats extends React.Component {
+export class Stats extends React.Component {
 
     render() {
         return (
             <div className="stats-body" id="stats-body">
                 <div className="container-fluid">
                     <div className="row">
+                        <div className="col-md-12" style={{backgroundColor: 'white', paddingTop: '10px'}}>
+                            <div className="main-menu-left pull-left">
+                                <a className="button active"> <i className="fa fa-home" aria-hidden="true"></i><span> Overview   </span></a>
+                                <a className="button"> <i className="fa fa-bar-chart" aria-hidden="true"></i><span> Comparison  </span></a>
+                            </div>
+                            <DateSelector />
+                            <StatsMenu />
+                        </div>
                         <div className="col-md-12">
                             <div className="col-sm-12">
                                 <div className="stats-graph-card card-shape clearfix">
@@ -56,6 +67,22 @@ export default class Stats extends React.Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        user: state.authReducer.user,
+        currentSensor: state.nodeReducer.map,
+        currentNode: state.overviewReducer.currentNode,
+        roomType: state.querySettingsReducer.room
+    };
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        dispatch
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Stats);

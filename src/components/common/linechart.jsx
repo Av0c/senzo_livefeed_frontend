@@ -3,18 +3,34 @@ import { core as Core } from 'zingchart-react';
 
 export default class LineChart extends React.Component {
 
+    getLabels() {
+        if (this.props.stats.constraint.startdate == this.props.stats.constraint.enddate) {
+            return this.props.stats.points.map((point) => {return point.time.substr(0,2);});
+        }
+        else {
+            return this.props.stats.points.map((point) => {return point.time.substr(0,11);});
+        } 
+    }
+
+    getAverage() {
+        return this.props.stats.points.map((point) => {return Math.round(point.avg*100);});
+    }
+
+    getPeak() {
+        return this.props.stats.points.map((point) => {return Math.round(point.pk*100);});
+    }
+
     render() {
+        let labels = this.getLabels();
+        let avgs = this.getAverage();
+        let peaks = this.getPeak();
         var myConfig =
             {
                 type: "line",
-
-                title: {
-                    text: "Webpage Analytics",
-                    fontSize: "24px",
-                    adjustLayout: true
-                },
                 plotarea: {
-                    margin: "dynamic 45 60 dynamic",
+                    marginTop: '10px',
+                    marginRight: '50px',
+                    marginLeft: '40',
                     backgroundColor: "#f6f7fa"
                 },
                 legend: {
@@ -31,56 +47,46 @@ export default class LineChart extends React.Component {
                     }
                 },
                 scaleX: {
-                    labels: [
-                        "Jan",
-                        "Feb",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
-                        "July",
-                        "Aug"
-                    ],
+                    labels: labels,
                     minorTicks: 0
                 },
                 scaleY: {
-                    values: "0:1000:250",
+                    values: "0:100:20",
                     lineColor: "#f6f7f8",
                     shadow: 0,
+                    format: "%v%",
                     guide: {
                         lineStyle: "dashed",
                         lineColor: "white"
                     },
                     markers: [
                         {
-                            type: "line",
-                            lineStyle: "dashed",
-                            range: [920],
+                            type: "area",
+                            range: [80, 100],
                             lineColor: "#e39199",
                             lineWidth: 2,
-                            label:{  //define label within marker
-                                text:"High Mark",
-                                fontColor: "#e39199",
+                            label: {  //define label within marker
+                                text: "High Mark",
+                                fontColor: "#9e9e9e",
                                 alpha: 0.7,
                                 textAlpha: 1,
-                                offsetX: 0,
+                                offsetX: 10,
                                 offsetY: -5,
-                                fontSize:16
+                                fontSize: 16
                             }
                         },
                         {
-                            type: "line",
-                            lineStyle: "dashed",
-                            range: [120],
-                            lineColor: "#e3d49b",
+                            type: "area",
+                            range: [0, 20],
+                            lineColor: "#faf8f9",
                             lineWidth: 2,
-                            label:{  //define label within marker
-                                text:"Low Mark",
-                                fontColor: "#e3d49b",
+                            label: {  //define label within marker
+                                text: "Low Mark",
+                                fontColor: "#9e9e9e",
                                 alpha: 0.7,
                                 textAlpha: 1,
-                                offsetX: 0,
-                                offsetY: 25,
+                                offsetX: 10,
+                                offsetY: -5,
                                 fontSize: 16
                             }
                         }
@@ -127,17 +133,8 @@ export default class LineChart extends React.Component {
                 },
                 series: [
                     {
-                        values: [
-                            149.2,
-                            174.3,
-                            187.7,
-                            147.1,
-                            129.6,
-                            189.6,
-                            230,
-                            164
-                        ],
-                        text: "Pricing",
+                        values: peaks,
+                        text: "Peak",
                         lineColor: "#60aff4",
                         lineWidth: 5,
                         legendItem: {
@@ -160,17 +157,8 @@ export default class LineChart extends React.Component {
                         }
                     },
                     {
-                        values: [
-                            714.6,
-                            656.3,
-                            660.6,
-                            729.8,
-                            731.6,
-                            682.3,
-                            654.6
-
-                        ],
-                        text: "Documentation",
+                        values: avgs,
+                        text: "Average",
                         lineColor: "#a9d34a",
                         legendItem: {
                             backgroundColor: "#a9d34a",
@@ -196,7 +184,7 @@ export default class LineChart extends React.Component {
             };
         return (
             <div>
-                <Core id={this.props.id} data={myConfig} height="30%" width="400px" />
+                <Core id={this.props.id} data={myConfig} height="450px" width="100%" />
             </div>
         );
     }

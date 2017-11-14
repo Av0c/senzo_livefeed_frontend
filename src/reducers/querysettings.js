@@ -1,30 +1,38 @@
+import { SELECT_PERIOD, SELECT_MODE, SELECT_ROOM_TYPE, SELECT_TAG } from 'actions/querysettings';
 import config from 'config';
-import { SELECT_PERIOD, SELECT_MODE, APPLY_DATES, SELECT_ROOM_TYPE } from 'actions/querysettings';
-
 const initialState = {
-  room: {
-    type: "All areas",
-    code: "all_areas"
-  },
-  tag: {
-    type: "Occupancy",
-    tag: "O"
-  },
+  room: config.room.ALLAREA,
+  tag: 'Occupancy',
   startdate: '',
   enddate: '',
   id: -1,
   starthour: 8,
   endhour: 17,
-  startweekday: 1,
-  endweekday: 5,
-  marks: [0.2, 0.9]
+  startweekday: 0,
+  endweekday: 6,
+  marks: [0.2, 0.9],
+  groupby: 'day'
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SELECT_ROOM_TYPE: {
       return Object.assign({}, state, {
-        room: action.room
+        room: action.room,
+      });
+    }
+
+    case SELECT_TAG: {
+      return Object.assign({}, state, {
+        tag: action.tag
+      });
+    }
+
+    case SELECT_PERIOD: {
+      return  Object.assign({}, state, {
+        startdate: action.period.from,
+        enddate: action.period.to,
+        groupby: action.period.groupby
       });
     }
     default:

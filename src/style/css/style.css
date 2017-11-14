@@ -445,9 +445,9 @@ input:focus {
 .the-graph {
   background: #d8d8d8;
   height: 400px;
-  margin-top: 25px;
-  margin-left: 40px;
-  margin-right: 40px;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 0px;
 }
 .the-graph-legend {
   display: flex;

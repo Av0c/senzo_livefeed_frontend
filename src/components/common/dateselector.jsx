@@ -1,11 +1,9 @@
 import React from 'react';
-import Dropdown from 'components/common/dropdown';
-import DropdownItem from 'components/common/dropdownitem';
 import moment from 'moment';
 import { DateField } from 'react-date-picker'
-import { applyDates } from 'actions/querysettings';
 import { connect } from 'react-redux';
-import DatePicker from 'react-bootstrap-date-picker';
+
+import { selectPeriod } from 'actions/querysettings';
 import PeriodButton from 'components/common/periodbutton';
 
 
@@ -14,10 +12,11 @@ class DateSelector extends React.Component {
   constructor() {
     super();
     this.state = {
-      from: moment().subtract(1, 'days').format('DD-MM-YYYY'),
-      to: moment().format('DD-MM-YYYY'),
+      from: moment().startOf('isoweek').format('DD-MM-YYYY'),
+      to: moment().endOf('week').format('DD-MM-YYYY'),
       show: true,
-      active: "This week"
+      active: "This week",
+      groupby: 'day'
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -28,22 +27,61 @@ class DateSelector extends React.Component {
   }
 
   handleClick(value) {
-    console.log(this.state);
+
     this.setState({ show: !this.setState.show });
     this.setState({ active: value });
     if (value == "Today") {
       this.setState({
         from: moment().format('DD-MM-YYYY'),
-        to: moment().format('DD-MM-YYYY')
-      });
+        to: moment().format('DD-MM-YYYY'),
+        groupby: 'hour'
+      }, () =>
+          this.dispatchPeriod());
     }
 
     else if (value == "This week") {
       this.setState({
-        from: moment().startOf('week').format('DD-MM-YYYY'),
-        to: moment().startOf('isoweek').format('DD-MM-YYYY')
-      });
+        to: moment().endOf('week').format('DD-MM-YYYY'),
+        from: moment().startOf('isoweek').format('DD-MM-YYYY'),
+        groupby: 'day'
+      }, () =>
+          this.dispatchPeriod());
     }
+
+    else if (value == "This month") {
+      this.setState({
+        to: moment().endOf('month').format('DD-MM-YYYY'),
+        from: moment().startOf('month').format('DD-MM-YYYY'),
+        groupby: 'day'
+      }, () =>
+          this.dispatchPeriod());
+    }
+
+    else if (value == "This year") {
+      this.setState({
+        to: moment().endOf('year').format('DD-MM-YYYY'),
+        from: moment().startOf('year').format('DD-MM-YYYY'),
+        groupby: 'month'
+      }, () =>
+          this.dispatchPeriod());
+    }
+
+  }
+
+  dispatchPeriod() {
+    this.props.dispatch(selectPeriod({
+      from: this.state.from,
+      to: this.state.to,
+      groupby: this.state.groupby
+    }));
+  }
+
+  componentDidMount() {
+    this.props.dispatch(selectPeriod({
+      from: this.state.from,
+      to: this.state.to,
+      groupby: this.state.groupby
+    }))
   }
 
   render() {
@@ -52,7 +90,7 @@ class DateSelector extends React.Component {
         <ul>
           <PeriodButton handleClick={this.handleClick} active={this.state.active} value="Today" />
           <PeriodButton handleClick={this.handleClick} active={this.state.active} value="This week" />
-          <PeriodButton handleClick={this.handleClick} active={this.state.active} value="This Month" />
+          <PeriodButton handleClick={this.handleClick} active={this.state.active} value="This month" />
           <PeriodButton handleClick={this.handleClick} active={this.state.active} value="This year" />
           <li onClick={this.showDatePickers.bind(this)} className="datepicker-parent">
             <a className={"button custom-time" + (this.state.active == "Custom" ? " active" : "")}>
@@ -81,15 +119,15 @@ class DateSelector extends React.Component {
 
   // Set state is asynchronous, apply update in callback where state is properly updated.
   setStartDate(datestring) {
-    this.setState({ from: datestring }, () =>
-      this.props.dispatch(applyDates(this.state))
+    this.setState({ from: datestring, groupby: 'day' }, () =>
+      this.dispatchPeriod()
     );
   }
 
   setEndDate(datestring) {
-    this.setState({ to: datestring }, () =>
-      this.props.dispatch(applyDates(this.state))
-    )
+    this.setState({ to: datestring, groupby: 'day' }, () =>
+      this.dispatchPeriod()
+    );
   }
 
 }

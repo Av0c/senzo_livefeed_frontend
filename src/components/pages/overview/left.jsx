@@ -15,6 +15,8 @@ import LineChart from 'components/common/linechart';
 import { Link } from 'react-router';
 import { selectNodeStats } from 'actions/node';
 import appHistory from 'components/common/appHistory';
+import { getOccupancyOverview, getParams } from 'actions/stats';
+
 
 
 class OverviewLeft extends React.Component {
@@ -62,9 +64,14 @@ class OverviewLeft extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    let params = getParams(nextProps);
+    params.tag = 'TTO';
+    this.props.dispatch(getOccupancyOverview(params));
+  }
+
   render() {
-    console.log(this.props.currentNode);
-    var stats = this.countTreeStatistic(this.props.currentNode, this.props.currentSensor, this.props.roomType.code);
+    var stats = this.countTreeStatistic(this.props.currentNode, this.props.currentSensor, this.props.querySettings.room.code);
     return (
       <div style={{ marginTop: '20px' }} className="overview-block">
         <div className="container-fluid">
@@ -86,7 +93,7 @@ class OverviewLeft extends React.Component {
                     <RoomTypeSelector />
                   </div>
                   <div className="card-nav pull-right"><a className="button-sm pull-right" href="#">LIVE </a>
-                    <Link className='button-sm pull-right nav-stats' to={'/statistic/'+ this.props.currentNode.id}> Stats</Link></div>
+                    <Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.props.currentNode.id}> Stats</Link></div>
                 </div>
                 <div className="card-gauge-block">
                   <Gauge />
@@ -116,7 +123,7 @@ function mapStateToProps(state) {
     user: state.authReducer.user,
     currentSensor: state.nodeReducer.map,
     currentNode: state.overviewReducer.currentNode,
-    roomType: state.querySettingsReducer.room
+    querySettings: state.querySettingsReducer
   };
 }
 function mapDispatchToProps(dispatch) {

@@ -25,7 +25,7 @@ export default {
         title: "Custom timeframe",
         prevTitle: ""
       }
-    },
+    }
   },
   mode: {
     AVERAGE: {
@@ -43,10 +43,6 @@ export default {
       code: 'meeting_room',
       occupancyTag: 'MRO',
       efficiencyTag: 'MRE'
-    },
-    WORKINGAREA: {
-      type: "Working areas",
-      code: 'working_area'
     },
     OPENAREA: {
       type: "Open areas",
@@ -67,4 +63,24 @@ export default {
       type: 'Efficiency'
     }
   }
+}
+
+export function getParams(nextProps) {
+  let params = {
+    id: nextProps.currentNode.id,
+    from: nextProps.querySettings.startdate,
+    to: nextProps.querySettings.enddate,
+    starthour: nextProps.currentNode.info.WH_from,
+    endhour: nextProps.currentNode.info.WH_to,
+    startweekday: nextProps.querySettings.startweekday,
+    endweekday: nextProps.querySettings.endweekday,
+    marks: nextProps.querySettings.marks
+  }
+  if (nextProps.querySettings.tag == 'Occupancy') {
+    params.tag = nextProps.querySettings.room.occupancyTag;
+  }
+  else {
+    params.tag = nextProps.querySettings.room.efficiencyTag || nextProps.querySettings.room.occupancyTag;
+  }
+  return params;
 }

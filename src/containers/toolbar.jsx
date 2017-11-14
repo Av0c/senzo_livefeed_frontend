@@ -25,7 +25,7 @@ export class Toolbar extends React.Component {
             </div>
           </div>
           <div className="col-xs-4">
-            <div className="header-logo"><img src="src/assets/images/header-logo.svg" alt="SenzoLive" /></div>
+            <div className="header-logo"><Link to="/"><img src="src/assets/images/header-logo.svg" alt="SenzoLive" /></Link></div>
           </div>
           <div className="col-xs-4">
             <div className="user-block">

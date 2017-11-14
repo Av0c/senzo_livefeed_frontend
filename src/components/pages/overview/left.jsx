@@ -107,7 +107,6 @@ class OverviewLeft extends React.Component {
               <a className="add-card"> <img src="src/assets/images/plus.svg" />
                 <div className="add-card-descr">
                   Add Location</div>
-                <LineChart id="occunpancy" />
               </a>
 
             </div>

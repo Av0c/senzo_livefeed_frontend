@@ -10,7 +10,7 @@ const initialState = {
             0.2,
             0.8,
             0
-        ],
+        ]
     },
     stats: {
         constraint: {
@@ -21,6 +21,9 @@ const initialState = {
             startweekday: 1,
             endweekday: 5
         },
+        points: []
+    },
+    range: {
         points: []
     }
 }
@@ -34,18 +37,19 @@ export default (state = initialState, action) => {
 
         case Stats.RECEIVE_OCCUPANCY_OVERVIEW:
             return Object.assign({}, state, {
-                overview: {
-                    average: action.data.average,
-                    hours: action.data.hours,
-                    peak: action.data.peak,
-                    marks: action.data.marks
-                }
+                overview: action.data
             });
 
         case Stats.RECEIVE_NODE_STATS:
             return Object.assign({}, state, {
                 stats: action.data
             });
+
+        case Stats.RECEIVE_OCCUPANCY_RANGE:{
+            return Object.assign({},state, {
+                range: action.data
+            });
+        }
 
         default:
             return state;

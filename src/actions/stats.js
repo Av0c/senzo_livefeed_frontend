@@ -6,6 +6,7 @@ export const RECEIVE_OCCUPANCY_OVERVIEW = 'RECEIVE_OCCUPANCY_OVERVIEW';
 export const FETCH_FAILED = 'FETCH_FAILED';
 export const FETCH_NODE_STATS = 'FETCH_NODE_STATS';
 export const RECEIVE_NODE_STATS = 'RECEIVE_NODE_STATS';
+export const RECEIVE_OCCUPANCY_RANGE = 'RECEIVE_OCCUPANCY_RANGE';
 
 export function fetchOccupancyOverview() {
     return {
@@ -23,6 +24,13 @@ export function receiveOccupancyOverview(data) {
 export function fetchFailed(data) {
     return {
         type: FETCH_FAILED,
+        data
+    }
+}
+
+export function receiveOccupancyRange(data) {
+    return {
+        type: RECEIVE_OCCUPANCY_RANGE,
         data
     }
 }
@@ -78,7 +86,12 @@ export function getNodeSeriesStats(params) {
         dispatch(fetchNodeStats());
         axios.get(config.api.root + `/stats/series/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}&groupby=${params.groupby}`)
             .then((response) => {
-                dispatch(receiveNodeStats(response.data));
+                if (params.chart == 'range') {
+                    dispatch(receiveOccupancyRange(response.data));
+                }
+                else {
+                    dispatch(receiveNodeStats(response.data));
+                }
             })
             .catch(function (response) {
                 dispatch(fetchFailed(response.data));
@@ -86,7 +99,7 @@ export function getNodeSeriesStats(params) {
     }
 }
 
-export function getNodeStatsByHours(params) {
+export function getNodeStatsDaily(params) {
     return dispatch => {
         dispatch(fetchNodeStats());
         if (params.from == params.to) {

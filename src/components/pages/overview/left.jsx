@@ -16,8 +16,7 @@ import { Link } from 'react-router';
 import { selectNodeStats } from 'actions/node';
 import appHistory from 'components/common/appHistory';
 import { getOccupancyOverview, getParams } from 'actions/stats';
-
-
+import Widget from 'components/pages/overview/widget';
 
 class OverviewLeft extends React.Component {
 
@@ -85,30 +84,13 @@ class OverviewLeft extends React.Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-4 col-xs-12">
-              <div className="the-card clearfix">
-                <h1 className="card-location">{this.props.currentNode.info.name}</h1>
-                <div className="card-buttons clearfix">
-                  <div className="card-inner-location pull-left">
-                    <RoomTypeSelector />
-                  </div>
-                  <div className="card-nav pull-right"><a className="button-sm pull-right" href="#">LIVE </a>
-                    <Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.props.currentNode.id}> Stats</Link></div>
-                </div>
-                <div className="card-gauge-block">
-                  <Gauge />
-                </div>
-                <div className="card-marks-block"> </div>
-                <LocationStats stats={stats} />
-                <LocationBottomMenu />
-              </div>
-            </div>
+            <Widget currentNode={this.props.currentNode} stats={stats} />
             <div className="col-sm-8 col-xs-12 text-center add-cart-zone">
+
               <a className="add-card"> <img src="src/assets/images/plus.svg" />
                 <div className="add-card-descr">
                   Add Location</div>
               </a>
-
             </div>
           </div>
         </div>

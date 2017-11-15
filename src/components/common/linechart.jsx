@@ -3,34 +3,14 @@ import { core as Core } from 'zingchart-react';
 
 export default class LineChart extends React.Component {
 
-    getLabels() {
-        if (this.props.stats.constraint.startdate == this.props.stats.constraint.enddate) {
-            return this.props.stats.points.map((point) => {return point.time.substr(0,2);});
-        }
-        else {
-            return this.props.stats.points.map((point) => {return point.time.substr(0,11);});
-        } 
-    }
-
-    getAverage() {
-        return this.props.stats.points.map((point) => {return Math.round(point.avg*100);});
-    }
-
-    getPeak() {
-        return this.props.stats.points.map((point) => {return Math.round(point.pk*100);});
-    }
-
     render() {
-        let labels = this.getLabels();
-        let avgs = this.getAverage();
-        let peaks = this.getPeak();
         var myConfig =
             {
                 type: "line",
                 plotarea: {
                     marginTop: '10px',
                     marginRight: '50px',
-                    marginLeft: '40',
+                    marginLeft: '40px',
                     backgroundColor: "#f6f7fa"
                 },
                 legend: {
@@ -47,7 +27,7 @@ export default class LineChart extends React.Component {
                     }
                 },
                 scaleX: {
-                    labels: labels,
+                    labels: this.props.stats.labels,
                     minorTicks: 0
                 },
                 scaleY: {
@@ -133,7 +113,7 @@ export default class LineChart extends React.Component {
                 },
                 series: [
                     {
-                        values: peaks,
+                        values: this.props.stats.peaks,
                         text: "Peak",
                         lineColor: "#60aff4",
                         lineWidth: 5,
@@ -157,7 +137,7 @@ export default class LineChart extends React.Component {
                         }
                     },
                     {
-                        values: avgs,
+                        values: this.props.stats.avgs,
                         text: "Average",
                         lineColor: "#a9d34a",
                         legendItem: {

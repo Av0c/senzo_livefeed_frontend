@@ -11,7 +11,7 @@ export default class StatsMenu extends React.Component {
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="stats-title pull-left">
-                                <h1>Main Office</h1>
+                                <h1>{this.props.name}</h1>
                             </div>
                             <div className="stats-room-select stats-select pull-left" style={{paddingTop: '0px'}}>
                                 <RoomTypeSelector />

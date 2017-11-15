@@ -7,7 +7,7 @@ export default class Gauge extends React.Component {
         var myConfig = {
             type: "gauge",
             scale: {
-                sizeFactor:"100%" 
+                sizeFactor:"120%" 
             },
             scaleR: {
                 aperture: 180,
@@ -34,12 +34,12 @@ export default class Gauge extends React.Component {
                             backgroundColor: "#f4bc36"
                         },
                         {
-                            rule: "%v >= 70 && %v <= 100",
+                            rule: "%v >= 75 && %v <= 100",
                             backgroundColor: "#ff6367"
                         }
                     ]
                 },
-                labels: ["Very Poor", "Poor", "Fair", "Good", "Great", "Very Great"]  //Scale Labels
+                labels: [null, null, null, "Peak"]  //Scale Labels
             },
             plotarea: {
                 marginBottomOffset: 10, // or '10px', '10%',
@@ -56,7 +56,7 @@ export default class Gauge extends React.Component {
         };
         return (
             <div>
-                <Core id="myChart" data={myConfig}  />
+                <Core id="myChart" data={myConfig} height="320px" width="100%"/>
             </div>
         );
     }

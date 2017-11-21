@@ -2,14 +2,11 @@ import React from 'react';
 import Dropdown from 'components/common/dropdown';
 import DropdownItem from 'components/common/dropdownitem';
 import config from 'config';
-import { selectTag } from 'actions/querysettings';
-import { connect } from 'react-redux';
 
-
-export class TagSelector extends React.Component {
+export default class TagSelector extends React.Component {
 
   optionClicked(tag) {
-    this.props.dispatch(selectTag(tag));
+    this.props.chooseTag(tag);
   }
 
   render() {
@@ -28,19 +25,6 @@ export class TagSelector extends React.Component {
       </Dropdown>
     )
   }
-
-
 }
 
-function mapStateToProps(state) {
-  return { tag: state.querySettingsReducer.tag }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TagSelector);
 

@@ -4,9 +4,13 @@ import config from 'config';
 export const FETCH_OCCUPANCY_OVERVIEW = 'FETCH_OCCUPANCY_OVERVIEW';
 export const RECEIVE_OCCUPANCY_OVERVIEW = 'RECEIVE_OCCUPANCY_OVERVIEW';
 export const FETCH_FAILED = 'FETCH_FAILED';
-export const FETCH_NODE_STATS = 'FETCH_NODE_STATS';
-export const RECEIVE_NODE_STATS = 'RECEIVE_NODE_STATS';
+export const FETCH_STATS_DAILY = 'FETCH_STATS_DAILY';
+export const RECEIVE_STATS_DAILY = 'RECEIVE_STATS_DAILY';
 export const RECEIVE_OCCUPANCY_RANGE = 'RECEIVE_OCCUPANCY_RANGE';
+export const FETCH_STATS_BREAKDOWN = 'FETCH_STATS_BREAKDOWN';
+export const RECEIVE_STATS_BREAKDOWN = 'RECEIVE_STATS_BREAKDOWN';
+export const FETCH_NODE_STATS = "FETCH_NODE_STATS";
+export const RECEIVE_NODE_STATS = "RECEIVE_NODE_STATS";
 
 export function fetchOccupancyOverview() {
     return {
@@ -48,6 +52,32 @@ export function receiveNodeStats(data) {
     };
 }
 
+export function fetchStatsDaily() {
+    return {
+        type: FETCH_STATS_DAILY
+    };
+}
+
+export function receiveStatsDaily(data) {
+    return {
+        type: RECEIVE_STATS_DAILY,
+        data
+    };
+}
+
+export function fetchStatsBreakdown() {
+    return {
+        type: FETCH_STATS_BREAKDOWN
+    };
+}
+
+export function receiveStatsBreakdown(data) {
+    return {
+        type: RECEIVE_STATS_BREAKDOWN,
+        data
+    };
+}
+
 export function getParams(nextProps) {
     let params = {
         id: nextProps.currentNode.id,
@@ -68,6 +98,7 @@ export function getParams(nextProps) {
     }
     return params;
 }
+
 export function getOccupancyOverview(params) {
     return dispatch => {
         dispatch(fetchOccupancyOverview());
@@ -99,17 +130,29 @@ export function getNodeSeriesStats(params) {
     }
 }
 
-export function getNodeStatsDaily(params) {
+export function getStatsDaily(params) {
     return dispatch => {
-        dispatch(fetchNodeStats());
-        if (params.from == params.to) {
-            axios.get(config.api.root + `/stats/weekdayXhour/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}`)
-                .then((response) => {
-                    dispatch(receiveNodeStats(response.data));
-                })
-                .catch(function (response) {
-                    dispatch(fetchFailed(response.data));
-                })
-        }
+        dispatch(fetchStatsDaily());
+        axios.get(config.api.root + `/stats/weekdayXhour/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}`)
+            .then((response) => {
+                dispatch(receiveStatsDaily(response.data));
+            })
+            .catch(function (response) {
+                dispatch(fetchFailed(response.data));
+            })
+
+    }
+}
+
+export function getStatsBreakdown(params) {
+    return dispatch => {
+        dispatch(fetchStatsBreakdown());
+        axios.get(config.api.root + `/stats/overviewlist/${JSON.stringify(params.id)}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}`)
+            .then((response) => {
+                dispatch(receiveStatsBreakdown(response.data));
+            })
+            .catch(function (response) {
+                dispatch(fetchFailed(response.data));
+            })
     }
 }

@@ -25,7 +25,9 @@ const initialState = {
     },
     range: {
         points: []
-    }
+    },
+    breakdown: [],
+    daily: {}
 }
 
 export default (state = initialState, action) => {
@@ -45,9 +47,22 @@ export default (state = initialState, action) => {
                 stats: action.data
             });
 
-        case Stats.RECEIVE_OCCUPANCY_RANGE:{
-            return Object.assign({},state, {
+        case Stats.RECEIVE_OCCUPANCY_RANGE: {
+            return Object.assign({}, state, {
                 range: action.data
+            });
+        }
+
+        case Stats.RECEIVE_STATS_BREAKDOWN: {
+            return Object.assign({}, state, {
+                breakdown: action.data
+            });
+        }
+
+        case Stats.RECEIVE_STATS_DAILY: {
+            console.log(action.data);
+            return Object.assign({}, state, {
+                daily: action.data
             });
         }
 

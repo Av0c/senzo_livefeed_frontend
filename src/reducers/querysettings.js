@@ -8,8 +8,8 @@ const initialState = {
   id: -1,
   starthour: 8,
   endhour: 17,
-  startweekday: 0,
-  endweekday: 6,
+  startweekday: 1,
+  endweekday: 5,
   marks: [0.2, 0.9],
   groupby: 'day'
 };

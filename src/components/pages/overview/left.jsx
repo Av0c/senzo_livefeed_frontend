@@ -1,22 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import appHistory from 'components/common/appHistory';
 import Loading from 'components/common/loading';
 import Section from 'components/common/section';
 import SingleBarChart from 'components/common/graphs/singlebarchart';
 import BigText from 'components/common/bigtext';
 import { fetchCustomerOverview, getNodeStatistic } from 'actions/overview';
 import { fetchLiveData } from 'actions/node';
-import { connect } from 'react-redux';
-import RoomTypeSelector from 'components/common/roomtypeselector';
-import LocationStats from 'components/common/locationstats';
-import LocationBottomMenu from 'components/common/locationbottommenu';
-import Gauge from 'components/common/gauge';
 import DateSelector from 'components/common/dateselector';
 import LineChart from 'components/common/linechart';
-import { Link } from 'react-router';
 import { selectNodeStats } from 'actions/node';
-import appHistory from 'components/common/appHistory';
 import { getOccupancyOverview, getParams } from 'actions/stats';
 import Widget from 'components/pages/overview/widget';
+import SearchContainer from 'components/pages/overview/searchcontainer';
+import SearchBar from 'components/common/searchbar';
 
 class OverviewLeft extends React.Component {
 
@@ -69,6 +66,10 @@ class OverviewLeft extends React.Component {
     this.props.dispatch(getOccupancyOverview(params));
   }
 
+  renderWidget(){
+    
+  }
+
   render() {
     var stats = this.countTreeStatistic(this.props.currentNode, this.props.currentSensor, this.props.querySettings.room.code);
     return (
@@ -85,13 +86,7 @@ class OverviewLeft extends React.Component {
           </div>
           <div className="row">
             <Widget currentNode={this.props.currentNode} stats={stats} />
-            <div className="col-sm-8 col-xs-12 text-center add-cart-zone">
-
-              <a className="add-card"> <img src="src/assets/images/plus.svg" />
-                <div className="add-card-descr">
-                  Add Location</div>
-              </a>
-            </div>
+            <SearchContainer tree={this.props.overview}/>
           </div>
         </div>
       </div>
@@ -104,7 +99,8 @@ function mapStateToProps(state) {
     user: state.authReducer.user,
     currentSensor: state.nodeReducer.map,
     currentNode: state.overviewReducer.currentNode,
-    querySettings: state.querySettingsReducer
+    querySettings: state.querySettingsReducer,
+    overview: state.overviewReducer.customerOverview
   };
 }
 function mapDispatchToProps(dispatch) {

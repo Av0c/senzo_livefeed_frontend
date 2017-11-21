@@ -2,7 +2,17 @@ import React from 'react';
 import { core as Core } from 'zingchart-react';
 
 export default class PianoChart extends React.Component {
+
+    generateSeries() {
+        return this.props.data.values.map((values)=>{
+            return {
+                values: values
+            };
+        });
+    }
+    
     render() {
+        let values = this.generateSeries();
         var myConfig = {
             globals: {
                 fontFamily: "Roboto"
@@ -28,7 +38,7 @@ export default class PianoChart extends React.Component {
                         tick: {
                             visible: false
                         },
-                        values: ["1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p"],
+                        values: this.props.data.labelsX,
                         zooming: true,
                         zoomSnap: true
                         //"zoomTo": [2,5]
@@ -85,7 +95,7 @@ export default class PianoChart extends React.Component {
                             size: "13px",
                             fontColor: "#05636c"
                         },
-                        values: ["Mo", "Tu", "We", "Th", "Fr", "All"]
+                        values: this.props.data.labelsY
                     },
                     plot: {
                         aspect: "none",
@@ -94,77 +104,55 @@ export default class PianoChart extends React.Component {
                         tooltip: {
                             fontSize: "14px",
                             fontColor: "white",
-                            text: " The surf will be about %v feet.",
+                            text: "Occupancy: %v%.",
                             textAlign: "left"
                         },
                         rules: [
                             {
-                                rule: "%node-value > 4",
+                                rule: "%node-value >= 80",
                                 backgroundColor: "#ee4d51",
                                 fontColor: "#05636c"
                             },
                             {
-                                rule: "%node-value > 3 && %node-value <= 4",
+                                rule: "%node-value >= 60 && %node-value < 80",
                                 backgroundColor: "#f06c67",
                                 fontColor: "#05636c"
                             },
                             {
-                                rule: "%node-value > 2 && %node-value <= 3",
+                                rule: "%node-value >= 40 && %node-value < 60",
                                 backgroundColor: "#f39986",
                                 fontColor: "#05636c"
                             },
                             {
-                                rule: "%node-value > 1 && %node-value <= 2",
+                                rule: "%node-value >=20 && %node-value < 40",
                                 backgroundColor: "#f6c5a2",
                                 fontColor: "#05636c"
                             },
                             {
-                                rule: "%node-value > 0 && %node-value <= 1",
+                                rule: "%node-value >= 0 && %node-value <20",
                                 backgroundColor: "#fae9ba",
                                 fontColor: "#05636c",
                                 legendMarker: {
                                     backgroundColor: "#fae9ba"
                                 }
+                            },
+                            {
+                                rule: "%node-value < 0",
+                                backgroundColor: "white",
+                                fontColor: "#05636c",
+                                legendMarker: {
+                                    backgroundColor: "white"
+                                }
                             }
                         ]
                     },
-                    series: [
-                        {
-                            values: [ 1, 2, 3,4 ,5 , 2, 1, 2, 2, 1, 2],
-     
-                        },
-                        {
-                            values: [ 3, 3, 3, 3, 2, 2, 2, 2, 1, 2, 3],
-                            
-                        },
-                        {
-                            values: [ 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 2],
-                            text: "40-60%",
-                            legendMarker: {
-                                backgroundColor: "#f39986"
-                            }
-                        },
-                        {
-                            values: [ 5, 4, 4, 5, 4, 4, 3, 3, 3, 3, 3],
-                            text: "60-80%",
-                            legendMarker: {
-                                backgroundColor: "#f06c67"
-                            }
-                        },
-                        {
-                            values: [ 5, 5, 4, 4, 5, 4, 3, 2, 3, 4, 4],
-                            text: "80-100%",
-                            legendMarker: {
-                                "backgroundColor": "#ee4d51"
-                            }
-                        }
-                    ]
+                    series: values
                 }
             ]
         };
         return (
             <div>
-                <Core id="myChart1" data={myConfig} width='100%' height='430px' />
+                <Core id="pianodaily" data={myConfig} width='100%' height='430px' />
             </div>
         );
     }

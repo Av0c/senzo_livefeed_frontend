@@ -1,5 +1,5 @@
 export default {
-  time:{
+  time: {
     period: {
       DAY: {
         format: "HH:mm",
@@ -29,11 +29,11 @@ export default {
   },
   mode: {
     AVERAGE: {
-      code: "average",
+      code: "Average",
       title: "AVERAGE UTILIZATION"
     },
     PEAK: {
-      code: "peak",
+      code: "Peak",
       title: "PEAK UTILIZATION"
     }
   },
@@ -62,25 +62,6 @@ export default {
     EFFICIENCY: {
       type: 'Efficiency'
     }
-  }
-}
-
-export function getParams(nextProps) {
-  let params = {
-    id: nextProps.currentNode.id,
-    from: nextProps.querySettings.startdate,
-    to: nextProps.querySettings.enddate,
-    starthour: nextProps.currentNode.info.WH_from,
-    endhour: nextProps.currentNode.info.WH_to,
-    startweekday: nextProps.querySettings.startweekday,
-    endweekday: nextProps.querySettings.endweekday,
-    marks: nextProps.querySettings.marks
-  }
-  if (nextProps.querySettings.tag == 'Occupancy') {
-    params.tag = nextProps.querySettings.room.occupancyTag;
-  }
-  else {
-    params.tag = nextProps.querySettings.room.efficiencyTag || nextProps.querySettings.room.occupancyTag;
-  }
-  return params;
+  },
+  day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 }

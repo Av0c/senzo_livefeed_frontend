@@ -6,23 +6,23 @@ import {selectMode} from 'actions/querysettings';
 import { connect } from 'react-redux';
 
 
-class ModeSelector extends React.Component {
+ export default class ModeSelector extends React.Component {
 
   optionClicked(mode) {
-    this.props.dispatch(selectMode(mode))
+    this.props.chooseMode(mode);
   }
   
   render() {
     return (
-      <Dropdown header={this.props.title} toggleable>
+      <Dropdown header={this.props.mode} toggleable>
         <DropdownItem>
-          <div onClick={this.optionClicked.bind(this, config.mode.AVERAGE)}>
-            {config.mode.AVERAGE.title}
+          <div onClick={this.optionClicked.bind(this, config.mode.AVERAGE.code)}>
+            {config.mode.AVERAGE.code}
           </div>
         </DropdownItem>
         <DropdownItem>
-          <div onClick={this.optionClicked.bind(this, config.mode.PEAK)}>
-            {config.mode.PEAK.title}
+          <div onClick={this.optionClicked.bind(this, config.mode.PEAK.code)}>
+            {config.mode.PEAK.code}
           </div>
         </DropdownItem>
       </Dropdown>
@@ -30,15 +30,4 @@ class ModeSelector extends React.Component {
   }
 }
 
-function mapStateToProps(state){
-  return state.querySettingsReducer.mode
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ModeSelector);
 

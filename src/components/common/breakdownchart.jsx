@@ -14,7 +14,7 @@ export default class BreakDownChart extends React.Component {
                     backgroundColor: "#f6f7fa"
                 },
                 scaleX: {
-                    labels: ["0%", "0-20%", "20-40%", "40-60%", "60-80%", "80-100%", "100%"],
+                    labels: this.props.data.labels,
                     minorTicks: 0
                 },
                 scaleY: {
@@ -72,7 +72,7 @@ export default class BreakDownChart extends React.Component {
                 },
                 series: [
                     {
-                        values: [11, 12, 23, 11, 45, 52, 32],
+                        values: this.props.data.stats,
                         backgroundColor: "#74b63b"
                     },
 
@@ -80,7 +80,7 @@ export default class BreakDownChart extends React.Component {
             };
         return (
             <div>
-                <Core id={this.props.id} data={myConfig} height="450px" width="100%" />
+                <Core id="breakdownchart" data={myConfig} height="450px" width="100%" />
             </div>
         );
     }

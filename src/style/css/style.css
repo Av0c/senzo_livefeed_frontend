@@ -69,7 +69,7 @@ a:active {
   background: #fff;
   position: absolute;
   width: 100%;
-  z-index: 9999;
+  z-index: 1000;
 }
 .dropdown ul {
   list-style-type: none;

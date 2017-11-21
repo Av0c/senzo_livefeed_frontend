@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchCustomerOverview } from 'actions/overview';
 import Tree from 'containers/tree';
-import { fetchLiveData }from 'actions/node'; 
+import { fetchLiveData } from 'actions/node';
 
 export class Toolbar extends React.Component {
 
@@ -15,12 +15,12 @@ export class Toolbar extends React.Component {
     return (
       <div style={{ width: '100%', backgroundColor: 'white', paddingBottom: '15px' }} className="container-fluid">
         <div className="row">
-          <div className="col-xs-4">
+          <div className="col-xs-4" style={{ zIndex: '1001' }}>
             <div className="location-block clearfix">
               <div className="location-icon pull-left"><img src="src/assets/images/location-icon.svg" alt="Location" /></div>
               <div className="location-name pull-left"><span>{this.props.companyName}</span></div>
               <div style={{ marginTop: '17px' }} className="location-dropdown-root" >
-              <Tree tree={this.props.tree} statistic={this.props.statistic} />
+                <Tree tree={this.props.tree} statistic={this.props.statistic} />
               </div>
             </div>
           </div>

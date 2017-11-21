@@ -2,38 +2,10 @@ import React from 'react';
 import { core as Core } from 'zingchart-react';
 import { connect } from 'react-redux';
 
-export class RangeChart extends React.Component {
-
-    getValues() {
-        let values = [0, 0, 0, 0, 0, 0, 0];
-        this.props.range.points.forEach((point) => {
-            if (point.avg == 0) {
-                values[0] += 1;
-            }
-            else if (point.avg < 0.2) {
-                values[1] += 1;
-            }
-            else if (point.avg < 0.4) {
-                values[2] += 1;
-            }
-            else if (point.avg < 0.6) {
-                values[3] += 1;
-            }
-            else if (point.avg < 0.8) {
-                values[4] += 1;
-            }
-            else if (point.avg < 1) {
-                values[5] += 1;
-            }
-            else {
-                values[6] += 1;
-            }
-        });
-        return values;
-    }
+export default class RangeChart extends React.Component {
 
     render() {
-        let values = this.getValues();
+        
         var myConfig =
             {
                 type: "bar",
@@ -74,7 +46,7 @@ export class RangeChart extends React.Component {
                 },
                 series: [
                     {
-                        values: values,
+                        values: this.props.values,
                         backgroundColor: "#74b63b"
                     },
 
@@ -87,11 +59,3 @@ export class RangeChart extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
-    return {
-        range: state.statsReducer.range
-    };
-}
-
-export default connect(mapStateToProps, null)(RangeChart);

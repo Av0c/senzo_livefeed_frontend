@@ -7,7 +7,6 @@ import { getNodeSeriesStats, getParams } from 'actions/stats';
 import OccupancyRange from 'components/pages/stats/occupancyrange';
 import DailyOccupancy from 'components/pages/stats/dailyoccupancy';
 import OccupancyBreakDown from 'components/pages/stats/occupancybreakdown';
-import LineDailyOccupancy from 'components/pages/stats/linedailyoccupancy';
 
 export class Stats extends React.Component {
 

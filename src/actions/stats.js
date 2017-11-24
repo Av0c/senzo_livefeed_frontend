@@ -98,6 +98,17 @@ export function getParams(nextProps) {
     }
     return params;
 }
+export function findOccupancyTag(node) {
+    if (node.type == 'meeting_room') {
+        return 'MRO';
+    }
+    else if (node.type == 'open_area') {
+        return 'OAO';
+    }
+    else {
+        return 'TTO';
+    }
+}
 
 export function getOccupancyOverview(params, node) {
     return dispatch => {

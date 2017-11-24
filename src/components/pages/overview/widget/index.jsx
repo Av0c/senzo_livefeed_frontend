@@ -5,8 +5,6 @@ import WidgetContainer from 'components/pages/overview/widget/widgetcontainer';
 
 export class Widgets extends React.Component {
 
-    
-
     generateWidgets() {
         return this.props.overview.map((element, index) => {
             return <WidgetContainer id={index} key={index} node={element.node} stats={element.data} allSensors={this.props.allSensors}
@@ -15,7 +13,6 @@ export class Widgets extends React.Component {
     }
 
     render() {
-        console.log(this.props.overview);
         let widgets = this.generateWidgets();
         return (
             <div>

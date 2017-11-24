@@ -96,7 +96,7 @@ class DateSelector extends React.Component {
             <a className={"button custom-time" + (this.state.active == "Custom" ? " active" : "")}>
               <span>Custom</span></a>
           </li>
-          {this.state.show || <div style={{ marginRight: '180px', zIndex: 10 }} className="datepicker">
+          {this.state.show || <div style={{ marginRight: '180px', zIndex: 100 }} className="datepicker">
             <DateField className="start-date pull-left"
               dateFormat="DD-MM-YYYY"
               defaultValue={this.state.from}

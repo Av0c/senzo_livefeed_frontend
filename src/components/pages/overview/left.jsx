@@ -10,7 +10,7 @@ import { fetchLiveData } from 'actions/node';
 import DateSelector from 'components/common/dateselector';
 import LineChart from 'components/common/linechart';
 import { selectNodeStats } from 'actions/node';
-import { getOccupancyOverview, getParams } from 'actions/stats';
+import { getOccupancyOverview, getParams, findOccupancyTag } from 'actions/stats';
 import Widgets from 'components/pages/overview/widget';
 import SearchContainer from 'components/pages/overview/searchcontainer';
 import SearchBar from 'components/common/searchbar';
@@ -23,13 +23,15 @@ class OverviewLeft extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    var self = this;
+    nextProps.widgets.forEach((node) => {
+      let params = getParams({querySettings: nextProps.querySettings, currentNode: node});
+      params.tag = findOccupancyTag(node);
+      nextProps.dispatch(getOccupancyOverview(params, node));
+    });
     let params = getParams(nextProps);
-    params.tag = 'TTO';
+    params.tag = findOccupancyTag(nextProps.currentNode);
     this.props.dispatch(getOccupancyOverview(params, nextProps.currentNode));
-  }
-
-  renderWidget() {
-
   }
 
   render() {
@@ -62,6 +64,7 @@ function mapStateToProps(state) {
     currentNode: state.overviewReducer.currentNode,
     querySettings: state.querySettingsReducer,
     overview: state.overviewReducer.customerOverview,
+    widgets: state.statsReducer.widgets
   };
 }
 

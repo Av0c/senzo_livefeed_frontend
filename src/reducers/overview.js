@@ -45,26 +45,6 @@ const initialState = {
     },
     children: []
   },
-  utilizationOverview: {
-    deskUtilization: {
-      firstValue: 0,
-      secondValue: 0,
-      id: 0,
-      name: ""
-    },
-    lowUtilizedAreas: [],
-    lowUtilizedMeetingRooms: [],
-    meetingRoomUtilization: {
-      firstValue: 0,
-      secondValue: 0,
-      id: 0,
-      name: ""
-    },
-    sensorStatistics: {
-      desks: 0,
-      meetingRooms: 0
-    }
-  },
   widgets: []
 };
 
@@ -109,7 +89,6 @@ export default (state = initialState, action) => {
       })
     }
     case SET_CURRENT_NODE: {
-      console.log(action.node);
       return Object.assign({}, state, {
         currentNode: action.node
       });

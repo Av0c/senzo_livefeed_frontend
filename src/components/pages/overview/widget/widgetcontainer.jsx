@@ -13,7 +13,6 @@ export class WidgetContainer extends React.Component {
     };
   }
 
-
   chooseArea(area) {
     this.setState({ area: area });
   }

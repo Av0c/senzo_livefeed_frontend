@@ -6,6 +6,7 @@ import appHistory from 'components/common/appHistory';
 import { clearToken } from 'actions/authentication';
 import { setCurrentNode } from 'actions/overview';
 import './style/main.less';
+import 'react-date-picker/index.css'
 
 export class Frame extends React.Component {
 

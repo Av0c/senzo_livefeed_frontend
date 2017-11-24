@@ -3,6 +3,7 @@ import * as Stats from 'actions/stats';
 const initialState = {
     loading: false,
     overview: [],
+    widgets: [],
     stats: {
         constraint: {
             startdate: "13-11-2017",
@@ -29,7 +30,6 @@ export default (state = initialState, action) => {
             });
 
         case Stats.RECEIVE_OCCUPANCY_OVERVIEW:
-            
             let contained = false;
             for (let i = 0; i < state.overview.length; i++) {
                 if (state.overview[i].node.id == action.data.node.id) {
@@ -38,14 +38,14 @@ export default (state = initialState, action) => {
                 }
             }
             if (contained) {
-
                 return Object.assign({}, state, {
                     overview: [...state.overview]
                 });
             }
             else {
                 return Object.assign({}, state, {
-                    overview: [...state.overview, { node: action.data.node, data: action.data.data }]
+                    overview: [...state.overview, { node: action.data.node, data: action.data.data }],
+                    widgets: [...state.widgets, action.data.node]
                 });
             }
 

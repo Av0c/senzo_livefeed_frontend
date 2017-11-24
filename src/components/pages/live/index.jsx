@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Path from "./path"
 import NodeFilterDropdown from "./nodedropdown"
+import ViewFilterDropdown from "./viewdropdown"
 
 import {
 	selectNodeFilter,
@@ -9,7 +10,7 @@ import {
 } from "actions/live/filter"
 
 
-export default class Live extends React.Component {
+class Live extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
@@ -25,13 +26,15 @@ export default class Live extends React.Component {
 		};
 	}
 
+
+	empty(node) {
+		return (node.info.empty == true)
+	}
+
 	componentWillReceiveProps(nextProps) {
-		var oldnode = this.state.currentNode;
-		var currentNode = this.prepare(nextProps).currentNode;
-		if ((oldnode != currentNode) || (nextProps.nodeFilter.info.empty && (typeof currentNode.info.empty != "undefined"))) {
-			// either change floor or no node filter yet => set node filter to all areas.
-			this.props.dispatch(selectNodeFilter(currentNode));
-		}
+		console.log("Live receive props");
+		this.prepare(nextProps);
+		console.log("sensor", this.props.sensorMap);
 	}
 
 	prepare(props) {
@@ -39,7 +42,14 @@ export default class Live extends React.Component {
 		var path = [];
 		var res = {currentNode: null};
 		this.findNode(props.tree, props.params.id, path, status, res);
-		return res;
+
+		var oldnode = this.state.currentNode;
+		var currentNode = res.currentNode;
+		console.log(oldnode, currentNode, (oldnode != currentNode && !this.empty(oldnode)), props);
+		if (currentNode!=null && ((oldnode != currentNode && !this.empty(oldnode)) || (props.nodeFilter.info.empty && !this.empty(currentNode)))) {
+			// either floor changed or no node filter yet => set node filter to all areas.
+			this.props.dispatch(selectNodeFilter(currentNode));
+		}
 	}
 
 	findNode(tree, id, path, status, res) {
@@ -70,53 +80,70 @@ export default class Live extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.nodeFilter);
+		// ?? how to fix this ??
+		console.log("live render", this.state.currentNode.info, this.props.tree.info);
+		if (this.state.currentNode.info.empty && !this.empty(this.props.tree)) {
+			console.log("render prep", this.props);
+			this.prepare(this.props);
+		}
+		// ??
 		return (
 			<div>
 				<div className="live-header-wrapper">
-				  <div className="stats-menu">     
-					<div className="container-fluid">
-					  <div className="row">
-						<div className="col-sm-12">
-						  <div className="main-menu-left pull-left"><a className="button" href="#">
-							<i className="fa fa-home" aria-hidden="true"></i>
-							<span> Overview   </span></a>
-							<a className="button" href="#"> <i className="fa fa-bar-chart" aria-hidden="true"></i><span> Comparison </span></a>
-						  </div>
-						  <div className="live-title pull-left">
-							<h1>{this.state.currentNode.info.name}</h1>
-						  </div>
-						  <div className="live-top-menu pull-right">
-							<div className="live-select pull-left">
-							<i className="fa fa-chevron-down" aria-hidden="true"> </i>
-							  	<div className="dropdown">
-							  		<NodeFilterDropdown
-							  			root={this.state.currentNode}
-							  			nodeFilter={this.props.nodeFilter}
-							  			click={
-							  				(node) => { this.props.dispatch(selectNodeFilter(node)) }
-							  			}
-							  		/>
+					<div className="stats-menu">     
+						<div className="container-fluid">
+							<div className="row">
+								<div className="col-sm-12">
+									<div className="main-menu-left pull-left">
+
+										<a className="button" href="#">
+											<i className="fa fa-home" aria-hidden="true"></i>
+											<span> Overview   </span>
+										</a>
+
+										<a className="button" href="#">
+											<i className="fa fa-bar-chart" aria-hidden="true"></i>
+											<span> Comparison </span>
+										</a>
+
+									</div>
+
+									<div className="live-title pull-left">
+										<h1>{this.state.currentNode.info.name}</h1>
+									</div>
+
+									<div className="live-top-menu pull-right">
+
+										<div className="live-select pull-left">
+											<NodeFilterDropdown
+												root={this.state.currentNode}
+												nodeFilter={this.props.nodeFilter}
+												click={
+													(node) => { this.props.dispatch(selectNodeFilter(node)) }
+												}
+											/>
+										</div>
+
+										<div className="live-select pull-left">
+											<ViewFilterDropdown
+												viewFilter={this.props.viewFilter}
+												click={
+													(node) => { this.props.dispatch(selectViewFilter(node)) }
+												}
+											/>
+										</div>
+										<a className="stats-live-btn button-sm pull-left" href="#">Stats</a>
+									</div>
+									{/*
+									<div className="toolbar">
+										<div className="toolbr-tools clearfix"><a className="toolbar-seat" href="#"></a><a className="toolbar-meeting-room" href="#"></a><a className="toolbar-mr" href="#"></a></div>
+										<div className="toolbar-close clearfix"><a className="toolbar-arrow-right" href="#"></a><a className="toolbar-arrow-left" href="#"></a></div>
+									</div>
+								  */}
 								</div>
 							</div>
-							<div className="live-select pull-left"><span>Live View </span><i className="fa fa-chevron-down" aria-hidden="true"></i>
-							  <div className="dropdown">
-								<ul>
-								  <li> <a href="#">Maintenance View</a></li>
-								</ul>
-							  </div>
-							</div><a className="stats-live-btn button-sm pull-left" href="#">Stats</a>
-						  </div>
-						{/*
-						  <div className="toolbar">
-							<div className="toolbr-tools clearfix"><a className="toolbar-seat" href="#"></a><a className="toolbar-meeting-room" href="#"></a><a className="toolbar-mr" href="#"></a></div>
-							<div className="toolbar-close clearfix"><a className="toolbar-arrow-right" href="#"></a><a className="toolbar-arrow-left" href="#"></a></div>
-						  </div>
-					  */}
 						</div>
-					  </div>
 					</div>
-				  </div>
 				</div>
 				<Path path={this.state.path} />
 				<div className="container-fluid">
@@ -201,7 +228,8 @@ function mapStateToProps(state) {
 	return {
 		tree: state.overviewReducer.customerOverview,
 		nodeFilter: state.liveReducer.nodeFilter,
-		viewFilter: state.liveReducer.viewFilter
+		viewFilter: state.liveReducer.viewFilter,
+		sensorMap: state.nodeReducer.map
 	};
 }
 

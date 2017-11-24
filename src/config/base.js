@@ -64,5 +64,18 @@ export default {
     }
   },
   day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-  viewFilter: ["ALL", "LIVE", "MAINTENANCE"]
+  viewFilter: {
+    ALL: {
+      code: "ALL",
+      text: "Show all"
+    },
+    LIVE: {
+      code: "LIVE",
+      text: "Live view"
+    },
+    MAINTENANCE: {
+      code: "MAINTENANCE",
+      text: "Maintenance view"
+    }
+  }
 }

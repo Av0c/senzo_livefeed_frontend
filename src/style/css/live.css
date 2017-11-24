@@ -108,3 +108,13 @@
 .tb-closed .toolbar-arrow-left {
   display: block;
 }
+.breadcrumbs {
+  margin-top: 22px;
+}
+.breadcrumbs a {
+  color: bgrey;
+  font-size: 16px;
+}
+.bc-divider {
+  padding: 0 10px;
+}

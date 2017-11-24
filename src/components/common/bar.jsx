@@ -139,7 +139,6 @@ export default class Bar extends React.Component {
         }
 
         var className = "bold " + ((Number(i)===1)?"top ":"bottom ") + ((this.state.lengths[i]<0.0001)?"hide ":"") + this.state.className;
-        console.log(i, className)
 
         return (
             <span className={className} style={css}>{marker}</span>

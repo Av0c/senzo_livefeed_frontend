@@ -30,7 +30,7 @@ export default class NodeFilterDropdown extends React.Component {
 		this.props.root.children.forEach((child) => {
 			self.listAreas(child, areas);
 		})
-		var header = (this.props.nodeFilter.id==this.props.root.id) ? "All area" : this.props.nodeFilter.info.name;
+		var header = (this.props.nodeFilter.id==this.props.root.id) ? "All Areas" : this.props.nodeFilter.info.name;
 
 		return (
 			<Dropdown header={header} toggleable>

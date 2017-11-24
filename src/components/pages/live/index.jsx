@@ -4,6 +4,7 @@ import Path from "./path"
 import NodeFilterDropdown from "./nodedropdown"
 import ViewFilterDropdown from "./viewdropdown"
 import LiveSummary from "./summary"
+import { Link } from 'react-router';
 
 import {
 	selectNodeFilter,
@@ -140,7 +141,7 @@ class Live extends React.Component {
 												}
 											/>
 										</div>
-										<a className="stats-live-btn button-sm pull-left" href="#">Stats</a>
+			                            <Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
 									</div>
 									{/*
 									<div className="toolbar">

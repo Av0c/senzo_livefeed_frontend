@@ -118,3 +118,9 @@
 .bc-divider {
   padding: 0 10px;
 }
+.card {
+  padding: 12px 26px 20px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
+}

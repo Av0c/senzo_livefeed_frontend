@@ -65,18 +65,28 @@ export default class LiveSummary extends React.Component {
 						<td>Occupancy</td>
 					  </tr>
 					  {
-					  	OAs.map((x) => {
-							var smr = this.summary(x);
-							return (
-								<tr className="objects-list" key={x.id}> 
-									<td className="object-name">{x.info.name}</td>
-									<td>{smr.total}</td>
-									<td>{smr.inUse}</td>
-									<td>{smr.total-smr.inUse}</td>
-									<td>{(smr.total>0) ? Math.round(100*smr.inUse/smr.total)/100 : 0}%</td>
-								</tr>
-							);
-					  	})
+					  	(OAs.length > 0) ? (
+						  	OAs.map((x) => {
+								var smr = this.summary(x);
+								return (
+									<tr className="objects-list" key={x.id}> 
+										<td className="object-name">{x.info.name}</td>
+										<td>{smr.total}</td>
+										<td>{smr.inUse}</td>
+										<td>{smr.total-smr.inUse}</td>
+										<td>{(smr.total>0) ? Math.round(100*smr.inUse/smr.total)/100 : 0}%</td>
+									</tr>
+								);
+						  	})
+						) : (
+							<tr className="objects-list"> 
+								<td className="object-name" style={{textAlign: "center"}}>--</td>
+								<td>--</td>
+								<td>--</td>
+								<td>--</td>
+								<td>--</td>
+							</tr>
+						)
 					  }
 					  <tr className="objects-list"> 
 						<td className="live-stats-heading">Meeting Rooms</td>
@@ -86,18 +96,28 @@ export default class LiveSummary extends React.Component {
 						<td>Efficiency</td>
 					  </tr>
 					  {
-					  	MRs.map((x) => {
-							var smr = this.summary(x);
-							return (
-								<tr className="objects-list" key={x.id}> 
-									<td className="object-name">{x.info.name}</td>
-									<td>{smr.total}</td>
-									<td><Status taken={(smr.inUse >0)} /></td>
-									<td>{smr.inUse}</td>
-									<td>{(smr.inUse>0) ? Math.round(100*smr.inUse/smr.total)/100+"%" : ""}</td>
-								</tr>
-							);
-					  	})
+					  	(MRs.length > 0) ? (
+						  	MRs.map((x) => {
+								var smr = this.summary(x);
+								return (
+									<tr className="objects-list" key={x.id}> 
+										<td className="object-name">{x.info.name}</td>
+										<td>{smr.total}</td>
+										<td><Status taken={(smr.inUse >0)} /></td>
+										<td>{smr.inUse}</td>
+										<td>{(smr.inUse>0) ? Math.round(100*smr.inUse/smr.total)/100+"%" : ""}</td>
+									</tr>
+								);
+						  	})
+						) : (
+							<tr className="objects-list"> 
+								<td className="object-name" style={{textAlign: "center"}}>--</td>
+								<td>--</td>
+								<td>--</td>
+								<td>--</td>
+								<td>--</td>
+							</tr>
+						)
 					  }
 					</tbody></table>
 				  </div>

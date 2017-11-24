@@ -46,7 +46,6 @@ ReactDOM.render((
     <Router history={appHistory} onUpdate={() => window.scrollTo(0, 0)}>
       <Route path="/" component={requireAuthentication(Frame)}>
         <IndexRoute component={Overview} />
-
         <Route path="/locations" component={Locations}>
           <IndexRoute component={LocationsIntroPage} />
           <Route path="/locations/site/:id" component={SiteView} />

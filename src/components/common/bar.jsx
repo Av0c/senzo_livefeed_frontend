@@ -86,7 +86,7 @@ export default class Bar extends React.Component {
 
     renderInfo(i) {
         // Convert values to percent first
-        var percent = Math.round(this.state.lengths[i] * 10000) / 100;
+        var percent = Math.round(this.state.lengths[i] * 100);
         var marker;
         if (Number(i) === 1) {
             marker = percent + "%\n|";
@@ -108,8 +108,6 @@ export default class Bar extends React.Component {
         }
 
         var className = "bold " + ((Number(i) === 1) ? "top " : "bottom ") + this.state.className;
-        console.log(i, className)
-
         return (
             <span className={className} style={css}>{marker}</span>
         );

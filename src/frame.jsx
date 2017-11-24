@@ -2,18 +2,25 @@ import React from 'react';
 import Toolbar from 'containers/toolbar';
 import Notification from 'components/common/notification';
 import { connect } from 'react-redux';
+import appHistory from 'components/common/appHistory';
 import { clearToken } from 'actions/authentication';
-import { getNodeStatistic } from 'actions/overview';
-import { fetchLiveData } from 'actions/node';
+import { setCurrentNode } from 'actions/overview';
 import './style/main.less';
-import 'react-date-picker/index.css'
 
 export class Frame extends React.Component {
+
+  handleTreeClick(node) {
+    if(this.props.location.pathname.includes("/statistic")) {
+      appHistory.push(`/statistic/${node.id}`);
+    }
+    this.props.dispatch(setCurrentNode(node));
+  }
+
   render() {
     return (
       <div style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px', width: '100%', maxWidth: '100%' }} className="container">
         <Toolbar user={this.props.user} actions={{ logout: this.props.logout }} companyName={this.props.companyName} tree={this.props.tree}
-          statistic={this.props.getNodeStatistic} />
+          statistic={this.handleTreeClick.bind(this)} />
         <div className="content">
           {this.props.children}
         </div>
@@ -33,9 +40,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     logout: () => dispatch(clearToken()),
-    getNodeStatistic: (node) => {
-      dispatch(fetchLiveData(node.id));
-      dispatch(getNodeStatistic(node));
+    setCurrentNode: (node) => {
+      dispatch(setCurrentNode(node));
     }
   }
 }

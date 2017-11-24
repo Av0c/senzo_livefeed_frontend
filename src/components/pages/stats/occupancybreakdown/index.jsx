@@ -21,17 +21,18 @@ export class OccupancyBreakDown extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.tree.type == 'meeting_room' || this.props.type == 'open_area') {
-            this.setState({ isArea: true });
-        }
-        else {
-
-            let params = getParams(nextProps);
-            params.id = [];
-            params.areas = new Map();
-            this.getAreaChildren(nextProps.tree, params.id, params.areas);
-            this.setState({ isArea: false, areas: params.areas });
-            this.props.dispatch(getStatsBreakdown(params));
+        if (nextProps.currentNode.id) {
+            if (nextProps.currentNode.type == 'meeting_room' || nextProps.currentNode.type == 'open_area') {
+                this.setState({ isArea: true });
+            }
+            else {
+                let params = getParams(nextProps);
+                params.id = [];
+                params.areas = new Map();
+                this.getAreaChildren(nextProps.currentNode, params.id, params.areas);
+                this.setState({ isArea: false, areas: params.areas });
+                this.props.dispatch(getStatsBreakdown(params));
+            }
         }
     }
 
@@ -73,11 +74,6 @@ export class OccupancyBreakDown extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        tree: state.overviewReducer.currentNode
-    }
-}
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -85,4 +81,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OccupancyBreakDown);
+export default connect(null, mapDispatchToProps)(OccupancyBreakDown);

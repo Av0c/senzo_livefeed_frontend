@@ -10,7 +10,7 @@ export class BreakdownChartContainer extends React.Component {
             stats: []
         };
         if (this.props.areas.get) {
-            for (let i = 0; i < (8 < this.props.stats.length ? 8 : this.props.stats.length); i++) {
+            for (let i = 0; i < (7 < this.props.stats.length ? 7 : this.props.stats.length); i++) {
                 if (this.props.mode == 'Average') {
                     data.stats.push(Math.round(this.props.stats[i].average * 100));
                 }

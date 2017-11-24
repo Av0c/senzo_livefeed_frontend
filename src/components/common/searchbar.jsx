@@ -1,59 +1,33 @@
 import React from 'react';
+import Select from 'react-select';
 
 export default class SearchBar extends React.Component {
 
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            name: ''
-        };
-        this.findMatchingArea = this.findMatchingArea.bind(this);
+    onChange(val) {
+        this.props.addNodeWidget(val.values);
     }
 
-    handleChange(e) {
-        let key = e.target.id;
-        let value = e.target.value;
-        this.setState({ [key]: value });
-    }
-
-    handleKeyDown(e) {
-        if (e.key === 'Enter') {
-            this.props.dispatch(login(this.state))
-        }
-    }
-
-    findMatchingArea(tree) {
+    constructOptions(tree, options) {
         var self = this;
+
         if (tree.children) {
+            options.push({ label: tree.info.name, values: tree });
             tree.children.forEach(function (element) {
-                self.findMatchingArea(element);
+                self.constructOptions(element, options);
             });
         }
-    }
 
-    checkMatching(name, node) {
-        return node.info.name.toLowerCase().includes(name.toLowerCase());
     }
-
 
     render() {
-
-        this.findMatchingArea(this.props.tree);
-
+        let options = [];
+        this.constructOptions(this.props.tree, options);
         return (
-            <div className="login-wrapper">
-                <div className="login-card text-center">
-                    <h2 className="welcome-message">Add Location!</h2>
-                    <div className="login-box-wrapper">
-                        <div className="login-box">
-                            <form action="#">
-                                <div className="user_email">
-                                    <input type="username" id="name" placeholder="Area name" onChange={this.handleChange.bind(this)} required />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+            <div style={{ width: '300px', textAlign: 'left', position: 'absolute', top: '0px' }}>
+                <Select name="form-field-name"
+                    options={options}
+                    onChange={this.onChange.bind(this)}
+                    onClose={this.props.hideSearchBar} />
             </div>
         );
     }

@@ -9,6 +9,7 @@ export class RangeChartContainer extends React.Component {
         this.props.range.points.forEach((point) => {
             if (point.avg == 0) {
                 values[0] += 1;
+                values[1] += 1;
             }
             else if (point.avg < 0.2) {
                 values[1] += 1;
@@ -26,6 +27,7 @@ export class RangeChartContainer extends React.Component {
                 values[5] += 1;
             }
             else {
+                values[5] += 1;
                 values[6] += 1;
             }
         });

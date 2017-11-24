@@ -56,7 +56,7 @@ export default class Gauge extends React.Component {
         };
         return (
             <div>
-                <Core id="myChart" data={myConfig} height="320px" width="100%"/>
+                <Core id={"gaugechart"+this.props.id} data={myConfig} height="320px" width="100%"/>
             </div>
         );
     }

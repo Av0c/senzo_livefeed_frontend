@@ -2,16 +2,7 @@ import * as Stats from 'actions/stats';
 
 const initialState = {
     loading: false,
-    overview: {
-        average: 0,
-        peak: 0,
-        hours: 0,
-        marks: [
-            0.2,
-            0.8,
-            0
-        ]
-    },
+    overview: [],
     stats: {
         constraint: {
             startdate: "13-11-2017",
@@ -38,9 +29,25 @@ export default (state = initialState, action) => {
             });
 
         case Stats.RECEIVE_OCCUPANCY_OVERVIEW:
-            return Object.assign({}, state, {
-                overview: action.data
-            });
+            
+            let contained = false;
+            for (let i = 0; i < state.overview.length; i++) {
+                if (state.overview[i].node.id == action.data.node.id) {
+                    contained = true;
+                    state.overview[i].data = action.data.data;
+                }
+            }
+            if (contained) {
+
+                return Object.assign({}, state, {
+                    overview: [...state.overview]
+                });
+            }
+            else {
+                return Object.assign({}, state, {
+                    overview: [...state.overview, { node: action.data.node, data: action.data.data }]
+                });
+            }
 
         case Stats.RECEIVE_NODE_STATS:
             return Object.assign({}, state, {
@@ -60,7 +67,6 @@ export default (state = initialState, action) => {
         }
 
         case Stats.RECEIVE_STATS_DAILY: {
-            console.log(action.data);
             return Object.assign({}, state, {
                 daily: action.data
             });

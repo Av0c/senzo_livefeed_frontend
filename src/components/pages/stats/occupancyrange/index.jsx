@@ -6,10 +6,12 @@ import { getNodeSeriesStats, getParams } from 'actions/stats';
 export class OccupancyRange extends React.Component {
 
     componentWillReceiveProps(nextProps) {
-        let params = getParams(nextProps);
-        params.groupby = 'hour';
-        params.chart = 'range';
-        this.props.dispatch(getNodeSeriesStats(params));
+        if (nextProps.currentNode.id) {
+            let params = getParams(nextProps);
+            params.groupby = 'hour';
+            params.chart = 'range';
+            this.props.dispatch(getNodeSeriesStats(params));
+        }
     }
     render() {
         return (

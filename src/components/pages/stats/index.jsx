@@ -10,10 +10,38 @@ import OccupancyBreakDown from 'components/pages/stats/occupancybreakdown';
 
 export class Stats extends React.Component {
 
-    componentWillReceiveProps(nextProps) {
-        let params = getParams(nextProps);
-        this.props.dispatch(getNodeSeriesStats(params));
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            currentNode: {
+                info: {
+                    name: ""
+                }
+            }
+        };
     }
+
+    componentWillReceiveProps(nextProps) {
+        this.findNode(nextProps.tree, nextProps);
+    }
+
+
+    findNode(tree, nextProps) {
+        var self = this;
+        if (tree) {
+            if (nextProps.params.id == tree.id) {
+                this.setState({ currentNode: tree });
+                return;
+            }
+
+            else if(tree.type!="meeting_room" && tree.type!="open_area" ) {
+                tree.children.forEach((child) => {
+                    self.findNode(child, nextProps);
+                })
+            }
+        }
+    }
+
 
     render() {
         return (
@@ -26,19 +54,19 @@ export class Stats extends React.Component {
                                 <a className="button"> <i className="fa fa-bar-chart" aria-hidden="true"></i><span> Comparison  </span></a>
                             </div>
                             <DateSelector />
-                            <StatsMenu name={this.props.currentNode.info.name} />
+                            <StatsMenu name={this.state.currentNode.info.name } />
                         </div>
                         <div className="col-md-12">
                             <div className="col-sm-12">
-                                <TotalOccupancy />
+                                <TotalOccupancy currentNode={this.state.currentNode} querySettings={this.props.querySettings} />
                             </div>
                             <div className="col-sm-12">
-                                <OccupancyRange querySettings={this.props.querySettings} currentNode={this.props.currentNode} />
+                                <OccupancyRange querySettings={this.props.querySettings} currentNode={this.state.currentNode} />
                             </div>
                             <div className="col-sm-12">
-                                <OccupancyBreakDown querySettings={this.props.querySettings} currentNode={this.props.currentNode} />
+                                <OccupancyBreakDown querySettings={this.props.querySettings} currentNode={this.state.currentNode} />
                             </div>
-                            <DailyOccupancy querySettings={this.props.querySettings} currentNode={this.props.currentNode} />
+                            <DailyOccupancy querySettings={this.props.querySettings} currentNode={this.state.currentNode} />
                         </div>
                     </div>
                 </div>
@@ -49,7 +77,7 @@ export class Stats extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        currentNode: state.overviewReducer.currentNode,
+        tree: state.overviewReducer.customerOverview,
         querySettings: state.querySettingsReducer
     };
 }

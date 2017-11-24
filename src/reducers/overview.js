@@ -10,7 +10,8 @@ import {
   RECEIVE_UTILIZATION_OVERVIEW,
   receiveUtilizationOverview,
   fetchingFailed,
-  GET_NODE_STATISTIC
+  SET_CURRENT_NODE,
+  ADD_NODE_WIDGET
 } from 'actions/overview'
 
 const initialState = {
@@ -63,7 +64,8 @@ const initialState = {
       desks: 0,
       meetingRooms: 0
     }
-  }
+  },
+  widgets: []
 };
 
 function fetchCustomerOverview(id, map) {
@@ -73,48 +75,6 @@ function fetchCustomerOverview(id, map) {
     }).catch((error) => {
       return fetchingFailed(error);
     });
-}
-
-function fetchUtilizationOverview(settings) {
-  return axios.get(config.api.root + `/api/utilization/overview?period=${settings.period.code}&mode=${settings.mode.code}`)
-    .then(receiveUtilizationOverview)
-    .catch(fetchingFailed)
-}
-
-function countTreeStatistic(root) {
-  var statistic = {
-    allRooms: 0,
-    meetingRooms: 0,
-    workingRooms: 0,
-    allSensors: 0,
-    meetingSensors: 0,
-    workingSensors: 0
-  };
-  count(root, statistic);
-  return statistic;
-}
-
-function count(root, statistic) {
-  if (root.children != null && root.children.length > 0) {
-    if (root.type == 'meeting_room' || root.type == 'open_area') {
-      statistic.allRooms++;
-      let len = root.children.length;
-      if (root.type == 'meeting_room') {
-        statistic.meetingRooms++;
-        statistic.meetingSensors += len;
-      }
-      else {
-        statistic.workingRooms++;
-        statistic.workingSensors += len;
-      }
-      statistic.allSensors += len;
-    }
-    else {
-      root.children.forEach(function (node) {
-        count(node, statistic);
-      });
-    }
-  }
 }
 
 export default (state = initialState, action) => {
@@ -128,12 +88,11 @@ export default (state = initialState, action) => {
     }
 
     case RECEIVE_CUSTOMER_OVERVIEW: {
-      let statistic = countTreeStatistic(action.data);
       return Object.assign({}, state, {
         loading: false,
         customerOverview: action.data,
-        currentNode: action.data,
-        treeStatistic: statistic
+        widgets: [...state.widgets, action.data],
+        currentNode: action.data
       })
     }
 
@@ -149,13 +108,19 @@ export default (state = initialState, action) => {
         utilizationOverview: action.data
       })
     }
-    case GET_NODE_STATISTIC: {
-      let statistic = countTreeStatistic(action.node);
+    case SET_CURRENT_NODE: {
+      console.log(action.node);
       return Object.assign({}, state, {
-        treeStatistic: statistic,
         currentNode: action.node
       });
     }
+
+    case ADD_NODE_WIDGET: {
+      return Object.assign({}, state, {
+        widgets: [...state.widgets, action.node]
+      });
+    }
+
     default: {
       return state
     }

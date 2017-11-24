@@ -5,10 +5,10 @@ import config from 'config';
 import { selectRoomType } from 'actions/querysettings';
 import { connect } from 'react-redux';
 
-export class RoomTypeSelector extends React.Component {
+export default class RoomTypeSelector extends React.Component {
 
   optionClicked(room) {
-    this.props.dispatch(selectRoomType(room));
+    this.props.chooseType(room);
   }
 
   render() {
@@ -34,14 +34,3 @@ export class RoomTypeSelector extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return state.querySettingsReducer.room
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(RoomTypeSelector);

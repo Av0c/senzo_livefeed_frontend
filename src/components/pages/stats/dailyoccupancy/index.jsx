@@ -23,10 +23,11 @@ export class DailyOccupancy extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let params = getParams(nextProps);
-        this.props.dispatch(getStatsDaily(params));
+        if (nextProps.currentNode.id) {
+            let params = getParams(nextProps);
+            this.props.dispatch(getStatsDaily(params));
+        }
     }
-
     render() {
         return (
             <PianoChartContainer mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} day={this.state.day} chooseDay={this.chooseDay.bind(this)} />

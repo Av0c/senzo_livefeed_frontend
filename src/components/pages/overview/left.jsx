@@ -11,7 +11,7 @@ import DateSelector from 'components/common/dateselector';
 import LineChart from 'components/common/linechart';
 import { selectNodeStats } from 'actions/node';
 import { getOccupancyOverview, getParams } from 'actions/stats';
-import Widget from 'components/pages/overview/widget';
+import Widgets from 'components/pages/overview/widget';
 import SearchContainer from 'components/pages/overview/searchcontainer';
 import SearchBar from 'components/common/searchbar';
 
@@ -22,56 +22,17 @@ class OverviewLeft extends React.Component {
 
   }
 
-  countTreeStatistic(root, map, type) {
-    var statistic = {
-      allRooms: 0,
-      allSensors: 0,
-      roomsInUse: 0,
-      desksInUse: 0
-    };
-    this.count(root, statistic, map, type);
-    return statistic;
-  }
-
-  count(root, statistic, map, type) {
-    var self = this;
-    if (root != null && root.children != null && root.children.length > 0) {
-      if (((root.type == 'meeting_room' || root.type == 'open_area') && type == 'all_areas') || root.type == type) {
-        statistic.allRooms++;
-        let occupied = false;
-        root.children.forEach((sensor) => {
-          if (map.get(sensor.id)) {
-            if (map.get(sensor.id).inuse) {
-              occupied = true;
-              statistic.desksInUse++;
-            }
-          }
-        });
-        statistic.allSensors += root.children.length;
-        if (occupied) {
-          statistic.roomsInUse++;
-        }
-      }
-      else {
-        root.children.forEach(function (node) {
-          self.count(node, statistic, map, type);
-        });
-      }
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     let params = getParams(nextProps);
     params.tag = 'TTO';
-    this.props.dispatch(getOccupancyOverview(params));
+    this.props.dispatch(getOccupancyOverview(params, nextProps.currentNode));
   }
 
-  renderWidget(){
-    
+  renderWidget() {
+
   }
 
   render() {
-    var stats = this.countTreeStatistic(this.props.currentNode, this.props.currentSensor, this.props.querySettings.room.code);
     return (
       <div style={{ marginTop: '20px' }} className="overview-block">
         <div className="container-fluid">
@@ -85,8 +46,8 @@ class OverviewLeft extends React.Component {
             </div>
           </div>
           <div className="row">
-            <Widget currentNode={this.props.currentNode} stats={stats} />
-            <SearchContainer tree={this.props.overview}/>
+            <Widgets querySettings={this.props.querySettings} allSensors={this.props.currentSensor} />
+            <SearchContainer tree={this.props.overview} querySettings={this.props.querySettings} />
           </div>
         </div>
       </div>
@@ -100,9 +61,10 @@ function mapStateToProps(state) {
     currentSensor: state.nodeReducer.map,
     currentNode: state.overviewReducer.currentNode,
     querySettings: state.querySettingsReducer,
-    overview: state.overviewReducer.customerOverview
+    overview: state.overviewReducer.customerOverview,
   };
 }
+
 function mapDispatchToProps(dispatch) {
   return {
     dispatch

@@ -3,12 +3,18 @@ import { connect } from 'react-redux';
 import RoomTypeSelector from 'components/common/roomtypeselector';
 import TagSelector from 'components/common/tagselector';
 import { selectTag } from 'actions/querysettings';
+import { selectRoomType } from 'actions/querysettings';
 
 export class StatsMenu extends React.Component {
 
     chooseTag(tag) {
         this.props.dispatch(selectTag(tag));
     }
+
+    chooseType(type) {
+        this.props.dispatch(selectRoomType(type));
+    }
+
     render() {
         return (
             <div className="stats-menu" style={{ paddingTop: '50px', marginBottom: '10px' }}>
@@ -19,7 +25,7 @@ export class StatsMenu extends React.Component {
                                 <h1>{this.props.name}</h1>
                             </div>
                             <div className="stats-room-select stats-select pull-left" style={{ paddingTop: '0px' }}>
-                                <RoomTypeSelector />
+                                <RoomTypeSelector chooseType={this.chooseType.bind(this)} type={this.props.room.type} />
                             </div>
                             <div className="stats-occupancy-select stats-select pull-left" style={{ paddingTop: '0px' }}>
                                 <TagSelector chooseTag={this.chooseTag.bind(this)} tag={this.props.tag} />
@@ -33,7 +39,10 @@ export class StatsMenu extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return { tag: state.querySettingsReducer.tag }
+    return {
+        tag: state.querySettingsReducer.tag,
+        room: state.querySettingsReducer.room
+    }
 }
 
 function mapDispatchToProps(dispatch) {

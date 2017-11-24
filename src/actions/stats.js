@@ -99,12 +99,12 @@ export function getParams(nextProps) {
     return params;
 }
 
-export function getOccupancyOverview(params) {
+export function getOccupancyOverview(params, node) {
     return dispatch => {
         dispatch(fetchOccupancyOverview());
         axios.get(config.api.root + `/stats/overview/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}`)
             .then((response) => {
-                dispatch(receiveOccupancyOverview(response.data));
+                dispatch(receiveOccupancyOverview({ data: response.data, node: node }));
             })
             .catch(function (response) {
                 dispatch(fetchFailed(response.data));

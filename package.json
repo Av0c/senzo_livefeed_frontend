@@ -81,6 +81,7 @@
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.2",
     "react-router": "^2.4.0",
+    "react-select": "^1.0.0-rc.10",
     "recharts": "^1.0.0-beta.0",
     "redux": "^3.3.1",
     "redux-loop": "^2.1.1",

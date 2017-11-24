@@ -63,5 +63,6 @@ export default {
       type: 'Efficiency'
     }
   },
-  day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+  day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+  viewFilter: ["ALL", "LIVE", "MAINTENANCE"]
 }

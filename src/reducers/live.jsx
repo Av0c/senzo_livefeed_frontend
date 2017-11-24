@@ -14,7 +14,7 @@ const initialState = {
 		children: [],
 		type: null
 	},
-	viewFilter: config.liveView.ALL,
+	viewFilter: config.viewFilter.ALL,
 };
 
 export default (state = initialState, action) => {

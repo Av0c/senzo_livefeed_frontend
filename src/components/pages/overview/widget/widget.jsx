@@ -10,7 +10,7 @@ export default class Widget extends React.Component {
 
     render() {
         return (
-            <div className="col-sm-4 col-xs-12">
+            <div style={{marginBottom: '20px'}} className="col-sm-4 col-xs-12">
                 <div className="the-card clearfix">
                     <h1 className="card-location">{this.props.node.info.name}</h1>
                     <div className="card-buttons clearfix">
@@ -25,9 +25,9 @@ export default class Widget extends React.Component {
                     <Gauge
                         label="Occupancy"
                         arcParams={[180, 125]}
-                        values={[this.props.values[0], this.props.values[1]]}
+                        values={this.props.gauge}
                     />
-                    <Bar values={this.props.values} />
+                    <Bar values={this.props.bar} />
                     <LocationStats stats={this.props.stats} />
                     <LocationBottomMenu />
                 </div>

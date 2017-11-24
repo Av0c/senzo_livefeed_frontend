@@ -67,9 +67,10 @@ export class WidgetContainer extends React.Component {
 
   render() {
     let stats = this.countTreeStatistic(this.props.node, this.props.allSensors);
-    let values = [this.props.stats.average, this.props.stats.peak, 1-this.props.stats.average-this.props.stats.peak];
+    let gauge = [this.props.stats.average, this.props.stats.peak];
+    let bar = this.props.stats.marks;
     return (
-      <Widget values={values} type={this.state.area.type} node={this.props.node} stats={stats} id={this.props.id} getOverview={this.getOverview.bind(this)} />
+      <Widget bar={bar} gauge={gauge} type={this.state.area.type} node={this.props.node} stats={stats} id={this.props.id} getOverview={this.getOverview.bind(this)} />
     );
   }
 }

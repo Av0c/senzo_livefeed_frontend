@@ -34,6 +34,7 @@ class Live extends React.Component {
 				type: null
 			},
 			path: [],
+			groupMR: true
 		};
 	}
 
@@ -98,6 +99,12 @@ class Live extends React.Component {
 		}
 	}
 
+	changeMRMode() {
+		this.setState({
+			groupMR: !this.state.groupMR
+		});
+	}
+
 	render() {
 		// ?? how to fix this ??
 		// console.log("live render", this.state.currentNode.info, this.props.tree.info);
@@ -132,6 +139,7 @@ class Live extends React.Component {
 									</div>
 
 									<div className="live-top-menu pull-right">
+										<input type="checkbox" onChange={this.changeMRMode.bind(this)}/>
 
 										<div className="live-select pull-left">
 											<NodeFilterDropdown
@@ -165,7 +173,13 @@ class Live extends React.Component {
 					</div>
 				</div>
 				<Path path={this.state.path} />
-				<FloorPlan imageURL={this.props.imageURL} root={this.props.nodeFilter} viewFilter={this.props.viewFilter} sensorMap={this.props.sensorMap} />
+				<FloorPlan
+					imageURL={this.props.imageURL}
+					root={this.props.nodeFilter}
+					viewFilter={this.props.viewFilter}
+					sensorMap={this.props.sensorMap}
+					groupMR={this.state.groupMR}
+				/>
 				<LiveSummary
 					root={this.state.currentNode}
 					sensorMap={this.props.sensorMap}

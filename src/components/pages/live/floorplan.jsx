@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Sensor from './sensor';
+import MeetingRoom from './meetingroom';
 import config from 'config';
 import {Link} from 'react-router'
 
@@ -51,9 +52,6 @@ export class FloorPlan extends React.Component {
 			}
 			if (root.children) {
 				root.children.forEach((child) => {
-					if(child.type==type.code) {
-						res.push(child);
-					}
 					self.listNodeByType(child, type, res);
 				});
 			}
@@ -74,10 +72,13 @@ export class FloorPlan extends React.Component {
 
 
 	render() {
-		var MRs = [], OAsensors = [];
-		this.listNodeByType(this.props.root, config.room.MEETINGROOM, MRs);
-		this.listSensorByRoomType(this.props.root, config.room.OPENAREA, OAsensors);
-		this.listSensorByRoomType(this.props.root, config.room.MEETINGROOM, OAsensors);
+		var MRs = [], sensors = [];
+		this.listSensorByRoomType(this.props.root, config.room.OPENAREA, sensors);
+		if (this.props.groupMR) {
+			this.listNodeByType(this.props.root, config.room.MEETINGROOM, MRs);
+		} else {
+			this.listSensorByRoomType(this.props.root, config.room.MEETINGROOM, sensors);
+		}
 
 		return (
 			<div className="container-fluid">
@@ -86,27 +87,28 @@ export class FloorPlan extends React.Component {
 						<div className="floorplan-container">
 							{
 								(!this.state.imageError) ? ([
-									<img src={this.props.imageURL} alt="Floorplan" className="floorplan-image" onError={this.imageError.bind(this)} key="image" />,
-									OAsensors.map((sensor) => {
-											return (
-												<Sensor sensor={sensor} viewFilter={this.props.viewFilter} selectedSensor={this.props.selectedSensor} key={sensor.id}/>
-											);
+									<img src={this.props.imageURL} alt="Floorplan" className="floorplan-image" onError={this.imageError.bind(this)} key="image" draggable="false"/>,
+									sensors.map((sensor) => {
+										return (
+											<Sensor
+												sensor={sensor}
+												viewFilter={this.props.viewFilter}
+												selectedSensor={this.props.selectedSensor}
+												key={sensor.id}
+											/>
+										);
 									}),
-									<Sensor sensor={{id: 0, xpercent: 0, ypercent: 0}}
-										viewFilter={this.props.viewFilter}
-										selectedSensor={this.props.selectedSensor}
-										key={0}
-									/>,
-									<Sensor sensor={{id: 1, xpercent: 100, ypercent: 0}}
-										viewFilter={this.props.viewFilter}
-										selectedSensor={this.props.selectedSensor}
-										key={1}
-									/>,
-									<Sensor sensor={{id: 2, xpercent: 0, ypercent: 100}}
-										viewFilter={this.props.viewFilter}
-										selectedSensor={this.props.selectedSensor}
-										key={2}
-									/>,
+									MRs.map((node) => {
+										return (
+											<MeetingRoom
+												node={node}
+												viewFilter={this.props.viewFilter}
+												selectedMR={this.props.selectedSensor}
+												key={node.id}
+												sensorMap={this.props.sensorMap}
+											/>
+										);
+									}),
 								]) : (
 									<h1>Oops ! No image uploaded ?? :D ??</h1>
 								)						

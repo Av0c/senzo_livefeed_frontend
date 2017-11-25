@@ -192,6 +192,7 @@ export default (state = initialState, action ) => {
     }
 
     case SELECT_SENSOR: {
+      console.log("select", action.sensor);
       return Object.assign({}, state, {
         selectedSensor: action.sensor
       })

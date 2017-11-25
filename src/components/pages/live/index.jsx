@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
+
 import Path from "./path"
 import NodeFilterDropdown from "./nodedropdown"
 import ViewFilterDropdown from "./viewdropdown"
 import LiveSummary from "./summary"
-import { Link } from 'react-router';
+import FloorPlan from "./floorplan"
 
 import {
 	selectNodeFilter,
@@ -13,6 +15,10 @@ import {
 import {
 	fetchLiveData
 } from 'actions/node';
+import {
+	fetchImage
+} from 'actions/floorplan';
+
 
 
 class Live extends React.Component {
@@ -58,6 +64,10 @@ class Live extends React.Component {
 		if (currentNode!=null && ((oldnode != currentNode && !this.empty(oldnode)) || (props.nodeFilter.info.empty && !this.empty(currentNode)))) {
 			// either floor changed or no node filter yet => set node filter to all areas.
 			this.props.dispatch(selectNodeFilter(currentNode));
+		}
+		if (oldnode != currentNode) {
+			// floor changed => fetch new image
+			this.props.dispatch(fetchImage(currentNode.id));
 		}
 	}
 
@@ -155,17 +165,7 @@ class Live extends React.Component {
 					</div>
 				</div>
 				<Path path={this.state.path} />
-
-				<div className="container-fluid">
-				  <div className="row">
-					<div className="col-md-12">
-					  <div className="floorplan-container">
-						<div className="temp-floorplan"></div>
-					  </div>
-					</div>
-				  </div>
-				</div>
-
+				<FloorPlan imageURL={this.props.imageURL} root={this.props.nodeFilter} viewFilter={this.props.viewFilter} sensorMap={this.props.sensorMap} />
 				<LiveSummary
 					root={this.state.currentNode}
 					sensorMap={this.props.sensorMap}
@@ -183,6 +183,7 @@ function mapStateToProps(state) {
 		sensorMap: state.nodeReducer.map,
 		sensorMapError: state.nodeReducer.error,
 	    user: state.authReducer.user,
+	    imageURL: state.floorPlanReducer.imageURL
 	};
 }
 

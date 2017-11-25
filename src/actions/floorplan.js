@@ -32,7 +32,7 @@ export function uploadImageSuccessful() {
 export function fetchImage(id) {
   return {
     type: FETCH_IMAGE,
-    id
+    id: id
   }
 }
 

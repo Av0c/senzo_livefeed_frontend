@@ -13,11 +13,16 @@ export default class LiveSummary extends React.Component {
 	listAreas(root, type, res) {
 		var self = this;
 		if (root) {
-			root.children.forEach((child) => {
-				if(child.type==type) {
-					res.push(child);
-				}
-			})
+			if(root.type==type.code) {
+				res.push(root);
+			}
+			if (root.children) {
+				root.children.forEach((child) => {
+					if(child.type==type.code) {
+						res.push(child);
+					}
+				})
+			}
 		}
 	}
 
@@ -42,9 +47,9 @@ export default class LiveSummary extends React.Component {
 
 	render() {
 		var OAs = [], MRs = [];
-		this.listAreas(this.props.root, config.room.OPENAREA.code, OAs);
-		this.listAreas(this.props.root, config.room.MEETINGROOM.code, MRs);
-		console.log("sensor", this.props.sensorMap);
+		this.listAreas(this.props.root, config.room.OPENAREA, OAs);
+		this.listAreas(this.props.root, config.room.MEETINGROOM, MRs);
+		console.log(OAs, MRs);
 
 		return (
 			<div className="container-fluid"> 
@@ -57,15 +62,15 @@ export default class LiveSummary extends React.Component {
 						<td className="live-stats-heading">Total:</td>
 						<td className="live-stats-heading" colSpan="3">Current Usage:</td>
 					  </tr>
-					  <tr className="objects-list"> 
-						<td className="live-stats-heading">Working Areas </td>
-						<td> </td>
-						<td>In Use</td>
-						<td>Unused</td>
-						<td>Occupancy</td>
-					  </tr>
 					  {
-					  	(OAs.length > 0) ? (
+					  	(OAs.length > 0) ? ([
+							<tr className="objects-list" key="OAs"> 
+								<td className="live-stats-heading">Working Areas </td>
+								<td> </td>
+								<td>In Use</td>
+								<td>Unused</td>
+								<td>Occupancy</td>
+							</tr>,
 						  	OAs.map((x) => {
 								var smr = this.summary(x);
 								return (
@@ -78,25 +83,17 @@ export default class LiveSummary extends React.Component {
 									</tr>
 								);
 						  	})
-						) : (
-							<tr className="objects-list"> 
-								<td className="object-name" style={{textAlign: "center"}}>--</td>
-								<td>--</td>
-								<td>--</td>
-								<td>--</td>
-								<td>--</td>
-							</tr>
-						)
+						]) : ([])
 					  }
-					  <tr className="objects-list"> 
-						<td className="live-stats-heading">Meeting Rooms</td>
-						<td> </td>
-						<td>Status</td>
-						<td>Users</td>
-						<td>Efficiency</td>
-					  </tr>
 					  {
-					  	(MRs.length > 0) ? (
+					  	(MRs.length > 0) ? ([
+							<tr className="objects-list" key="MRs"> 
+								<td className="live-stats-heading">Meeting Rooms</td>
+								<td> </td>
+								<td>Status</td>
+								<td>Users</td>
+								<td>Efficiency</td>
+							</tr>,
 						  	MRs.map((x) => {
 								var smr = this.summary(x);
 								return (
@@ -109,15 +106,7 @@ export default class LiveSummary extends React.Component {
 									</tr>
 								);
 						  	})
-						) : (
-							<tr className="objects-list"> 
-								<td className="object-name" style={{textAlign: "center"}}>--</td>
-								<td>--</td>
-								<td>--</td>
-								<td>--</td>
-								<td>--</td>
-							</tr>
-						)
+						]) : ([])
 					  }
 					</tbody></table>
 				  </div>

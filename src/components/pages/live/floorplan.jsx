@@ -1,113 +1,132 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import SensorForm from './sensorform';
 import Sensor from './sensor';
+import config from 'config';
 import {Link} from 'react-router'
+
 import {
-  saveSensor,
-  removeSensor,
-  fetchSensorFloorplanInfo,
-  updateSensor,
-  fetchImage,
-  selectSensor
+	saveSensor,
+	removeSensor,
+	fetchSensorFloorplanInfo,
+	updateSensor,
+	fetchImage,
+	selectSensor
 } from 'actions/floorplan';
 
 export class FloorPlan extends React.Component {
+	constructor(props, context) {
+		super(props, context);
+		this.state = {
+			imageError: false
+		};
+	}
 
-  componentWillMount(){
-    this.props.fetchInfo(this.props.params.id);
-    this.props.fetchImage(this.props.params.id);
-  }
+	listSensorByRoomType(root, roomType, res) {
+		var self = this;
+		if (root) {
+			if (root.type == roomType.code) {
+				root.children.forEach((child) => {
+					if (child.type=="sensor") {
+						let sensor = this.props.sensorMap.get(child.id);
+						if (sensor) {
+							res.push(sensor);
+						}
+					}
+				});
+			} else {
+				if (root.children) {
+					root.children.forEach((child) => {
+						self.listSensorByRoomType(child, roomType, res);
+					});
+				}
+			}
+		}
+	}
 
-  render (){
-    let formActions = {
-      select: this.props.select,
-      save: this.props.save,
-      update: this.props.update,
-      remove: this.props.remove
-    };
+	listNodeByType(root, type, res) {
+		var self = this;
+		if (root) {
+			if(root.type==type.code) {
+				res.push(root);
+			}
+			if (root.children) {
+				root.children.forEach((child) => {
+					if(child.type==type.code) {
+						res.push(child);
+					}
+					self.listNodeByType(child, type, res);
+				});
+			}
+		}
+	}
 
-    let dataUri = this.props.floorplan.image ? 'data:image/jpg;base64,' + this.props.floorplan.image : '';
-    let imageElement = <img id="floorplan-image" ref="floorplan-image" src={dataUri} onClick={this.onClick.bind(this)} />
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			imageError: false
+		})
+	}
 
-    if (!dataUri) {
-      return <div id="floorplan-image">
-        No floorplan found!
-        <div className="link">
-          <Link to={`locations/area/${this.props.params.id}/floorplan/add`} style={{color:'#E25E5A', textDecoration:'none'}}>UPLOAD FLOOR PLAN</Link>
-        </div>
-      </div>
-    }
+	imageError() {
+		this.setState({
+			imageError: true
+		})
+	}
 
-    let FormElement = this.props.map.selectedSensor ? <SensorForm sensor={this.props.map.selectedSensor} actions={formActions}/> : null;
-    let selectedSensor = this.props.map.selectedSensor ? <Sensor sensor={this.props.map.selectedSensor} /> : null;
-    return (
-      <div className="floorplan-container">
-        <div className="floorplan-image-container" onClick={this.onClick.bind(this)}>
-          {imageElement}
-          {this.renderChildren(this.props.map.sensors)}
-          {selectedSensor}
-        </div>
-        {FormElement}
-      </div>
-    )
-  }
 
-  renderChildren(sensors) {
-    return sensors.map( (sensor) => {
-      return (
-        <Sensor key={sensor.id} ref={sensor.id} sensor={sensor} selectedSensor={this.props.map.selectedSensor} />
-      )
-    })
-  }
+	render() {
+		var MRs = [], OAsensors = [];
+		this.listNodeByType(this.props.root, config.room.MEETINGROOM, MRs);
+		this.listSensorByRoomType(this.props.root, config.room.OPENAREA, OAsensors);
+		this.listSensorByRoomType(this.props.root, config.room.MEETINGROOM, OAsensors);
 
-  onClick(e) {
-    e.stopPropagation();
-    var imageElement = this.refs['floorplan-image'];
-    var mousePos = this.getMousePos(e);
-    var containerX = imageElement.offsetWidth;
-    var containerY = imageElement.offsetHeight;
-    var clickXpercent = ((mousePos.x) / containerX) * 100;
-    var clickYpercent = ((mousePos.y) / containerY) * 100;
-    this.props.select({
-      id: undefined,
-      dev_id: '',
-      area_id: parseInt(this.props.params.id, 10),
-      name: '',
-      xPercent: clickXpercent,
-      yPercent: clickYpercent,
-      faulty: false
-    });
-
-  }
-
-  getMousePos(evt) {
-    var imageElement = this.refs['floorplan-image'].getBoundingClientRect();
-    var root = document.documentElement;
-    var mouseX = evt.clientX - imageElement.left - root.scrollLeft;
-    var mouseY = evt.clientY - imageElement.top - root.scrollTop;
-    return {
-      x: mouseX,
-      y: mouseY
-    }
-  }
-
+		return (
+			<div className="container-fluid">
+				<div className="row">
+					<div className="col-md-12">
+						<div className="floorplan-container">
+							{
+								(!this.state.imageError) ? ([
+									<img src={this.props.imageURL} alt="Floorplan" className="floorplan-image" onError={this.imageError.bind(this)} key="image" />,
+									OAsensors.map((sensor) => {
+											return (
+												<Sensor sensor={sensor} viewFilter={this.props.viewFilter} selectedSensor={this.props.selectedSensor} key={sensor.id}/>
+											);
+									}),
+									<Sensor sensor={{id: 0, xpercent: 0, ypercent: 0}}
+										viewFilter={this.props.viewFilter}
+										selectedSensor={this.props.selectedSensor}
+										key={0}
+									/>,
+									<Sensor sensor={{id: 1, xpercent: 100, ypercent: 0}}
+										viewFilter={this.props.viewFilter}
+										selectedSensor={this.props.selectedSensor}
+										key={1}
+									/>,
+									<Sensor sensor={{id: 2, xpercent: 0, ypercent: 100}}
+										viewFilter={this.props.viewFilter}
+										selectedSensor={this.props.selectedSensor}
+										key={2}
+									/>,
+								]) : (
+									<h1>Oops ! No image uploaded ?? :D ??</h1>
+								)						
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 }
 
 function mapStateToProps(state){
-  return {
-    map: state.floorPlanSensorReducer,
-    floorplan: state.floorPlanReducer
-  }
+	return {
+
+	}
 }
 function mapDispatchToProps(dispatch) {
-  return {
-    fetchInfo: (id) => dispatch(fetchSensorFloorplanInfo(id)),
-    fetchImage: (id) => dispatch(fetchImage(id)),
-    select: (sensor) => dispatch(selectSensor(sensor)),
-    save: (sensor) => dispatch(saveSensor(sensor)),
-    update: (sensor) => dispatch(updateSensor(sensor)),
-    remove: (sensor) => dispatch(removeSensor(sensor))
-  }
+	return {
+		dispatch
+	};
 }
-export default connect(mapStateToProps, mapDispatchToProps)(FloorPlanIndex);
+export default connect(mapStateToProps, mapDispatchToProps)(FloorPlan);

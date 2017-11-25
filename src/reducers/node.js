@@ -31,7 +31,6 @@ export default function (state = initialState, action) {
       action.data.forEach(function (element) {
         map.set(element.id, element);
       })
-      console.log(RECEIVE_LIVE_DATA, map);
       return Object.assign({}, state, {
         map: map
       });

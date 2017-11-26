@@ -11,10 +11,11 @@ import 'react-date-picker/index.css'
 export class Frame extends React.Component {
 
   handleTreeClick(node) {
-    if(this.props.location.pathname.includes("/statistic")) {
+    if (this.props.location.pathname.includes("/statistic")) {
       appHistory.push(`/statistic/${node.id}`);
-    }
-    else{
+    } else if (this.props.location.pathname.includes("/live")) {
+      appHistory.push(`/live/${node.id}`);
+    } else {
       this.props.dispatch(setCurrentNode(node));
     }
   }

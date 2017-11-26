@@ -38,6 +38,7 @@ import Profile from 'components/pages/profile';
 import FloorPlan from 'components/pages/locations/area/floorplan/index';
 import AddFloorPlan from 'components/pages/addfloorplan';
 import Stats from 'components/pages/stats';
+import Live from 'components/pages/live';
 
 
 
@@ -56,6 +57,7 @@ ReactDOM.render((
         </Route>
         <Route path="/profile" component={Profile} />
         <Route path="/statistic/:id" component={Stats} />
+        <Route path="/live/:id" component={Live} />
 
         <Route path="/locations/area/:id/floorplan/add" component={AddFloorPlan} />
         <Route path="/settings" component={Settings}>

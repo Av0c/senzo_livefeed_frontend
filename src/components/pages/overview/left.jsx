@@ -18,7 +18,7 @@ import SearchBar from 'components/common/searchbar';
 class OverviewLeft extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));
+    this.props.dispatch(fetchLiveData(this.props.user.companyid));
 
   }
 

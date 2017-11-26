@@ -32,7 +32,7 @@ export function uploadImageSuccessful() {
 export function fetchImage(id) {
   return {
     type: FETCH_IMAGE,
-    id
+    id: id
   }
 }
 
@@ -63,6 +63,7 @@ export const UI_UPDATE_COMPLETED = 'UI_UPDATE_COMPLETED';
 export const UPDATE_SENSOR = 'UPDATE_SENSOR';
 export const UPDATE_SENSOR_COMPLETED = 'UPDATE_SENSOR_COMPLETED';
 export const SELECT_SENSOR = 'SELECT_SENSOR';
+export const MOVE_SENSOR = 'MOVE_SENSOR';
 
 export function updateSensor(sensor) {
   return {
@@ -168,5 +169,13 @@ export function selectSensor(sensor) {
   return {
     type: SELECT_SENSOR,
     sensor
+  }
+}
+
+export function moveSensor(sensor, x, y) {
+  return {
+    type: MOVE_SENSOR,
+    sensor,
+    x, y
   }
 }

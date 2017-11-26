@@ -11,7 +11,8 @@ import {
 	fetchSensorFloorplanInfo,
 	updateSensor,
 	fetchImage,
-	selectSensor
+	selectSensor,
+	moveSensor
 } from 'actions/floorplan';
 
 export class FloorPlan extends React.Component {
@@ -70,52 +71,109 @@ export class FloorPlan extends React.Component {
 		})
 	}
 
+	imageClick(e) {
+		e.stopPropagation();
+		if (this.props.selectedSensor && typeof this.props.selectedSensor.id != "undefined") {
+			var imageElement = this.refs['floorplan-image'];
+			var mousePos = this.getMousePos(e);
+			var containerX = imageElement.offsetWidth;
+			var containerY = imageElement.offsetHeight;
+			var xpercent = ((mousePos.x) / containerX) * 100;
+			var ypercent = ((mousePos.y) / containerY) * 100;
+			console.log(xpercent, ypercent);
+			this.props.dispatch(moveSensor(this.props.selectedSensor, xpercent, ypercent));
+		} else {
+			this.props.dispatch(selectSensor({}));
+		}
+	}
+
+	getMousePos(evt) {
+		var imageElement = this.refs['floorplan-image'].getBoundingClientRect();
+		var mouseX = evt.clientX - imageElement.left;
+		var mouseY = evt.clientY - imageElement.top;
+		return {
+			x: mouseX,
+			y: mouseY
+		}
+	}
 
 	render() {
 		var MRs = [], sensors = [];
 		this.listSensorByRoomType(this.props.root, config.room.OPENAREA, sensors);
-		if (this.props.groupMR) {
+		if (this.props.groupMR && this.props.viewFilter!=config.viewFilter.MAINTENANCE) {
 			this.listNodeByType(this.props.root, config.room.MEETINGROOM, MRs);
 		} else {
 			this.listSensorByRoomType(this.props.root, config.room.MEETINGROOM, sensors);
 		}
 
+		console.log("FP render", this.props.root.id, this.props.root.info.hasfloorplan);
 		return (
 			<div className="container-fluid">
-				<div className="row">
-					<div className="col-md-12">
-						<div className="floorplan-container">
-							{
-								(!this.state.imageError) ? ([
-									<img src={this.props.imageURL} alt="Floorplan" className="floorplan-image" onError={this.imageError.bind(this)} key="image" draggable="false"/>,
-									sensors.map((sensor) => {
-										return (
-											<Sensor
-												sensor={sensor}
-												viewFilter={this.props.viewFilter}
-												selectedSensor={this.props.selectedSensor}
-												key={sensor.id}
-											/>
-										);
-									}),
-									MRs.map((node) => {
-										return (
-											<MeetingRoom
-												node={node}
-												viewFilter={this.props.viewFilter}
-												selectedMR={this.props.selectedSensor}
-												key={node.id}
-												sensorMap={this.props.sensorMap}
-											/>
-										);
-									}),
-								]) : (
-									<h1>Oops ! No image uploaded ?? :D ??</h1>
-								)						
-							}
-						</div>
-					</div>
+				<div className="color-note">
+					<table><tbody>
+					<tr>
+						<td className="color-note-td"><Sensor sensor={{id: -2, inuse: true, standby: false, faulty: false, registered:true, xpercent: 50, ypercent: 50}} viewFilter={config.viewFilter.ALL} /></td>
+						<td>Occupied</td>
+					</tr>
+					<tr>
+						<td className="color-note-td"><Sensor sensor={{id: -3, inuse: false, standby: true, faulty: false, registered:true, xpercent: 50, ypercent: 50}} viewFilter={config.viewFilter.ALL} /></td>
+						<td>Standby</td>
+					</tr>
+					<tr>
+						<td className="color-note-td"><Sensor sensor={{id: -1, inuse: false, standby: false, faulty: false, registered: true, xpercent: 50, ypercent: 50}} viewFilter={config.viewFilter.ALL} /></td>
+						<td>Unoccupied</td>
+					</tr>
+					<tr><td><br/></td><td></td></tr>
+					<tr>
+						<td className="color-note-td"><Sensor sensor={{id: -4, inuse: false, standby: false, faulty: true, registered:true, xpercent: 50, ypercent: 50}} viewFilter={config.viewFilter.ALL} /></td>
+						<td>Need maintenance</td>
+					</tr>
+					<tr>
+						<td className="color-note-td"><Sensor sensor={{id: -5, inuse: false, standby: false, faulty: false, registered:false, xpercent: 50, ypercent: 50}} viewFilter={config.viewFilter.ALL} /></td>
+						<td>Unregistered</td>
+					</tr>
+					</tbody></table>
 				</div>
+					{(this.props.root.info.hasfloorplan) ? (
+						<div className="floorplan-container">
+							<img
+								src={this.props.imageURL}
+								alt="Floorplan"
+								className="floorplan-image"
+								ref="floorplan-image"
+								onError={this.imageError.bind(this)}
+								draggable="false"
+								onClick={this.imageClick.bind(this)}
+								key="image"
+							/>
+							{sensors.map((sensor) => {
+								return (
+									<Sensor
+										sensor={sensor}
+										viewFilter={this.props.viewFilter}
+										selectedSensor={this.props.selectedSensor}
+										key={sensor.id}
+									/>
+								);
+							})}
+							{MRs.map((node) => {
+								return (
+									<MeetingRoom
+										node={node}
+										viewFilter={this.props.viewFilter}
+										selectedMR={this.props.selectedSensor}
+										key={node.id}
+										sensorMap={this.props.sensorMap}
+									/>
+								);
+							})}
+						</div>
+					) : (
+						<div className="floorplan-error">
+							<br/>
+							<h2>Oops ! No floor plan uploaded for this location...</h2>
+						</div>
+					)}
 			</div>
 		);
 	}
@@ -123,7 +181,7 @@ export class FloorPlan extends React.Component {
 
 function mapStateToProps(state){
 	return {
-
+		selectedSensor: state.floorPlanSensorReducer.selectedSensor
 	}
 }
 function mapDispatchToProps(dispatch) {

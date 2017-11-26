@@ -29,6 +29,12 @@ export default function (state = initialState, action) {
     case RECEIVE_LIVE_DATA: {
       let map = new Map();
       action.data.forEach(function (element) {
+        // Dummy test...
+        // if (element.id%3==0) {
+        //   element.inuse = true;
+        // } else if (element.id%3==1) {
+        //   element.standby = true;
+        // }
         map.set(element.id, element);
       })
       return Object.assign({}, state, {

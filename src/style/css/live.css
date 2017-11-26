@@ -15,18 +15,26 @@
   position: relative;
   margin-right: 40px;
 }
+.floorplan-error {
+  margin-top: 20px;
+  margin-left: 50px;
+  display: inline-block;
+  height: 100%;
+}
+
 .floorplan-container {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 40px;
   position: relative;
-  margin-left: 10%;
+  margin-left: 50px;
 
   display: inline-block;
-  border: 2px solid black;
+  border: 1px solid black;
   padding: 1px;
 }
 .floorplan-image {
-  height: 80vh;
+  min-height: 80vh;
+  min-width: 20vh;
   display: inline-block;
   vertical-align: middle;
   background-repeat: no-repeat;
@@ -133,6 +141,9 @@
 }
 .bc-divider {
   padding: 0 10px;
+}
+.bc-element-off, .bc-root {
+  color: gray;
 }
 .card {
   padding: 12px 26px 20px;

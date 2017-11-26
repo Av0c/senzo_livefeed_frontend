@@ -27,7 +27,8 @@ import {
   UPLOAD_SUCCESSFUL,
   UPDATE_SENSOR_COMPLETED,
   updateSensorCompleted,
-  SELECT_SENSOR
+  SELECT_SENSOR,
+  MOVE_SENSOR
 } from 'actions/floorplan';
 
 import {showNotification} from 'actions/common';
@@ -192,10 +193,26 @@ export default (state = initialState, action ) => {
     }
 
     case SELECT_SENSOR: {
-      console.log("select", action.sensor);
+      if (state.selectedSensor != action.sensor) {
+        // select new
+        return Object.assign({}, state, {
+          selectedSensor: action.sensor
+        });
+      } else {
+        // deselect
+        return Object.assign({}, state, {
+          selectedSensor: {}
+        });
+      }
+    }
+
+    case MOVE_SENSOR: {
+      action.sensor.xpercent = action.x;
+      action.sensor.ypercent = action.y;
+      console.log(action)
       return Object.assign({}, state, {
-        selectedSensor: action.sensor
-      })
+          selectedSensor: {}
+        });
     }
 
     default: {

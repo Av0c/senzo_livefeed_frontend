@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-
+import config from "config"
 import Path from "./path"
 import NodeFilterDropdown from "./nodedropdown"
 import ViewFilterDropdown from "./viewdropdown"
@@ -49,7 +49,7 @@ class Live extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		// console.log("Live receive props");
+		console.log("Live receive props");
 		this.prepare(nextProps);
 	}
 
@@ -61,12 +61,20 @@ class Live extends React.Component {
 
 		var oldnode = this.state.currentNode;
 		var currentNode = res.currentNode;
-		// console.log(oldnode, currentNode, (oldnode != currentNode && !this.empty(oldnode)), props);
-		if (currentNode!=null && ((oldnode != currentNode && !this.empty(oldnode)) || (props.nodeFilter.info.empty && !this.empty(currentNode)))) {
+
+		var cond1 = (oldnode.id != currentNode.id && !this.empty(currentNode));
+		var cond2 = (props.nodeFilter.info.empty && !this.empty(currentNode));
+		console.log(oldnode, currentNode, cond1, cond2);
+		if (cond1 || cond2) {
 			// either floor changed or no node filter yet => set node filter to all areas.
 			this.props.dispatch(selectNodeFilter(currentNode));
 		}
-		if (oldnode != currentNode) {
+		if (currentNode.type == config.room.MEETINGROOM.code || props.nodeFilter.type == config.room.MEETINGROOM.code || props.viewFilter == config.viewFilter.MAINTENANCE) {
+			this.setState({
+				groupMR: false
+			})
+		}
+		if (oldnode.id != currentNode.id) {
 			// floor changed => fetch new image
 			this.props.dispatch(fetchImage(currentNode.id));
 		}
@@ -75,7 +83,7 @@ class Live extends React.Component {
 	findNode(tree, id, path, status, res) {
 		var self = this;
 		if (tree) {
-			path.push(tree.info.name);
+			path.push(tree);
 			if (id == tree.id) {
 				this.setState({
 					currentNode: tree,
@@ -86,7 +94,7 @@ class Live extends React.Component {
 				return;
 			}
 
-			else if(tree.type!="meeting_room" && tree.type!="open_area" ) {
+			else if(tree.type!="meeting_room" && tree.type!="open_area" && tree.children) {
 				tree.children.forEach((child) => {
 					if (!status.found) {
 						self.findNode(child, id, path, status, res);
@@ -107,9 +115,9 @@ class Live extends React.Component {
 
 	render() {
 		// ?? how to fix this ??
-		// console.log("live render", this.state.currentNode.info, this.props.tree.info);
+		console.log("live render", this.state.currentNode.info, this.props.tree.info);
 		if (this.state.currentNode.info.empty && !this.empty(this.props.tree)) {
-			// console.log("render prep", this.props);
+			console.log("render prep", this.props);
 			this.prepare(this.props);
 		}
 		// ??
@@ -139,7 +147,7 @@ class Live extends React.Component {
 									</div>
 
 									<div className="live-top-menu pull-right">
-										<input type="checkbox" onChange={this.changeMRMode.bind(this)}/>
+										<input type="checkbox" onChange={this.changeMRMode.bind(this)} checked={this.state.groupMR} />
 
 										<div className="live-select pull-left">
 											<NodeFilterDropdown

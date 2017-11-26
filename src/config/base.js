@@ -67,15 +67,15 @@ export default {
   viewFilter: {
     ALL: {
       code: "ALL",
-      text: "Show all"
+      text: "Show All"
     },
     LIVE: {
       code: "LIVE",
-      text: "Live view"
+      text: "Live View"
     },
     MAINTENANCE: {
       code: "MAINTENANCE",
-      text: "Maintenance view"
+      text: "Maintenance View"
     }
   }
 }

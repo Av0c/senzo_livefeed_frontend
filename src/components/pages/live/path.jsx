@@ -9,10 +9,19 @@ export default class Path extends React.Component {
 						<div className="breadcrumbs">
 							{this.props.path.map(
 								(x, idx) => (
-									(idx == 0) ? (<a className="bc-root" key={idx}>{x}</a>) :
+									(idx == 0) ? (<a className="bc-root" key={idx}>{x.info.name}</a>) :
 									([
 										<span className="bc-divider" key={-idx}> > </span>,
-										<a className="bc-element" key={idx}>{x}</a>
+										/* Must fix hash sign in the future !!!*/
+										(x.info.hasfloorplan) ? (
+											<a className="bc-element-on" key={idx} href={"#/live/" + x.id}>
+												{x.info.name}
+											</a>
+										) : (
+											<a className="bc-element-off" key={idx}>
+												{x.info.name}
+											</a>
+										)
 									])
 								)
 							)}

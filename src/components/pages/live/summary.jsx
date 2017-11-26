@@ -49,7 +49,6 @@ export default class LiveSummary extends React.Component {
 		var OAs = [], MRs = [];
 		this.listAreas(this.props.root, config.room.OPENAREA, OAs);
 		this.listAreas(this.props.root, config.room.MEETINGROOM, MRs);
-		console.log(OAs, MRs);
 
 		return (
 			<div className="container-fluid"> 
@@ -79,7 +78,7 @@ export default class LiveSummary extends React.Component {
 										<td>{smr.total}</td>
 										<td>{smr.inUse}</td>
 										<td>{smr.total-smr.inUse}</td>
-										<td>{(smr.total>0) ? Math.round(100*smr.inUse/smr.total)/100 : 0}%</td>
+										<td>{(smr.total>0) ? Math.round(100*smr.inUse/smr.total) : 0}%</td>
 									</tr>
 								);
 						  	})
@@ -102,7 +101,7 @@ export default class LiveSummary extends React.Component {
 										<td>{smr.total}</td>
 										<td><Status taken={(smr.inUse >0)} /></td>
 										<td>{smr.inUse}</td>
-										<td>{(smr.inUse>0) ? Math.round(100*smr.inUse/smr.total)/100+"%" : ""}</td>
+										<td>{(smr.inUse>0) ? Math.round(100*smr.inUse/smr.total)+"%" : ""}</td>
 									</tr>
 								);
 						  	})

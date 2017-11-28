@@ -37,7 +37,7 @@ export default class NodeFilterDropdown extends React.Component {
 
 				<DropdownItem>
 					<div onClick={this.optionClicked.bind(this, this.props.root)}>
-						All area
+						All areas
 					</div>
 				</DropdownItem>
 				{

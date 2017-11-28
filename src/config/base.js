@@ -77,5 +77,10 @@ export default {
       code: "MAINTENANCE",
       text: "Maintenance View"
     }
-  }
+  },
+  roles: [
+    {code:"ADMIN", text:"Administrator"},
+    {code:"LOCALUSER", text:"Local user"},
+    {code:"SUPPORTUSER", text:"Support user"}
+  ]
 }

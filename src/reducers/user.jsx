@@ -22,6 +22,7 @@ import {
   userRemoved,
   userSaved,
   userUpdated,
+  userInvited
 
 } from 'actions/user'
 
@@ -39,7 +40,7 @@ const initialState = {
 };
 
 function fetchUsers() {
-  return axios.get(`${config.api.root}/api/user`)
+  return axios.get(`${config.api.root}/api/user/me`)
     .then(receiveUsers)
 }
 
@@ -74,6 +75,12 @@ function updatePassword(data){
     .then(() => showNotification('Password updated', true))
     .catch((error) => showNotification('Updating password failed: ' + error.statusText, false))
 }
+function inviteUser(inv){
+  return axios.post(`${config.api.root}/user/invite`, inv)
+    .then(userInvited)
+    .catch((error) => userInvited(error.statusText))
+}
+
 
 
 export default(state = initialState, action) => {
@@ -122,6 +129,20 @@ export default(state = initialState, action) => {
         Effects.promise(updatePassword, action.data)
       )
     }
+    case INVITE_USER: {
+      return loop (
+        Object.assign({}, state, {loading: true}),
+        Effects.promise(inviteUser, action.inv)
+      )
+    }
+    case USER_INVITED: {
+      console.log(action);
+      return Object.assign({}, state, {
+          loading: false,
+          respond: action.msg
+      })
+    }
+
 
     case FORM_DATA_CHANGED: {
       return Object.assign({}, state, {

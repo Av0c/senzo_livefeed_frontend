@@ -14,6 +14,9 @@ export const USER_CREATED = 'USER_CREATED';
 export const USER_UPDATED = 'USER_UPDATED';
 export const USER_REMOVED = 'USER_REMOVED';
 
+export const INVITE_USER = 'INVITE_USER';
+export const USER_INVITED = 'USER_INVITED';
+
 
 
 
@@ -64,6 +67,20 @@ export function updateUser(user) {
   return {
     type: UPDATE_USER,
     user
+  }
+}
+
+export function inviteUser(inv) {
+  return {
+    type: INVITE_USER,
+    inv
+  }
+}
+
+export function userInvited(msg) {
+  return {
+    type: USER_INVITED,
+    msg
   }
 }
 

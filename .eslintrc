@@ -36,6 +36,7 @@
     "react/jsx-uses-react": 1,
     "indent": 0,
     "keyword-spacing": 2,
-    "import/no-unresolved": 0
+    "import/no-unresolved": 0,
+    "no-case-declarations": 1
   }
 }

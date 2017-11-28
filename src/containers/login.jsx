@@ -43,7 +43,7 @@ class Login extends React.Component {
                   <input type="checkbox" name="keep_me_logged_in" /><span>Keep me logged in</span>
                 </div>
                 <div className="user_submit">
-                  <input type="submit" name="user_submit" value="Log in" onClick={this.submit} />
+                  <input type="button" name="user_submit" value="Log in" onClick={this.submit} />
                 </div>
                 <div className='error-message' >{this.props.auth.errorMessage}</div>
                 <div className='forgot-password'>

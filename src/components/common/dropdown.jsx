@@ -17,7 +17,7 @@ export default class DropDown extends React.Component {
 
   render () {
     return (
-      <div className={`${this.state.opened ? "dropdown open" : "dropdown"} ${this.props.customClass}`}>
+      <div className={`dropdown card-area-dropdown ${this.state.opened ? "dropdown open" : "dropdown"} ${this.props.customClass}`}>
         <button className="dropdown-toggle" onClick={this.handleClick.bind(this)}>
           {this.props.header}<i className={this.state.opened ? "icon arrow-up" : "icon arrow-down"}></i>
         </button>

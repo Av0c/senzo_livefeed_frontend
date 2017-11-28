@@ -17,7 +17,7 @@ export default class Tree extends React.Component {
                 };
             }
             childNodes = this.props.tree.children.map(function(node, index) {
-                return <Node node={node} key={index} statistic={self.props.statistic.bind(this)}><Tree statistic={self.props.statistic.bind(this)} tree={node} /></Node>
+                return <Node node={node} key={index} statistic={self.props.statistic.bind(self)}><Tree statistic={self.props.statistic.bind(self)} tree={node} /></Node>
             });
         }
         return (

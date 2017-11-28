@@ -1,5 +1,5 @@
 export default {
-  time:{
+  time: {
     period: {
       DAY: {
         format: "HH:mm",
@@ -25,16 +25,43 @@ export default {
         title: "Custom timeframe",
         prevTitle: ""
       }
-    },
+    }
   },
   mode: {
     AVERAGE: {
-      code: "average",
+      code: "Average",
       title: "AVERAGE UTILIZATION"
     },
     PEAK: {
-      code: "peak",
+      code: "Peak",
       title: "PEAK UTILIZATION"
     }
-  }
+  },
+  room: {
+    MEETINGROOM: {
+      type: "Meeting rooms",
+      code: 'meeting_room',
+      occupancyTag: 'MRO',
+      efficiencyTag: 'MRE'
+    },
+    OPENAREA: {
+      type: "Open areas",
+      code: "open_area",
+      occupancyTag: "OAO"
+    },
+    ALLAREA: {
+      type: "All areas",
+      code: 'all_areas',
+      occupancyTag: "TTO"
+    }
+  },
+  tag: {
+    OCCUPANCY: {
+      type: 'Occupancy'
+    },
+    EFFICIENCY: {
+      type: 'Efficiency'
+    }
+  },
+  day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 }

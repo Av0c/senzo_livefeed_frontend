@@ -2,7 +2,7 @@
 
 .dropdown {
   position: relative;
-  background-color: @background-lighter-blue;
+  background-color: white;
   &.open {
     .dropdown-items {
       display: block;
@@ -12,11 +12,10 @@
     background-color: transparent;
     border: none;
     width: 100%;
-    color: @color-text-white;
-    font-size: @font-size-default;
+    color: #585858;
+    font-size: 17px;
     font-family: @font-family-default;
     text-align: left;
-    padding: 15px;
     cursor: pointer;
     &:focus {
       outline: none;
@@ -26,7 +25,6 @@
       height: 1em;
       width: 1em;
       float: right;
-      margin-top: 2px;
     }
   }
   .dropdown-items {
@@ -35,17 +33,16 @@
     left:0;
     top: 100%;
     width: 100%;
-    background-color: @background-lighter-blue;
+    background-color: white;
     margin-top: 2px;
     padding: 10px;
     line-height: 20px;
     box-sizing: border-box;
 
     .dropdown-item {
-      text-transform: uppercase;
       &:hover {
         cursor: pointer;
-        background-color: @background-navigation-hover;
+        background-color: wheat;
       }
 
       .react-date-picker__calendar {

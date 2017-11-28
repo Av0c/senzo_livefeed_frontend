@@ -37,6 +37,7 @@ import EditCustomer from 'components/pages/settings/customers/edit';
 import Profile from 'components/pages/profile';
 import FloorPlan from 'components/pages/locations/area/floorplan/index';
 import AddFloorPlan from 'components/pages/addfloorplan';
+import Stats from 'components/pages/stats';
 
 
 
@@ -54,6 +55,8 @@ ReactDOM.render((
           <Route path="/locations/area/:id/sensor/:sensorId" component={FloorPlan} />
         </Route>
         <Route path="/profile" component={Profile} />
+        <Route path="/statistic/:id" component={Stats} />
+
         <Route path="/locations/area/:id/floorplan/add" component={AddFloorPlan} />
         <Route path="/settings" component={Settings}>
           <Route path="/settings/myaccount/password" component={Password} />

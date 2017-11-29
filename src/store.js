@@ -17,7 +17,7 @@ import floorPlanReducer from 'reducers/floorplan';
 import commonReducer from 'reducers/common';
 import nodeReducer from 'reducers/node';
 import statsReducer from 'reducers/stats';
-
+import comparisonReducer from 'reducers/comparison';
 import { clearToken } from 'actions/authentication';
 import { showNotification } from 'actions/common';
 
@@ -35,7 +35,8 @@ const reducer = combineReducers({
   floorPlanReducer,
   commonReducer,
   nodeReducer,
-  statsReducer
+  statsReducer,
+  comparisonReducer
 });
 
 const store = createStore(

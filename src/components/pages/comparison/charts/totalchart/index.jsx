@@ -4,7 +4,7 @@ import LineChart from 'components/common/linechart';
 import LineChartContainer from 'components/pages/stats/totaloccupancy/linechartcontainer';
 import { getNodeSeriesStats, getParams } from 'actions/stats';
 
-export class TotalOccupancy extends React.Component {
+export class TotalChart extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.currentNode.id) {
@@ -26,4 +26,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(null, mapDispatchToProps)(TotalOccupancy);
+export default connect(null, mapDispatchToProps)(TotalChart);

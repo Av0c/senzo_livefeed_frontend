@@ -1,7 +1,6 @@
 import React from 'react';
 
 import OverviewLeft from 'components/pages/overview/left'
-import OverviewRight from 'components/pages/overview/right'
 
 export default class Overview extends React.Component {
 

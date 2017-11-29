@@ -7,7 +7,7 @@ import { getNodeSeriesStats, getParams } from 'actions/stats';
 import OccupancyRange from 'components/pages/stats/occupancyrange';
 import DailyOccupancy from 'components/pages/stats/dailyoccupancy';
 import OccupancyBreakDown from 'components/pages/stats/occupancybreakdown';
-
+import LeftMenu from 'components/common/leftmenu';
 export class Stats extends React.Component {
 
     constructor(props, context) {
@@ -34,7 +34,7 @@ export class Stats extends React.Component {
                 return;
             }
 
-            else if(tree.type!="meeting_room" && tree.type!="open_area" ) {
+            else if (tree.type != "meeting_room" && tree.type != "open_area") {
                 tree.children.forEach((child) => {
                     self.findNode(child, nextProps);
                 })
@@ -42,19 +42,15 @@ export class Stats extends React.Component {
         }
     }
 
-
     render() {
         return (
             <div className="stats-body" id="stats-body">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-12" style={{ backgroundColor: 'white', paddingTop: '10px' }}>
-                            <div className="main-menu-left pull-left">
-                                <a className="button active"> <i className="fa fa-home" aria-hidden="true"></i><span> Overview   </span></a>
-                                <a className="button"> <i className="fa fa-bar-chart" aria-hidden="true"></i><span> Comparison  </span></a>
-                            </div>
+                            <LeftMenu overview='active' comparison='' />
                             <DateSelector />
-                            <StatsMenu name={this.state.currentNode.info.name } />
+                            <StatsMenu name={this.state.currentNode.info.name} />
                         </div>
                         <div className="col-md-12">
                             <div className="col-sm-12">

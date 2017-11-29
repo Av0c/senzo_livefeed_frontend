@@ -29,17 +29,14 @@ import EditSensors from 'components/pages/settings/editsensors/index';
 import Users from 'components/pages/settings/users';
 import CreateUser from 'components/pages/settings/users/create';
 import EditUser from 'components/pages/settings/users/edit';
-
 import Customers from 'components/pages/settings/customers';
 import CreateCustomer from 'components/pages/settings/customers/create';
 import EditCustomer from 'components/pages/settings/customers/edit';
-
 import Profile from 'components/pages/profile';
 import FloorPlan from 'components/pages/locations/area/floorplan/index';
 import AddFloorPlan from 'components/pages/addfloorplan';
 import Stats from 'components/pages/stats';
-
-
+import Comparison from 'components/pages/comparison';
 
 ReactDOM.render((
   <Provider store={Store}>
@@ -56,7 +53,7 @@ ReactDOM.render((
         </Route>
         <Route path="/profile" component={Profile} />
         <Route path="/statistic/:id" component={Stats} />
-
+        <Route path="/comparison" component={Comparison} />
         <Route path="/locations/area/:id/floorplan/add" component={AddFloorPlan} />
         <Route path="/settings" component={Settings}>
           <Route path="/settings/myaccount/password" component={Password} />

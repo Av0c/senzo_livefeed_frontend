@@ -14,7 +14,7 @@ export class Frame extends React.Component {
     if(this.props.location.pathname.includes("/statistic")) {
       appHistory.push(`/statistic/${node.id}`);
     }
-    else{
+    else if(this.props.location.pathname=="/") {
       this.props.dispatch(setCurrentNode(node));
     }
   }

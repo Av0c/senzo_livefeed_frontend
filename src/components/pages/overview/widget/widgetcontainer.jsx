@@ -22,6 +22,9 @@ export class WidgetContainer extends React.Component {
     this.setState({ area: area }, () => {
       self.props.querySettings.room = self.state.area;
       let params = getParams({ currentNode: self.props.node, querySettings: self.props.querySettings });
+      if(this.props.action) {
+        params.action = this.props.action;
+      }
       this.props.dispatch(getOccupancyOverview(params, self.props.node));
     }
     );

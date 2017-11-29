@@ -25,7 +25,6 @@ export default (state = initialState, action ) => {
 
     case RECEIVE_CUSTOMER_ORGANIZATION: {
       let areaList = lodash.flatMapDeep(action.data, buildAreaFlatMap);
-
       return Object.assign({}, state, {
         areaList: areaList
       })

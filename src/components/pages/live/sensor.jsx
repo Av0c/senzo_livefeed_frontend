@@ -10,7 +10,7 @@ export class Sensor extends React.Component{
 
 	onClick(e){
 		e.stopPropagation();
-		this.props.selectSensor(this.props.sensor);
+		// this.props.selectSensor(this.props.sensor);
 	}
 
 	render(){

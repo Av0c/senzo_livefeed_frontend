@@ -10,7 +10,7 @@ export class MeetingRoom extends React.Component{
 
 	onClick(e){
 		e.stopPropagation();
-		this.props.selectSensor(this.props.node);
+		// this.props.selectSensor(this.props.node);
 	}
 
 	getPos(node) {

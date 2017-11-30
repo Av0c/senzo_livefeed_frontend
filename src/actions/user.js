@@ -17,7 +17,10 @@ export const USER_REMOVED = 'USER_REMOVED';
 export const INVITE_USER = 'INVITE_USER';
 export const USER_INVITED = 'USER_INVITED';
 
+export const GET_INVITE = 'GET_INVITE';
+export const RECEIVE_INVITE = 'RECEIVE_INVITE';
 
+export const RECEIVE_RESPOND = 'RECEIVE_RESPOND';
 
 
 export function updatePassword(data){
@@ -76,11 +79,16 @@ export function inviteUser(inv) {
     inv
   }
 }
-
-export function userInvited(msg) {
+export function getInvite(key) {
   return {
-    type: USER_INVITED,
-    msg
+    type: GET_INVITE,
+    key
+  }
+}
+export function receiveRespond(respond) {
+  return {
+    type: RECEIVE_RESPOND,
+    respond
   }
 }
 

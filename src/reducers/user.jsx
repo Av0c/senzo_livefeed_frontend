@@ -3,7 +3,6 @@ import config from 'config';
 import { Effects, loop } from 'redux-loop';
 
 import {
-  CREATE_USER,
   FETCH_USERS,
   FETCH_USER,
   FORM_DATA_CHANGED,
@@ -15,14 +14,22 @@ import {
   UPDATE_PASSWORD,
   REMOVE_USER,
   UPDATE_USER,
-  USER_CREATED,
   USER_UPDATED,
-  INVITE_USER,
-  USER_INVITED,
   userRemoved,
   userSaved,
   userUpdated,
-  userInvited
+
+  INVITE_USER,
+  USER_INVITED,
+
+  GET_INVITE,
+  RECEIVE_INVITE,
+
+  CREATE_USER,
+  USER_CREATED,
+
+  RECEIVE_RESPOND,
+  receiveRespond
 
 } from 'actions/user'
 
@@ -35,8 +42,10 @@ const initialState = {
     firstName: '',
     lastName: '',
     email: '',
-    username: ''
-  }
+    username: '',
+  },
+  respond: {},
+  loading:false
 };
 
 function fetchUsers() {
@@ -56,11 +65,10 @@ function fetchUser(id) {
     .catch((error) => showNotification(error.statusText, false))
 }
 
-function createUser(user) {
-  return axios.post(`${config.api.root}/api/user`, user)
-    .then(userSaved)
-    .then(() => showNotification('User created', true))
-    .catch((error) => showNotification('Save failed: ' + error.statusText, false))
+function createUser(key, user) {
+  return axios.post(`${config.api.root}/user/create/${key}`, user)
+    .then(receiveRespond)
+    .catch((error) => receiveRespond(error))
 }
 
 function updateUser(user) {
@@ -77,61 +85,44 @@ function updatePassword(data){
 }
 function inviteUser(inv){
   return axios.post(`${config.api.root}/user/invite`, inv)
-    .then(userInvited)
-    .catch((error) => userInvited(error.statusText))
+    .then(receiveRespond)
+    .catch((error) => receiveRespond(error))
 }
-
+function getInvite(key){
+  return axios.get(`${config.api.root}/user/invite/check/${key}`)
+    .then(receiveRespond)
+    .catch((error) => receiveRespond(error))
+}
 
 
 export default(state = initialState, action) => {
   switch (action.type) {
-    case FETCH_USERS: {
-      return loop (
-        Object.assign({}, state, {loading: true}),
-        Effects.promise(fetchUsers)
-      );
-    }
-    case RECEIVE_USERS: {
-      return Object.assign({}, state, {users:action.data})
-    }
-
-    case FETCH_USER: {
-      return loop (
-        Object.assign({}, state, {loading: true}),
-        Effects.promise(fetchUser, action.id)
-      )
-    }
-    case RECEIVE_USER: {
-      return Object.assign({}, state, {editedUser: action.data})
-    }
-
     case CREATE_USER: {
       return loop (
-        Object.assign({}, state, {loading: true}),
+        Object.assign({}, state, {
+          loading: true,
+          respond: {},
+          created: false,
+        }),
         Effects.promise(createUser, action.user)
       );
     }
-    case REMOVE_USER: {
-      return loop (
-        Object.assign({}, state, {loading: true}),
-        Effects.promise(removeUser, action.id)
-      )
+    case USER_CREATED: {
+      console.log(action);
+      return Object.assign({}, state, {
+          loading: false,
+          created: action.respond,
+          respond: action.respond
+      })
     }
-    case UPDATE_USER: {
-      return loop (
-        Object.assign({}, state, {loading: true}),
-        Effects.promise(updateUser, action.user)
-      )
-    }
-    case UPDATE_PASSWORD: {
-      return loop (
-        Object.assign({}, state, {loading: true}),
-        Effects.promise(updatePassword, action.data)
-      )
-    }
+
     case INVITE_USER: {
       return loop (
-        Object.assign({}, state, {loading: true}),
+        Object.assign({}, state, {
+          loading: true,
+          respond: {},
+          invited: false
+        }),
         Effects.promise(inviteUser, action.inv)
       )
     }
@@ -139,11 +130,32 @@ export default(state = initialState, action) => {
       console.log(action);
       return Object.assign({}, state, {
           loading: false,
-          respond: action.msg
+          invited: true,
+          respond: action.respond
       })
     }
 
+    case GET_INVITE: {
+      return loop (
+        Object.assign({}, state, {loading: true, respond: {}}),
+        Effects.promise(getInvite, action.key)
+      )
+    }
+    case RECEIVE_INVITE: {
+      console.log(action);
+      return Object.assign({}, state, {
+          loading: false,
+          respond: action.respond
+      })
+    }
 
+    case RECEIVE_RESPOND: {
+      console.log(action);
+      return Object.assign({}, state, {
+          loading: false,
+          respond: action.respond
+      })
+    }
     case FORM_DATA_CHANGED: {
       return Object.assign({}, state, {
         editedUser: Object.assign({}, state.editedUser, action.data )

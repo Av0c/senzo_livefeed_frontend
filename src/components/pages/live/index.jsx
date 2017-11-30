@@ -34,22 +34,34 @@ class Live extends React.Component {
 				type: null
 			},
 			path: [],
-			groupMR: true
+			groupMR: true,
+			I: {}
 		};
 	}
 
-	componentDidMount() {
-		console.log(this.props.user);
-	    this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));
+	fetchLive(id) {
+		console.log("fetch live");
+		this.props.dispatch(fetchLiveData(id));
 	}
 
+	componentDidMount() {
+		console.log("set inteval");
+		console.log(this.props.user);
+	    this.fetchLive(this.props.user.rootnodeid);
+	    // var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
+	    // this.setState({I: I});
+	}
+
+	componentWillUnmount() {
+		console.log("clear inteval");
+		// clearInterval(this.state.I);
+	}
 
 	empty(node) {
 		return (node.info.empty == true)
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log("Live receive props");
 		this.prepare(nextProps);
 	}
 
@@ -64,7 +76,7 @@ class Live extends React.Component {
 
 		var cond1 = (oldnode.id != currentNode.id && !this.empty(currentNode));
 		var cond2 = (props.nodeFilter.info.empty && !this.empty(currentNode));
-		console.log(oldnode, currentNode, cond1, cond2);
+		// console.log(oldnode, currentNode, cond1, cond2);
 		if (cond1 || cond2) {
 			// either floor changed or no node filter yet => set node filter to all areas.
 			this.props.dispatch(selectNodeFilter(currentNode));
@@ -115,9 +127,9 @@ class Live extends React.Component {
 
 	render() {
 		// ?? how to fix this ??
-		console.log("live render", this.state.currentNode.info, this.props.tree.info);
+		// console.log("live render", this.state.currentNode.info, this.props.tree.info);
 		if (this.state.currentNode.info.empty && !this.empty(this.props.tree)) {
-			console.log("render prep", this.props);
+			// console.log("render prep", this.props);
 			this.prepare(this.props);
 		}
 		// ??

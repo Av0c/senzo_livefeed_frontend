@@ -41,6 +41,7 @@ import AddFloorPlan from 'components/pages/addfloorplan';
 import Stats from 'components/pages/stats';
 import Live from 'components/pages/live';
 import User from 'components/pages/user';
+import Register from 'components/pages/user/register';
 
 
 
@@ -83,7 +84,7 @@ ReactDOM.render((
         </Route>
       </Route>
       <Route path="/login" component={login} />
-      <Route path="/register" component={register} />
+      <Route path="/invitation" component={Register} />
     </Router>
   </Provider>
 ), document.getElementById('app'));

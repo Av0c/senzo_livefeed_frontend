@@ -9,12 +9,10 @@ class User extends React.Component {
 		super(props, context);
 		this.state = {
 			AAOpen: true, // add account modal open ?
-			Role: "ADMIN"
+			Role: "ADMIN",
+			respond: "",
+			respondClass: "",
 		};
-	}
-
-	componentDidMount() {
-
 	}
 
 	addAccountOpen(e) {
@@ -39,7 +37,34 @@ class User extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-
+		let respond = nextProps.respond
+		console.log("user props",nextProps)
+		if (!nextProps.loading) {
+			if (typeof respond.status != "undefined") {
+				if (respond.status==201) {
+					this.setState({
+						respond: "Invitation email sent.",
+						respondClass: "text-green"
+					});
+				} else {
+					this.setState({
+						respond: "Provided information is invalid.",
+						respondClass: "text-red"
+					})
+				}
+			} else {
+					this.setState({
+						respond: "",
+						respondClass: ""
+					})
+			}
+		} else {
+			console.log("Loading ?")
+			this.setState({
+				respond: "Sending...",
+				respondClass: "text-loading"
+			})
+		}
 	}
 
 	listNodes(root, depth, res) {
@@ -92,9 +117,8 @@ class User extends React.Component {
 							<label>Location</label>
 							<select required ref="location">
 							{nodes.map((x) => {
-								console.log(x.node.id);
 								return (
-									<option value={x.node.id} key={x.node.id}>
+									<option value={x.node.id} key={"o"+x.node.id}>
 										{x.padding}
 										{x.node.info.name}
 									</option>
@@ -104,6 +128,7 @@ class User extends React.Component {
 
 							<label>Email</label>
 							<input type="email" placeholder="new@user.com" ref="email"/>
+							<span className={this.state.respondClass}>{this.state.respond}</span>
 						</div>
 						<div className="modal-footer">
 							<button className="btn btn-default" type="button" onClick={this.addAccountClose.bind(this)}>Cancel</button>

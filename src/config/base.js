@@ -79,8 +79,8 @@ export default {
     }
   },
   roles: [
-    {code:"ADMIN", text:"Administrator"},
-    {code:"LOCALUSER", text:"Local user"},
-    {code:"SUPPORTUSER", text:"Support user"}
+    {code:"ADMIN", text:"Administrator", singular: "an administrator"},
+    {code:"LOCALUSER", text:"Local user", singular: "a local user"},
+    {code:"SUPPORTUSER", text:"Support user", singular: "a support user"}
   ]
 }

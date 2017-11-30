@@ -80,7 +80,6 @@ export class FloorPlan extends React.Component {
 			var containerY = imageElement.offsetHeight;
 			var xpercent = ((mousePos.x) / containerX) * 100;
 			var ypercent = ((mousePos.y) / containerY) * 100;
-			console.log(xpercent, ypercent);
 			this.props.dispatch(moveSensor(this.props.selectedSensor, xpercent, ypercent));
 		} else {
 			this.props.dispatch(selectSensor({}));
@@ -106,7 +105,6 @@ export class FloorPlan extends React.Component {
 			this.listSensorByRoomType(this.props.root, config.room.MEETINGROOM, sensors);
 		}
 
-		console.log("FP render", this.props.root.id, this.props.root.info.hasfloorplan);
 		return (
 			<div className="container-fluid">
 				<div className="color-note">
@@ -126,7 +124,7 @@ export class FloorPlan extends React.Component {
 					<tr><td><br/></td><td></td></tr>
 					<tr>
 						<td className="color-note-td"><Sensor sensor={{id: -4, inuse: false, standby: false, faulty: true, registered:true, xpercent: 50, ypercent: 50}} viewFilter={config.viewFilter.ALL} /></td>
-						<td>Need maintenance</td>
+						<td>Offline</td>
 					</tr>
 					<tr>
 						<td className="color-note-td"><Sensor sensor={{id: -5, inuse: false, standby: false, faulty: false, registered:false, xpercent: 50, ypercent: 50}} viewFilter={config.viewFilter.ALL} /></td>

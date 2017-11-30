@@ -25,6 +25,7 @@ export class WidgetContainer extends React.Component {
       if(this.props.action) {
         params.action = this.props.action;
       }
+      console.log(params);
       this.props.dispatch(getOccupancyOverview(params, self.props.node));
     }
     );
@@ -71,7 +72,7 @@ export class WidgetContainer extends React.Component {
   render() {
     let stats = this.countTreeStatistic(this.props.node, this.props.allSensors);
     let gauge = [this.props.stats.average, this.props.stats.peak];
-    let bar = this.props.stats.marks;
+    let bar = this.props.stats.marks || [1, 0, 0];
     return (
       <Widget bar={bar} gauge={gauge} type={this.state.area.type} node={this.props.node} stats={stats} id={this.props.id} getOverview={this.getOverview.bind(this)} />
     );

@@ -10,7 +10,6 @@ export class ComparisonCard extends React.Component {
 
     chooseFirstLocation(node) {
         if (node.id) {
-            console.log(node.id);
             let params = getParams({ currentNode: node, querySettings: this.props.querySettings });
             params.action = Comparison.RECEIVE_FIRST_LOCATION_OVERVIEW;
             this.props.dispatch(getOccupancyOverview(params, node));
@@ -23,7 +22,7 @@ export class ComparisonCard extends React.Component {
             let params3 = Object.assign({}, params);
             params3.action = Comparison.RECEIVE_FIRST_LOCATION_RANGE;
             params3.groupby = 'hour';
-            this.props.dispatch(getNodeSeriesStats(params));
+            this.props.dispatch(getNodeSeriesStats(params3));
         }
     }
 
@@ -41,7 +40,7 @@ export class ComparisonCard extends React.Component {
             let params3 = Object.assign({}, params);
             params3.action = Comparison.RECEIVE_SECOND_LOCATION_RANGE;
             params3.groupby = 'hour';
-            this.props.dispatch(getNodeSeriesStats(params));
+            this.props.dispatch(getNodeSeriesStats(params3));
         }
     }
 

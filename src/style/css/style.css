@@ -416,7 +416,7 @@ input:focus {
 .comparison-graph-card {
   padding: 22px 10px;
   margin-top: 40px;
-  min-height: 400px;
+  min-height: 510px;
 }
 .stats-graph-card {
   padding: 28px 10px 60px;
@@ -433,7 +433,6 @@ input:focus {
   text-align: center;
 }
 .graph-options {
-  font-size: 18px;
   margin-right: 40px;
 }
 .graph-options div {

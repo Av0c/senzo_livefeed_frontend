@@ -111,6 +111,15 @@ export function findOccupancyTag(node) {
     }
 }
 
+export function findEfficiencyTag(node) {
+    if (node.type == 'meeting_room') {
+        return 'MRE';
+    }
+    else {
+        return findOccupancyTag(node);
+    }
+}
+
 export function getOccupancyOverview(params, node) {
     return dispatch => {
         dispatch(fetchOccupancyOverview());
@@ -137,7 +146,6 @@ export function getNodeSeriesStats(params) {
         dispatch(fetchNodeStats());
         axios.get(config.api.root + `/stats/series/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}&groupby=${params.groupby}`)
             .then((response) => {
-                console.log(params.action);
                 if (params.action == Comparison.RECEIVE_FIRST_LOCATION_TOTAL) {
                     dispatch(Comparison.receiveFirstLocationTotal(response.data));
                 }

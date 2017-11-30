@@ -14,10 +14,14 @@ export class ComparisonStats extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
         let overview = nextProps.overview;
         if(nextProps.overview.length==2) {
             this.setState({
-                peak: Math.round((overview[0].data.peak-overview[1].data.peak)*100)
+                peak: Math.round((overview[0].data.peak-overview[1].data.peak)*100),
+                average: Math.round((overview[0].data.average-overview[1].data.average)*100),
+                aboveHighMark: Math.round((overview[0].data.marks[1]-overview[1].data.marks[1])*100),
+                belowHighMark: Math.round((overview[0].data.marks[0]-overview[1].data.marks[0])*100)
             });
         }
     }

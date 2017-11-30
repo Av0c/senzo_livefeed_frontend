@@ -34,8 +34,6 @@ function decodeToken(token) {
 // Reducing function
 export default (state = initialState, action ) => {
   switch (action.type) {
-
-
     case LOGIN_FAILED: {
       return Object.assign({}, state, {
         loginInProgress: false,
@@ -63,7 +61,7 @@ export default (state = initialState, action ) => {
     case CLEAR_TOKEN: {
       localStorage.removeItem("token");
       return Object.assign({}, initialState, {
-        token: undefined
+        token: null
       })
     }
     

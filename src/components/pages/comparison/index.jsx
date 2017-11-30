@@ -7,7 +7,6 @@ import Charts from 'components/pages/comparison/charts';
 export default class Comparison extends React.Component {
 
     render() {
-
         return (
             <div className="comparison-stats-wrapper">
                 <div className="container-fluid">

@@ -13,20 +13,20 @@ import LeftMenu from 'components/common/leftmenu';
 class OverviewLeft extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));
-
   }
 
   componentWillReceiveProps(nextProps) {
-    var self = this;
-    nextProps.widgets.forEach((node) => {
-      let params = getParams({querySettings: nextProps.querySettings, currentNode: node});
-      params.tag = findOccupancyTag(node);
-      nextProps.dispatch(getOccupancyOverview(params, node));
-    });
-    let params = getParams(nextProps);
-    params.tag = findOccupancyTag(nextProps.currentNode);
-    this.props.dispatch(getOccupancyOverview(params, nextProps.currentNode));
+    if (nextProps.currentNode.id) {
+      var self = this;
+      nextProps.widgets.forEach((node) => {
+        let params = getParams({ querySettings: nextProps.querySettings, currentNode: node });
+        params.tag = findOccupancyTag(node);
+        nextProps.dispatch(getOccupancyOverview(params, node));
+      });
+      let params = getParams(nextProps);
+      params.tag = findOccupancyTag(nextProps.currentNode);
+      this.props.dispatch(getOccupancyOverview(params, nextProps.currentNode));
+    }
   }
 
   render() {

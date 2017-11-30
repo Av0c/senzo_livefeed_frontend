@@ -8,78 +8,31 @@ import OccupancyRange from 'components/pages/stats/occupancyrange';
 import DailyOccupancy from 'components/pages/stats/dailyoccupancy';
 import OccupancyBreakDown from 'components/pages/stats/occupancybreakdown';
 import LeftMenu from 'components/common/leftmenu';
+import TotalChart from 'components/pages/comparison/charts/totalchart';
+import RangeChart from 'components/pages/comparison/charts/rangechart';
+import DailyChart from 'components/pages/comparison/charts/dailychart';
+
 export class Charts extends React.Component {
 
     render() {
+        let first = {};
+        let second = {};
+        if(this.props.comparisonStats.overview.length == 2 ){
+            first = this.props.comparisonStats.overview[0].node;
+            second = this.props.comparisonStats.overview[1].node;
+        }
         return (
             <div className="stats-body" id="stats-body">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-sm-12">
-                            <div className="comparison-graph-card card-shape clearfix">
-                                <div className="graph-header clearfix">
-                                    <h2 className="pull-left">Total Occupancy Comparison</h2>
-                                    <div className="graph-options pull-right clearfix">
-                                        <div className="graph-options-average pull-left"><span>Average </span><i className="fa fa-chevron-down" aria-hidden="true">   </i></div>
-                                        <div className="graph-options-occupancy pull-left"><span>Occupancy </span><i className="fa fa-chevron-down" aria-hidden="true"></i></div>
-                                    </div>
-                                </div>
-                                <div className="the-graph clearfix">    </div>
-                                <div className="the-graph-legend">
-                                    <div className="legend-location-box pull-left">
-                                        <div className="legend-location-color location-color-green pull-left"></div>
-                                        <div className="legend-location-name pull-left">Location 1 </div>
-                                    </div>
-                                    <div className="legend-location-box pull-left">
-                                        <div className="legend-location-color location-color-blue pull-left"></div>
-                                        <div className="legend-location-name pull-left">Location 2   </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <TotalChart querySettings={this.props.querySettings} stats= {this.props.comparisonStats.total} first={first} second={second} />
                         </div>
                         <div className="col-sm-12">
-                            <div className="comparison-graph-card card-shape clearfix">
-                                <div className="graph-header clearfix">
-                                    <h2 className="pull-left">Occupancy Range Comparsion</h2>
-                                    <div className="graph-options pull-right clearfix">
-                                        <div className="graph-options-average pull-left"><span>Average </span><i className="fa fa-chevron-down" aria-hidden="true">   </i></div>
-                                        <div className="graph-options-occupancy pull-left"><span>Occupancy </span><i className="fa fa-chevron-down" aria-hidden="true"></i></div>
-                                    </div>
-                                </div>
-                                <div className="the-graph clearfix">    </div>
-                                <div className="the-graph-legend">
-                                    <div className="legend-location-box pull-left">
-                                        <div className="legend-location-color location-color-green pull-left"></div>
-                                        <div className="legend-location-name pull-left">Location 1 </div>
-                                    </div>
-                                    <div className="legend-location-box pull-left">
-                                        <div className="legend-location-color location-color-blue pull-left"></div>
-                                        <div className="legend-location-name pull-left">Location 2   </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <RangeChart querySettings={this.props.querySettings} stats= {this.props.comparisonStats.range} first={first} second={second} />
                         </div>
                         <div className="col-sm-12">
-                            <div className="comparison-graph-card card-shape clearfix">
-                                <div className="graph-header clearfix">
-                                    <h2 className="pull-left">Occupancy Range Comparsions</h2>
-                                    <div className="graph-options pull-right clearfix">
-                                        <div className="graph-options-average pull-left"><span>Average </span><i className="fa fa-chevron-down" aria-hidden="true">   </i></div>
-                                        <div className="graph-options-occupancy pull-left"><span>Occupancy </span><i className="fa fa-chevron-down" aria-hidden="true"></i></div>
-                                    </div>
-                                </div>
-                                <div className="the-graph clearfix">    </div>
-                                <div className="the-graph-legend">
-                                    <div className="legend-location-box pull-left">
-                                        <div className="legend-location-color location-color-green pull-left"></div>
-                                        <div className="legend-location-name pull-left">Location 1 </div>
-                                    </div>
-                                    <div className="legend-location-box pull-left">
-                                        <div className="legend-location-color location-color-blue pull-left"></div>
-                                        <div className="legend-location-name pull-left">Location 2   </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <DailyChart querySettings={this.props.querySettings} stats= {this.props.comparisonStats.daily} first={first} second={second} />
                         </div>
                     </div>
                 </div>

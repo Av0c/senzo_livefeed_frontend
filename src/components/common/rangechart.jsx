@@ -5,7 +5,11 @@ import { connect } from 'react-redux';
 export default class RangeChart extends React.Component {
 
     render() {
-        
+        let values = []
+        values.push({values:this.props.values, backgroundColor: "#74b63b"});
+        if(this.props.values1) {
+            values.push({values:this.props.values1, backgroundColor: "#66aee9"})
+        }
         var myConfig =
             {
                 type: "bar",
@@ -34,8 +38,12 @@ export default class RangeChart extends React.Component {
                     barWidth: "50px",
                     rules: [
                         {
-                            rule: "%node-index ==0 || %node-index==6",
-                            backgroundColor: "#dfdfdf"
+                            rule: " %p==0 && %node-index ==0 || %node-index==6" ,
+                            backgroundColor: this.props.values1 ? "#d1e6a2" : "#dfdfdf"
+                        },
+                        {
+                            rule: " %p==1 && %node-index ==0 || %node-index==6",
+                            backgroundColor: "#afd3f7"
                         }
                     ],
                     animation: {
@@ -44,13 +52,7 @@ export default class RangeChart extends React.Component {
                         speed: 100
                     }
                 },
-                series: [
-                    {
-                        values: this.props.values,
-                        backgroundColor: "#74b63b"
-                    },
-
-                ]
+                series: values
             };
         return (
             <div>

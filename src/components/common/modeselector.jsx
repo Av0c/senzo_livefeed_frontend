@@ -2,9 +2,6 @@ import React from 'react';
 import Dropdown from 'components/common/dropdown';
 import DropdownItem from 'components/common/dropdownitem';
 import config from 'config';
-import {selectMode} from 'actions/querysettings';
-import { connect } from 'react-redux';
-
 
  export default class ModeSelector extends React.Component {
 

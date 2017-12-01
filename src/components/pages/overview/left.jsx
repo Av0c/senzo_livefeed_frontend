@@ -1,49 +1,43 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import appHistory from 'components/common/appHistory';
-import Loading from 'components/common/loading';
-import Section from 'components/common/section';
-import SingleBarChart from 'components/common/graphs/singlebarchart';
-import BigText from 'components/common/bigtext';
 import { fetchCustomerOverview, getNodeStatistic } from 'actions/overview';
 import { fetchLiveData } from 'actions/node';
 import DateSelector from 'components/common/dateselector';
-import LineChart from 'components/common/linechart';
 import { selectNodeStats } from 'actions/node';
 import { getOccupancyOverview, getParams, findOccupancyTag } from 'actions/stats';
 import Widgets from 'components/pages/overview/widget';
 import SearchContainer from 'components/pages/overview/searchcontainer';
-import SearchBar from 'components/common/searchbar';
+import LeftMenu from 'components/common/leftmenu';
+
 
 class OverviewLeft extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));
-
+    this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));    
   }
 
   componentWillReceiveProps(nextProps) {
-    var self = this;
-    nextProps.widgets.forEach((node) => {
-      let params = getParams({querySettings: nextProps.querySettings, currentNode: node});
-      params.tag = findOccupancyTag(node);
-      nextProps.dispatch(getOccupancyOverview(params, node));
-    });
-    let params = getParams(nextProps);
-    params.tag = findOccupancyTag(nextProps.currentNode);
-    this.props.dispatch(getOccupancyOverview(params, nextProps.currentNode));
+    if (nextProps.currentNode.id) {
+      var self = this;
+      nextProps.widgets.forEach((node) => {
+        let params = getParams({ querySettings: nextProps.querySettings, currentNode: node });
+        params.tag = findOccupancyTag(node);
+        nextProps.dispatch(getOccupancyOverview(params, node));
+      });
+      let params = getParams(nextProps);
+      params.tag = findOccupancyTag(nextProps.currentNode);
+      this.props.dispatch(getOccupancyOverview(params, nextProps.currentNode));
+    }
   }
 
   render() {
+    console.log(this.props.currentSensor);
     return (
       <div style={{ marginTop: '20px' }} className="overview-block">
         <div className="container-fluid">
           <div style={{ marginBottom: '30px' }} className="row">
             <div className="col-md-12">
-              <div className="main-menu-left pull-left">
-                <a className="button active" href="#"> <i className="fa fa-home" aria-hidden="true"></i><span> Overview   </span></a>
-                <a className="button" href="#"> <i className="fa fa-bar-chart" aria-hidden="true"></i><span> Comparison  </span></a>
-              </div>
+              <LeftMenu overview='active' comparison='' />
               <DateSelector />
             </div>
           </div>

@@ -61,6 +61,7 @@ export function redirectToLogin(){
 }
 
 export function logout(){
+
   appHistory.push('/login');
   return {
     type: CLEAR_TOKEN

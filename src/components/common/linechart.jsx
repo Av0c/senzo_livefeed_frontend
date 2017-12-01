@@ -114,13 +114,14 @@ export default class LineChart extends React.Component {
                 series: [
                     {
                         values: this.props.stats.peaks,
-                        text: "Peak",
+                        text: this.props.first || "Peak",
                         lineColor: "#60aff4",
                         lineWidth: 5,
                         legendItem: {
                             backgroundColor: "#60aff4",
                             borderRadius: 5,
-                            fontColor: "white"
+                            fontColor: "white",
+                            fontSize: "16px"
                         },
                         legendMarker: {
                             visible: false
@@ -138,12 +139,13 @@ export default class LineChart extends React.Component {
                     },
                     {
                         values: this.props.stats.avgs,
-                        text: "Average",
+                        text: this.props.second || "Average",
                         lineColor: "#a9d34a",
                         legendItem: {
                             backgroundColor: "#a9d34a",
                             borderRadius: 5,
-                            fontColor: "white"
+                            fontColor: "white",
+                            fontSize: "16px"
                         },
                         lineWidth: 5,
                         legendMarker: {

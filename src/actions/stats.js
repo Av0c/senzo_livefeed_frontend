@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from 'config';
+import * as Comparison from 'actions/comparison';
 
 export const FETCH_OCCUPANCY_OVERVIEW = 'FETCH_OCCUPANCY_OVERVIEW';
 export const RECEIVE_OCCUPANCY_OVERVIEW = 'RECEIVE_OCCUPANCY_OVERVIEW';
@@ -110,12 +111,29 @@ export function findOccupancyTag(node) {
     }
 }
 
+export function findEfficiencyTag(node) {
+    if (node.type == 'meeting_room') {
+        return 'MRE';
+    }
+    else {
+        return findOccupancyTag(node);
+    }
+}
+
 export function getOccupancyOverview(params, node) {
     return dispatch => {
         dispatch(fetchOccupancyOverview());
         axios.get(config.api.root + `/stats/overview/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}`)
             .then((response) => {
-                dispatch(receiveOccupancyOverview({ data: response.data, node: node }));
+                if (params.action == Comparison.RECEIVE_FIRST_LOCATION_OVERVIEW) {
+                    dispatch(Comparison.receiveFirstLocationOverview(node, response.data));
+                }
+                else if (params.action == Comparison.RECEIVE_SECOND_LOCATION_OVERVIEW) {
+                    dispatch(Comparison.receiveSecondLocationOverview(node, response.data));
+                }
+                else {
+                    dispatch(receiveOccupancyOverview({ data: response.data, node: node }));
+                }
             })
             .catch(function (response) {
                 dispatch(fetchFailed(response.data));
@@ -128,7 +146,19 @@ export function getNodeSeriesStats(params) {
         dispatch(fetchNodeStats());
         axios.get(config.api.root + `/stats/series/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}&groupby=${params.groupby}`)
             .then((response) => {
-                if (params.chart == 'range') {
+                if (params.action == Comparison.RECEIVE_FIRST_LOCATION_TOTAL) {
+                    dispatch(Comparison.receiveFirstLocationTotal(response.data));
+                }
+                else if (params.action == Comparison.RECEIVE_SECOND_LOCATION_TOTAL) {
+                    dispatch(Comparison.receiveSecondLocationTotal(response.data));
+                }
+                else if (params.action == Comparison.RECEIVE_FIRST_LOCATION_RANGE) {
+                    dispatch(Comparison.receiveFirstLocationRange(response.data));
+                }
+                else if (params.action == Comparison.RECEIVE_SECOND_LOCATION_RANGE) {
+                    dispatch(Comparison.receiveSecondLocationRange(response.data));
+                }
+                else if (params.chart == 'range') {
                     dispatch(receiveOccupancyRange(response.data));
                 }
                 else {
@@ -146,7 +176,15 @@ export function getStatsDaily(params) {
         dispatch(fetchStatsDaily());
         axios.get(config.api.root + `/stats/weekdayXhour/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}`)
             .then((response) => {
-                dispatch(receiveStatsDaily(response.data));
+                if (params.action == Comparison.RECEIVE_FIRST_LOCATION_DAILY) {
+                    dispatch(Comparison.receiveFirstLocationDaily(response.data));
+                }
+                else if (params.action == Comparison.RECEIVE_SECOND_LOCATION_DAILY) {
+                    dispatch(Comparison.receiveSecondLocationDaily(response.data));
+                }
+                else {
+                    dispatch(receiveStatsDaily(response.data));
+                }
             })
             .catch(function (response) {
                 dispatch(fetchFailed(response.data));

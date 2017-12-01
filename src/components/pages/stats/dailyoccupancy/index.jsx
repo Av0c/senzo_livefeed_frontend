@@ -10,7 +10,7 @@ export class DailyOccupancy extends React.Component {
         super(props, context);
         this.state = {
             mode: 'Average',
-            day: 'Monday'
+            day: 'Mondays'
         };
     }
 
@@ -30,7 +30,7 @@ export class DailyOccupancy extends React.Component {
     }
     render() {
         return (
-            <PianoChartContainer mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} day={this.state.day} chooseDay={this.chooseDay.bind(this)} />
+            <PianoChartContainer tag={this.props.querySettings.tag} mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} day={this.state.day} chooseDay={this.chooseDay.bind(this)} />
         );
     }
 }

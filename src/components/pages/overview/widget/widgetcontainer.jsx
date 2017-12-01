@@ -22,6 +22,9 @@ export class WidgetContainer extends React.Component {
     this.setState({ area: area }, () => {
       self.props.querySettings.room = self.state.area;
       let params = getParams({ currentNode: self.props.node, querySettings: self.props.querySettings });
+      if (this.props.action) {
+        params.action = this.props.action;
+      }
       this.props.dispatch(getOccupancyOverview(params, self.props.node));
     }
     );
@@ -32,7 +35,8 @@ export class WidgetContainer extends React.Component {
       allRooms: 0,
       allSensors: 0,
       roomsInUse: 0,
-      desksInUse: 0
+      desksInUse: 0,
+      faulties: 0
     };
     this.count(root, statistic, map);
     return statistic;
@@ -49,6 +53,9 @@ export class WidgetContainer extends React.Component {
             if (map.get(sensor.id).inuse) {
               occupied = true;
               statistic.desksInUse++;
+            }
+            else if (map.get(sensor.id).faulty) {
+              statistic.faulties++;
             }
           }
         });
@@ -68,7 +75,7 @@ export class WidgetContainer extends React.Component {
   render() {
     let stats = this.countTreeStatistic(this.props.node, this.props.allSensors);
     let gauge = [this.props.stats.average, this.props.stats.peak];
-    let bar = this.props.stats.marks;
+    let bar = this.props.stats.marks || [1, 0, 0];
     return (
       <Widget bar={bar} gauge={gauge} type={this.state.area.type} node={this.props.node} stats={stats} id={this.props.id} getOverview={this.getOverview.bind(this)} />
     );
@@ -76,9 +83,9 @@ export class WidgetContainer extends React.Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        dispatch
-    }
+  return {
+    dispatch
+  }
 }
 
 export default connect(null, mapDispatchToProps)(WidgetContainer);

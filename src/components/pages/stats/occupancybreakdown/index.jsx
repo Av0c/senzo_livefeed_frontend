@@ -55,10 +55,10 @@ export class OccupancyBreakDown extends React.Component {
                 {!this.state.isArea && <div className="stats-graph-card card-shape clearfix">
                     <div className="graph-header clearfix">
                         <div className="row">
-                            <div className="col-sm-10 col-xs-12">
-                                <h2>Occupancy Breakdown</h2>
+                            <div className="col-sm-offset-4 col-sm-4 col-xs-12">
+                                <h2>{this.props.querySettings.tag} Breakdown</h2>
                             </div>
-                            <div className="col-sm-2 col-xs-12">
+                            <div style={{marginRight: '30px'}} className="pull-right">
                                 <ModeSelector mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} />
                             </div>
                         </div>

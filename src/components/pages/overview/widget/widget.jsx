@@ -29,7 +29,7 @@ export default class Widget extends React.Component {
                     />
                     <Bar values={this.props.bar} />
                     <LocationStats stats={this.props.stats} />
-                    <LocationBottomMenu />
+                    <LocationBottomMenu faulty={this.props.stats.faulties} />
                 </div>
             </div>
         );

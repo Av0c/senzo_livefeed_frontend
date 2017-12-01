@@ -11,11 +11,8 @@ import 'react-date-picker/index.css'
 export class Frame extends React.Component {
 
   handleTreeClick(node) {
-    if(this.props.location.pathname.includes("/statistic")) {
+    if(this.props.location.pathname.includes("/statistic") || this.props.location.pathname=="/") {
       appHistory.push(`/statistic/${node.id}`);
-    }
-    else{
-      this.props.dispatch(setCurrentNode(node));
     }
   }
 
@@ -42,7 +39,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    logout: () => dispatch(clearToken()),
+    logout: () => {
+      dispatch(clearToken());
+      window.location.reload();
+      },
     setCurrentNode: (node) => {
       dispatch(setCurrentNode(node));
     }

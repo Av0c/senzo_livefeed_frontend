@@ -10,7 +10,7 @@ const initialState = {
   endhour: 17,
   startweekday: 1,
   endweekday: 5,
-  marks: [0.2, 0.9],
+  marks: [0.1, 0.3, 0.5],
   groupby: 'day'
 };
 

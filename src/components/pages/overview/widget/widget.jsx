@@ -9,7 +9,6 @@ import LocationBottomMenu from 'components/common/locationbottommenu';
 export default class Widget extends React.Component {
 
     render() {
-        console.log(this.props);
         return (
             <div style={{marginBottom: '20px'}} className="col-sm-4 col-xs-12">
                 <div className="the-card clearfix">
@@ -30,7 +29,7 @@ export default class Widget extends React.Component {
                     />
                     <Bar values={this.props.bar} />
                     <LocationStats stats={this.props.stats} />
-                    <LocationBottomMenu />
+                    <LocationBottomMenu faulty={this.props.stats.faulties} />
                 </div>
             </div>
         );

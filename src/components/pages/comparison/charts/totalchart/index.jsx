@@ -72,7 +72,7 @@ export class TotalChart extends React.Component {
         return (
             <div className="comparison-graph-card card-shape clearfix">
                 <div className="graph-header clearfix">
-                    <h2 className="pull-left">Total Occupancy Comparison</h2>
+                    <h2 className="pull-left">Total {this.state.tag} Comparison</h2>
                     <div className="graph-options pull-right clearfix">
                         <div className="graph-options-average pull-left"><ModeSelector mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} /></div>
                         <div className="graph-options-occupancy pull-left"><TagSelector tag={this.state.tag} chooseTag={this.chooseTag.bind(this)} /></div>

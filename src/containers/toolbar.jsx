@@ -35,7 +35,7 @@ export class Toolbar extends React.Component {
                 <ul>
                   <li><a href="#">Own Account</a></li>
                   <li> <a href="#">User Administration</a></li>
-                  <li><a href="#">Locations Settings</a></li>
+                  <li><Link to="/locations">Locations Settings</Link></li>
                   <li> <a href="#">Sensor Settings</a></li>
                   <li><a href="#">Live Feed/SenzoAPI  </a></li>
                   <li><a href="#">Default Settings  </a></li>

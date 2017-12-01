@@ -17,7 +17,7 @@ export class OccupancyRange extends React.Component {
         return (
             <div className="stats-graph-card card-shape clearfix">
                 <div className="graph-header clearfix">
-                    <h2>Occupancy Range</h2>
+                    <h2>{this.props.querySettings.tag} Range</h2>
 
                 </div>
                 <div className="the-graph clearfix">

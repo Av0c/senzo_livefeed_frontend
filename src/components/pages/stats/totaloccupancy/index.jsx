@@ -15,7 +15,7 @@ export class TotalOccupancy extends React.Component {
 
     render() {
         return (
-            <LineChartContainer />
+            <LineChartContainer tag={this.props.querySettings.tag}/>
         );
     }
 }

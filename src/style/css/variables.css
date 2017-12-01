@@ -158,7 +158,7 @@
 	visibility: hidden;
 	position: absolute;
 	background: #fff;
-	z-index: 99;
+	z-index: 1009;
 	top: 35px;
 	right: 0;
 	width: 180px;
@@ -195,4 +195,29 @@ li {
   line-height: 160%;
   padding: 6px 8px 6px 18px;
   display: inline-block;
+}
+
+.faulty {
+	position: relative;
+	left: 50px;
+	top: 10px;
+	z-index: 1000;
+	width: 20px;
+	line-height: 20px;
+	border-radius: 50%;
+	text-align: center;
+	color: white;
+	font-size: 14px;
+	background-color: #ef5350;
+}
+
+.card-bottom-menu-icon {
+	margin-top: 22px;
+}
+.total-rooms-container {
+	margin-left: 40px;
+}
+
+.total-desks-container {
+	margin-right: 40px;
 }

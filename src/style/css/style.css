@@ -323,7 +323,7 @@ input:focus {
   margin-top: 20px;
 }
 .card-bottom-menu {
-  margin-top: 25px;
+  margin-top: 0px;
 }
 .add-cart-zone {
   cursor: pointer;

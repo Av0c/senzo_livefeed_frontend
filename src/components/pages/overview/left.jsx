@@ -13,6 +13,7 @@ import LeftMenu from 'components/common/leftmenu';
 class OverviewLeft extends React.Component {
 
   componentDidMount() {
+    this.props.dispatch(fetchLiveData(this.props.user.rootnodeid));    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -30,6 +31,7 @@ class OverviewLeft extends React.Component {
   }
 
   render() {
+    console.log(this.props.currentSensor);
     return (
       <div style={{ marginTop: '20px' }} className="overview-block">
         <div className="container-fluid">

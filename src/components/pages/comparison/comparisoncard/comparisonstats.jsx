@@ -14,7 +14,6 @@ export class ComparisonStats extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
         let overview = nextProps.overview;
         if(nextProps.overview.length==2) {
             this.setState({

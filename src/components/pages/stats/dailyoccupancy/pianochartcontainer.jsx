@@ -86,10 +86,10 @@ export class PianoChartContainer extends React.Component {
                 <div className="col-sm-12">
                     <div className="stats-graph-card card-shape clearfix" style={{ minHeight: '650px' }}>
                         <div className="row">
-                            <div className="col-sm-10 col-xs-12 graph-header clearfix">
-                                <h2>Daily Occupancy: All Weekdays</h2>
+                            <div className="col-sm-offset-3 col-sm-6 col-xs-12 graph-header clearfix">
+                                <h2>Daily {this.props.tag}: All Weekdays</h2>
                             </div>
-                            <div className="col-sm-2 col-xs-12">
+                            <div style={{marginRight: '30px'}} className="pull-right">
                                 <ModeSelector mode={this.props.mode} chooseMode={this.props.chooseMode} />
                             </div>
                         </div>
@@ -105,10 +105,10 @@ export class PianoChartContainer extends React.Component {
                 <div className="col-sm-12">
                     <div className="stats-graph-card card-shape clearfix">
                         <div className="row">
-                            <div className="col-sm-10 col-xs-12 graph-header clearfix">
-                                <h2>Daily Occupancy</h2>
+                            <div className="col-sm-offset-3 col-sm-6 graph-header clearfix">
+                                <h2>Daily {this.props.tag}</h2>
                             </div>
-                            <div className="col-sm-2 col-xs-12">
+                            <div style={{marginRight: '30px'}} className="pull-right">
                                 <DaySelector day={this.props.day} chooseDay={this.props.chooseDay} items={pianoChart.labelsY} />
                             </div>
                         </div>

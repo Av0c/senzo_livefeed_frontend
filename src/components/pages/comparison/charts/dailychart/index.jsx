@@ -15,7 +15,7 @@ export class DailyChart extends React.Component {
         this.state = {
             mode: 'Average',
             tag: 'Occupancy',
-            day: 'Monday'
+            day: 'Mondays'
         };
     }
 
@@ -73,11 +73,11 @@ export class DailyChart extends React.Component {
             first = this.props.first.info.name;
             second = this.props.second.info.name;
         }
-        console.log(this.props.stats);
+ 
         return (
             <div className="comparison-graph-card card-shape clearfix">
                 <div className="graph-header clearfix">
-                    <h2 className="pull-left">Occupancy Range Comparsions</h2>
+                    <h2 className="pull-left">{this.state.tag} Daily Comparsion</h2>
                     <div className="graph-options pull-right clearfix">
                         <div className="graph-options-average pull-left"><DaySelector day={this.state.day} chooseDay={this.chooseDay.bind(this)} items={config.day} /></div>
                         <div className="graph-options-average pull-left"><ModeSelector mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} /></div>

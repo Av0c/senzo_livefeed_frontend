@@ -43,7 +43,7 @@ export class LineChartContainer extends React.Component {
         return (
             <div className="stats-graph-card card-shape clearfix">
                 <div className="graph-header clearfix">
-                    <h2>Total Occupancy</h2>
+                    <h2>Total {this.props.tag}</h2>
                 </div>
                 <div className="the-graph clearfix">
                     <LineChart id="totalOccupancy" stats={data} />

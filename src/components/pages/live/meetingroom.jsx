@@ -27,25 +27,53 @@ export class MeetingRoom extends React.Component{
 	}
 
 	getStatus(node) {
-		var res = {
+		var status = {
 			inuse: 0,
 			faulty: 0,
 			total: node.children.length,
 			registered: 0,
 			standby: 0,
-			displayValue: 0
+			displayValue: 0,
+			type: "free"
 		};
 		let sensorMap = this.props.sensorMap;
 		node.children.forEach((child) => {
 			if (child.type=="sensor" && sensorMap.get(child.id)) {
 				var ss = sensorMap.get(child.id);
-				res.inuse += ss.inuse;
-				res.faulty += ss.faulty;
-				res.registered += ss.registered;
-				res.standby += ss.standby;
+				status.inuse += ss.inuse;
+				status.faulty += ss.faulty;
+				status.registered += ss.registered;
+				status.standby += ss.standby;
 			}
 		});
-		return res;		
+		if (status.registered > 0) {
+			if (status.faulty == status.registered) {
+				status.type = 'faulty';
+			} else {
+				if (status.inuse > 0) {
+					status.type = 'inuse';
+				} else if (status.standby) {
+					status.type = 'standby';
+				}
+			}
+		} else {
+			status.type = `unregistered`
+		}
+
+		switch (status.type) {
+			case "free":
+				status.displayValue = status.total;
+			case "inuse":
+				status.displayValue = status.inuse;
+			case "standby":
+				status.displayValue = status.total;
+			case "faulty":
+				status.displayValue = status.total;
+			case "unregistered":
+				status.displayValue = status.total;
+		}
+
+		return status;		
 	}
 
 	render(){
@@ -58,21 +86,8 @@ export class MeetingRoom extends React.Component{
 		if (this.props.selectedMR && (this.props.selectedMR.id == node.id)){
 			className += ' selected'
 		}
-		let type = "";
-		if (status.registered > 0) {
-			if (status.faulty == status.registered) {
-				type = 'faulty';
-			} else {
-				if (status.inuse > 0) {
-					type = 'inuse';
-				} else if (status.standby) {
-					type = 'standby';
-				}
-			}
-		} else {
-			type = `unregistered`
-		}
-		className += " "+type;
+
+		className += " "+status.type;
 
 		if (this.props.viewFilter==config.viewFilter.LIVE && (type=="unregistered" || type=="faulty")) {
 			// hide broken / unregistered meeting room in live view.
@@ -86,7 +101,7 @@ export class MeetingRoom extends React.Component{
 		return(
 			<div className={className} style={style}
 				onClick={this.onClick.bind(this)}>
-				{status.total}
+				{status.displayValue}
 			</div>
 		)
 	}

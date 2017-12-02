@@ -64,4 +64,23 @@ export default {
     }
   },
   day: ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"]
+  viewFilter: {
+    ALL: {
+      code: "ALL",
+      text: "Show All"
+    },
+    LIVE: {
+      code: "LIVE",
+      text: "Live View"
+    },
+    MAINTENANCE: {
+      code: "MAINTENANCE",
+      text: "Maintenance View"
+    }
+  },
+  roles: [
+    {code:"ADMIN", text:"Administrator", singular: "an administrator"},
+    {code:"LOCALUSER", text:"Local user", singular: "a local user"},
+    {code:"SUPPORTUSER", text:"Support user", singular: "a support user"}
+  ]
 }

@@ -1,61 +1,116 @@
 @import "variables.less";
 
-.floorplan-container {
+.color-note {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  float: left;
+}
+
+.color-note-td {
   position: relative;
-  height: 100%;
-  width: 100%;
+  width: 30px;
+  min-width: 10px;
+}
 
-  .floorplan-image-container {
-    position: relative;
-    #floorplan-image {
-      height: 100%;
-      width: 100%;
-      vertical-align: middle;
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: 50%;
-    }
-    div#floorplan-image {
-      height: 100%;
-      width: 100%;
-    }
-  }
 
+// .floorplan-container {
   .point {
-    background-color: limegreen;
+    // unused :
+    background-color: @color-highlight-green;
+
     width: 10px;
     height: 10px;
     position: absolute;
     border-radius: 30px;
-    -ms-transform: translate(-10px, -10px); /* IE 9 */
-    -webkit-transform: translate(-10px, -10px); /* Safari */
-    transform: translate(-10px, -10px);
+
+    // -ms-transform: translate(-10px, -10px); /* IE 9 */
+    // -webkit-transform: translate(-10px, -10px); /* Safari */
+    // transform: translate(-10px, -10px);
+    // transform: translate(-10px, -10px);
+
+    -ms-transform: translate(-50%, -50%); /* IE 9 */
+    -webkit-transform: translate(-50%, -50%); /* Safari */
+    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
 
     &.faulty {
-      background-color: @color-highlight-red;
+      background-color: @color-highlight-blue;
     }
-    &.inuse:not(.faulty) {
-      background-color: blue;
-      animation: pulsate 1s ease-out;
-      animation-iteration-count: infinite;
-      -webkit-animation: pulsate 1s ease-out;
-      -webkit-animation-iteration-count: infinite;
-      opacity: 0.0;
-      &:hover {
-        -webkit-animation: none;
-        animation:         none;
-        opacity: 1;
-      }
+    &.unregistered {
+      background-color: @color-highlight-brown;
+    }
+    &.inuse {
+      background-color: @color-highlight-red;
+      animation: pip 0.5s ease-out infinite;
+      -webkit-animation: pip 0.5s ease-out infinite;
+    }
+    &.standby {
+      background-color: @color-highlight-yellow;
     }
 
     &:hover {
       cursor: pointer;
     }
-    .selected {
-      background-color: green;
+    &.selected {
+      animation: fade 0.5s ease-out;
+      animation-iteration-count: infinite;
+      -webkit-animation: fade 0.5s ease-out;
+      -webkit-animation-iteration-count: infinite;
     }
   }
-}
+
+  .circle {
+    // unused :
+    background-color: @color-highlight-green;
+
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    position: absolute;
+    border-radius: 30px;
+
+    text-align: center;
+    vertical-align: middle;
+
+    color: #eee;
+    font-weight: bold;
+    user-select: none;
+
+    // -ms-transform: translate(-10px, -10px); /* IE 9 */
+    // -webkit-transform: translate(-10px, -10px); /* Safari */
+    // transform: translate(-10px, -10px);
+    // transform: translate(-10px, -10px);
+
+    -ms-transform: translate(-50%, -50%); /* IE 9 */
+    -webkit-transform: translate(-50%, -50%); /* Safari */
+    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+
+    &.faulty {
+      background-color: @color-highlight-blue;
+    }
+    &.unregistered {
+      background-color: @color-highlight-brown;
+    }
+    &.inuse {
+      background-color: @color-highlight-red;
+      animation: pipbig 0.75s ease-out infinite;
+      -webkit-animation: pipbig 0.75s ease-out infinite;
+    }
+    &.standby {
+      background-color: @color-highlight-yellow;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+    &.selected {
+      animation: fade 0.5s ease-out infinite;
+      -webkit-animation: fade 0.5s ease-out infinite;
+    }
+  }
 
 
 .content-right-floormap{
@@ -66,8 +121,33 @@
   display: none;
 }
 
-@-webkit-keyframes pulsate {
-  0% { opacity: 0.0; }
+@-webkit-keyframes pip {
+  0% { transform: scale(1, 1) translate(-50%, -50%);}
+  50% { transform: scale(1.2, 1.2) translate(-40%, -40%);}
+  100% { transform: scale(1, 1) translate(-50%, -50%);}
+}
+
+@-webkit-keyframes pipbig {
+  0% { transform: scale(1, 1) translate(-50%, -50%);}
+  50% { transform: scale(1.05, 1.05) translate(-47.5%, -47.5%);}
+  100% { transform: scale(1, 1) translate(-50%, -50%);}
+}
+
+
+@-webkit-keyframes spin {
+  0% { transform: translate(-60%, -60%); }
+  12.5% { transform: translate(-60%, -50%); }
+  25% { transform: translate(-60%, -40%); }
+  37.5% { transform: translate(-50%, -40%); }
+  50% { transform: translate(-40%, -40%); }
+  62.5% { transform: translate(-40%, -50%); }
+  75% { transform: translate(-40%, -60%); }
+  87.5% { transform: translate(-50%, -60%); }
+  100% { transform: translate(-60%, -60%); }
+}
+
+@-webkit-keyframes fade {
+  0% { opacity: 0.6; }
   50% { opacity: 1.0; }
-  100% { opacity: 0.0; }
+  100% { opacity: 0.6; }
 }

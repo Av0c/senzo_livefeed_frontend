@@ -4,6 +4,7 @@ var webpack = require('webpack');
 
 var devConfig = {
   devServer: {
+    disableHostCheck: true,
     historyApiFallback: true,
     hot: true,
     inline: true,

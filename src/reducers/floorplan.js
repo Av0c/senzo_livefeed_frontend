@@ -34,7 +34,7 @@ function uploadImage(data) {
 }
 
 function fetchImage(id) {
-  return axios.get(`${config.api.root}/api/area/${id}/floorplan`)
+  return axios.get(`${config.api.root}/node/image/${id}`)
     .then(receiveImage)
     .catch((error) => console.log(error))
 }
@@ -69,7 +69,7 @@ export default (state = initialState, action ) => {
       )
     }
     case RECEIVE_IMAGE: {
-      return Object.assign({}, initialState, {image: action.data})
+      return Object.assign({}, initialState, {imageURL: action.data.url})
     }
 
       break;

@@ -17,6 +17,8 @@ import {
   UPDATE_USER,
   USER_CREATED,
   USER_UPDATED,
+  INVITE_USER,
+  USER_INVITED,
   userRemoved,
   userSaved,
   userUpdated,
@@ -73,6 +75,7 @@ function updatePassword(data){
     .catch((error) => showNotification('Updating password failed: ' + error.statusText, false))
 }
 
+
 export default(state = initialState, action) => {
   switch (action.type) {
     case FETCH_USERS: {
@@ -119,6 +122,7 @@ export default(state = initialState, action) => {
         Effects.promise(updatePassword, action.data)
       )
     }
+
     case FORM_DATA_CHANGED: {
       return Object.assign({}, state, {
         editedUser: Object.assign({}, state.editedUser, action.data )

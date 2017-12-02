@@ -41,7 +41,8 @@ const initialState = {
       maintenance: 0
     },
     info: {
-      name: ''
+      name: '',
+      empty: true
     },
     children: []
   },

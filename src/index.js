@@ -35,8 +35,17 @@ import EditCustomer from 'components/pages/settings/customers/edit';
 import Profile from 'components/pages/profile';
 import FloorPlan from 'components/pages/locations/area/floorplan/index';
 import AddFloorPlan from 'components/pages/addfloorplan';
+
 import Stats from 'components/pages/stats';
+<<<<<<< HEAD
 import Comparison from 'components/pages/comparison';
+=======
+import Live from 'components/pages/live';
+import User from 'components/pages/user';
+import Register from 'components/pages/user/register';
+
+
+>>>>>>> user
 
 ReactDOM.render((
   <Provider store={Store}>
@@ -52,8 +61,14 @@ ReactDOM.render((
           <Route path="/locations/area/:id/sensor/:sensorId" component={FloorPlan} />
         </Route>
         <Route path="/profile" component={Profile} />
+
         <Route path="/statistic/:id" component={Stats} />
+
         <Route path="/comparison" component={Comparison} />
+
+        <Route path="/live/:id" component={Live} />
+        <Route path="/user" component={User} />
+
         <Route path="/locations/area/:id/floorplan/add" component={AddFloorPlan} />
         <Route path="/settings" component={Settings}>
           <Route path="/settings/myaccount/password" component={Password} />
@@ -74,7 +89,7 @@ ReactDOM.render((
         </Route>
       </Route>
       <Route path="/login" component={login} />
-      <Route path="/register" component={register} />
+      <Route path="/invitation" component={Register} />
     </Router>
   </Provider>
 ), document.getElementById('app'));

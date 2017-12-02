@@ -13,6 +13,10 @@ export class Frame extends React.Component {
   handleTreeClick(node) {
     if(this.props.location.pathname.includes("/statistic") || this.props.location.pathname=="/") {
       appHistory.push(`/statistic/${node.id}`);
+    } else if (this.props.location.pathname.includes("/live")) {
+      appHistory.push(`/live/${node.id}`);
+    } else {
+      this.props.dispatch(setCurrentNode(node));
     }
   }
 

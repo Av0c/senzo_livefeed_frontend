@@ -7,6 +7,7 @@ import NodeFilterDropdown from "./nodedropdown"
 import ViewFilterDropdown from "./viewdropdown"
 import LiveSummary from "./summary"
 import FloorPlan from "./floorplan"
+import LeftMenu from 'components/common/leftmenu';
 
 import {
 	selectNodeFilter,
@@ -47,9 +48,9 @@ class Live extends React.Component {
 	componentDidMount() {
 		console.log("set inteval");
 		console.log(this.props.user);
-	    this.fetchLive(this.props.user.rootnodeid);
-	    var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
-	    this.setState({I: I});
+			this.fetchLive(this.props.user.rootnodeid);
+			var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
+			this.setState({I: I});
 	}
 
 	componentWillUnmount() {
@@ -136,23 +137,11 @@ class Live extends React.Component {
 		return (
 			<div>
 				<div className="live-header-wrapper">
-					<div className="stats-menu">     
+					<div className="stats-menu">		 
 						<div className="container-fluid">
 							<div className="row">
 								<div className="col-sm-12">
-									<div className="main-menu-left pull-left">
-
-										<a className="button" href="#">
-											<i className="fa fa-home" aria-hidden="true"></i>
-											<span> Overview   </span>
-										</a>
-
-										<a className="button" href="#">
-											<i className="fa fa-bar-chart" aria-hidden="true"></i>
-											<span> Comparison </span>
-										</a>
-
-									</div>
+		                            <LeftMenu overview='active' comparison='' />
 
 									<div className="live-title pull-left">
 										<h1>{this.state.currentNode.info.name}</h1>
@@ -179,14 +168,14 @@ class Live extends React.Component {
 												}
 											/>
 										</div>
-			                            <Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
+																	<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
 									</div>
 									{/*
 									<div className="toolbar">
 										<div className="toolbr-tools clearfix"><a className="toolbar-seat" href="#"></a><a className="toolbar-meeting-room" href="#"></a><a className="toolbar-mr" href="#"></a></div>
 										<div className="toolbar-close clearfix"><a className="toolbar-arrow-right" href="#"></a><a className="toolbar-arrow-left" href="#"></a></div>
 									</div>
-								  */}
+									*/}
 								</div>
 							</div>
 						</div>
@@ -216,8 +205,8 @@ function mapStateToProps(state) {
 		viewFilter: state.liveReducer.viewFilter,
 		sensorMap: state.nodeReducer.map,
 		sensorMapError: state.nodeReducer.error,
-	    user: state.authReducer.user,
-	    imageURL: state.floorPlanReducer.imageURL
+			user: state.authReducer.user,
+			imageURL: state.floorPlanReducer.imageURL
 	};
 }
 

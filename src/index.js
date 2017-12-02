@@ -37,15 +37,13 @@ import FloorPlan from 'components/pages/locations/area/floorplan/index';
 import AddFloorPlan from 'components/pages/addfloorplan';
 
 import Stats from 'components/pages/stats';
-<<<<<<< HEAD
+
 import Comparison from 'components/pages/comparison';
-=======
+
 import Live from 'components/pages/live';
 import User from 'components/pages/user';
 import Register from 'components/pages/user/register';
 
-
->>>>>>> user
 
 ReactDOM.render((
   <Provider store={Store}>

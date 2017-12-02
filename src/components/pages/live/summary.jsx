@@ -58,7 +58,7 @@ export default class LiveSummary extends React.Component {
 					<table className="table text-center"><tbody>
 					  <tr>
 						<td></td>
-						<td className="live-stats-heading">Total:</td>
+						<td className="live-stats-heading">Capacity:</td>
 						<td className="live-stats-heading" colSpan="3">Current Usage:</td>
 					  </tr>
 					  {
@@ -119,9 +119,9 @@ export default class LiveSummary extends React.Component {
 class Status extends React.Component {
 	render() {
 		if (this.props.taken) {
-			return (<img src="/src/assets/images/room-taken.svg" alt="Taken"/>);
+			return (<img src="/src/assets/images/room-taken.svg" alt="Taken" title="Taken"/>);
 		} else {
-			return (<img src="/src/assets/images/room-free.svg" alt="Free"/>);
+			return (<img src="/src/assets/images/room-free.svg" alt="Free" title="Available"/>);
 		}
 	}
 }

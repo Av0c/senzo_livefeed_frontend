@@ -572,7 +572,6 @@ li {
   background: #fff;
 /* Flyout CSS menu */
 }
-<<<<<<< HEAD
 .settings-wrapper {
   padding-top: 24px;
 }
@@ -618,9 +617,6 @@ h2.account-title {
   font-size: 16px;
   font-weight: normal;
 }
-=======
-
->>>>>>> user
 .add-account-wrapper select,
 .settings-add-location-wrapper select,
 .settings-edit-location-wrapper select {
@@ -633,7 +629,6 @@ h2.account-title {
   box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
   background: #fff;
 }
-<<<<<<< HEAD
 .locations-list {
   margin: 0;
   padding: 0;
@@ -701,7 +696,7 @@ h2.account-title {
   display: block;
   float: left;
   margin-top: 7px;
-=======
+}
 .change-pwd-wrapper label,
 .add-account-wrapper label,
 .edit-sensor-wrapper label,
@@ -712,5 +707,4 @@ h2.account-title {
   font-family: 'Catamaran';
   font-size: 16px;
   font-weight: normal;
->>>>>>> user
 }

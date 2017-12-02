@@ -63,7 +63,7 @@ export default {
       type: 'Efficiency'
     }
   },
-  day: ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"]
+  day: ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"],
   viewFilter: {
     ALL: {
       code: "ALL",

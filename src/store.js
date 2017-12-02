@@ -40,7 +40,7 @@ const reducer = combineReducers({
   commonReducer,
   nodeReducer,
   statsReducer,
-  comparisonReducer
+  comparisonReducer,
   liveReducer,
   userReducer
 });

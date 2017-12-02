@@ -48,13 +48,13 @@ class Live extends React.Component {
 		console.log("set inteval");
 		console.log(this.props.user);
 	    this.fetchLive(this.props.user.rootnodeid);
-	    // var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
-	    // this.setState({I: I});
+	    var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
+	    this.setState({I: I});
 	}
 
 	componentWillUnmount() {
 		console.log("clear inteval");
-		// clearInterval(this.state.I);
+		clearInterval(this.state.I);
 	}
 
 	empty(node) {

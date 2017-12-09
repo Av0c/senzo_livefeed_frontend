@@ -18,39 +18,8 @@ export const RECEIVE_SENSOR_STATISTICS = 'RECEIVE_SENSOR_STATISTICS';
 
 export const FETCHING_FAILED = 'FETCHING_FAILED';
 
-/***
- * Area actions
- */
-export function fetchAreaData(id, settings) {
-  return {
-    type: FETCH_AREA_DATA,
-    id,
-    settings
-  }
-}
 
-export function receiveAreaData(result) {
-  return {
-    type: RECEIVE_AREA_DATA,
-    data: result.data
-  }
-}
 
-export function applyAreaQuery(id, settings) {
-  return {
-    type: APPLY_AREA_QUERY,
-    settings,
-    id
-  }
-}
-
-export function exportAreaUtilizationCsv(id, settings) {
-  return {
-    type: EXPORT_AREA_UTILIZATION_CSV,
-    settings,
-    id
-  }
-}
 
 /**
  * Site actions

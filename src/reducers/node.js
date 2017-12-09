@@ -1,8 +1,7 @@
 import axios from 'axios';
 import config from 'config';
 import { Effects, loop } from 'redux-loop';
-
-import { FETCH_LIVE_DATA, RECEIVE_LIVE_DATA, receiveLiveData, fetchFailed, FETCH_FAILED, SELECT_NODE_STATS } from 'actions/node';
+import * as Node from 'actions/node';
 
 const initialState = {
   loading: false,
@@ -13,20 +12,20 @@ const initialState = {
 
 function fetchLiveData(id) {
   return axios.get(config.api.root + `/sensor/live/${id}`)
-    .then(receiveLiveData)
-    .catch(fetchFailed);
+    .then(Node.receiveLiveData)
+    .catch(Node.fetchFailed);
 }
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case FETCH_LIVE_DATA: {
+    case Node.FETCH_LIVE_DATA: {
       return loop(
         Object.assign({}, state, { loading: true }),
         Effects.promise(fetchLiveData, action.id)
       );
     }
 
-    case RECEIVE_LIVE_DATA: {
+    case Node.RECEIVE_LIVE_DATA: {
       let map = new Map();
       action.data.forEach(function (element) {
         // Dummy test...
@@ -42,13 +41,13 @@ export default function (state = initialState, action) {
       });
     }
 
-    case FETCH_FAILED: {
+    case Node.FETCH_FAILED: {
       return Object.assign({}, state, {
         error: action.data
       });
     }
 
-    case SELECT_NODE_STATS: {
+    case Node.SELECT_NODE_STATS: {
       return Object.assign({}, state, {
         loading: true
       });

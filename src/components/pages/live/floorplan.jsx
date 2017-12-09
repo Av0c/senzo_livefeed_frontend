@@ -4,6 +4,7 @@ import Sensor from './sensor';
 import MeetingRoom from './meetingroom';
 import config from 'config';
 import {Link} from 'react-router'
+import SensorForm from './sensorform';
 
 import {
 	saveSensor,
@@ -19,7 +20,8 @@ export class FloorPlan extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			imageError: false
+			imageError: false,
+			sensorForm: false
 		};
 	}
 
@@ -73,9 +75,9 @@ export class FloorPlan extends React.Component {
 
 	imageClick(e) {
 		e.stopPropagation();
+		var mousePos = this.getMousePos(e);
 		if (this.props.selectedSensor && typeof this.props.selectedSensor.id != "undefined") {
 			var imageElement = this.refs['floorplan-image'];
-			var mousePos = this.getMousePos(e);
 			var containerX = imageElement.offsetWidth;
 			var containerY = imageElement.offsetHeight;
 			var xpercent = ((mousePos.x) / containerX) * 100;
@@ -97,6 +99,7 @@ export class FloorPlan extends React.Component {
 	}
 
 	render() {
+		console.log(this.props.selectedSensor);
 		var MRs = [], sensors = [];
 		this.listSensorByRoomType(this.props.root, config.room.OPENAREA, sensors);
 		if (this.props.groupMR && this.props.viewFilter!=config.viewFilter.MAINTENANCE) {
@@ -104,7 +107,6 @@ export class FloorPlan extends React.Component {
 		} else {
 			this.listSensorByRoomType(this.props.root, config.room.MEETINGROOM, sensors);
 		}
-
 		return (
 			<div className="container-fluid">
 				<div className="color-note">

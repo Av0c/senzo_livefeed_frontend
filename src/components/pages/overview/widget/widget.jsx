@@ -10,7 +10,7 @@ export default class Widget extends React.Component {
 
     render() {
         return (
-            <div style={{marginBottom: '20px'}} className="col-sm-4 col-xs-12">
+            <div style={{marginBottom: '20px'}} className="col-sm-3 col-xs-12">
                 <div className="the-card clearfix">
                     <h1 className="card-location">{this.props.node.info.name}</h1>
                     <div className="card-buttons clearfix">

@@ -221,3 +221,19 @@ li {
 .total-desks-container {
 	margin-right: 40px;
 }
+
+.zone-type span {
+	margin-left: 5px;
+}
+
+.dropdown-menu {
+	display: block;
+}
+
+.add-location-form-notification {
+	padding-left: 20px;
+	padding-right: 20px;
+    font-family: 'Catamaran';
+    font-size: 16px;
+    font-weight: normal;
+}

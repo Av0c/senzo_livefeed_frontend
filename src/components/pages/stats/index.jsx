@@ -22,7 +22,6 @@ export class Stats extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("stats receive props");
         this.findNode(nextProps.tree, nextProps);
     }
 
@@ -44,7 +43,6 @@ export class Stats extends React.Component {
     }
 
     render() {
-        console.log("stats render");
         return (
             <div className="stats-body" id="stats-body">
                 <div className="container-fluid">

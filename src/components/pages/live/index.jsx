@@ -48,9 +48,9 @@ class Live extends React.Component {
 	componentDidMount() {
 		console.log("set inteval");
 		console.log(this.props.user);
-			this.fetchLive(this.props.user.rootnodeid);
-			var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
-			this.setState({I: I});
+		this.fetchLive(this.props.user.rootnodeid);
+		var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
+		this.setState({ I: I });
 	}
 
 	componentWillUnmount() {
@@ -67,9 +67,9 @@ class Live extends React.Component {
 	}
 
 	prepare(props) {
-		var status = {found: false};
+		var status = { found: false };
 		var path = [];
-		var res = {currentNode: null};
+		var res = { currentNode: null };
 		this.findNode(props.tree, props.params.id, path, status, res);
 
 		var oldnode = this.state.currentNode;
@@ -107,7 +107,7 @@ class Live extends React.Component {
 				return;
 			}
 
-			else if(tree.type!="meeting_room" && tree.type!="open_area" && tree.children) {
+			else if (tree.type != "meeting_room" && tree.type != "open_area" && tree.children) {
 				tree.children.forEach((child) => {
 					if (!status.found) {
 						self.findNode(child, id, path, status, res);
@@ -137,11 +137,11 @@ class Live extends React.Component {
 		return (
 			<div>
 				<div className="live-header-wrapper">
-					<div className="stats-menu">		 
+					<div className="stats-menu">
 						<div className="container-fluid">
 							<div className="row">
 								<div className="col-sm-12">
-		                            <LeftMenu overview='active' comparison='' />
+									<LeftMenu overview='active' comparison='' />
 
 									<div className="live-title pull-left">
 										<h1>{this.state.currentNode.info.name}</h1>
@@ -168,7 +168,7 @@ class Live extends React.Component {
 												}
 											/>
 										</div>
-																	<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
+										<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
 									</div>
 									{/*
 									<div className="toolbar">
@@ -205,8 +205,8 @@ function mapStateToProps(state) {
 		viewFilter: state.liveReducer.viewFilter,
 		sensorMap: state.nodeReducer.map,
 		sensorMapError: state.nodeReducer.error,
-			user: state.authReducer.user,
-			imageURL: state.floorPlanReducer.imageURL
+		user: state.authReducer.user,
+		imageURL: state.floorPlanReducer.imageURL
 	};
 }
 

@@ -140,6 +140,25 @@ export function deleteNode(node) {
   }
 }
 
+export function uploadFloorplanView(id, image) {
+  let formData = new FormData();
+  formData.append('floorplan', image);
+  let axiosConfig = {
+    headers: {'Content-Type': 'multipart/form-data'}
+  };
+  return dispatch => {
+    dispatch(uploadImage(image));
+    return axios.post(config.api.root + `/node/image/upload/${id}`, formData, axiosConfig)
+      .then((response) => {
+        dispatch(uploadImageSuccessfully(response.data));
+      })
+      .catch(function (response) {
+        console.log(response);
+        dispatch(uploadImageFailed(response.data));
+      })
+  }
+}
+
 export function selectNodeStats(node) {
   appHistory.push("/statistic");
 }

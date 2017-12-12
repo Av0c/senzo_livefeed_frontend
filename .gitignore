@@ -7,3 +7,5 @@ yarn.lock
 *.log
 
 .vscode/*
+
+package-lock.json

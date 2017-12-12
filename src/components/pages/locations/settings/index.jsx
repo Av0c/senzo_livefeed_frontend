@@ -6,7 +6,7 @@ import AddFloorplanForm from 'components/common/addfloorplanform';
 import Tree from 'components/pages/locations/settings/tree';
 import EditLocationForm from 'components/common/editlocationform';
 import DeleteLocationForm from 'components/common/deletelocationform';
-import { createNode, deleteNode } from 'actions/node';
+import { createNode, deleteNode, updateNode, uploadFloorplanView } from 'actions/node';
 import { fetchCustomerOverview } from 'actions/overview';
 
 export class Settings extends React.Component {
@@ -113,6 +113,34 @@ export class Settings extends React.Component {
             });
     }
 
+    updateLocation(node, state) {
+        if (!state.name && !state.timezone) {
+            toastr.info("Nothing changed");
+        }
+        else {
+            let newNode = Object.assign({}, node);
+            newNode.info.location = state.timezone || node.info.location;
+            newNode.info.name = state.name || node.info.name;
+            this.props.dispatch(updateNode(newNode)).then(() => {
+                node = Object.assign({}, newNode);
+                toastr.success(`${node.info.name} has been updated`);
+            })
+                .catch(error => {
+                    toastr.error(error);
+                });
+
+        }
+    }
+
+    uploadImage(node, image) {
+        this.props.dispatch(uploadFloorplanView(node.id, image)).then(() => {
+            toastr.success(`${node.info.name}'s floorplan view has been uploaded`);
+        })
+            .catch(error => {
+                toastr.error(error);
+            });
+    }
+
     render() {
         return (
             <div>
@@ -141,8 +169,8 @@ export class Settings extends React.Component {
                                         closeDeleteLocationForm={this.closeDeleteLocationForm.bind(this)}
                                     />
                                     {this.state.isAddingLocation && <AddLocationForm submit={this.addLocation.bind(this)} node={this.state.currentNode} tree={this.props.tree} isAddingLocation={this.state.isAddingLocation} closeAddLocationForm={this.closeAddLocationForm.bind(this)} />}
-                                    {this.state.isAddingFloorplan && <AddFloorplanForm isAddingFloorplan={this.state.isAddingFloorplan} closeAddFloorplanForm={this.closeAddFloorplanForm.bind(this)} />}
-                                    {this.state.isEditingLocation && <EditLocationForm isEditingLocation={this.state.isEditingLocation} closeEditLocationForm={this.closeEditLocationForm.bind(this)} />}
+                                    {this.state.isAddingFloorplan && <AddFloorplanForm submit={this.uploadImage.bind(this)} node={this.state.currentNode} isAddingFloorplan={this.state.isAddingFloorplan} closeAddFloorplanForm={this.closeAddFloorplanForm.bind(this)} />}
+                                    {this.state.isEditingLocation && <EditLocationForm submit={this.updateLocation.bind(this)} node={this.state.currentNode} isEditingLocation={this.state.isEditingLocation} closeEditLocationForm={this.closeEditLocationForm.bind(this)} />}
                                     {this.state.isDeletingLocation && <DeleteLocationForm submit={this.deleteLocation.bind(this)} node={this.state.currentNode} isDeletingLocation={this.state.isDeletingLocation} closeDeleteLocationForm={this.closeDeleteLocationForm.bind(this)} />}
                                 </div>
                             </div>

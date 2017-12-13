@@ -33,8 +33,6 @@ class OverviewLeft extends React.Component {
   }
 
   render() {
-    console.log(this.props.overview);
-    console.log(CountriesAndTimezones.getTimezonesForCountry('FI'));
     return (
       <div style={{ marginTop: '20px' }} className="overview-block">
         <div className="container-fluid">

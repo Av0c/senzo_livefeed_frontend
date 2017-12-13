@@ -162,20 +162,6 @@ export default (state = initialState, action ) => {
       })
     }
 
-    case SAVE_SENSOR:{
-      return loop (
-        Object.assign({}, state, {loading:true}),
-        Effects.promise(saveSensor,action.sensor)
-      )
-    }
-
-    case UPDATE_SENSOR:{
-      return loop (
-        Object.assign({}, state, {loading:true}),
-        Effects.promise(updateSensor,action.sensor)
-      )
-    }
-
     case UI_UPDATE_COMPLETED:{
       return Object.assign({}, state, {
         saveSensorCompleted: false,

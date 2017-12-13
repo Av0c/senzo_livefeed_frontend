@@ -153,8 +153,7 @@ export function uploadFloorplanView(id, image) {
         dispatch(uploadImageSuccessfully(response.data));
       })
       .catch(function (response) {
-        console.log(response);
-        dispatch(uploadImageFailed(response.data));
+        dispatch(uploadImageFailed());
       })
   }
 }

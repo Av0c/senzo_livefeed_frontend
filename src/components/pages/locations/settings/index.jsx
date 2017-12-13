@@ -132,13 +132,17 @@ export class Settings extends React.Component {
         }
     }
 
-    uploadImage(node, image) {
+    uploadImage(node, image, type) {
         this.props.dispatch(uploadFloorplanView(node.id, image)).then(() => {
             toastr.success(`${node.info.name}'s floorplan view has been uploaded`);
         })
             .catch(error => {
                 toastr.error(error);
             });
+        let newNode = Object.assign({}, node);
+        newNode.type = type;
+        this.props.dispatch(updateNode(newNode))
+
     }
 
     render() {

@@ -44,7 +44,7 @@ export default class AddFloorPlanFrom extends React.Component {
                     <div className="modal-footer">
                         <button onClick={this.props.closeAddFloorplanForm} className="btn btn-default" type="button" data-dismiss="modal" onClick={this.props.closeAddFloorplanForm}>Cancel</button>
                         <button className="btn btn-success" onClick={() =>{
-                        this.props.submit(node, document.getElementById("img").files[0]);
+                        this.props.submit(node, document.getElementById("img").files[0], this.state.type);
                         this.props.closeAddFloorplanForm();}} type="button">Confirm</button>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ export default class AddFloorPlanFrom extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state={
-            type: 'mixed_area',
+            type: 'meeting_room',
             file: ''
         };
     }
@@ -31,7 +31,6 @@ export default class AddFloorPlanFrom extends React.Component {
                         <div className="area-type">
                             <label>Area Type</label>
                             <select id="type" onChange={this.changeHandler.bind(this)}>
-                                <option value='mixed_area' >Mixed Area</option>
                                 <option value='meeting_room' >Meeting Room</option>
                                 <option value='open_area' >Open Area</option>
                             </select>

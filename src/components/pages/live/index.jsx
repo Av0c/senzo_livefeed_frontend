@@ -160,7 +160,8 @@ class Live extends React.Component {
 											<ViewFilterDropdown
 												viewFilter={this.props.viewFilter}
 												click={
-													(node) => { this.props.dispatch(selectViewFilter(node)) }
+													(node) => { console.log(node);
+														this.props.dispatch(selectViewFilter(node)); }
 												}
 											/>
 										</div>

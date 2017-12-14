@@ -8,6 +8,7 @@ import EditLocationForm from 'components/common/editlocationform';
 import DeleteLocationForm from 'components/common/deletelocationform';
 import { createNode, deleteNode, updateNode, uploadFloorplanView } from 'actions/node';
 import { fetchCustomerOverview } from 'actions/overview';
+import LeftMenu from 'components/common/leftmenu';
 
 export class Settings extends React.Component {
 
@@ -148,11 +149,13 @@ export class Settings extends React.Component {
     render() {
         return (
             <div>
+
                 <div className="settings-wrapper">
                     <div className="container-fluid">
+                        <LeftMenu overview='' comparison='' />
                         <div className="row">
                             <div className="col-md-12">
-                                <h2 className="account-title">Location Settings</h2>
+                                <h2 className="account-title" style={{ marginTop: '30px' }}>Location Settings</h2>
                             </div>
                         </div>
                     </div>

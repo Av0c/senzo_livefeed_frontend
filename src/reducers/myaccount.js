@@ -6,18 +6,21 @@ import {
   UPDATE_USER,
   UPDATE_COMPLETED,
   updateFailed,
-  updateCompleted
+  updateCompleted, 
+  RECEIVE_USER,
 } from 'actions/myaccount'
 
 const initialState = {
   loading: false,
   user: {
+    email: '',
     title: '',
     firstName: '',
     lastName: '',
     company: '',
     username: '',
-    password:''
+    password:'',
+    phone: ''
   }
 }
 
@@ -41,6 +44,13 @@ export default (state = initialState, action ) => {
       return Object.assign({}, state, {
         loading: false
       })
+    }
+
+    case RECEIVE_USER: {
+      console.log(action.data);
+      return Object.assign({}, state, {
+        user: action.data
+      });
     }
 
     default: {

@@ -2,14 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getOccupancyOverview, getParams } from 'actions/stats';
 import WidgetContainer from 'components/pages/overview/widget/widgetcontainer';
-import { RECEIVE_FIRST_LOCATION_OVERVIEW , RECEIVE_SECOND_LOCATION_OVERVIEW } from 'actions/comparison';
+import { RECEIVE_FIRST_LOCATION_OVERVIEW, RECEIVE_SECOND_LOCATION_OVERVIEW } from 'actions/comparison';
 
 export class Widgets extends React.Component {
 
     generateWidgets() {
         return this.props.overview.map((element, index) => {
             return <WidgetContainer id={index} key={index} node={element.node} stats={element.data} allSensors={this.props.allSensors}
-            querySettings={this.props.querySettings} action={index==0 ? RECEIVE_FIRST_LOCATION_OVERVIEW : RECEIVE_SECOND_LOCATION_OVERVIEW}/>
+                    querySettings={this.props.querySettings} action={index == 0 ? RECEIVE_FIRST_LOCATION_OVERVIEW : RECEIVE_SECOND_LOCATION_OVERVIEW} />
+           
         });
     }
 

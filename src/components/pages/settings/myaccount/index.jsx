@@ -1,109 +1,99 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateUser } from 'actions/myaccount';
-import { fetchUser } from 'actions/user';
 import { Link } from 'react-router';
+import { updateUser } from 'actions/myaccount';
+import { fetchCurrentUser } from 'actions/myaccount';
 
 class Index extends React.Component {
   constructor() {
     super();
-    this.displayName = 'My Account'
     this.state = {
-      email:'',
-      firstName:'',
-      lastName:'',
-      password1:'',
-      password2:'',
-      role:'',
-      username:'',
-      showPassword2: false
+      phone: '',
+      position: '',
+      location: '',
+      email: '',
+      firstname: '',
+      lastname: '',
+      title: 'Mr',
+      username: '',
+      address: ''
     }
+  }
+
+  submit() { 
   }
 
   componentWillMount() {
-    this.props.dispatch(fetchUser(this.props.auth.id))
+    this.props.dispatch(fetchCurrentUser());
   }
 
-  save(){
-    let user = {
-      email:this.state.email,
-      firstName:this.state.firstName,
-      lastName:this.state.lastName
-    }
-    this.props.dispatch(updateUser(user));
-  }
-
-  cancel(){
-    this.props.dispatch(fetchUser(this.props.auth.id))
-  }
-
-  componentWillReceiveProps(nextProps) {
-    let user = nextProps.user.editedUser;
-    user.password1 ='';
-    user.password2 ='';
-    this.setState({  email:user.email,
-      firstName:user.firstName,
-      lastName:user.lastName,
-      password1:'',
-      password2:''
-    })
-  }
-
-  handleChange(e){
+  changeHandler(e) {
     let key = e.target.id;
     let value = e.target.value;
-    this.setState ({[key]:value});
+    this.setState({ [key]: value });
   }
 
   render() {
-
+    let user = this.props.user;
+    console.log(this.state);
     return (
-      <div className='settings-container'>
-        <div className='settings-title'>My account</div>
-        <div className='settings-line'></div>
-        <div className='settings-text'>
-        Update your information.
-      </div>
-        <div className='settings-line'></div>
-        <div className='settings-form'>
-          <br></br>
-          <div className="settings-row">
-            <label htmlFor="first-name">First Name</label>
-            <input type='text' id='firstName' autocomplete="off" style={{flex:2}}
-              onChange={this.handleChange.bind(this)} value={this.state.firstName}/>
-            <label htmlFor="last-name">Last Name</label>
-            <input type='text' id='lastName' autocomplete="off" style={{flex:2}}
-              onChange={this.handleChange.bind(this)} value={this.state.lastName} />
+      <div className="settings-wrapper">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-12">
+              <h2 className="account-title">Own Account</h2>
+              <form className="account-form">
+                <div className="account-email">
+                  <label>Email Address</label>
+                  <input type="email" id="email" placeholder="jamesbond@gmail.com" disabled="disabled" />
+                </div>
+                <div className="account-username">
+                  <label>Username</label>
+                  <input type="text" id="username" value={this.state.username || user.username} onChange={this.changeHandler.bind(this)} />
+                </div>
+                <div className="account-title">
+                  <label>Title</label>
+                  <select id="title" onChange={this.changeHandler.bind(this)}>
+                    <option value="Mr">Mr</option>
+                    <option value="Ms">Ms </option>
+                  </select>
+                </div>
+                <div className="account-firstname" >
+                  <label>First Name    </label>
+                  <input type="text" id="firstname" value={this.state.firstname || user.firstname} onChange={this.changeHandler.bind(this)}  />
+                </div>
+                <div className="account-lastname">
+                  <label>Last Name    </label>
+                  <input type="text" id="lastname"  value={this.state.lastname || user.lastname} onChange={this.changeHandler.bind(this)} />
+                </div>
+                <div className="account-phone">
+                  <label>Phone    </label>
+                  <input type="tel" id="phone"  value={this.state.phone || user.phone} onChange={this.changeHandler.bind(this)} />
+                </div>
+                <div className="account-position">
+                  <label>Position</label>
+                  <input type="text"  id="position" value={this.state.position || user.postion} onChange={this.changeHandler.bind(this)} />
+                </div>
+                <div className="account-location">
+                  <label>Location</label>
+                  <input type="text"  id="address" value={this.state.address || user.address} onChange={this.changeHandler.bind(this)} />
+                </div>
+                <div className="account-change-password"><a className="chpwd">Change Password    </a></div>
+                <div className="account-submit">
+                  <input className="disabled" type="submit" value="Save Changes" />
+                </div>
+              </form>
+            </div>
           </div>
-          <br></br>
-          <div className="settings-row">
-            <label htmlFor="email">Contact Email</label>
-            <input type="email" id="email" autocomplete="off" required style={{flex:2}}
-              onChange={this.handleChange.bind(this)} value={this.state.email}/>
-          </div>
-          <br></br>
-          <div className="white-text-button">
-            <Link to='/settings/myaccount/password'
-              style={{marginLeft:'0em', color:'white', float:'left', fontWeight:'bold'}}>
-              CHANGE PASSWORD</Link>
-          </div>
-          <br></br>
-          <br></br>
-          <div className="white-text-button" onClick={this.save.bind(this)}
-            style={{marginLeft:'0em', color:'white', float:'left', fontWeight:'bold'}}>
-            <span style={{textDecoration:'underline'}}>SAVE CHANGES</span>
-          </div>
-          <span className='settings-cancel' onClick={this.cancel.bind(this)}>DISCARD CHANGES</span>
         </div>
       </div>
     )
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
-    auth: state.authReducer.user,
-    user: state.settingsPageReducer.user
+    user: state.myAccountReducer.user
   }
 }
 

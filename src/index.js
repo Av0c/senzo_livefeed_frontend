@@ -70,7 +70,7 @@ ReactDOM.render((
         <Route path="/locations/area/:id/floorplan/add" component={AddFloorPlan} />
         <Route path="/settings" component={Settings}>
           <Route path="/settings/myaccount/password" component={Password} />
-          <Route path="/settings/myaccount" component={MyAccount} />
+          <Route path="/settings/ownaccount" component={MyAccount} />
           <Route path="/settings/locations/edit" component={EditLocations} />
           <Route path="/settings/areas/edit" component={EditAreas} />
           <Route path="/settings/sensors/edit" component={EditSensors} />

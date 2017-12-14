@@ -2,18 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { createSensor, removeSensor, updateSensor } from 'actions/floorplan';
+import { deleteNode } from 'actions/node';
 
 export class SensorForm extends React.Component {
 
   constructor() {
     super();
     this.state = {};
-  }
-  componentWillMount() {
-    //this.setState(this.props.sensor)
-  }
-  componentWillReceiveProps(nextProps) {
-    //this.setState(nextProps.sensor)
   }
 
   submit() {
@@ -42,7 +37,16 @@ export class SensorForm extends React.Component {
         toastr.error("Name and MAC address must be filled");
       }
     }
+    this.props.closeSensorForm();
+  }
 
+  deleteSensor(sensor) {
+    this.props.dispatch(deleteNode(this.props.selectedSensor)).then(() => {
+      toastr.success(`Delete sensor successfully`)
+    })
+      .catch(error => {
+        toastr.error(error);
+      });
     this.props.closeSensorForm();
   }
 
@@ -69,7 +73,7 @@ export class SensorForm extends React.Component {
               </div>
             </div>
             <div className="modal-footer">
-              <button className="btn btn-default" type="button" data-dismiss="modal">Remove</button>
+              <button className="btn btn-default" onClick={this.deleteSensor.bind(this)} >Remove</button>
               <button onClick={this.props.closeSensorForm} className="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
               <button className="btn btn-success" type="button" onClick={this.submit.bind(this)}>Confirm</button>
             </div>

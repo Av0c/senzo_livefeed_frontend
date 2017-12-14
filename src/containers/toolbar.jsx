@@ -33,7 +33,7 @@ export class Toolbar extends React.Component {
               <div className="user-name pull-right"><span>{this.props.user.username}</span></div>
               <div className="settings-dropdown-root">
                 <ul>
-                  <li><a href="#">Own Account</a></li>
+                  <li><Link to="/settings/ownaccount">Own Account</Link></li>
                   <li> <a href="#">User Administration</a></li>
                   <li><Link to="/locations">Locations Settings</Link></li>
                   <li> <a href="#">Sensor Settings</a></li>

@@ -5,12 +5,18 @@ import Bar from 'components/common/bar';
 import RoomTypeSelector from 'components/common/roomtypeselector';
 import LocationStats from 'components/common/locationstats';
 import LocationBottomMenu from 'components/common/locationbottommenu';
+import { RECEIVE_FIRST_LOCATION_OVERVIEW, RECEIVE_SECOND_LOCATION_OVERVIEW } from 'actions/comparison';
+
 
 export default class Widget extends React.Component {
 
     render() {
+        let style = null;
+        if ((this.props.action == RECEIVE_SECOND_LOCATION_OVERVIEW) || (this.props.action == RECEIVE_FIRST_LOCATION_OVERVIEW)) {
+            style = "col-sm-4 col-xs-12";
+        }
         return (
-            <div style={{marginBottom: '20px'}} className="col-sm-3 col-xs-12">
+            <div style={{ marginBottom: '20px' }} className={style || "col-sm-3 col-xs-12"}>
                 <div className="the-card clearfix">
                     <h1 className="card-location">{this.props.node.info.name}</h1>
                     <div className="card-buttons clearfix">
@@ -29,7 +35,8 @@ export default class Widget extends React.Component {
                     />
                     <Bar values={this.props.bar} />
                     <LocationStats stats={this.props.stats} />
-                    <LocationBottomMenu faulty={this.props.stats.faulties} />
+                    <LocationBottomMenu faulty={this.props.stats.faulties} nodeId={this.props.node.id} 
+                    redirectMaintenanceView={this.props.redirectMaintenanceView} />
                 </div>
             </div>
         );

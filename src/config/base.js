@@ -82,5 +82,12 @@ export default {
     {code:"ADMIN", text:"Administrator", singular: "an administrator"},
     {code:"LOCALUSER", text:"Local user", singular: "a local user"},
     {code:"SUPPORTUSER", text:"Support user", singular: "a support user"}
+  ],
+  userFilter: [
+    {code:"ALL", text:"All Users"},
+    {code:"CADMIN", text:"Company Admins"},
+    {code:"LADMIN", text:"Local Admins"},
+    {code:"LUSER", text:"Local Users"},
+    {code:"SUSER", text:"Support Users"}
   ]
 }

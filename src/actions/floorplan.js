@@ -1,4 +1,6 @@
-import history from 'components/common/appHistory'
+import history from 'components/common/appHistory';
+import axios from 'axios';
+import config from 'config';
 
 /**
  * Floorplan image related
@@ -62,13 +64,21 @@ export const SAVING_SENSOR_INPROGRESS = 'SAVING_SENSOR_INPROGRESS';
 export const UI_UPDATE_COMPLETED = 'UI_UPDATE_COMPLETED';
 export const UPDATE_SENSOR = 'UPDATE_SENSOR';
 export const UPDATE_SENSOR_COMPLETED = 'UPDATE_SENSOR_COMPLETED';
+export const UPDATE_SENSOR_FAILED = 'UPDATE_SENSOR_FAILED';
 export const SELECT_SENSOR = 'SELECT_SENSOR';
 export const MOVE_SENSOR = 'MOVE_SENSOR';
 
-export function updateSensor(sensor) {
+export function updateSensorInProgress(sensor) {
   return {
     type: UPDATE_SENSOR,
     sensor
+  }
+}
+
+export function updateSensorFailed(data) {
+  return {
+    type: UPDATE_SENSOR_FAILED,
+    data
   }
 }
 
@@ -133,7 +143,7 @@ export function saveSensorFailed() {
   }
 }
 
-export function removeSensor(sensor) {
+export function removeSensorInProgress(sensor) {
   return {
     type: REMOVE_SENSOR,
     sensor
@@ -177,5 +187,44 @@ export function moveSensor(sensor, x, y) {
     type: MOVE_SENSOR,
     sensor,
     x, y
+  }
+}
+
+export function removeSensor(id, sensor) {
+  return dispatch => {
+    dispatch(removeSensor(sensor));
+    return axios.post(config.api.root + `/node/create/${id}`, sensor)
+      .then((response) => {
+        dispatch(removeSensorCompleted(response.data));
+      })
+      .catch(function (response) {
+        dispatch(removeSensorFailed(response.data));
+      })
+  }
+}
+
+export function createSensor(id, sensor) {
+  return dispatch => {
+    dispatch(saveSensor(sensor));
+    return axios.post(config.api.root + `/sensor/create/0/${id}`, sensor)
+      .then((response) => {
+        dispatch(saveSensorCompleted(response.data));
+      })
+      .catch(function (response) {
+        dispatch(saveSensorFailed());
+      })
+  }
+}
+
+export function updateSensor(sensor) {
+  return dispatch => {
+    dispatch(updateSensorInProgress(sensor));
+    return axios.put(config.api.root + `/sensor/update/${sensor.id}`, sensor)
+      .then((response) => {
+        dispatch(updateSensorCompleted(response.data));
+      })
+      .catch(function (response) {
+        dispatch(updateSensorFailed(response.data));
+      })
   }
 }

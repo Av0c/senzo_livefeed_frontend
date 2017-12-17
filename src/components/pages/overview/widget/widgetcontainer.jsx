@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import config from 'config';
 import Widget from 'components/pages/overview/widget/widget';
 import { getOccupancyOverview, getParams } from 'actions/stats';
+import {selectViewFilter} from "actions/live/filter";
 
 export class WidgetContainer extends React.Component {
 
@@ -72,12 +73,19 @@ export class WidgetContainer extends React.Component {
     }
   }
 
+  redirectMaintenanceView() {
+    this.props.dispatch(selectViewFilter(config.viewFilter.MAINTENANCE));
+  }
+
   render() {
     let stats = this.countTreeStatistic(this.props.node, this.props.allSensors);
     let gauge = [this.props.stats.average, this.props.stats.peak];
     let bar = this.props.stats.marks || [1, 0, 0];
     return (
-      <Widget bar={bar} gauge={gauge} type={this.state.area.type} node={this.props.node} stats={stats} id={this.props.id} getOverview={this.getOverview.bind(this)} />
+      <Widget bar={bar} gauge={gauge} type={this.state.area.type} 
+      node={this.props.node} stats={stats} id={this.props.id} 
+      getOverview={this.getOverview.bind(this)} action={this.props.action} 
+      redirectMaintenanceView={this.redirectMaintenanceView.bind(this)}/>
     );
   }
 }

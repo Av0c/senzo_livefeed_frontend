@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import CountriesAndTimezones from 'countries-and-timezones';
 import { fetchCustomerOverview, getNodeStatistic } from 'actions/overview';
 import { fetchLiveData } from 'actions/node';
 import DateSelector from 'components/common/dateselector';
@@ -8,7 +10,7 @@ import { getOccupancyOverview, getParams, findOccupancyTag } from 'actions/stats
 import Widgets from 'components/pages/overview/widget';
 import SearchContainer from 'components/pages/overview/searchcontainer';
 import LeftMenu from 'components/common/leftmenu';
-
+import getCountryName from '../../../countries';
 
 class OverviewLeft extends React.Component {
 
@@ -31,7 +33,6 @@ class OverviewLeft extends React.Component {
   }
 
   render() {
-    console.log(this.props.currentSensor);
     return (
       <div style={{ marginTop: '20px' }} className="overview-block">
         <div className="container-fluid">

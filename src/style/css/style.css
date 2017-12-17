@@ -603,7 +603,7 @@ h2.account-title {
   margin-top: 30px;
 }
 .locations-list .location-name {
-  font-size: 18px;
+  font-size: 28px;
   font-weight: bold;
 }
 .change-pwd-wrapper label,
@@ -664,7 +664,7 @@ h2.account-title {
   margin-top: 5px;
 }
 .locations-list ul {
-  margin-left: 18px;
+  margin-left: 28px;
   padding: 0;
 }
 .locations-list li ul li .location-name {
@@ -707,4 +707,47 @@ h2.account-title {
   font-family: 'Catamaran';
   font-size: 16px;
   font-weight: normal;
+}
+
+.active-user:before {
+  content: '';
+  float: left;
+  background: #7ec443;
+  height: 18px;
+  width: 18px;
+  border-radius: 20px;
+  margin-right: 4px;
+}
+.pending-user:before {
+  content: '';
+  float: left;
+  background: #964e16;
+  height: 18px;
+  width: 18px;
+  border-radius: 20px;
+  margin-right: 4px;
+}
+.bin {
+  background: url("/src/assets/images/bin.svg");
+  height: 22px;
+  width: 18px;
+  display: block;
+  float: right;
+}
+.bin-default-settings {
+  background: url(/src/assets/images/bin.svg");
+  height: 22px;
+  width: 18px;
+  display: block;
+  float: left;
+  margin-top: 7px;
+}
+.table-email {
+  color: #585e66;
+}
+table.table tr td.table-heading {
+  border-top: none;
+}
+td.table-heading h4 {
+  margin-top: 18px;
 }

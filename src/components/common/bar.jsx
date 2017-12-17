@@ -64,7 +64,6 @@ export default class Bar extends React.Component {
         if (!this.state.haveTrans) {
             this.addTrans();
         }
-        console.log(props);
         const values = props.values.slice();
         values[0] = Math.max( 0, Math.min(1, values[0]) ); // Middle segment can't be zero or it will dissappear
         values[1] = Math.max( 0.00001, Math.min(1, values[1]) ); // Middle segment can't be zero or it will dissappear

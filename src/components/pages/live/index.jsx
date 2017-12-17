@@ -35,26 +35,22 @@ class Live extends React.Component {
 				type: null
 			},
 			path: [],
-			groupMR: true,
+			groupMR: false,
 			I: {}
 		};
 	}
 
 	fetchLive(id) {
-		console.log("fetch live");
 		this.props.dispatch(fetchLiveData(id));
 	}
 
 	componentDidMount() {
-		console.log("set inteval");
-		console.log(this.props.user);
-			this.fetchLive(this.props.user.rootnodeid);
-			var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
-			this.setState({I: I});
+		this.fetchLive(this.props.user.rootnodeid);
+		var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
+		this.setState({ I: I });
 	}
 
 	componentWillUnmount() {
-		console.log("clear inteval");
 		clearInterval(this.state.I);
 	}
 
@@ -67,9 +63,9 @@ class Live extends React.Component {
 	}
 
 	prepare(props) {
-		var status = {found: false};
+		var status = { found: false };
 		var path = [];
-		var res = {currentNode: null};
+		var res = { currentNode: null };
 		this.findNode(props.tree, props.params.id, path, status, res);
 
 		var oldnode = this.state.currentNode;
@@ -107,7 +103,7 @@ class Live extends React.Component {
 				return;
 			}
 
-			else if(tree.type!="meeting_room" && tree.type!="open_area" && tree.children) {
+			else if (tree.type != "meeting_room" && tree.type != "open_area" && tree.children) {
 				tree.children.forEach((child) => {
 					if (!status.found) {
 						self.findNode(child, id, path, status, res);
@@ -137,18 +133,20 @@ class Live extends React.Component {
 		return (
 			<div>
 				<div className="live-header-wrapper">
-					<div className="stats-menu">		 
+					<div className="stats-menu">
 						<div className="container-fluid">
 							<div className="row">
 								<div className="col-sm-12">
-		                            <LeftMenu overview='active' comparison='' />
+									<LeftMenu overview='active' comparison='' />
 
 									<div className="live-title pull-left">
 										<h1>{this.state.currentNode.info.name}</h1>
 									</div>
 
 									<div className="live-top-menu pull-right">
-										<input type="checkbox" onChange={this.changeMRMode.bind(this)} checked={this.state.groupMR} />
+										<div className="button-sm pull-left nav-stats show-hide-details" onClick={this.changeMRMode.bind(this)}>
+											{(this.state.groupMR) ? "Hide details" : "Show details"}
+										</div>
 
 										<div className="live-select pull-left">
 											<NodeFilterDropdown
@@ -164,11 +162,12 @@ class Live extends React.Component {
 											<ViewFilterDropdown
 												viewFilter={this.props.viewFilter}
 												click={
-													(node) => { this.props.dispatch(selectViewFilter(node)) }
+													(node) => { console.log(node);
+														this.props.dispatch(selectViewFilter(node)); }
 												}
 											/>
 										</div>
-																	<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
+										<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
 									</div>
 									{/*
 									<div className="toolbar">

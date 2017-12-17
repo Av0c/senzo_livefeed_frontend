@@ -2,18 +2,31 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from "config"
-import { inviteUser } from "actions/user"
+import UserList from "./userlist"
+import { listContact, inviteUser } from "actions/user"
 
 class User extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			AAOpen: true, // add account modal open ?
+			AAOpen: false, // add account modal open ?
 			Role: "ADMIN",
 			respond: "",
 			respondClass: "",
+			interval: {}
 		};
 	}
+
+	componentWillMount() {
+		this.props.dispatch(listContact());
+		var itv = setInterval(this.props.dispatch, 5000, listContact());
+		this.setState({ interval: itv })
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.state.interval);
+	}
+
 
 	addAccountOpen(e) {
 		e.stopPropagation()
@@ -21,7 +34,8 @@ class User extends React.Component {
 	}
 
 	addAccountClose(e) {
-		e.stopPropagation()
+		e.stopPropagation();
+		console.log(this.state.AAOpen);
 		this.setState({AAOpen: false})
 	}
 
@@ -38,7 +52,6 @@ class User extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		let respond = nextProps.respond
-		console.log("user props",nextProps)
 		switch (nextProps.stage) {
 			case "inviting":
 				console.log("Inviting", this.state);
@@ -81,7 +94,6 @@ class User extends React.Component {
 	}
 
 	render() {
-		console.log("render", this.state);
 		var nodes = [];
 		this.listNodes(this.props.tree, 0, nodes)
 		return (
@@ -96,47 +108,19 @@ class User extends React.Component {
 										Add Account
 									</div>
 								</div>
+								<UserList contact={this.props.contact}/>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div>
-					<div className={"modal-overlay"+(this.state.AAOpen ? "" : " closed")} onClick={this.addAccountClose.bind(this)}></div>
-					<div className={"add-account-wrapper invite-modal"+(this.state.AAOpen ? "" : " closed")}>
-						<div className="modal-header">
-							<button className="close" onClick={this.addAccountClose.bind(this)}>×</button>
-							<h4 className="modal-title">Add Account</h4>
-						</div>
-						<div className="modal-body">
-							<label>Add New</label>
-							<select required ref="role">
-								{config.roles.map((role) => (
-									<option value={role.code} key={role.code}> {role.text} </option>
-								))}
-							</select>
-
-							<label>Location</label>
-							<select required ref="location">
-							{nodes.map((x) => {
-								return (
-									<option value={x.node.id} key={"o"+x.node.id}>
-										{x.padding}
-										{x.node.info.name}
-									</option>
-								);
-							})}
-							</select>
-
-							<label>Email</label>
-							<input type="email" placeholder="new@user.com" ref="email"/>
-							<span className={this.state.respondClass}>{this.state.respond}</span>
-						</div>
-						<div className="modal-footer">
-							<button className="btn btn-default" type="button" onClick={this.addAccountClose.bind(this)}>Cancel</button>
-							<button className="btn btn-success" type="button" onClick={this.sendInvitation.bind(this)}>Send Invitation</button>
-						</div>
-					</div>
-				</div>
+				<InviteModal
+					open={this.state.AAOpen}
+					closeModal={this.addAccountClose.bind(this)}
+					nodes={nodes}
+					respond={this.state.respond}
+					respondClass={this.state.respondClass}
+					sendInvitation={this.sendInvitation}
+				/>
 				<div className="modal fade" id="delete-user-modal">
 					<div className="modal-dialog modal-sm">
 						<div className="modal-content">
@@ -165,7 +149,9 @@ function mapStateToProps(state) {
 		user: state.authReducer.user,
 
 		stage: state.userInviteReducer.stage,
-		respond: state.userInviteReducer.respond
+		respond: state.userInviteReducer.respond,
+
+		contact: state.userAdminReducer.contact
 	};
 }
 
@@ -174,5 +160,69 @@ function mapDispatchToProps(dispatch) {
 		dispatch
 	};
 }
+
+class InviteModal extends React.Component {
+	constructor(props, context) {
+		super(props, context);
+		this.state = {
+			loaded: false
+		};
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (this.props.open != nextProps.open) {
+			this.setState({loaded: true});
+		}
+	}
+
+	render() {
+		console.log("Modal", this.props);
+		let type = "hidden";
+		if (this.state.loaded) {
+			type = this.props.open ? "open" : "closed";
+		}
+		return (
+			<div>
+				<div className={"modal-overlay "+type} onClick={this.props.closeModal}></div>
+				<div className={"add-account-wrapper invite-modal "+type}>
+					<div className="modal-header">
+						<button className="close" onClick={this.props.closeModal}>×</button>
+						<h4 className="modal-title">Add Account</h4>
+					</div>
+					<div className="modal-body">
+						<label>Add New</label>
+						<select required ref="role">
+							{config.roles.map((role) => (
+								<option value={role.code} key={role.code}> {role.text} </option>
+							))}
+						</select>
+
+						<label>Location</label>
+						<select required ref="location">
+						{this.props.nodes.map((x) => {
+							return (
+								<option value={x.node.id} key={"o"+x.node.id}>
+									{x.padding}
+									{x.node.info.name}
+								</option>
+							);
+						})}
+						</select>
+
+						<label>Email</label>
+						<input type="email" placeholder="new@user.com" ref="email"/>
+						<span className={this.props.respondClass}>{this.props.respond}</span>
+					</div>
+					<div className="modal-footer">
+						<button className="btn btn-default" type="button" onClick={this.props.closeModal}>Cancel</button>
+						<button className="btn btn-success" type="button" onClick={this.props.sendInvitation.bind(this)}>Send Invitation</button>
+					</div>
+				</div>
+			</div>
+		);
+	}
+}
+
+InviteModal = connect(null, mapDispatchToProps)(InviteModal);
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);

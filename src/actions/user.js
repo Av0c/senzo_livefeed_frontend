@@ -74,6 +74,28 @@ export function createUserFail(e) {
   }
 }
 
+// List contacts
+export const LIST_CONTACT = "LIST_CONTACT"
+export const LIST_CONTACT_OK = "LIST_CONTACT_OK"
+export const LIST_CONTACT_FAIL = "LIST_CONTACT_FAIL"
+
+export function listContact() {
+  return {
+    type: LIST_CONTACT
+  }
+}
+export function listContactOk(e) {
+  return {
+    type: LIST_CONTACT_OK,
+    e
+  }
+}
+export function listContactFail(e) {
+  return {
+    type: LIST_CONTACT_FAIL,
+    e
+  }
+}
 
 export const RECEIVE_RESPOND = 'RECEIVE_RESPOND';
 

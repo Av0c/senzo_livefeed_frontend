@@ -22,6 +22,7 @@ import comparisonReducer from 'reducers/comparison';
 import liveReducer from 'reducers/live';
 import userInviteReducer from 'reducers/user/invite';
 import userRegisterReducer from 'reducers/user/register';
+import userAdminReducer from 'reducers/user/administration';
 
 import { clearToken } from 'actions/authentication';
 import { showNotification } from 'actions/common';
@@ -44,7 +45,8 @@ const reducer = combineReducers({
   comparisonReducer,
   liveReducer,
   userInviteReducer,
-  userRegisterReducer
+  userRegisterReducer,
+  userAdminReducer
 });
 
 const store = createStore(

@@ -23,7 +23,6 @@ function createUser(key, user) {
 }
 
 export default(state = initialState, action) => {
-	console.log(action);
 	switch (action.type) {
 		// Check invitation key
 		case a.CHECK_INVITE_KEY: {

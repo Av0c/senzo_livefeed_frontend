@@ -22,7 +22,6 @@ export class Stats extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("stats receive props");
         this.findNode(nextProps.tree, nextProps);
     }
 
@@ -44,7 +43,6 @@ export class Stats extends React.Component {
     }
 
     render() {
-        console.log("stats render");
         return (
             <div className="stats-body" id="stats-body">
                 <div className="container-fluid">
@@ -52,7 +50,7 @@ export class Stats extends React.Component {
                         <div className="col-md-12" style={{ backgroundColor: 'white', paddingTop: '10px' }}>
                             <LeftMenu overview='active' comparison='' />
                             <DateSelector />
-                            <StatsMenu name={this.state.currentNode.info.name} />
+                            <StatsMenu name={this.state.currentNode.info.name} id={this.state.currentNode.id} />
                         </div>
                         <div className="col-md-12">
                             <div className="col-sm-12">

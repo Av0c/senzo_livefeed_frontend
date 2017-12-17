@@ -4,6 +4,7 @@ import Sensor from './sensor';
 import MeetingRoom from './meetingroom';
 import config from 'config';
 import {Link} from 'react-router'
+import SensorForm from './sensorform';
 
 import {
 	saveSensor,
@@ -19,8 +20,17 @@ export class FloorPlan extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			imageError: false
+			imageError: false,
+			sensorForm: false,
+			mousePos: {}
 		};
+	}
+	closeSensorForm()  {
+		this.setState({sensorForm: false});
+	}
+
+	openSensorForm() {
+		this.setState({sensorForm: true});
 	}
 
 	listSensorByRoomType(root, roomType, res) {
@@ -73,16 +83,20 @@ export class FloorPlan extends React.Component {
 
 	imageClick(e) {
 		e.stopPropagation();
+		var mousePos = this.getMousePos(e);
+		var imageElement = this.refs['floorplan-image'];
+		var containerX = imageElement.offsetWidth;
+		var containerY = imageElement.offsetHeight;
+		var xpercent = ((mousePos.x) / containerX) * 100;
+		var ypercent = ((mousePos.y) / containerY) * 100;
+		this.setState({mousePos: {top: ypercent+'%', left: xpercent+'%'}, sensorForm: true});
 		if (this.props.selectedSensor && typeof this.props.selectedSensor.id != "undefined") {
-			var imageElement = this.refs['floorplan-image'];
-			var mousePos = this.getMousePos(e);
-			var containerX = imageElement.offsetWidth;
-			var containerY = imageElement.offsetHeight;
-			var xpercent = ((mousePos.x) / containerX) * 100;
-			var ypercent = ((mousePos.y) / containerY) * 100;
 			this.props.dispatch(moveSensor(this.props.selectedSensor, xpercent, ypercent));
 		} else {
-			this.props.dispatch(selectSensor({}));
+			this.props.dispatch(selectSensor({
+				xpercent: xpercent,
+				ypercent: ypercent
+			  }));
 		}
 	}
 
@@ -104,7 +118,6 @@ export class FloorPlan extends React.Component {
 		} else {
 			this.listSensorByRoomType(this.props.root, config.room.MEETINGROOM, sensors);
 		}
-
 		return (
 			<div className="container-fluid">
 				<div className="color-note">
@@ -144,9 +157,11 @@ export class FloorPlan extends React.Component {
 								onClick={this.imageClick.bind(this)}
 								key="image"
 							/>
+							{this.state.sensorForm && <SensorForm nodeId={this.props.root.id} sensorForm={this.state.sensorForm} closeSensorForm={this.closeSensorForm.bind(this)} mousePos={this.state.mousePos} />}
 							{sensors.map((sensor) => {
 								return (
 									<Sensor
+										openSensorForm={this.openSensorForm.bind(this)}
 										sensor={sensor}
 										viewFilter={this.props.viewFilter}
 										selectedSensor={this.props.selectedSensor}

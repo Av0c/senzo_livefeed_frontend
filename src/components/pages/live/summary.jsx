@@ -101,7 +101,7 @@ export default class LiveSummary extends React.Component {
 										<td>{smr.total}</td>
 										<td><Status taken={(smr.inUse >0)} /></td>
 										<td>{smr.inUse}</td>
-										<td>{(smr.inUse>0) ? Math.round(100*smr.inUse/smr.total)+"%" : ""}</td>
+										<td>{(smr.inUse>0) ? Math.round(100*smr.inUse/smr.total)+"%" : "--"}</td>
 									</tr>
 								);
 						  	})

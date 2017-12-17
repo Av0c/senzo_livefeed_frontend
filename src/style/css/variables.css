@@ -221,3 +221,81 @@ li {
 .total-desks-container {
 	margin-right: 40px;
 }
+
+.zone-type span {
+	margin-left: 5px;
+}
+
+.dropdown-menu {
+	display: block;
+}
+
+.add-location-form-notification {
+	padding-left: 20px;
+	padding-right: 20px;
+    font-family: 'Catamaran';
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.modal-sensorform {
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
+
+.modal-body input {
+	font-family: 'Arial';
+}
+
+.locations-list li {
+	padding-top: 10px;
+	border-top: 1px dashed #585858;
+}
+
+.location-name {
+	min-width: 300px;
+}
+
+.location-name img {
+	float: right;
+}
+.account-change-password a {
+	text-align: center;
+	float: right;
+	display: block;
+	width: 140px;
+	color: #7ec443;
+	border: 1px solid #7ec443;
+	border-radius: 4px;
+	padding: 4px 8px;
+	margin-bottom: 18px;
+	cursor: pointer;
+}
+
+.account-change-password {
+	width: 337px;
+}
+
+.account-submit input[type="submit"].disabled {
+	background: none;
+	border: 1px solid #979797;
+	color: #979797;
+}
+
+.account-form input[type="submit"] {
+	background: #7ec443;
+	color: #fff;
+	border: none;
+	width: 230px;
+	margin-left: 109px;
+	margin-top: 0;
+	font-family: 'Catamaran';
+	font-size: 18px;
+	background: #fff;
+	border: 1px solid #585858;
+	border-radius: 7px;
+	padding: 4px 18px;
+}

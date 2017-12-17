@@ -39,31 +39,31 @@ class User extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		let respond = nextProps.respond
 		console.log("user props",nextProps)
-		if (!nextProps.loading) {
-			if (typeof respond.status != "undefined") {
-				if (respond.status==201) {
-					this.setState({
-						respond: "Invitation email sent.",
-						respondClass: "text-green"
-					});
-				} else {
-					this.setState({
-						respond: "Provided information is invalid.",
-						respondClass: "text-red"
-					})
-				}
-			} else {
-					this.setState({
-						respond: "",
-						respondClass: ""
-					})
-			}
-		} else {
-			console.log("Loading ?")
-			this.setState({
-				respond: "Sending...",
-				respondClass: "text-loading"
-			})
+		switch (nextProps.stage) {
+			case "inviting":
+				console.log("Inviting", this.state);
+				this.setState({
+					respond: "Sending...",
+					respondClass: "text-loading"
+				})
+				break;
+			case "invited":
+				this.setState({
+					respond: "Invitation email sent.",
+					respondClass: "text-green"
+				});
+				break;
+			case "invite-failed":
+				this.setState({
+					respond: "Provided information is invalid.",
+					respondClass: "text-red"
+				})
+				break;
+			default: // "nothing"
+				this.setState({
+					respond: "",
+					respondClass: ""
+				});
 		}
 	}
 
@@ -81,6 +81,7 @@ class User extends React.Component {
 	}
 
 	render() {
+		console.log("render", this.state);
 		var nodes = [];
 		this.listNodes(this.props.tree, 0, nodes)
 		return (
@@ -162,8 +163,9 @@ function mapStateToProps(state) {
 	return {
 		tree: state.overviewReducer.customerOverview,
 		user: state.authReducer.user,
-		respond: state.userReducer.respond,
-		loading: state.userReducer.loading
+
+		stage: state.userInviteReducer.stage,
+		respond: state.userInviteReducer.respond
 	};
 }
 

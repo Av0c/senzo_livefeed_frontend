@@ -34,7 +34,7 @@ export class Toolbar extends React.Component {
               <div className="settings-dropdown-root">
                 <ul>
                   <li><a href="#">Own Account</a></li>
-                  <li> <a href="#">User Administration</a></li>
+                  <li><Link to="/user">User Administration</Link></li>
                   <li><Link to="/locations">Locations Settings</Link></li>
                   <li> <a href="#">Sensor Settings</a></li>
                   <li><a href="#">Live Feed/SenzoAPI  </a></li>

@@ -205,8 +205,8 @@ function mapStateToProps(state) {
 		viewFilter: state.liveReducer.viewFilter,
 		sensorMap: state.nodeReducer.map,
 		sensorMapError: state.nodeReducer.error,
-			user: state.authReducer.user,
-			imageURL: state.floorPlanReducer.imageURL
+		user: state.authReducer.user,
+		imageURL: state.floorPlanReducer.imageURL
 	};
 }
 

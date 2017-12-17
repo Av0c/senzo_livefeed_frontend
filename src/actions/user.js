@@ -1,77 +1,9 @@
 import history from 'components/common/appHistory';
 
-export const CREATE_USER = 'CREATE_USER';
-export const FETCH_USER = 'FETCH_USER';
-export const FETCH_USERS = 'FETCH_USERS';
-export const FORM_DATA_CHANGED = 'FORM_DATA_CHANGED';
-export const PASSWORD_UPDATED = 'PASSWORD_UPDATED';
-export const RECEIVE_USERS = 'RECEIVE_USERS';
-export const RECEIVE_USER = 'RECEIVE_USER';
-export const REMOVE_USER = 'REMOVE_USER';
-export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
-export const UPDATE_USER = 'UPDATE_USER';
-export const USER_CREATED = 'USER_CREATED';
-export const USER_UPDATED = 'USER_UPDATED';
-export const USER_REMOVED = 'USER_REMOVED';
-
+// Invite new user
 export const INVITE_USER = 'INVITE_USER';
-export const USER_INVITED = 'USER_INVITED';
-
-export const GET_INVITE = 'GET_INVITE';
-export const RECEIVE_INVITE = 'RECEIVE_INVITE';
-
-export const RECEIVE_RESPOND = 'RECEIVE_RESPOND';
-
-
-export function updatePassword(data){
-  return {
-    type: UPDATE_PASSWORD,
-    data
-  }
-}
-export function removeUser(id) {
-  return {
-    type: REMOVE_USER,
-    id
-  }
-}
-export function fetchUsers() {
-  return {
-    type: FETCH_USERS
-  }
-}
-
-export function receiveUsers(result) {
-  return {
-    type: RECEIVE_USERS,
-    data: result.data
-  }
-}
-export function fetchUser(id) {
-  return {
-    type: FETCH_USER,
-    id
-  }
-}
-export function receiveUser(result) {
-  return {
-    type: RECEIVE_USER,
-    data: result.data
-  }
-}
-export function createUser(user) {
-  return {
-    type: CREATE_USER,
-    user
-  }
-}
-
-export function updateUser(user) {
-  return {
-    type: UPDATE_USER,
-    user
-  }
-}
+export const INVITE_USER_OK = 'INVITE_USER_OK';
+export const INVITE_USER_FAIL = 'INVITE_USER_FAIL';
 
 export function inviteUser(inv) {
   return {
@@ -79,36 +11,70 @@ export function inviteUser(inv) {
     inv
   }
 }
-export function getInvite(key) {
+export function inviteUserOk(e) {
   return {
-    type: GET_INVITE,
+    type: INVITE_USER_OK,
+    e
+  }
+}
+export function inviteUserFail(e) {
+  return {
+    type: INVITE_USER_FAIL,
+    e
+  }
+}
+
+
+// Check invite key valid or not.
+export const CHECK_INVITE_KEY = 'GET_INVITE_KEY';
+export const CHECK_INVITE_KEY_OK = 'GET_INVITE_KEY_OK';
+export const CHECK_INVITE_KEY_FAIL = 'GET_INVITE_KEY_FAIL';
+
+export function checkInviteKey(key) {
+  return {
+    type: CHECK_INVITE_KEY,
     key
   }
 }
-export function receiveRespond(respond) {
+export function checkInviteKeyOk(e) {
   return {
-    type: RECEIVE_RESPOND,
-    respond
+    type: CHECK_INVITE_KEY_OK,
+    e
+  }
+}
+export function checkInviteKeyFail(e) {
+  return {
+    type: CHECK_INVITE_KEY_FAIL,
+    e
   }
 }
 
-export function userSaved() {
-  history.push('/settings/users/');
+// Create new user
+export const CREATE_USER = 'CREATE_USER';
+export const CREATE_USER_OK = 'CREATE_USER_OK';
+export const CREATE_USER_FAIL = 'CREATE_USER_FAIL';
+
+export function createUser(key, user) {
   return {
-    type: USER_CREATED
+    type: CREATE_USER,
+    user,
+    key
+  }
+}
+export function createUserOk(e) {
+  return {
+    type: CREATE_USER_OK,
+    e
+  }
+}
+export function createUserFail(e) {
+  return {
+    type: CREATE_USER_FAIL,
+    e
   }
 }
 
-export function passwordUpdated() {
-  history.push('/settings/myaccount/');
-  return {
-    type: PASSWORD_UPDATED
-  }
-}
 
-export function formDataChanged(data) {
-  return {
-    type: FORM_DATA_CHANGED,
-    data
-  }
-}
+export const RECEIVE_RESPOND = 'RECEIVE_RESPOND';
+
+

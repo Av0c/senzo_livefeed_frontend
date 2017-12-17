@@ -20,7 +20,8 @@ import statsReducer from 'reducers/stats';
 
 import comparisonReducer from 'reducers/comparison';
 import liveReducer from 'reducers/live';
-import userReducer from 'reducers/user';
+import userInviteReducer from 'reducers/user/invite';
+import userRegisterReducer from 'reducers/user/register';
 
 import { clearToken } from 'actions/authentication';
 import { showNotification } from 'actions/common';
@@ -42,7 +43,8 @@ const reducer = combineReducers({
   statsReducer,
   comparisonReducer,
   liveReducer,
-  userReducer
+  userInviteReducer,
+  userRegisterReducer
 });
 
 const store = createStore(

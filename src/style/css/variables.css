@@ -250,7 +250,7 @@ li {
 	font-family: 'Arial';
 }
 
-.locations-list li {
+.locations-list li.location-item-li {
 	padding-top: 10px;
 	border-top: 1px dashed #585858;
 }

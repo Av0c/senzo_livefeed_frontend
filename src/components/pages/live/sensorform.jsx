@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { createSensor, removeSensor, updateSensor } from 'actions/floorplan';
 import { deleteNode } from 'actions/node';
+import Sensor from './sensor';
 
 export class SensorForm extends React.Component {
 
   constructor() {
     super();
+    this.submit = this.submit.bind(this);
     this.state = {};
   }
 
-  submit() {
+  submit(nodeId) {
     let sensor = Object.assign({}, this.props.selectedSensor, {
       name: this.state.name || this.props.selectedSensor.name,
       macaddress: this.state.mac || this.props.selectedSensor.macaddress
@@ -26,7 +28,7 @@ export class SensorForm extends React.Component {
     }
     else {
       if (this.state.name && this.state.mac) {
-        this.props.dispatch(createSensor(this.props.nodeId, sensor)).then(() => {
+        this.props.dispatch(createSensor(nodeId, sensor)).then(() => {
           toastr.success(`Add new sensor successfully`)
         })
           .catch(error => {
@@ -50,12 +52,35 @@ export class SensorForm extends React.Component {
     this.props.closeSensorForm();
   }
 
+  createLocationOptions(options) {
+    return options.map((element, index) => {
+      return <option key={index} value={element.id}>{element.info.name}</option>
+    });
+  }
+
+  getAllAreas(tree, options) {
+    var self = this;
+    if (tree.type == 'meeting_room' || tree.type == 'open_area') {
+      options.push(tree);
+    }
+    else {
+      tree.children.forEach(function (element) {
+        self.getAllAreas(element, options);
+      });
+    }
+  }
+
   render() {
+    let options = [];
+    this.getAllAreas(this.props.node, options);
+    let locations = this.createLocationOptions(options);
     return (
       <div>
+        <div className="point unregistered" style={this.props.mousePos} >
+        </div>
         <div>
           <div className={"modal-sensorform" + (this.props.sensorForm ? "" : " closed")} onClick={this.props.closeSensorForm}></div>
-          <div className={"add-account-wrapper invite-modal" + (this.props.sensorForm ? "" : " closed")}>
+          <div style={{zIndex: 1}} className={"add-account-wrapper invite-modal" + (this.props.sensorForm ? "" : " closed")}>
             <div className="modal-header">
               <button onClick={this.props.closeSensorForm} className="close">×</button>
               <h4 className="modal-title">Sensor Form</h4>
@@ -70,12 +95,19 @@ export class SensorForm extends React.Component {
                   <span>Name</span>
                   <input type="username" id="name" value={this.state.name || this.props.selectedSensor.name} onChange={this.changeHandler.bind(this)} required />
                 </label>
+                <div className="timezone" >
+                  <label>Location</label>
+                  <select value={this.state.location} id="location" onChange={this.changeHandler.bind(this)}>
+                    {locations}
+                  </select>
+                </div>
+
               </div>
             </div>
             <div className="modal-footer">
               <button className="btn btn-default" onClick={this.deleteSensor.bind(this)} >Remove</button>
               <button onClick={this.props.closeSensorForm} className="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-              <button className="btn btn-success" type="button" onClick={this.submit.bind(this)}>Confirm</button>
+              <button className="btn btn-success" type="button" onClick={() => { this.submit(this.state.location || options[0].id) }}>Confirm</button>
             </div>
           </div>
         </div>

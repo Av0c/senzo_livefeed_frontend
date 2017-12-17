@@ -5,7 +5,7 @@ export default class AddFloorPlanFrom extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state={
-            type: 'meeting_room',
+            type: 'location',
             file: ''
         };
     }
@@ -18,7 +18,6 @@ export default class AddFloorPlanFrom extends React.Component {
 
     render() {
         let node = this.props.node;
-        console.log(node);
         return (
             <div>
                 <div className={"modal-overlay" + (this.props.isAddingFloorplan ? "" : " closed")} onClick={this.props.closeAddFloorplanForm}></div>
@@ -31,6 +30,7 @@ export default class AddFloorPlanFrom extends React.Component {
                         <div className="area-type">
                             <label>Area Type</label>
                             <select id="type" onChange={this.changeHandler.bind(this)}>
+                                <option value="location"> Mixed Area </option>
                                 <option value='meeting_room' >Meeting Room</option>
                                 <option value='open_area' >Open Area</option>
                             </select>

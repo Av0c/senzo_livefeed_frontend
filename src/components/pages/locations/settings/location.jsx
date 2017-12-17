@@ -39,7 +39,7 @@ export default class Location extends React.Component {
     render() {
         let icon = this.renderIcon();
         return (
-            <li>
+            <li className="location-item-li">
                 <div className="location-wrapper clearfix">
                     <div className="location-name pull-left" data-toggle="collapse" onClick={this.showChildren.bind(this)} >{this.props.node.info.name}
                         {icon}

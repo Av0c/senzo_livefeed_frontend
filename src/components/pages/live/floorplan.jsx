@@ -157,7 +157,7 @@ export class FloorPlan extends React.Component {
 								onClick={this.imageClick.bind(this)}
 								key="image"
 							/>
-							{this.state.sensorForm && <SensorForm nodeId={this.props.root.id} sensorForm={this.state.sensorForm} closeSensorForm={this.closeSensorForm.bind(this)} mousePos={this.state.mousePos} />}
+							{this.state.sensorForm && <SensorForm node={this.props.root} sensorForm={this.state.sensorForm} closeSensorForm={this.closeSensorForm.bind(this)} mousePos={this.state.mousePos} />}
 							{sensors.map((sensor) => {
 								return (
 									<Sensor

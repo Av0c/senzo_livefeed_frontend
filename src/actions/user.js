@@ -97,6 +97,38 @@ export function listContactFail(e) {
   }
 }
 
+// Select a user to delete
+export const SELECT_DELETE_USER = "SELECT_DELETE_USER"
+
+export function selectDeleteUser(username) {
+  return {
+    type: SELECT_DELETE_USER,
+    username
+  }
+}
+
 export const RECEIVE_RESPOND = 'RECEIVE_RESPOND';
 
+// Delete a user
+export const DELETE_USER = 'DELETE_USER';
+export const DELETE_USER_OK = 'DELETE_USER_OK';
+export const DELETE_USER_FAIL = 'DELETE_USER_FAIL';
 
+export function deleteUser(username) {
+  return {
+    type: DELETE_USER,
+    username
+  }
+}
+export function deleteUserOk(e) {
+  return {
+    type: DELETE_USER_OK,
+    e
+  }
+}
+export function deleteUserFail(e) {
+  return {
+    type: DELETE_USER_FAIL,
+    e
+  }
+}

@@ -55,6 +55,12 @@ export default {
       occupancyTag: "TTO"
     }
   },
+  nodeType: {
+    customer: {
+      code: "customer",
+      text: "Company"
+    }
+  },
   tag: {
     OCCUPANCY: {
       type: 'Occupancy'
@@ -79,9 +85,10 @@ export default {
     }
   },
   roles: [
-    {code:"ADMIN", text:"Administrator", singular: "an administrator"},
-    {code:"LOCALUSER", text:"Local user", singular: "a local user"},
-    {code:"SUPPORTUSER", text:"Support user", singular: "a support user"}
+    {code:"!ADMIN", rolecode:"ADMIN", text:"Company administrator", singular: "a company administrator"},
+    {code:".ADMIN", rolecode:"ADMIN", text:"Administrator", singular: "an administrator"},
+    {code:".LOCALUSER", rolecode:"LOCALUSER", text:"Local user", singular: "a local user"},
+    {code:".SUPPORTUSER", rolecode:"SUPPORTUSER", text:"Support user", singular: "a support user"}
   ],
   userFilter: [
     {code:"ALL", text:"All Users"},

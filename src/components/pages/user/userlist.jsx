@@ -2,90 +2,68 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from "config"
-import { listContact } from "actions/user"
+import { selectDeleteUser } from "actions/user"
 
-export default class UserList extends React.Component {
+class UserList extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 	}
 
+	openDelete(username) {
+		this.props.dispatch(selectDeleteUser(username));
+		this.props.openDeleteModal();
+	}
+
+	renderUser(u, nodeNames) {
+		console.log(this)
+		return (
+			<tr key={u.username}>
+				<td> <span className={u.registered ? "active-user" : "pending-user"}>{u.title + " " + u.firstname + " " + u.lastname}</span></td>
+				<td>{u.username + ((u.username == this.props.me.username) ? " (Me)" : "")}</td>
+				<td> <a className="table-email" href={"mailto:"+u.email}>{u.email}</a></td>
+				<td>{u.phone}</td>
+				<td>Administrator</td>
+				<td>{nodeNames[String(u.rootnodeid)]}</td>
+				<td className="text-right">
+					{
+						(u.canmodify && u.username != this.props.me.username) ?
+						<div className="bin" onClick={() => this.openDelete(u.username)}/> :
+						<div/>
+					}
+				</td>
+			</tr>
+		)
+	}
+
 	render() {
-		let u1 = this.props.contact.companyadmins;
-		let u2 = this.props.contact.localadmins;
-		let u3 = this.props.contact.localusers;
-		let u4 = this.props.contact.supportusers;
-		let names = this.props.contact.nodenames;
-		if (u1 && u2 && u3 && u4 && names) {
+		let userrows = [
+			[this.props.contact.companyadmins, "Company administrators"],
+			[this.props.contact.localadmins, "Local administrators"],
+			[this.props.contact.localusers, "Local Users"],
+			[this.props.contact.supportusers, "Support"],
+		]
+		let nodeNames = this.props.contact.nodenames;
+		let ok = true;
+		userrows.map((row) => {
+			if (!row[0]) {
+				ok = false;
+			}
+		})
+		if (ok && nodeNames) {
 			return (
 				<div className="users-section">
 					<table className="table"><tbody>
-					<tr>
-						<td className="table-heading">
-						<h4>Company administrators  </h4>
-						</td>
-					</tr>
 					{
-						u1.map((u) => (
-							<tr key={u.username}>
-								<td> <span className={u.registered ? "active-user" : "pending-user"}>{u.title + " " + u.firstname + " " + u.lastname}</span></td>
-								<td> <a className="table-email" href={"mailto:"+u.email}>{u.email}</a></td>
-								<td>{u.phone}</td>
-								<td>Administrator</td>
-								<td>{names[String(u.rootnodeid)]}</td>
-								<td className="text-right">{u.canmodify? <a className="bin" href="#delete-user-modal" data-toggle="modal"/> : <div/>}</td>
-							</tr>
-						))
-					}
-					<tr>
-						<td className="table-heading">
-						<h4>Local administrators      </h4>
-						</td>
-					</tr>
-					{
-						u2.map((u) => (
-							<tr key={u.username}>
-								<td> <span className={u.registered ? "active-user" : "pending-user"}>{u.title + " " + u.firstname + " " + u.lastname}</span></td>
-								<td> <a className="table-email" href={"mailto:"+u.email}>{u.email}</a></td>
-								<td>{u.phone}</td>
-								<td>Local Administrator</td>
-								<td>{names[String(u.rootnodeid)]}</td>
-								<td className="text-right">{u.canmodify? <a className="bin" href="#delete-user-modal" data-toggle="modal"/> : <div/>}</td>
-							</tr>
-						))
-					}
-					<tr>
-						<td className="table-heading">
-						<h4>Local Users</h4>
-						</td>
-					</tr>
-					{
-						u3.map((u) => (
-							<tr key={u.username}>
-								<td> <span className={u.registered ? "active-user" : "pending-user"}>{u.title + " " + u.firstname + " " + u.lastname}</span></td>
-								<td> <a className="table-email" href={"mailto:"+u.email}>{u.email}</a></td>
-								<td>{u.phone}</td>
-								<td>Local User</td>
-								<td>{names[String(u.rootnodeid)]}</td>
-								<td className="text-right">{u.canmodify? <a className="bin" href="#delete-user-modal" data-toggle="modal"/> : <div/>}</td>
-							</tr>
-						))
-					}
-					<tr>
-						<td className="table-heading">    
-						<h4>Support         </h4>
-						</td>
-					</tr>
-					{
-						u4.map((u) => (
-							<tr key={u.username}>
-								<td> <span className={u.registered ? "active-user" : "pending-user"}>{u.title + " " + u.firstname + " " + u.lastname}</span></td>
-								<td> <a className="table-email" href={"mailto:"+u.email}>{u.email}</a></td>
-								<td>{u.phone}</td>
-								<td>Support User</td>
-								<td>{names[String(u.rootnodeid)]}</td>
-								<td className="text-right"> {u.canmodify? <a className="bin" href="#delete-user-modal" data-toggle="modal"/> : <div/>}</td>
-							</tr>
-						))
+						userrows.map((urow) => {
+							return [
+								<tr>
+									<td className="table-heading">
+									<h4>{urow[1]}</h4>
+									</td>
+								</tr>,
+								urow[0].map((u) => this.renderUser(u, nodeNames))
+							];
+						})
 					}
 					</tbody></table>
 				</div>
@@ -95,3 +73,17 @@ export default class UserList extends React.Component {
 		}
 	}
 }
+
+
+function mapDispatchToProps(dispatch) {
+	return  {
+		dispatch
+	};
+}
+
+function mapStateToProps(state) {
+	return {
+		me: state.authReducer.user,
+	};
+}
+export default connect(mapStateToProps, mapDispatchToProps)(UserList);

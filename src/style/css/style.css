@@ -629,6 +629,12 @@ h2.account-title {
   box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
   background: #fff;
 }
+.add-account-wrapper select:disabled,
+.settings-add-location-wrapper select:disabled,
+.settings-edit-location-wrapper select:disabled{
+  color: #E0E0E0;
+}
+
 .locations-list {
   margin: 0;
   padding: 0;
@@ -733,6 +739,7 @@ h2.account-title {
   width: 18px;
   display: block;
   float: right;
+  cursor: pointer;
 }
 .bin-default-settings {
   background: url(/src/assets/images/bin.svg");

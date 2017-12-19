@@ -12,8 +12,8 @@ class DateSelector extends React.Component {
   constructor() {
     super();
     this.state = {
-      from: moment().startOf('isoweek').format('DD-MM-YYYY'),
-      to: moment().endOf('week').format('DD-MM-YYYY'),
+      to: moment().format('DD-MM-YYYY'),
+      from: moment().subtract(1, "weeks").add(1, "days").format('DD-MM-YYYY'),
       show: true,
       active: "This week",
       groupby: 'day'
@@ -41,8 +41,8 @@ class DateSelector extends React.Component {
 
     else if (value == "This week") {
       this.setState({
-        to: moment().endOf('week').format('DD-MM-YYYY'),
-        from: moment().startOf('isoweek').format('DD-MM-YYYY'),
+        to: moment().format('DD-MM-YYYY'),
+        from: moment().subtract(1, "weeks").add(1, "days").format('DD-MM-YYYY'),
         groupby: 'day'
       }, () =>
           this.dispatchPeriod());
@@ -50,8 +50,8 @@ class DateSelector extends React.Component {
 
     else if (value == "This month") {
       this.setState({
-        to: moment().endOf('month').format('DD-MM-YYYY'),
-        from: moment().startOf('month').format('DD-MM-YYYY'),
+        to: moment().format('DD-MM-YYYY'),
+        from: moment().subtract(1, "months").add(1, "days").format('DD-MM-YYYY'),
         groupby: 'day'
       }, () =>
           this.dispatchPeriod());
@@ -59,9 +59,9 @@ class DateSelector extends React.Component {
 
     else if (value == "This year") {
       this.setState({
-        to: moment().endOf('year').format('DD-MM-YYYY'),
-        from: moment().startOf('year').format('DD-MM-YYYY'),
-        groupby: 'month'
+        to: moment().format('DD-MM-YYYY'),
+        from: moment().subtract(1, "years").add(1, "days").format('DD-MM-YYYY'),
+        groupby: 'day'
       }, () =>
           this.dispatchPeriod());
     }

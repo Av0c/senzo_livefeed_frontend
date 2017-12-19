@@ -105,11 +105,11 @@ export default class LineChart extends React.Component {
                     highlightState: {
                         lineWidth: 3
                     },
-                    animation: {
-                        effect: 1,
-                        sequence: 2,
-                        speed: 100
-                    }
+                    // animation: {
+                    //     effect: 1,
+                    //     sequence: 2,
+                    //     speed: 0.000
+                    // }
                 },
                 series: [
                     {

@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { DateField } from 'react-date-picker'
+import DatePicker from 'react-datepicker'
 import { connect } from 'react-redux';
 
 import { selectPeriod } from 'actions/querysettings';
@@ -96,36 +96,37 @@ class DateSelector extends React.Component {
             <a className={"button custom-time" + (this.state.active == "Custom" ? " active" : "")}>
               <span>Custom</span></a>
           </li>
-          {this.state.show || <div style={{ marginRight: '180px', zIndex: 10006 }} className="datepicker">
-            <DateField className="start-date pull-left"
+          {this.state.show || <div style={{ width: '410px',marginRight:'50px', zIndex: 10006 }} className="datepicker">
+          <div className="start-date-datepicker pull-left">
+            <DatePicker className="start-date pull-left"
               dateFormat="DD-MM-YYYY"
-              defaultValue={this.state.from}
+              selected={moment(this.state.from,'DD-MM-YYYY')}
               onChange={this.setStartDate.bind(this)}
             />
+            </div>
             <div className="date-divider pull-left">-</div>
-            <DateField className="end-date pull-left"
+            <div className="end-date-datepicker pull-right" style={{marginRight:'26px'}}>
+            <DatePicker className="end-date pull-right"
               dateFormat="DD-MM-YYYY"
-              defaultValue={this.state.to}
+              selected={moment(this.state.to,'DD-MM-YYYY')}
               onChange={this.setEndDate.bind(this)}
             />
+            </div>
           </div>}
-
         </ul>
-
       </div>
-
     )
   }
 
   // Set state is asynchronous, apply update in callback where state is properly updated.
   setStartDate(datestring) {
-    this.setState({ from: datestring, groupby: 'day' }, () =>
+    this.setState({ from: moment(datestring).format('DD-MM-YYYY'), groupby: 'day' }, () =>
       this.dispatchPeriod()
     );
   }
 
   setEndDate(datestring) {
-    this.setState({ to: datestring, groupby: 'day' }, () =>
+    this.setState({ to: moment(datestring).format('DD-MM-YYYY'), groupby: 'day' }, () =>
       this.dispatchPeriod()
     );
   }

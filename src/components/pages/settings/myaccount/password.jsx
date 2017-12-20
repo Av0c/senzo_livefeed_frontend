@@ -1,90 +1,86 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updatePassword } from 'actions/user';
+import { updatePassword } from 'actions/myaccount';
 import appHistory from 'components/common/appHistory';
+import toastr from 'toastr';
 
 class Password extends React.Component {
   constructor() {
     super();
-    this.displayName = 'Change Password'
-    this.state= {password1:'', password2:'', oldPassword:''}
+    this.displayName = 'Change Password';
+    this.state = {};
   }
 
-  save(){
-    if (this.state.password1 === this.state.password2){
-      let data = {
-        id: this.props.auth.id,
-        username: this.props.auth.username,
-        old: this.state.oldPassword,
-        new: this.state.password1
+  save() {
+    if (this.state.new && this.state.confirm) {
+      if (this.state.new === this.state.confirm) {
+        let data = {
+          username: this.props.auth.username,
+          old: this.state.old,
+          new: this.state.new
+        }
+        this.props.dispatch(updatePassword(data)).then(() => {
+          toastr.success(`Update Password Successfully`)
+        })
+          .catch(error => {
+            toastr.error(error);
+          });; 
       }
-      this.props.dispatch(updatePassword(data))
+      else {
+        toastr.error("Password does not match! ");
+      }
     }
     else {
-      //todo:show notification of the wrong password
+      toastr.error("Password does not match! ");
     }
   }
 
-  cancel(){
-    appHistory.push('/settings/myaccount');
+  cancel() {
+    appHistory.push('/settings/ownaccount');
 
   }
 
-  handleChange(e){
+  handleChange(e) {
     let key = e.target.id;
     let value = e.target.value;
-    this.setState ({[key]:value});
+    this.setState({ [key]: value });
   }
 
   render() {
     return (
-      <div className='settings-container'>
-        <div className='settings-title'>Update Password</div>
-        <div className='settings-line'></div>
-        <div className='settings-text'>
-          Update your password.
-        </div>
-        <div className='settings-line'></div>
-        <br></br>
-        <div className='settings-form'>
-          <div className="settings-row">
-            <label htmlFor="oldPassword">Old Password</label>
-            <input type="password" id="oldPassword" autoComplete="off" required style={{flex:2}}
-              onChange={this.handleChange.bind(this)} value={this.state.oldPassword}
-            />
+      <div className="settings-wrapper">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-12">
+              <h2 className="account-title">Change Password</h2>
+              <form className="account-form">
+                <div className="account-email">
+                  <label>Old Password</label>
+                  <input type="text" id="old" onChange={this.handleChange.bind(this)}/>
+                </div>
+                <div className="account-email">
+                  <label>New Password</label>
+                  <input type="password" id="new" onChange={this.handleChange.bind(this)} />
+                </div>
+                <div className="account-username">
+                  <label>Confirm Password</label>
+                  <input type="password" id="confirm" onChange={this.handleChange.bind(this)} />
+                </div>
+                <div className="account-change-password"><a onClick={this.save.bind(this)} className="chpwd">Change Password </a></div>
+                <div className="account-change-password"><a onClick={this.cancel.bind(this)} className="cancel">Cancel </a></div>
+              </form>
+            </div>
           </div>
-          <br></br>
-          <div className="settings-row">
-            <label htmlFor="password1">New Password</label>
-            <input type="password" id="password1" autoComplete="off" required style={{flex:2}}
-              onChange={this.handleChange.bind(this)} value={this.state.password1}
-            />
-          </div>
-          <br></br>
-          <div className="settings-row">
-            <label htmlFor="password2">Re-enter the New Password</label>
-            <input type="password" id="password2" autoComplete="off" required style={{flex:2}}
-              onChange={this.handleChange.bind(this)} value={this.state.password2}
-            />
-          </div>
-        </div>
-        <br></br>
-        <br></br>
-        <div className="white-text-button"
-          style={{marginLeft:'0em', color:'white', float:'left', fontWeight:'bold', float:'right'}}>
-          <span style={{textDecoration:'underline'}} onClick={this.cancel.bind(this)}>CANCEL</span>
-          &nbsp; &nbsp;
-          <span style={{textDecoration:'underline'}} onClick={this.save.bind(this)}>SAVE CHANGES</span>
         </div>
       </div>
     )
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     auth: state.authReducer.user,
-    user: state.settingsPageReducer.user
+    user: state.myAccountReducer.user
   }
 }
 

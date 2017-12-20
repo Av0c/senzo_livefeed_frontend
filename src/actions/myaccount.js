@@ -4,6 +4,9 @@ import config from 'config';
 export const UPDATE_IN_PROGRESS = 'UPDATE_IN_PROGRESS';
 export const UPDATE_FAILED = 'UPDATE_FAILED';
 export const UPDATE_COMPLETED = 'UPDATE_COMPLETED';
+export const UPDATE_PASSWORD_IN_PROGRESS = 'UPDATE_PASSWORD_IN_PROGRESS';
+export const UPDATE_PASSWORD_FAILED = 'UPDATE_PASSWORD_FAILED';
+export const UPDATE_PASSWORD_COMPLETED = 'UPDATE_PASSWORD_COMPLETED';
 export const FETCH_USER = 'FETCH_USER';
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const FETCH_USER_FAILED = 'FECTH_USER_FAILED';
@@ -27,15 +30,47 @@ export function updateCompleted(data) {
   }
 }
 
-export function updateUser(user) {
+export function updatePasswordInProgress() {
+  return {
+    type: UPDATE_PASSWORD_IN_PROGRESS
+  }
+}
+
+export function updatePasswordFailed(data) {
+  return {
+    type: UPDATE_PASSWORD_FAILED,
+    data
+  }
+}
+export function updatePasswordCompleted(data) {
+  return {
+    type: UPDATE_PASSWORD_COMPLETED,
+    data
+  }
+}
+
+export function updateUser(username, user) {
   return dispatch => {
     dispatch(updateInProgress());
-    return axios.put(config.api.root + '/user/update')
+    return axios.put(config.api.root + '/user/update/' + username, user)
       .then((response) => {
         dispatch(updateCompleted(response.data));
       })
       .catch(function (response) {
         dispatch(updateFailed(response.data));
+      })
+  }
+}
+
+export function updatePassword(user) {
+  return dispatch => {
+    dispatch(updatePasswordInProgress());
+    return axios.put(config.api.root + '/user/password/' + user.username, user)
+      .then((response) => {
+        dispatch(updatePasswordCompleted(response.data));
+      })
+      .catch(function (response) {
+        dispatch(updatePasswordFailed(response.data));
       })
   }
 }

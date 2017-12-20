@@ -78,7 +78,7 @@
     "react-addons-update": "^15.1.0",
     "react-bootstrap": "^0.31.5",
     "react-bootstrap-date-picker": "^5.1.0",
-    "react-date-picker": "^5.3.26",
+    "react-date-picker": "^6.5.2",
     "react-datepicker": "^0.60.2",
     "react-dom": "^15.6.2",
     "react-redux": "^4.4.2",

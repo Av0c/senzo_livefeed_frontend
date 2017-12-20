@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import appHistory from 'components/common/appHistory';
 import { clearToken } from 'actions/authentication';
 import { setCurrentNode } from 'actions/overview';
+import 'react-datepicker/dist/react-datepicker.css';
 import './style/main.less';
-import 'react-date-picker/index.css'
 
 export class Frame extends React.Component {
 

@@ -37,6 +37,7 @@ export default class Location extends React.Component {
         }
     }
     render() {
+        console.log(this.state.isShowingEdit)
         let icon = this.renderIcon();
         return (
             <li className="location-item-li">
@@ -44,7 +45,7 @@ export default class Location extends React.Component {
                     <div className="location-name pull-left" data-toggle="collapse" onClick={this.showChildren.bind(this)} >{this.props.node.info.name}
                         {icon}
                     </div>
-                    <div style={{ marginRight: '500px' }} className="location-options pull-right"> <a onClick={() => this.props.openAddLocationForm(this.props.node)} className="button btn-green pull-left" data-toggle="modal">Add Location</a>
+                    <div style={{ marginRight: '100px' }} className="location-options pull-right"> <a onClick={() => this.props.openAddLocationForm(this.props.node)} className="button btn-green pull-left" data-toggle="modal">Add Location</a>
                         <div className="edit-btn pull-left">
                             <div className="button btn-green settings-edit" id="dLabel" onClick={this.showEditDropdown.bind(this)}>Edit</div>
                             {this.state.isShowingEdit && <div aria-labelledby="dLabel">
@@ -64,7 +65,8 @@ export default class Location extends React.Component {
                                 </div>
                             </div>
                             }
-                        </div><a onClick={() => this.props.openDeleteLocationForm(this.props.node)} className="bin pull-left" data-toggle="modal"></a>
+                        </div>
+                        <img className="bin pull-left" onClick={() => this.props.openDeleteLocationForm(this.props.node)} src="/src/assets/images/bin.svg"/>
                     </div>
                 </div>
                 {this.state.isShowingChildren && this.props.children}

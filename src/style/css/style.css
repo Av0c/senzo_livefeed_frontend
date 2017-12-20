@@ -173,18 +173,28 @@ header {
 .end-date {
   color: #585858;
   font-family: 'Roboto';
-  font-size: 14px;
-  width: 150px;
+  font-size: 18px;
+  width: 170px;
   height: 30px;
   border-radius: 6px;
   border: 1px solid #ccc;
   padding-left: 6px;
   background: url("../../assets/images/calendar.svg") no-repeat;
-  background-position: 85px 6px;
+  background-position: 140px 6px;
 }
 
+.start-date-datepicker,
+.end-date-datepicker {
+  color: #585858;
+  font-family: 'Roboto';
+  font-size: 18px;
+  width: 170px;
+  height: 30px;
+  padding-left: 6px;
+
+}
 .start-date,
-.end-date > input {
+.end-date input {
   line-height: normal !important;
 }
 
@@ -199,7 +209,7 @@ header {
 }
 .date-divider {
   color: #585858;
-  margin: -4px 10px 0;
+  margin: -4px 6px 0 15px;
   font-size: 30px;
 }
 .timepicker-icon {

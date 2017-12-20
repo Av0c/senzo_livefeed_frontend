@@ -23,40 +23,24 @@ export default class EditLocationForm extends React.Component {
     }
 
     generateCountryOptions() {
-        let country = this.props.node.info.details.country;
-        if (country == 'Multi') {
-            let options = Object.keys(isoCountries);
-            return options.map((element, index) => {
-                return <option key={index} value={element}>{element}</option>
-            });
-        }
-        else {
-            return <option value={country}>{country}</option>
-        }
+        let options = Object.keys(isoCountries);
+        return options.map((element, index) => {
+            return <option key={index} value={element}>{element}</option>
+        });
     }
 
     getTimeZonesOfCountry() {
-        let country = '';
-        let location = this.props.node.info.details.country;
-        if (location != 'Multi') {
-            country = location;
-        }
-        else {
-            country = this.state.country || 'Afghanistan';
-        }
+        let country = this.state.country || this.props.node.info.details.country;
         return CountriesAndTimezones.getTimezonesForCountry(getCountryName(country)).map((element) => {
             return element.name;
         });
     }
 
-
     render() {
-        console.log(this.state);
-       
         let node = this.props.node;
-        console.log(node);
         let multi = (node.info.details.country == 'Multi');
         let timezones = this.generateTimeZoneOptions();
+        let countries = this.generateCountryOptions();
         return (
             <div>
                 <div className={"modal-overlay" + (this.props.isEditingLocation ? "" : " closed")} onClick={this.props.closeEditLocationForm}></div>
@@ -77,8 +61,8 @@ export default class EditLocationForm extends React.Component {
                             {multi || <div>
                                 <div className="country">
                                     <label>Country</label>
-                                    <select>
-                                        <option>{node.info.details.country}</option>
+                                    <select value={this.state.country || multi} id="country" onChange={this.changeHandler.bind(this)}>
+                                        {countries}
                                     </select>
                                 </div>
                                 <div className="timezone">

@@ -67,9 +67,10 @@ export default class AddLocationForm extends React.Component {
                     </div>
                     {!isArea ? <div className="modal-body settings-add-location-wrapper">
                         <div className="zone-type">
-                            <label htmlFor="country">
+                            {multi && <label htmlFor="country">
                                 <input className="zone-radio" onChange={this.changeHandler.bind(this)} id="option" value="Country" type="radio" name="zone" checked={this.state.option == 'Country'} /><span>Country</span>
                             </label>
+                            }
                             {multi && <label htmlFor="multi">
                                 <input className="zone-radio" onChange={this.changeHandler.bind(this)} id="option" value="Multi" type="radio" name="zone" checked={this.state.option == 'Multi'} /><span>Multi-Country Region  </span>
                             </label>

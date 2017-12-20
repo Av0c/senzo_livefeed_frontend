@@ -94,7 +94,7 @@ export class Settings extends React.Component {
         newNode.info.name = state.name || node.info.name;
         newNode.info.WH_from = node.info.WH_from;
         newNode.info.WH_to = node.info.WH_to;
-        newNode.type = node.type;
+        newNode.type = (node.type == 'customer' ? 'location' : node.type);
         this.props.dispatch(createNode(node.id, newNode)).then(() => {
             this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
             toastr.success(`Add ${newNode.info.name} successfully`)
@@ -149,7 +149,6 @@ export class Settings extends React.Component {
     render() {
         return (
             <div>
-
                 <div className="settings-wrapper">
                     <div className="container-fluid">
                         <LeftMenu overview='' comparison='' />

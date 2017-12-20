@@ -96,7 +96,7 @@ export class Settings extends React.Component {
         newNode.info.WH_to = node.info.WH_to;
         newNode.type = node.type;
         this.props.dispatch(createNode(node.id, newNode)).then(() => {
-            this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
+            this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
             toastr.success(`Add ${newNode.info.name} successfully`)
         })
             .catch(error => {
@@ -106,7 +106,7 @@ export class Settings extends React.Component {
 
     deleteLocation(node) {
         this.props.dispatch(deleteNode(node)).then(() => {
-            this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
+            this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
             toastr.error(`${node.info.name} has been deleted`);
         })
             .catch(error => {

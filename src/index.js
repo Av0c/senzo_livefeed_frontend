@@ -43,6 +43,10 @@ import Comparison from 'components/pages/comparison';
 import Live from 'components/pages/live';
 import User from 'components/pages/user';
 import Register from 'components/pages/user/register';
+import Help from 'components/pages/help';
+import LiveFeedAPI from 'components/pages/livefeedapi';
+import DefaultSettings from 'components/pages/defaultsettings';
+import SensorSettings from 'components/pages/sensorsettings';
 
 
 ReactDOM.render((
@@ -67,8 +71,15 @@ ReactDOM.render((
         <Route path="/live/:id" component={Live} />
         <Route path="/user" component={User} />
 
+        <Route path="/help" component={Help} />
+        <Route path="/api" component={LiveFeedAPI} />
+
         <Route path="/locations/area/:id/floorplan/add" component={AddFloorPlan} />
         <Route path="/settings" component={Settings}>
+
+          <Route path="/settings/default" component={DefaultSettings} />
+          <Route path="/settings/sensor" component={SensorSettings} />
+
           <Route path="/settings/myaccount/password" component={Password} />
           <Route path="/settings/ownaccount" component={MyAccount} />
           <Route path="/settings/locations/edit" component={EditLocations} />

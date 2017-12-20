@@ -148,25 +148,21 @@ class Live extends React.Component {
 											{(this.state.groupMR) ? "Hide details" : "Show details"}
 										</div>
 
-										<div className="live-select pull-left">
-											<NodeFilterDropdown
-												root={this.state.currentNode}
-												nodeFilter={this.props.nodeFilter}
-												click={
-													(node) => { this.props.dispatch(selectNodeFilter(node)) }
-												}
-											/>
-										</div>
+										<NodeFilterDropdown
+											root={this.state.currentNode}
+											nodeFilter={this.props.nodeFilter}
+											click={
+												(node) => { this.props.dispatch(selectNodeFilter(node)) }
+											}
+										/>
 
-										<div className="live-select pull-left">
-											<ViewFilterDropdown
-												viewFilter={this.props.viewFilter}
-												click={
-													(node) => { console.log(node);
-														this.props.dispatch(selectViewFilter(node)); }
-												}
-											/>
-										</div>
+										<ViewFilterDropdown
+											viewFilter={this.props.viewFilter}
+											click={
+												(node) => { console.log(node);
+													this.props.dispatch(selectViewFilter(node)); }
+											}
+										/>
 										<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
 									</div>
 									{/*

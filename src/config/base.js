@@ -86,11 +86,11 @@ export default {
   },
   roles: [
     {code:"!ADMIN", rolecode:"ADMIN", text:"Company administrator", singular: "a company administrator"},
-    {code:".ADMIN", rolecode:"ADMIN", text:"Administrator", singular: "an administrator"},
+    {code:".ADMIN", rolecode:"ADMIN", text:"Local administrator", singular: "a local administrator"},
     {code:".LOCALUSER", rolecode:"LOCALUSER", text:"Local user", singular: "a local user"},
     {code:".SUPPORTUSER", rolecode:"SUPPORTUSER", text:"Support user", singular: "a support user"}
   ],
-  userFilter: [
+  typeFilter: [
     {code:"ALL", text:"All Users"},
     {code:"CADMIN", text:"Company Admins"},
     {code:"LADMIN", text:"Local Admins"},

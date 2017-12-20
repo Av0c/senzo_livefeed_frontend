@@ -67,7 +67,7 @@ a:active {
   color: #fff;
 }
 .dropdown {
-  background: #fff;
+  background: transparent;
   position: absolute;
   width: 100%;
   z-index: 1000;
@@ -689,21 +689,6 @@ h2.account-title {
   text-align: left;
   padding: 2px;
 }
-.bin {
-  background: url("../../assets/images/bin.svg");
-  height: 22px;
-  width: 18px;
-  display: block;
-  float: right;
-}
-.bin-default-settings {
-  background: url("../../assets/images/bin.svg");
-  height: 22px;
-  width: 18px;
-  display: block;
-  float: left;
-  margin-top: 7px;
-}
 .change-pwd-wrapper label,
 .add-account-wrapper label,
 .edit-sensor-wrapper label,
@@ -734,16 +719,20 @@ h2.account-title {
   border-radius: 20px;
   margin-right: 4px;
 }
-.bin {
-  background: url("/src/assets/images/bin.svg");
+.bin, .pencil {
   height: 22px;
-  width: 18px;
   display: block;
-  float: right;
   cursor: pointer;
 }
+.bin {
+  width: 18px;
+}
+.pencil {
+  width: 22px;
+}
+
 .bin-default-settings {
-  background: url(/src/assets/images/bin.svg");
+  background: url("/src/assets/images/bin.svg");
   height: 22px;
   width: 18px;
   display: block;
@@ -753,9 +742,297 @@ h2.account-title {
 .table-email {
   color: #585e66;
 }
-table.table tr td.table-heading {
+table.table tr td {
   border-top: none;
 }
 td.table-heading h4 {
   margin-top: 18px;
+}
+.white {
+  background-color: #fff;
+}
+.tab-left {
+  padding-left: 10px;
+}
+.feedback-container label {
+  display: block;
+  width: 95px;
+  font-family: 'Catamaran';
+  font-size: 16px;
+  font-weight: normal;
+}
+.feedback-container .required {
+  color: #d0011b;
+}
+.feedback-container input[type="text"] {
+  width: 230px;
+  height: 36px;
+  padding-left: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #dfdfdf;
+  border-radius: 6px;
+  box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+}
+.feedback-submit input[type="submit"] {
+  background: #7ec443;
+  color: #fff;
+  border: none;
+  width: 230px;
+  margin-top: 0;
+}
+.feedback-container textarea {
+  resize: none;
+  width: 230px;
+  padding-left: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #dfdfdf;
+  border-radius: 6px;
+  box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+}
+.feedback {
+  margin-top: 20px;
+}
+.single-faq {
+  margin-top: 32px;
+}
+.single-faq h5 {
+  margin-bottom: 8px;
+}
+
+//
+.live-feeds-table {
+  margin-top: 20px;
+}
+.live-feeds-table tr tr {
+  margin-left: 40px;
+}
+.senzo-api textarea {
+  width: 100%;
+  height: 200px;
+  padding-left: 10px;
+  border: 1px solid #dfdfdf;
+  border-radius: 6px;
+  box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+  resize: none;
+}
+.generate {
+  background: none;
+  margin-top: 10px;
+}
+.current-api-key {
+  margin-top: 28px;
+}
+.sensor-settings-table {
+  margin-top: 40px;
+}
+.sensor-settings-table>tbody>tr>td {
+  vertical-align: middle;
+}
+.all-locations-select,
+.maintenance-select {
+  line-height: 38px;
+  margin-left: 28px;
+}
+.location-picker {
+  position: relative;
+  cursor: pointer;
+}
+.location-picker a {
+  line-height: 38px;
+  color: #585e66;
+}
+.location-picker label {
+  display: block;
+  font-family: 'Catamaran';
+  font-size: 16px;
+  font-weight: normal;
+}
+.location-picker-dropdown {
+  padding: 10px 20px;
+}
+.default-settings-bottom a {
+  margin-left: 24px;
+}
+.default-settings-card {
+  margin-top: 20px;
+}
+.days-picker input[type="checkbox"] {
+  display: none;
+}
+.custom-checkbox {
+  position: relative;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #979797;
+  border-radius: 8px;
+  display: inline-block;
+  cursor: pointer;
+}
+.chbx:checked + .custom-checkbox::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  bottom: 4px;
+  left: 4px;
+  background: #7ec344;
+  border-radius: 8px;
+}
+.working-days {
+  margin-top: 20px;
+}
+.working-hours {
+  margin-top: 20px;
+}
+.week-day {
+  display: block;
+  font-family: 'Roboto';
+  font-weight: normal;
+  font-size: 16px;
+}
+.days-picker {
+  margin-top: 14px;
+}
+.days-picker label {
+  width: 120px;
+}
+.default-settings-bottom {
+  margin-top: 12px;
+}
+.hours-picker {
+  height: 60px;
+  width: 100%;
+  background: #ccc;
+  margin-top: 14px;
+}
+.add-loc-button {
+  margin-left: 36px;
+}
+.locations-list {
+  margin: 0;
+  padding: 0;
+  margin-top: 30px;
+}
+.locations-list .location-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+.edit-btn {
+  position: relative;
+}
+.settings-location-dropdown {
+  left: auto;
+  right: 0;
+  min-width: 130px;
+}
+.settings-location-dropdown a {
+  color: #585e66;
+}
+.settings-location-dropdown a:hover {
+  color: #7ec443;
+}
+.settings-location-dropdown a:active,
+.settings-location-dropdown a:visited {
+  color: #585e66;
+}
+.location-options .button,
+.location-options .bin {
+  margin-left: 20px;
+}
+.location-options .bin {
+  margin-top: 5px;
+}
+.locations-list ul {
+  margin-left: 18px;
+  padding: 0;
+}
+.locations-list li ul li .location-name {
+  font-weight: normal;
+}
+.locations-list li {
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+.settings-edit {
+  position: relative;
+}
+.edit-dropdown {
+  width: 200px;
+  text-align: left;
+  padding: 2px;
+}
+.zone-type input[type="radio"] {
+  margin-right: 6px;
+}
+.zone-type {
+  margin-bottom: 20px;
+}
+.api-locations-list {
+  margin: 0;
+  padding: 0;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.api-locations-list li {
+  padding-left: 0;
+}
+.feed-link {
+  margin-left: 40px;
+  margin-top: 7px;
+}
+.show-users {
+  margin-left: 40px;
+  cursor: pointer;
+}
+.apibin {
+  margin-top: 5px;
+}
+ul.users {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.api-username,
+.api-email,
+.userbin {
+  margin-top: 8px;
+}
+.api-email,
+.alw,
+.api-edit {
+  margin-left: 40px;
+}
+.allowed,
+.allowed:visited {
+  color: #7ec443;
+  border: 1px solid #7ec443;
+}
+.blocked,
+.blocked:hover,
+.blocked:visited {
+  color: #d53a4f;
+  border: 1px solid #d53a4f;
+}
+.api-single-user {
+  margin-bottom: 10px;
+}
+.add-feed {
+  position: relative;
+  font-family: 'Catamaran';
+  font-size: 16px;
+  line-height: 26px;
+  border-radius: 7px;
+  padding: 4px 10px 2px 10px;
+  display: block;
+  float: left;
+  text-align: left;
+  transition: all 0.3s;
+  color: #7ec443;
+  border: 1px solid #7ec443;
+  cursor: pointer;
+  margin-left: 20px;
+}
+.user-settings-toggle {
+  cursor: pointer;
+  position: relative;
 }

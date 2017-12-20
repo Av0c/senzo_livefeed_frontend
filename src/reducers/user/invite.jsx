@@ -29,17 +29,21 @@ export default(state = initialState, action) => {
       )
     }
     case a.INVITE_USER_OK: {
-      console.log(action);
       return Object.assign({}, state, {
         stage: "invited",
         respond: {}
       })
     }
     case a.INVITE_USER_FAIL: {
-      console.log(action);
       return Object.assign({}, state, {
         stage: "invite-failed",
         respond: action.e
+      })
+    }
+    case a.RESET_INVITE_STATUS: {
+      return Object.assign({}, state, {
+        stage: "nothing",
+        respond: {}
       })
     }
     default:

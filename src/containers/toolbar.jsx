@@ -8,7 +8,7 @@ import { fetchLiveData } from 'actions/node';
 export class Toolbar extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
+    this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
   }
 
   render() {
@@ -34,13 +34,18 @@ export class Toolbar extends React.Component {
               <div className="settings-dropdown-root">
                 <ul>
                   <li><Link to="/settings/ownaccount">Own Account</Link></li>
-                  <li><Link to="/user">User Administration</Link></li>
-                  <li><Link to="/locations">Locations Settings</Link></li>
-                  <li> <a href="#">Sensor Settings</a></li>
-                  <li><a href="#">Live Feed/SenzoAPI  </a></li>
-                  <li><a href="#">Default Settings  </a></li>
-                  <li><a href="#">Help!  </a></li>
-                  <li><a href="#" onClick={this.props.actions.logout}>Log Out  </a></li>
+                  <li><Link to="/user">{ (this.props.user.role == "ADMIN") ? "User Administration" : "Contact" }</Link></li>
+                  {
+                    (this.props.user.role == "ADMIN") ? [
+                      <li key="0"><Link to="locations">Locations Settings</Link></li>,
+                      <li key="1"><Link to="/settings/sensor">Sensor Settings</Link></li>,
+                      <li key="2"><Link to="/api">Live Feed/SenzoAPI</Link></li>,
+                      <li key="3"><Link to="/settings/default">Default Settings</Link></li>
+                    ]
+                    : null
+                  }
+                  <li><Link to="/help">Help !</Link></li>
+                  <li><a href="#" onClick={this.props.actions.logout}>Log Out</a></li>
                 </ul>
               </div>
             </div>

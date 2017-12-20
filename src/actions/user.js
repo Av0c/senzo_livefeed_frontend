@@ -24,6 +24,13 @@ export function inviteUserFail(e) {
   }
 }
 
+// Reset invitation status text
+export const RESET_INVITE_STATUS = "RESET_INVITE_STATUS";
+export function resetInviteStatus() {
+  return {
+    type: RESET_INVITE_STATUS,
+  }
+}
 
 // Check invite key valid or not.
 export const CHECK_INVITE_KEY = 'GET_INVITE_KEY';
@@ -97,13 +104,21 @@ export function listContactFail(e) {
   }
 }
 
-// Select a user to delete
-export const SELECT_DELETE_USER = "SELECT_DELETE_USER"
-
-export function selectDeleteUser(username) {
+// Set contactFetched to false
+export const NEED_CONTACT = "NEED_CONTACT"
+export function needContact() {
   return {
-    type: SELECT_DELETE_USER,
-    username
+    type: NEED_CONTACT
+  }
+}
+
+// Select a user to delete
+export const SELECT_USER = "SELECT_USER"
+
+export function selectUser(user) {
+  return {
+    type: SELECT_USER,
+    user
   }
 }
 
@@ -129,6 +144,50 @@ export function deleteUserOk(e) {
 export function deleteUserFail(e) {
   return {
     type: DELETE_USER_FAIL,
+    e
+  }
+}
+
+// Select node filter
+export const USERAD_SELECT_NODE = "USERAD_SELECT_NODE"
+
+export function useradSelectNode(node) {
+  return {
+    type: USERAD_SELECT_NODE,
+    node
+  }
+}
+
+//Select user filter
+export const USERAD_SELECT_TYPE = "USERAD_SELECT_TYPE"
+
+export function useradSelectType(code) {
+  return {
+    type: USERAD_SELECT_TYPE,
+    code
+  }
+}
+
+// Edit user
+export const EDIT_USER = 'EDIT_USER';
+export const EDIT_USER_OK = 'EDIT_USER_OK';
+export const EDIT_USER_FAIL = 'EDIT_USER_FAIL';
+
+export function editUser(username) {
+  return {
+    type: EDIT_USER,
+    username
+  }
+}
+export function editUserOk(e) {
+  return {
+    type: EDIT_USER_OK,
+    e
+  }
+}
+export function editUserFail(e) {
+  return {
+    type: EDIT_USER_FAIL,
     e
   }
 }

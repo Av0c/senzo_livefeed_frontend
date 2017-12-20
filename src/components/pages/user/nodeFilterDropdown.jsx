@@ -13,14 +13,12 @@ export default class NodeFilterDropdown extends React.Component {
 	listAreas(root, res) {
 		var self = this;
 		if (root) {
-			if(root.type==config.room.MEETINGROOM.code || root.type==config.room.OPENAREA.code) {
+			if(root.type!="sensor") {
 				res.push(root);
+				root.children.forEach((child) => {
+					self.listAreas(child, res);
+				})
 			}
-			//  else if (root.type!="sensor") {
-			// 	root.children.forEach((child) => {
-			// 		self.listAreas(child, res);
-			// 	})
-			// }
 		}
 	}
 
@@ -30,14 +28,14 @@ export default class NodeFilterDropdown extends React.Component {
 		this.props.root.children.forEach((child) => {
 			self.listAreas(child, areas);
 		})
-		var header = (this.props.nodeFilter.id==this.props.root.id) ? "All Areas" : this.props.nodeFilter.info.name;
+		var header = (this.props.nodeFilter.id==this.props.root.id) ? "All locations" : this.props.nodeFilter.info.name;
 
 		return (
-			<div className="live-select pull-left">
-				<Dropdown header={header} toggleable>
+			<div className="dropdown-btn settings-dropdown pull-left">
+				<Dropdown header={header} toggleable customClass="dropdownOverflow">
 					<DropdownItem>
 						<div onClick={this.optionClicked.bind(this, this.props.root)}>
-							All areas
+							All locations
 						</div>
 					</DropdownItem>
 					{

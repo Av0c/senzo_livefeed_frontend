@@ -45,11 +45,10 @@ export function getNodeStatistic(node){
   };
 }
 
-export function fetchCustomerOverview(id, map) {
+export function fetchCustomerOverview(id) {
   return {
     type: FETCH_CUSTOMER_OVERVIEW,
-    id,
-    map
+    id
   };
 }
 
@@ -60,7 +59,24 @@ export function fetchUtilizationOverview(settings) {
   }
 }
 
-export function receiveCustomerOverview(result, map) {
+function addParent(root) {
+  root.children.map((x)=> {
+    x.parent = root;
+    addParent(x);
+  });
+}
+
+function makeMap(root, map) {
+  map[root.id] = root;
+  root.children.map((x)=> {
+    makeMap(x, map);
+  });
+}
+
+export function receiveCustomerOverview(result) {
+  addParent(result.data);
+  var map = {};
+  makeMap(result.data, map);
   return {
     type: RECEIVE_CUSTOMER_OVERVIEW,
     data: result.data,

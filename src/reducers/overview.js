@@ -30,30 +30,24 @@ const initialState = {
     children: []
   },
   customerOverview: {
-    companyName: '',
-    quarterlyUtilization: 0,
-    previousQuarterUtilization: 0,
-    sensorStatistics: {
-      sensors: 0,
-      sensorsInUse: 0,
-      desks: 0,
-      meetingRooms: 0,
-      maintenance: 0
-    },
+    id: -2,
+    parent: null,
     info: {
       name: '',
       empty: true
     },
     children: []
   },
+  nodeMap: {},
   widgets: []
 };
 
-function fetchCustomerOverview(id, map) {
+function fetchCustomerOverview(id) {
   return axios.get(config.api.root + `/node/structure/${id}`)
     .then((response) => {
-      return receiveCustomerOverview(response, map);
+      return receiveCustomerOverview(response);
     }).catch((error) => {
+      console.log(error);
       return fetchingFailed(error);
     });
 }
@@ -73,22 +67,11 @@ export default (state = initialState, action) => {
         loading: false,
         customerOverview: action.data,
         widgets: [...state.widgets, action.data],
-        currentNode: action.data
+        currentNode: action.data,
+        nodeMap: action.map
       })
     }
 
-    case FETCH_UTILIZATION_OVERVIEW: {
-      return loop(
-        Object.assign({}, state, { loading: true }),
-        Effects.promise(fetchUtilizationOverview, action.settings)
-      )
-    }
-    case RECEIVE_UTILIZATION_OVERVIEW: {
-      return Object.assign({}, state, {
-        loading: false,
-        utilizationOverview: action.data
-      })
-    }
     case SET_CURRENT_NODE: {
       return Object.assign({}, state, {
         currentNode: action.node

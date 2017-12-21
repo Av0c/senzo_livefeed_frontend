@@ -9,10 +9,25 @@ export default class EditLocationForm extends React.Component {
         this.state = {};
     }
 
+    componentDidMount() {
+        let node = this.props.node;
+        this.setState({
+            name: node.info.name,
+            country: node.info.details.country,
+            timezone: node.info.location
+        });
+    }
+
     changeHandler(e) {
         let key = e.target.id;
         let value = e.target.value;
         this.setState({ [key]: value });
+        if(key == 'country') {
+            if(value != this.props.node.info.location) {
+                let locations = this.getTimeZonesOfCountry();
+                this.setState({timezone: locations[0]});
+            }
+        }
     }
 
     generateTimeZoneOptions() {
@@ -39,6 +54,7 @@ export default class EditLocationForm extends React.Component {
     render() {
         let node = this.props.node;
         let multi = (node.info.details.country == 'Multi');
+        let locations = this.getTimeZonesOfCountry();
         let timezones = this.generateTimeZoneOptions();
         let countries = this.generateCountryOptions();
         return (
@@ -55,19 +71,19 @@ export default class EditLocationForm extends React.Component {
                             <div className="user_email">
                                 <label>
                                     <span>Name </span>
-                                    <input type="username" id="name" value={this.state.name || this.props.node.info.name} onChange={this.changeHandler.bind(this)} required />
+                                    <input type="username" id="name" value={this.state.name} onChange={this.changeHandler.bind(this)} required />
                                 </label>
                             </div>
                             {multi || <div>
                                 <div className="country">
                                     <label>Country</label>
-                                    <select value={this.state.country || multi} id="country" onChange={this.changeHandler.bind(this)}>
+                                    <select value={this.state.country} id="country" onChange={this.changeHandler.bind(this)}>
                                         {countries}
                                     </select>
                                 </div>
                                 <div className="timezone">
                                     <label>Timezone</label>
-                                    <select value={this.state.timezone || node.info.location} id="timezone" onChange={this.changeHandler.bind(this)}>
+                                    <select value={this.state.timezone} id="timezone" onChange={this.changeHandler.bind(this)}>
                                         {timezones}
                                     </select>
                                 </div>
@@ -76,7 +92,7 @@ export default class EditLocationForm extends React.Component {
                         <div className="modal-footer">
                             <button className="btn btn-default" type="button" onClick={this.props.closeEditLocationForm}>Cancel</button>
                             <button className="btn btn-success" type="button" onClick={() => {
-                                this.props.submit(node, this.state);
+                                this.props.submit(node, this.state, locations);
                                 this.props.closeEditLocationForm();
                             }} >Confirm</button>
                         </div>

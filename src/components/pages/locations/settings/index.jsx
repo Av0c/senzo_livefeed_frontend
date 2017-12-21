@@ -6,9 +6,10 @@ import AddFloorplanForm from 'components/common/addfloorplanform';
 import Tree from 'components/pages/locations/settings/tree';
 import EditLocationForm from 'components/common/editlocationform';
 import DeleteLocationForm from 'components/common/deletelocationform';
-import { createNode, deleteNode, updateNode, uploadFloorplanView } from 'actions/node';
+import { createNode, deleteNode, updateNode, uploadFloorplanView, setParent } from 'actions/node';
 import { fetchCustomerOverview } from 'actions/overview';
 import LeftMenu from 'components/common/leftmenu';
+import ConfirmDeleteLocationForm from 'components/common/confirmdeletelocation';
 
 export class Settings extends React.Component {
 
@@ -21,7 +22,8 @@ export class Settings extends React.Component {
             isEditing: false,
             isAddingFloorplan: false,
             isEditingLocation: false,
-            isDeletingLocation: false
+            isDeletingLocation: false,
+            isConfirmingDeleteLocation: false
         };
     }
 
@@ -65,6 +67,14 @@ export class Settings extends React.Component {
         this.setState({ isEditing: false });
     }
 
+    openConfirmDeleteLocationForm() {
+        this.setState({ isConfirmingDeleteLocation: true });
+    }
+
+    closeConfirmDeleteLocationForm() {
+        this.setState({ isConfirmingDeleteLocation: false });
+    }
+
     addLocation(node, state, timezone) {
         let newNode = {
             info: {
@@ -94,17 +104,55 @@ export class Settings extends React.Component {
         newNode.info.name = state.name || node.info.name;
         newNode.info.WH_from = node.info.WH_from;
         newNode.info.WH_to = node.info.WH_to;
-        newNode.type = (node.type == 'customer' ? 'location' : node.type);
-        this.props.dispatch(createNode(node.id, newNode)).then(() => {
-            this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
-            toastr.success(`Add ${newNode.info.name} successfully`)
-        })
-            .catch(error => {
-                toastr.error(error);
-            });
+        if (state.location == 'sub') {
+            newNode.type = (node.type == 'customer' ? 'location' : node.type);
+            this.props.dispatch(createNode(node.id, newNode)).then(() => {
+                this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
+                toastr.success(`Add ${newNode.info.name} successfully`)
+            })
+                .catch(error => {
+                    toastr.error(error);
+                });
+        }
+        else {
+            let parent = { id: -1 };
+            this.findParent(this.props.tree, node, parent);
+            newNode.type = 'location';
+            this.props.dispatch(createNode(parent.id, newNode)).then((response) => {
+                this.props.dispatch(setParent(node.id, response.id)).then(() => {
+                    this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
+                    toastr.success(`Add ${newNode.info.name} successfully`)
+                })
+                    .catch(error => {
+                        toastr.error(error);
+                    });
+            })
+                .catch(error => {
+                    toastr.error(error);
+                });
+        }
     }
 
+
+    findParent(tree, node, parent) {
+        let self = this;
+        if (tree.children && tree.children.length > 0 && tree.children[0].type != 'sensor') {
+            tree.children.forEach((element) => {
+                if (element.id == node.id) {
+                    parent.id = tree.id;
+                }
+                else {
+                    self.findParent(element, node, parent);
+                }
+            });
+        }
+    }
     deleteLocation(node) {
+        this.closeDeleteLocationForm();
+        this.openConfirmDeleteLocationForm();
+    }
+
+    confirmDeleteLocation(node) {
         this.props.dispatch(deleteNode(node)).then(() => {
             this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
             toastr.error(`${node.info.name} has been deleted`);
@@ -114,25 +162,42 @@ export class Settings extends React.Component {
             });
     }
 
-    updateLocation(node, state) {
-        if (!state.name && !state.timezone) {
+    updateLocation(node, state, locations) {
+        var self = this;
+        if (!state.name && !state.timezone && !state.country) {
             toastr.info("Nothing changed");
         }
         else {
             let newNode = Object.assign({}, node);
-            newNode.info.location = state.timezone || node.info.location;
-            newNode.info.name = state.name || node.info.name;
+            newNode.info.location = state.timezone;
+            newNode.info.name = state.name
+            newNode.info.details.country = state.country;
             this.props.dispatch(updateNode(newNode)).then(() => {
                 node = Object.assign({}, newNode);
                 toastr.success(`${node.info.name} has been updated`);
+                self.updateChildren(node, node);
             })
                 .catch(error => {
                     toastr.error(error);
                 });
 
         }
+
     }
 
+    updateChildren(node, parent) {
+        let self = this;
+        if (node.type != 'meeting_room' && node.type != 'open_area') {
+            node.children.forEach((element) => {
+                let newNode = Object.assign({}, element);
+                newNode.info.location = parent.info.location;
+                newNode.info.details.country = parent.info.details.country;
+                element = Object.assign({}, newNode);
+                self.props.dispatch(updateNode(newNode));
+                self.updateChildren(element, parent);
+            });
+        }
+    }
     uploadImage(node, image, type) {
         this.props.dispatch(uploadFloorplanView(node.id, image)).then(() => {
             toastr.success(`${node.info.name}'s floorplan view has been uploaded`);
@@ -178,6 +243,7 @@ export class Settings extends React.Component {
                                     {this.state.isAddingFloorplan && <AddFloorplanForm submit={this.uploadImage.bind(this)} node={this.state.currentNode} isAddingFloorplan={this.state.isAddingFloorplan} closeAddFloorplanForm={this.closeAddFloorplanForm.bind(this)} />}
                                     {this.state.isEditingLocation && <EditLocationForm submit={this.updateLocation.bind(this)} node={this.state.currentNode} isEditingLocation={this.state.isEditingLocation} closeEditLocationForm={this.closeEditLocationForm.bind(this)} />}
                                     {this.state.isDeletingLocation && <DeleteLocationForm submit={this.deleteLocation.bind(this)} node={this.state.currentNode} isDeletingLocation={this.state.isDeletingLocation} closeDeleteLocationForm={this.closeDeleteLocationForm.bind(this)} />}
+                                    {this.state.isConfirmingDeleteLocation && <ConfirmDeleteLocationForm submit={this.confirmDeleteLocation.bind(this)} node={this.state.currentNode} isConfirmingDeleteLocation={this.state.isConfirmingDeleteLocation} closeConfirmDeleteLocationForm={this.closeConfirmDeleteLocationForm.bind(this)} />}
                                 </div>
                             </div>
                         </div>

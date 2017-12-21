@@ -145,7 +145,7 @@ class Live extends React.Component {
 
 									<div className="live-top-menu pull-right">
 										<div className="button-sm pull-left nav-stats show-hide-details" onClick={this.changeMRMode.bind(this)}>
-											{(this.state.groupMR) ? "Hide details" : "Show details"}
+											{(this.state.groupMR) ? "Show details" : "Hide details"}
 										</div>
 
 										<NodeFilterDropdown

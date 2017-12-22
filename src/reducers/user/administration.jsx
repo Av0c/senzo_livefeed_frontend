@@ -42,7 +42,6 @@ function deleteUser(user){
 
 
 export default(state = initialState, action) => {
-	console.log(state, action);
 	switch (action.type) {
 		// List contact
 		case a.LIST_CONTACT: {

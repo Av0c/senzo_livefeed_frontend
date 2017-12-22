@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { createSensor, removeSensor, updateSensor } from 'actions/floorplan';
-import { deleteNode, updateNode } from 'actions/node';
+import { deleteNode } from 'actions/node';
 import Sensor from './sensor';
 
 export class SensorForm extends React.Component {
@@ -11,43 +11,6 @@ export class SensorForm extends React.Component {
     super();
     this.submit = this.submit.bind(this);
     this.state = {};
-  }
-
-  fixLocation() {
-    console.log(this.props.tree);
-    let count = {
-    value:1
-    };
-    this.loopTree(this.props.tree, count);
-    
-    console.log("done"+count.value);
-  }
-
-  loopTree(node, count) {
-    let self = this;
-    if (node.children && node.children.length > 0) {
-      node.children.forEach((element) => {
-        if (element.type == 'sensor') {
-          let newSensor = Object.assign({}, element);
-          if (count.value<180 && count.value>149) {
-            console.log(count.value);
-            let top =-0.8;
-            let left = -0.6;
-            newSensor.info.xpercent += left; 
-            newSensor.info.ypercent += top; 
-            self.props.dispatch(updateNode(newSensor));
-            console.log(newSensor);
-            for (let i = 0; i < 100000; i++) {
-
-            }
-          }
-          count.value++;
-        }
-        else {
-          self.loopTree(element, count);
-        }
-      });
-    }
   }
 
   submit(nodeId) {
@@ -117,9 +80,8 @@ export class SensorForm extends React.Component {
         </div>
         <div>
           <div className={"modal-sensorform" + (this.props.sensorForm ? "" : " closed")} onClick={this.props.closeSensorForm}></div>
-          <div style={{ zIndex: 1 }} className={"add-account-wrapper invite-modal" + (this.props.sensorForm ? "" : " closed")}>
+          <div style={{zIndex: 1}} className={"add-account-wrapper invite-modal" + (this.props.sensorForm ? "" : " closed")}>
             <div className="modal-header">
-              <h1 onClick={this.fixLocation.bind(this)}>adssads</h1>
               <button onClick={this.props.closeSensorForm} className="close">×</button>
               <h4 className="modal-title">Sensor Form</h4>
             </div>
@@ -162,8 +124,7 @@ export class SensorForm extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    selectedSensor: state.floorPlanSensorReducer.selectedSensor,
-    tree: state.overviewReducer.customerOverview
+    selectedSensor: state.floorPlanSensorReducer.selectedSensor
   }
 }
 function mapDispatchToProps(dispatch) {

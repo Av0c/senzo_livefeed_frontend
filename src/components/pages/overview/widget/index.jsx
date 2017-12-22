@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getOccupancyOverview, getParams } from 'actions/stats';
 import WidgetContainer from 'components/pages/overview/widget/widgetcontainer';
-import { updateUser } from 'actions/myaccount';
+import { updateUser, deleteWidget } from 'actions/myaccount';
 
 export class Widgets extends React.Component {
 
@@ -17,6 +17,7 @@ export class Widgets extends React.Component {
             });
             self.props.overview.splice(remove, 1);
         });
+        this.props.dispatch(deleteWidget(nodeId));
     }
 
     generateWidgets() {

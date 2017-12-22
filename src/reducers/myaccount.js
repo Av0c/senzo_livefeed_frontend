@@ -8,6 +8,7 @@ import {
   updateFailed,
   updateCompleted, 
   RECEIVE_USER,
+  DELETE_WIDGET
 } from 'actions/myaccount'
 
 const initialState = {

@@ -50,7 +50,7 @@ export class Stats extends React.Component {
                         <div className="col-md-12" style={{ backgroundColor: 'white', paddingTop: '10px' }}>
                             <LeftMenu overview='active' comparison='' />
                             <DateSelector />
-                            <StatsMenu name={this.state.currentNode.info.name} id={this.state.currentNode.id} />
+                            <StatsMenu name={this.state.currentNode.info.name} id={this.state.currentNode.id} node={this.state.currentNode} />
                         </div>
                         <div className="col-md-12">
                             <div className="col-sm-12">

@@ -15,6 +15,30 @@ export class WidgetContainer extends React.Component {
     };
   }
 
+  componentDidMount() {
+    let type = this.props.node.type;
+    if (type == 'open_area') {
+      this.setState({ area: config.room.OPENAREA });
+    }
+    else if (type == 'meeting_room') {
+      this.setState({ area: config.room.MEETINGROOM });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let type = nextProps.node.type;
+    if (type == 'open_area' || type == 'meeting_room') {
+      if (this.state.area.code != type) {
+        if (type == 'open_area') {
+          this.setState({ area: config.room.OPENAREA });
+        }
+        else if (type == 'meeting_room') {
+          this.setState({ area: config.room.MEETINGROOM });
+        }
+      }
+    }
+  }
+
   chooseArea(area) {
     this.setState({ area: area });
   }

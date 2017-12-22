@@ -8,6 +8,7 @@ import {
   updateFailed,
   updateCompleted, 
   RECEIVE_USER,
+  DELETE_WIDGET
 } from 'actions/myaccount'
 
 const initialState = {
@@ -41,13 +42,14 @@ export default (state = initialState, action ) => {
     //}
 
     case UPDATE_COMPLETED: {
+      console.log(action.data);
       return Object.assign({}, state, {
-        loading: false
-      })
+        loading: false,
+        user: action.data
+      });
     }
 
     case RECEIVE_USER: {
-      console.log(action.data);
       return Object.assign({}, state, {
         user: action.data
       });

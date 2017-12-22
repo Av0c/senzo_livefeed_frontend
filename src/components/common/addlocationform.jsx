@@ -7,7 +7,8 @@ export default class AddLocationForm extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            option: 'Country'
+            option: 'Country',
+            location: 'sub'
         };
     }
 
@@ -82,6 +83,14 @@ export default class AddLocationForm extends React.Component {
                                 <input type="username" id="name" onChange={this.changeHandler.bind(this)} required />
                             </label>
                         </div>
+
+                        {this.state.option == 'Multi' || <div className="country">
+                            <label>Location</label>
+                            <select value={this.state.location} id="location" onChange={this.changeHandler.bind(this)}>
+                                <option value='sub'>Sub location</option>
+                                <option value='top'>Top location</option>
+                            </select>
+                        </div>}
                         {this.state.option == 'Multi' || <div className="country">
                             <label>Country</label>
                             <select id="country" onChange={this.changeHandler.bind(this)}>

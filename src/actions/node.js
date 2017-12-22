@@ -21,6 +21,29 @@ export const ADD_FLOORPLAN_FAILED = "ADD_FLOORPLAN_FAILED";
 export const UPLOAD_IMAGE_FAILED = 'UPLOAD_IMAGE_FAILED';
 export const UPLOAD_IMAGE_SUCCESSFUL = 'UPLOAD_SUCCESSFUL';
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
+export const SET_PARENT_IN_PROGRESS = 'SET_PARENT_IN_PROGRESS';
+export const SET_PARENT_SUCCESSFULLY = 'SET_PARENT_SUCCESSFULLY';
+export const SET_PARENT_FAILED = 'SET_PARENT_FAILED';
+
+export function setParentInProgess() {
+  return {
+    type: SET_PARENT_IN_PROGRESS
+  };
+}
+
+export function setParentSuccessfully(data) {
+  return {
+    type: SET_PARENT_SUCCESSFULLY,
+    data
+  }
+}
+
+export function setParentFailed(){
+  return {
+    type: SET_PARENT_FAILED,
+    data
+  }
+}
 
 export function updateNodeInProgress() {
   return {
@@ -120,6 +143,7 @@ export function createNode(id, node) {
     return axios.post(config.api.root + `/node/create/${id}`, node)
       .then((response) => {
         dispatch(createNodeSuccessfully(response.data));
+        return response.data;
       })
       .catch(function (response) {
         dispatch(createFailed(response.data));
@@ -194,4 +218,16 @@ export function getLiveData(id) {
         dispatch(fetchFailed(response.data));
       });
   };
+}
+
+export function setParent(id1, id2) {
+  return dispatch => {
+    dispatch(setParentInProgess());
+    return axios.put(config.api.root+`/node/setparent/${id1}/${id2}`).then((response) => {
+      dispatch(setParentSuccessfully(response.data));
+    })
+    .catch((response) => {
+      dispatch(setParentFailed(response.data));
+    });
+  }
 }

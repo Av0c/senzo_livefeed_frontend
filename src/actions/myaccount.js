@@ -10,6 +10,14 @@ export const UPDATE_PASSWORD_COMPLETED = 'UPDATE_PASSWORD_COMPLETED';
 export const FETCH_USER = 'FETCH_USER';
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const FETCH_USER_FAILED = 'FECTH_USER_FAILED';
+export const DELETE_WIDGET = 'DELETE_WIDGET';
+
+export function deleteWidget(nodeId) {
+  return {
+    type: DELETE_WIDGET,
+    nodeId
+  }
+}
 
 export function updateInProgress() {
   return {

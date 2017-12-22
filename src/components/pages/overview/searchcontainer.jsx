@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {addNodeWidget} from 'actions/overview';
+import { addNodeWidget } from 'actions/overview';
 import SearchBar from 'components/common/searchbar';
 import { getOccupancyOverview, getParams } from 'actions/stats';
+import { updateUser } from 'actions/myaccount';
 
 export class SearchContainer extends React.Component {
 
@@ -19,8 +20,20 @@ export class SearchContainer extends React.Component {
     }
 
     addNodeWidget(node) {
-        let params = getParams({currentNode: node, querySettings: this.props.querySettings});
-        this.props.dispatch(getOccupancyOverview(params, node));
+        let user = Object.assign({}, this.props.user);
+        if (!user.details) {
+            user.details = {};
+            user.details.location = [node.id];
+        }
+        else if(user.details.location.includes(node.id)){
+
+        }
+        else {
+            user.details.location = [...user.details.location, node.id];
+        }
+
+        let params = getParams({ currentNode: node, querySettings: this.props.querySettings });
+        this.props.dispatch(updateUser(user.username, user));
     }
 
     render() {
@@ -35,10 +48,16 @@ export class SearchContainer extends React.Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        user: state.myAccountReducer.user
+    };
+}
+
 function mapDispatchToProps(dispatch) {
     return {
         dispatch
     };
 }
 
-export default connect(null, mapDispatchToProps)(SearchContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);

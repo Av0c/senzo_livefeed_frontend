@@ -28,10 +28,8 @@ export default (state = initialState, action) => {
 
         case DELETE_WIDGET:
             let newState = Object.assign({}, state);
-            console.log(newState);
             newState.widgets = newState.widgets.filter((element) => {return element.id != action.nodeId});
             newState.overview = newState.overview.filter((element) => {return element.node.id != action.nodeId});
-            console.log(newState);
             return newState;
 
         case Stats.FETCH_OCCUPANCY_OVERVIEW:

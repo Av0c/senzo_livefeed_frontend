@@ -38,7 +38,7 @@ export class PianoChartContainer extends React.Component {
             }
             data.values[data.values.length - 1].push(Math.round(avg / (data.values.length - 1 - count)));
         }
-        data.labelsY.push("All day");
+        data.labelsY.push("All days");
     }
 
     getStatsDayInWeek(data) {

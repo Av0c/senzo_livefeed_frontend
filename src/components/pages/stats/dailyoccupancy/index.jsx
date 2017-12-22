@@ -29,8 +29,11 @@ export class DailyOccupancy extends React.Component {
         }
     }
     render() {
+        let show = (this.props.querySettings.startdate == this.props.querySettings.enddate);
         return (
-            <PianoChartContainer tag={this.props.querySettings.tag} mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} day={this.state.day} chooseDay={this.chooseDay.bind(this)} />
+            <div>
+                {show || <PianoChartContainer tag={this.props.querySettings.tag} mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} day={this.state.day} chooseDay={this.chooseDay.bind(this)} />}
+            </div>
         );
     }
 }

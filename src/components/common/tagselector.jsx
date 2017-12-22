@@ -10,18 +10,20 @@ export default class TagSelector extends React.Component {
   }
 
   render() {
+    let show = this.props.roomType=='open_area';
     return (
       <Dropdown header={this.props.tag} toggleable>
-        <DropdownItem>
+        {show || <div><DropdownItem>
           <div onClick={this.optionClicked.bind(this, "Occupancy")}>
             {config.tag.OCCUPANCY.type}
           </div>
         </DropdownItem>
-        <DropdownItem>
-          <div onClick={this.optionClicked.bind(this, "Efficiency")}>
-            {config.tag.EFFICIENCY.type}
-          </div>
-        </DropdownItem>
+          <DropdownItem>
+            <div onClick={this.optionClicked.bind(this, "Efficiency")}>
+              {config.tag.EFFICIENCY.type}
+            </div>
+          </DropdownItem>
+        </div>}
       </Dropdown>
     )
   }

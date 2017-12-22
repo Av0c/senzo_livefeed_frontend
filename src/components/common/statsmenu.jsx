@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import RoomTypeSelector from 'components/common/roomtypeselector';
 import TagSelector from 'components/common/tagselector';
 import { selectTag } from 'actions/querysettings';
 import { selectRoomType } from 'actions/querysettings';
+import config from 'config';
 
 export class StatsMenu extends React.Component {
 
@@ -14,6 +15,22 @@ export class StatsMenu extends React.Component {
 
     chooseType(type) {
         this.props.dispatch(selectRoomType(type));
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.node.type == 'open_area') {
+            if (nextProps.room.code != 'open_area') {
+                nextProps.dispatch(selectRoomType(config.room.OPENAREA));
+            }
+            if (nextProps.tag == 'Efficiency') {
+                nextProps.dispatch(selectTag('Occupancy'));
+            }
+        }
+        else if (nextProps.node.type == 'meeting_room') {
+            if (nextProps.room.code != 'meeting_room') {
+                nextProps.dispatch(selectRoomType(config.room.MEETINGROOM));
+            }
+        }
     }
 
     render() {
@@ -26,10 +43,10 @@ export class StatsMenu extends React.Component {
                                 <h1>{this.props.name}</h1>
                             </div>
                             <div className="stats-room-select stats-select pull-left" style={{ paddingTop: '0px' }}>
-                                <RoomTypeSelector chooseType={this.chooseType.bind(this)} type={this.props.room.type} />
+                                <RoomTypeSelector roomType={this.props.node.type} chooseType={this.chooseType.bind(this)} type={this.props.room.type} />
                             </div>
                             <div className="stats-occupancy-select stats-select pull-left" style={{ paddingTop: '0px' }}>
-                                <TagSelector chooseTag={this.chooseTag.bind(this)} tag={this.props.tag} />
+                                <TagSelector roomType={this.props.node.type} chooseTag={this.chooseTag.bind(this)} tag={this.props.tag} />
                             </div>
                             <Link className="stats-live-btn button-sm pull-left" to={`live/${this.props.id}`} >LIVE</Link>
                             <a className="stats-export pull-left" href="#"><img src="src/assets/images/export.svg" /></a>

@@ -22,6 +22,7 @@ export class Charts extends React.Component {
             second = this.props.comparisonStats.overview[1].node;
         }
         return (
+            
             <div className="stats-body" id="stats-body">
                 <div className="container-fluid">
                     <div className="row">

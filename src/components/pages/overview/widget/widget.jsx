@@ -21,7 +21,7 @@ export default class Widget extends React.Component {
                     <h1 className="card-location">{this.props.node.info.name}</h1>
                     <div className="card-buttons clearfix">
                         <div className="card-inner-location pull-left">
-                            <RoomTypeSelector type={this.props.type} chooseType={this.props.getOverview} />
+                            <RoomTypeSelector roomType={this.props.node.type} type={this.props.type} chooseType={this.props.getOverview} />
                         </div>
                         <div className="card-nav pull-right">
                             <Link className='button-sm pull-right nav-stats' to={'live/' + this.props.node.id}> Live</Link>

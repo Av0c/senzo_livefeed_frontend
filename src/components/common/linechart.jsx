@@ -45,30 +45,14 @@ export default class LineChart extends React.Component {
                             range: [80, 100],
                             lineColor: "#e39199",
                             lineWidth: 2,
-                            label: {  //define label within marker
-                                text: "High Mark",
-                                fontColor: "#9e9e9e",
-                                alpha: 0.7,
-                                textAlpha: 1,
-                                offsetX: 10,
-                                offsetY: -5,
-                                fontSize: 16
-                            }
+                            
                         },
                         {
                             type: "area",
                             range: [0, 20],
                             lineColor: "#faf8f9",
                             lineWidth: 2,
-                            label: {  //define label within marker
-                                text: "Low Mark",
-                                fontColor: "#9e9e9e",
-                                alpha: 0.7,
-                                textAlpha: 1,
-                                offsetX: 10,
-                                offsetY: -5,
-                                fontSize: 16
-                            }
+                            
                         }
                     ],
                     minorTicks: 0,

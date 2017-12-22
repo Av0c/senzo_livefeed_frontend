@@ -12,18 +12,20 @@ export default class LocationSelector extends React.Component {
         };
     }
     clickOption(tree) {
-        this.setState({name: tree.info.name});
+        this.setState({ name: tree.info.name });
         this.props.chooseLocation(tree);
     }
     generateListItems(tree, list) {
         var self = this;
-        list.push(<DropdownItem key={tree.id*tree.id} class={self.props.class}>
-            <div key={tree.id} onClick={self.clickOption.bind(self, tree)}>
-                {tree.info.name}
-            </div>
-        </DropdownItem>);
+        if (tree.type != 'customer') {
+            list.push(<DropdownItem key={tree.id * tree.id} class={self.props.class}>
+                <div key={tree.id} onClick={self.clickOption.bind(self, tree)}>
+                    {tree.info.name}
+                </div>
+            </DropdownItem>);
+        }
         if (tree.children && tree.type != 'meeting_room' && tree.type != 'open_area') {
-            
+
             tree.children.forEach(function (element) {
                 return self.generateListItems(element, list);
             });
@@ -31,7 +33,7 @@ export default class LocationSelector extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({name: nextProps.tree.info.name});
+        this.setState({ name: nextProps.tree.info.name });
         this.props.chooseLocation(nextProps.tree);
     }
 

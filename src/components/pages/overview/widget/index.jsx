@@ -25,7 +25,8 @@ export class Widgets extends React.Component {
             return <WidgetContainer id={index} key={index} node={element.node}
                 deleteWidget={this.deleteWidget.bind(this)}
                 stats={element.data} allSensors={this.props.allSensors}
-                querySettings={this.props.querySettings} />
+                querySettings={this.props.querySettings} 
+                tree={this.props.tree}/>
         });
     }
 

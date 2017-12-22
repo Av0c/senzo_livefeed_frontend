@@ -111,7 +111,7 @@ export class WidgetContainer extends React.Component {
         node={this.props.node} stats={stats} id={this.props.id}
         getOverview={this.getOverview.bind(this)} action={this.props.action}
         redirectMaintenanceView={this.redirectMaintenanceView.bind(this)}
-        deleteWidget={this.props.deleteWidget.bind(this)} />
+        deleteWidget={this.props.deleteWidget.bind(this)} tree={this.props.tree}/>
     );
   }
 }

@@ -37,7 +37,6 @@ export default class Location extends React.Component {
         }
     }
     render() {
-        console.log(this.state.isShowingEdit)
         let icon = this.renderIcon();
         return (
             <li className="location-item-li">

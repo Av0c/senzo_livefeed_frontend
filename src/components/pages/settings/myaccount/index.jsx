@@ -18,11 +18,23 @@ class Index extends React.Component {
     })
       .catch(error => {
         toastr.error(error);
-      });; 
+      });;
   }
 
   componentWillMount() {
-    this.props.dispatch(fetchCurrentUser());
+    let self = this;
+    this.props.dispatch(fetchCurrentUser()).then(() => {
+      let user = self.props.user;
+      this.setState({
+        username: user.username,
+        title: user.title,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        phone: user.phone,
+        position: user.postion,
+        address: user.address
+      });
+    });
   }
 
   changeHandler(e) {
@@ -46,34 +58,34 @@ class Index extends React.Component {
                 </div>
                 <div className="account-username">
                   <label>Username</label>
-                  <input type="text" id="username" value={this.state.username || user.username} onChange={this.changeHandler.bind(this)} />
+                  <input type="text" id="username" value={this.state.username} onChange={this.changeHandler.bind(this)} />
                 </div>
                 <div className="account-title">
                   <label>Title</label>
-                  <select id="title" value={this.state.title || user.title} onChange={this.changeHandler.bind(this)}>
+                  <select id="title" value={this.state.title} onChange={this.changeHandler.bind(this)}>
                     <option value="Mr">Mr</option>
                     <option value="Ms">Ms </option>
                   </select>
                 </div>
                 <div className="account-firstname" >
                   <label>First Name    </label>
-                  <input type="text" id="firstname" value={this.state.firstname || user.firstname} onChange={this.changeHandler.bind(this)}  />
+                  <input type="text" id="firstname" value={this.state.firstname} onChange={this.changeHandler.bind(this)} />
                 </div>
                 <div className="account-lastname">
                   <label>Last Name    </label>
-                  <input type="text" id="lastname"  value={this.state.lastname || user.lastname} onChange={this.changeHandler.bind(this)} />
+                  <input type="text" id="lastname" value={this.state.lastname} onChange={this.changeHandler.bind(this)} />
                 </div>
                 <div className="account-phone">
                   <label>Phone    </label>
-                  <input type="tel" id="phone"  value={this.state.phone || user.phone} onChange={this.changeHandler.bind(this)} />
+                  <input type="tel" id="phone" value={this.state.phone} onChange={this.changeHandler.bind(this)} />
                 </div>
                 <div className="account-position">
                   <label>Position</label>
-                  <input type="text"  id="position" value={this.state.position || user.postion} onChange={this.changeHandler.bind(this)} />
+                  <input type="text" id="position" value={this.state.position} onChange={this.changeHandler.bind(this)} />
                 </div>
                 <div className="account-location">
                   <label>Location</label>
-                  <input type="text"  id="address" value={this.state.address || user.address} onChange={this.changeHandler.bind(this)} />
+                  <input type="text" id="address" value={this.state.address} onChange={this.changeHandler.bind(this)} />
                 </div>
                 <div className="account-change-password"><Link to="/settings/ownaccount/password" className="chpwd">Change Password    </Link></div>
                 <div className="account-submit">

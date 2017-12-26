@@ -25,7 +25,6 @@ export default class LocationSelector extends React.Component {
             </DropdownItem>);
         }
         if (tree.children && tree.type != 'meeting_room' && tree.type != 'open_area') {
-
             tree.children.forEach(function (element) {
                 return self.generateListItems(element, list);
             });
@@ -33,8 +32,16 @@ export default class LocationSelector extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ name: nextProps.tree.info.name });
-        this.props.chooseLocation(nextProps.tree);
+        if (nextProps.tree.children) {
+            if (nextProps.tree.type == 'customer') {
+                this.setState({ name: nextProps.tree.children[0].info.name });
+                this.props.chooseLocation(nextProps.tree.children[0]);
+            }
+            else {
+                this.setState({ name: nextProps.tree.info.name });
+                this.props.chooseLocation(nextProps.tree);
+            }
+        }
     }
 
     render() {

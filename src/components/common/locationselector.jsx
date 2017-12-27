@@ -11,6 +11,7 @@ export default class LocationSelector extends React.Component {
             name: ''
         };
     }
+    
     clickOption(tree) {
         this.setState({ name: tree.info.name });
         this.props.chooseLocation(tree);
@@ -31,7 +32,24 @@ export default class LocationSelector extends React.Component {
         }
     }
 
+    componentDidMount() {
+        let nextProps = this.props;
+        if (nextProps.tree.id > 0) {
+            if (nextProps.tree.children) {
+                if (nextProps.tree.type == 'customer') {
+                    this.setState({ name: nextProps.tree.children[0].info.name });
+                    this.props.chooseLocation(nextProps.tree.children[0]);
+                }
+                else {
+                    this.setState({ name: nextProps.tree.info.name });
+                    this.props.chooseLocation(nextProps.tree);
+                }
+            }
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
         if (nextProps.tree.children) {
             if (nextProps.tree.type == 'customer') {
                 this.setState({ name: nextProps.tree.children[0].info.name });

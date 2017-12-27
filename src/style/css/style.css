@@ -1046,3 +1046,7 @@ ul.users {
   cursor: pointer;
   position: relative;
 }
+.comparison-stats-card span {
+  float: right;
+  margin-right: 60px;
+}

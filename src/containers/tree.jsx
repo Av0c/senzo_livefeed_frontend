@@ -4,6 +4,11 @@ import Node from 'containers/node'
 
 export default class Tree extends React.Component {
 
+    constructor(props, context) {
+        super(props, context);
+        this.state= { show: true};
+    }  
+
     render() {
         var childNodes;
         var style = {};
@@ -22,7 +27,7 @@ export default class Tree extends React.Component {
         }
         return (
             <ul style={style}> 
-                {childNodes}
+                {this.state.show && childNodes}
             </ul>
         );
     }

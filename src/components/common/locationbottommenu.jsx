@@ -34,8 +34,8 @@ class EditWidget extends React.Component {
         this.generateOptions(this.props.tree, options);
         return (
             <div>
-                <div style={{backgroundColor:'transparent'}} className={"modal-overlay" + (this.props.isEditingWidget ? "" : " closed")} onClick={this.props.closeEditWidgetForm}></div>
-                <div style={{zIndex:'10000'}} className={"add-account-wrapper invite-modal" + (this.props.isEditingWidget ? "" : " closed")}>
+                <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.props.isEditingWidget ? "" : " closed")} onClick={this.props.closeEditWidgetForm}></div>
+                <div style={{ zIndex: '10000' }} className={"add-account-wrapper invite-modal" + (this.props.isEditingWidget ? "" : " closed")}>
                     <div className="modal-content">
                         <div className="modal-header">
                             <button className="close" onClick={this.props.closeEditWidgetForm}>×</button>
@@ -44,7 +44,7 @@ class EditWidget extends React.Component {
                         <div className="modal-body settings-wrapper">
                             <div>
                                 <div className="country">
-                                    <label style={{paddingLeft:'20px', paddingBottom:'5px'}}>Location</label>
+                                    <label style={{ paddingLeft: '20px', paddingBottom: '5px' }}>Location</label>
                                     <select id="location" onChange={this.changeHandler.bind(this)}>
                                         {options}
                                     </select>
@@ -103,27 +103,27 @@ export default class LocationBottomMenu extends React.Component {
         this.props.deleteWidget(node.id);
         this.closeDeleteLocationForm();
     }
-
+  
     render() {
         return (
-            <div className="card-bottom-menu">
+            <div className="card-bottom-menu" ref="container" onScroll={this.onscroll}>
                 <div className="row">
-                    <div className="col-xs-4 text-center card-bottom-menu-icon"><a onClick={this.openSettingDropdown.bind(this)} className="card-settings" href="#"><img src="src/assets/images/card-settings.svg" /></a>
-                        {this.state.isShowingSetting && <div aria-labelledby="dLabel">
+                    <div className="col-xs-4 text-center card-bottom-menu-icon"><a onClick={this.openSettingDropdown.bind(this)} className="card-settings" ><img src="src/assets/images/card-settings.svg" /></a>
+                        {this.state.isShowingSetting && (<div>
                             <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.state.isShowingSetting ? "" : " closed")} onClick={this.closeSettingDropdown.bind(this)} ></div>
-                            <div style={{ left: '10px', textAlign: 'left', minWidth: '170px' }} className={" dropdown-menu settings-location-dropdown " + (this.state.isShowingSetting ? "" : " closed")}>
-                                <ul style={{ textAlign: 'left' }}>
+                            <div className={"edit-widget-dropdown " + (this.state.isShowingSetting ? "" : " closed")}>
+                                <ul style={{ textAlign: 'left', paddingLeft: '30px', marginTop: '15px' }}>
                                     <li onClick={() => {
                                         this.closeSettingDropdown();
                                         this.openDeleteLocationForm();
                                     }}><a>Delete</a></li>
-                                    <li onClick={() => {
+                                    <li style={{ marginTop: '10px' }} onClick={() => {
                                         this.closeSettingDropdown();
                                         this.openEditWidgetForm();
                                     }}> <a>Edit</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div>)
                         }
                         {this.state.isDeletingLocation && <DeleteLocationForm isDeletingLocation={this.state.isDeletingLocation}
                             node={this.props.node} closeDeleteLocationForm={this.closeDeleteLocationForm.bind(this)}

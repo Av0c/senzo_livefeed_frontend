@@ -38,7 +38,7 @@ export default class Widget extends React.Component {
                     <LocationBottomMenu faulty={this.props.stats.faulties} node={this.props.node}
                         redirectMaintenanceView={this.props.redirectMaintenanceView}
                         deleteWidget={this.props.deleteWidget}
-                        tree={this.props.tree} />
+                        tree={this.props.tree} editWidget={this.props.editWidget} />
                 </div>
             </div>
         );

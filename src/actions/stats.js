@@ -12,6 +12,13 @@ export const FETCH_STATS_BREAKDOWN = 'FETCH_STATS_BREAKDOWN';
 export const RECEIVE_STATS_BREAKDOWN = 'RECEIVE_STATS_BREAKDOWN';
 export const FETCH_NODE_STATS = "FETCH_NODE_STATS";
 export const RECEIVE_NODE_STATS = "RECEIVE_NODE_STATS";
+export const RESET_OVERVIEW_STATS = "RESET_OVERVIEW_STATS";
+
+export function resetOverviewStats() {
+    return {
+        type: RESET_OVERVIEW_STATS
+    }
+}
 
 export function fetchOccupancyOverview() {
     return {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import toastr from 'toastr';
 import DeleteLocationForm from 'components/common/deletelocationform';
 
 class EditWidget extends React.Component {
@@ -9,10 +10,14 @@ class EditWidget extends React.Component {
         this.state = {};
     }
 
+    componentDidMount() {
+        this.setState({ location: this.props.nodeId });
+    }
+
     changeHandler(e) {
         let key = e.target.id;
         let value = e.target.value;
-        this.setState({ [key]: value });
+        this.setState({ [key]: parseInt(value) });
     }
 
     generateOptions(tree, options) {
@@ -26,6 +31,17 @@ class EditWidget extends React.Component {
                     self.generateOptions(element, options);
                 }
             });
+        }
+    }
+
+    submit() {
+        if(this.props.nodeId== this.state.location) {
+            toastr.error("Please, choose a different location");
+        }
+        else {
+            console.log(this.props.nodeId+"    "+this.state.location);
+            this.props.editWidget(this.props.nodeId, this.state.location);
+            this.props.closeEditWidgetForm();
         }
     }
 
@@ -45,7 +61,7 @@ class EditWidget extends React.Component {
                             <div>
                                 <div className="country">
                                     <label style={{ paddingLeft: '20px', paddingBottom: '5px' }}>Location</label>
-                                    <select id="location" onChange={this.changeHandler.bind(this)}>
+                                    <select value={this.state.location} id="location" onChange={this.changeHandler.bind(this)}>
                                         {options}
                                     </select>
                                 </div>
@@ -53,9 +69,7 @@ class EditWidget extends React.Component {
                         </div>
                         <div className="modal-footer">
                             <button className="btn btn-default" type="button" onClick={this.props.closeEditWidgetForm} >Cancel</button>
-                            <button className="btn btn-success" type="button" onClick={() => {
-                                this.props.closeEditWidgetForm();
-                            }} >Confirm</button>
+                            <button className="btn btn-success" type="button" onClick={this.submit.bind(this)} >Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -103,7 +117,7 @@ export default class LocationBottomMenu extends React.Component {
         this.props.deleteWidget(node.id);
         this.closeDeleteLocationForm();
     }
-  
+
     render() {
         return (
             <div className="card-bottom-menu" ref="container" onScroll={this.onscroll}>
@@ -130,7 +144,7 @@ export default class LocationBottomMenu extends React.Component {
                             submit={this.deleteWidget.bind(this)} />}
                         {this.state.isEditingWidget && <EditWidget isEditingWidget={this.state.isEditingWidget}
                             closeEditWidgetForm={this.closeEditWidgetForm.bind(this)}
-                            tree={this.props.tree} />}
+                            tree={this.props.tree} nodeId={this.props.node.id} editWidget={this.props.editWidget} />}
                     </div>
                     <div className="col-xs-4 text-center card-bottom-menu-icon"><a className="card-export" href="#"><img src="src/assets/images/export.svg" /></a></div>
                     <div className="col-xs-4 text-center">

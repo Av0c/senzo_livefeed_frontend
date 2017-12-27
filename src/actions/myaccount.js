@@ -11,11 +11,20 @@ export const FETCH_USER = 'FETCH_USER';
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const FETCH_USER_FAILED = 'FECTH_USER_FAILED';
 export const DELETE_WIDGET = 'DELETE_WIDGET';
+export const EDIT_WIDGET = 'EDIT_WDIGET';
 
 export function deleteWidget(nodeId) {
   return {
     type: DELETE_WIDGET,
     nodeId
+  }
+}
+
+export function editWidget(nodeId1, nodeId2) {
+  return {
+    type: EDIT_WIDGET,
+    nodeId1,
+    nodeId2
   }
 }
 

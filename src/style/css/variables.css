@@ -1,5 +1,5 @@
 .location-block .location-dropdown-root {
-    display: none;
+    display: block;
 }
 
 .location-block:hover .location-dropdown-root{

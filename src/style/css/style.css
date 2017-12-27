@@ -526,6 +526,7 @@ input:focus {
 }
 .location-dropdown-root ul,
 li {
+  
   list-style: none;
   margin: 0;
   padding: 0;
@@ -533,28 +534,27 @@ li {
 }
 .location-dropdown-root ul,
 .location-dropdown-root li {
+  visibility: visible;
   list-style: none;
   margin: 0;
   padding: 0;
   background: #fff;
+  position: relative;
+  z-index: 599;
 }
 .location-dropdown-root ul {
   border-top: 3px solid #7ec443;
   box-shadow: 0px 2px 3px 0px rgba(210,210,210,0.5);
 }
-.location-dropdown-root ul li.hover,
-.location-dropdown-root ul li:hover {
-  position: relative;
-  z-index: 599;
-}
+
 .location-dropdown-root ul ul {
-  visibility: hidden;
+  visibility: visible;
   position: absolute;
   top: 100%;
   left: 0;
   z-index: 598;
 }
-.location-dropdown-root ul li:hover > ul {
+.location-dropdown-root ul li > ul {
   visibility: visible;
 }
 .location-dropdown-root ul ul {
@@ -569,10 +569,7 @@ li {
 .location-dropdown-root li {
   background: #fff;
 }
-.location-dropdown-root li:hover,
-.location-dropdown-root li.active {
-  background: #fff;
-}
+
 .location-dropdown-root a {
   color: #585e66;
   line-height: 160%;

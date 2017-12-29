@@ -21,7 +21,7 @@ export default class Widget extends React.Component {
                     <h1 className="card-location">{this.props.node.info.name}</h1>
                     <div className="card-buttons clearfix">
                         <div className="card-inner-location pull-left">
-                            <RoomTypeSelector type={this.props.type} chooseType={this.props.getOverview} />
+                            <RoomTypeSelector roomType={this.props.node.type} type={this.props.type} chooseType={this.props.getOverview} />
                         </div>
                         <div className="card-nav pull-right">
                             <Link className='button-sm pull-right nav-stats' to={'live/' + this.props.node.id}> Live</Link>
@@ -35,8 +35,10 @@ export default class Widget extends React.Component {
                     />
                     <Bar values={this.props.bar} />
                     <LocationStats stats={this.props.stats} />
-                    <LocationBottomMenu faulty={this.props.stats.faulties} nodeId={this.props.node.id} 
-                    redirectMaintenanceView={this.props.redirectMaintenanceView} />
+                    <LocationBottomMenu faulty={this.props.stats.faulties} node={this.props.node}
+                        redirectMaintenanceView={this.props.redirectMaintenanceView}
+                        deleteWidget={this.props.deleteWidget}
+                        tree={this.props.tree} editWidget={this.props.editWidget} />
                 </div>
             </div>
         );

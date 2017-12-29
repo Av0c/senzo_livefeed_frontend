@@ -9,7 +9,9 @@ export default class SearchBar extends React.Component {
 
     constructOptions(tree, options) {
         var self = this;
-        options.push({ label: tree.info.name, values: tree });
+        if (tree.type != 'customer') {
+            options.push({ label: tree.info.name, values: tree });
+        }
         if (tree.children && tree.type != 'meeting_room' && tree.type != 'open_area') {
             tree.children.forEach(function (element) {
                 if (element.type != "sensor") {

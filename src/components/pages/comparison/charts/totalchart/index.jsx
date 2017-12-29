@@ -30,7 +30,12 @@ export class TotalChart extends React.Component {
     }
 
     getData(index) {
-        return this.props.stats[index].data.points.map((point) => { return Math.round(point[this.state.mode == 'Average' ? 'avg' : 'pk'] * 100); });
+        if (this.props.stats[index]) {
+            return this.props.stats[index].data.points.map((point) => { return Math.round(point[this.state.mode == 'Average' ? 'avg' : 'pk'] * 100); });
+        }
+        else {
+            return [];
+        }
     }
 
     chooseMode(mode) {
@@ -43,7 +48,7 @@ export class TotalChart extends React.Component {
         params.action = RECEIVE_FIRST_LOCATION_TOTAL;
         let params1 = getParams({ querySettings: this.props.querySettings, currentNode: this.props.second });
         params1.action = RECEIVE_SECOND_LOCATION_TOTAL;
-        if(tag=='Occupancy') {
+        if (tag == 'Occupancy') {
             params.tag = findOccupancyTag(this.props.first);
             params1.tag = findOccupancyTag(this.props.second);
         }
@@ -53,7 +58,7 @@ export class TotalChart extends React.Component {
         }
         this.props.dispatch(getNodeSeriesStats(params));
         this.props.dispatch(getNodeSeriesStats(params1));
-        
+
     }
 
     render() {

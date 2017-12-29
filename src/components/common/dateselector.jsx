@@ -2,23 +2,22 @@ import React from 'react';
 import moment from 'moment';
 import DatePicker from 'react-datepicker'
 import { connect } from 'react-redux';
-
 import { selectPeriod } from 'actions/querysettings';
 import PeriodButton from 'components/common/periodbutton';
-
 
 class DateSelector extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      to: moment().format('DD-MM-YYYY'),
-      from: moment().subtract(1, "weeks").add(1, "days").format('DD-MM-YYYY'),
+      to: '',
+      from: '',
       show: true,
-      active: "This week",
-      groupby: 'day'
+      active: "",
+      groupby: ''
     }
     this.handleClick = this.handleClick.bind(this);
+    this.dispatchPeriod = this.dispatchPeriod.bind(this);
   }
 
   showDatePickers() {
@@ -69,19 +68,36 @@ class DateSelector extends React.Component {
   }
 
   dispatchPeriod() {
+    console.log(this.state);
     this.props.dispatch(selectPeriod({
       from: this.state.from,
       to: this.state.to,
-      groupby: this.state.groupby
+      groupby: this.state.groupby,
+      active: this.state.active
     }));
   }
 
-  componentDidMount() {
-    this.props.dispatch(selectPeriod({
-      from: this.state.from,
-      to: this.state.to,
-      groupby: this.state.groupby
-    }))
+  componentWillMount() {
+    let nextProps = this.props;
+    if (nextProps.from != this.state.from && nextProps.to != this.state.to) {
+      this.setState({
+        from: nextProps.startdate,
+        to: nextProps.enddate,
+        active: nextProps.active,
+        groupby: nextProps.groupby
+      });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.startdate != this.state.from && nextProps.enddate != this.state.to) {
+      this.setState({
+        from: nextProps.startdate,
+        to: nextProps.enddate,
+        active: nextProps.active,
+        groupby: nextProps.groupby
+      });
+    }
   }
 
   render() {
@@ -96,19 +112,20 @@ class DateSelector extends React.Component {
             <a className={"button custom-time" + (this.state.active == "Custom" ? " active" : "")}>
               <span>Custom</span></a>
           </li>
-          {this.state.show || <div style={{ width: '410px',marginRight:'50px', zIndex: 10006 }} className="datepicker">
-          <div className="start-date-datepicker pull-left">
-            <DatePicker className="start-date pull-left"
-              dateFormat="DD-MM-YYYY"
-              selected={moment(this.state.from,'DD-MM-YYYY')}
-              onChange={this.setStartDate.bind(this)}
-            />
-          </div>
-          <div className="date-divider pull-left">-</div>
-            <div className="end-date-datepicker pull-right" style={{marginRight:'26px'}}>
+
+          {this.state.show || <div style={{ width: '410px', marginRight: '50px', zIndex: 10006 }} className="datepicker">
+            <div className="start-date-datepicker pull-left">
+              <DatePicker className="start-date pull-left"
+                dateFormat="DD-MM-YYYY"
+                selected={moment(this.state.from, 'DD-MM-YYYY')}
+                onChange={this.setStartDate.bind(this)}
+              />
+            </div>
+            <div className="date-divider pull-left">-</div>
+            <div className="end-date-datepicker pull-right" style={{ marginRight: '26px' }}>
               <DatePicker className="end-date pull-right"
                 dateFormat="DD-MM-YYYY"
-                selected={moment(this.state.to,'DD-MM-YYYY')}
+                selected={moment(this.state.to, 'DD-MM-YYYY')}
                 onChange={this.setEndDate.bind(this)}
               />
             </div>
@@ -120,14 +137,18 @@ class DateSelector extends React.Component {
 
   // Set state is asynchronous, apply update in callback where state is properly updated.
   setStartDate(datestring) {
+    let self = this;
     this.setState({ from: moment(datestring).format('DD-MM-YYYY'), groupby: 'day' }, () =>
-      this.dispatchPeriod()
+      self.dispatchPeriod()
     );
   }
 
   setEndDate(datestring) {
-    this.setState({ to: moment(datestring).format('DD-MM-YYYY'), groupby: 'day' }, () =>
-      this.dispatchPeriod()
+    let self = this;
+    this.setState({ to: moment(datestring).format('DD-MM-YYYY'), groupby: 'day' }, () =>{
+      console.log(self.state);
+      self.dispatchPeriod();
+    }
     );
   }
 

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import config from 'config';
 import Widget from 'components/pages/overview/widget/widget';
 import { getOccupancyOverview, getParams } from 'actions/stats';
-import {selectViewFilter} from "actions/live/filter";
+import { selectViewFilter } from "actions/live/filter";
+import { updateUser } from 'actions/myaccount';
 
 export class WidgetContainer extends React.Component {
 
@@ -12,6 +13,30 @@ export class WidgetContainer extends React.Component {
     this.state = {
       area: config.room.ALLAREA
     };
+  }
+
+  componentDidMount() {
+    let type = this.props.node.type;
+    if (type == 'open_area') {
+      this.setState({ area: config.room.OPENAREA });
+    }
+    else if (type == 'meeting_room') {
+      this.setState({ area: config.room.MEETINGROOM });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let type = nextProps.node.type;
+    if (type == 'open_area' || type == 'meeting_room') {
+      if (this.state.area.code != type) {
+        if (type == 'open_area') {
+          this.setState({ area: config.room.OPENAREA });
+        }
+        else if (type == 'meeting_room') {
+          this.setState({ area: config.room.MEETINGROOM });
+        }
+      }
+    }
   }
 
   chooseArea(area) {
@@ -82,12 +107,20 @@ export class WidgetContainer extends React.Component {
     let gauge = [this.props.stats.average, this.props.stats.peak];
     let bar = this.props.stats.marks || [1, 0, 0];
     return (
-      <Widget bar={bar} gauge={gauge} type={this.state.area.type} 
-      node={this.props.node} stats={stats} id={this.props.id} 
-      getOverview={this.getOverview.bind(this)} action={this.props.action} 
-      redirectMaintenanceView={this.redirectMaintenanceView.bind(this)}/>
+      <Widget bar={bar} gauge={gauge} type={this.state.area.type}
+        node={this.props.node} stats={stats} id={this.props.id}
+        getOverview={this.getOverview.bind(this)} action={this.props.action}
+        redirectMaintenanceView={this.redirectMaintenanceView.bind(this)}
+        deleteWidget={this.props.deleteWidget.bind(this)} tree={this.props.tree}
+        editWidget={this.props.editWidget} />
     );
   }
+}
+
+function mapStateToProps(state) {
+  return {
+    user: state.myAccountReducer.user
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -96,4 +129,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(WidgetContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(WidgetContainer);

@@ -6,11 +6,17 @@ import { RECEIVE_FIRST_LOCATION_OVERVIEW, RECEIVE_SECOND_LOCATION_OVERVIEW } fro
 
 export class Widgets extends React.Component {
 
+    deleteWidget() {
+    }
+
     generateWidgets() {
         return this.props.overview.map((element, index) => {
-            return <WidgetContainer id={index} key={index} node={element.node} stats={element.data} allSensors={this.props.allSensors}
-                    querySettings={this.props.querySettings} action={index == 0 ? RECEIVE_FIRST_LOCATION_OVERVIEW : RECEIVE_SECOND_LOCATION_OVERVIEW} />
-           
+            return <WidgetContainer id={index} key={index} node={element.node}
+                stats={element.data} allSensors={this.props.allSensors}
+                deleteWidget={this.deleteWidget.bind(this)}
+                querySettings={this.props.querySettings}
+                action={index == 0 ? RECEIVE_FIRST_LOCATION_OVERVIEW : RECEIVE_SECOND_LOCATION_OVERVIEW} />
+
         });
     }
 

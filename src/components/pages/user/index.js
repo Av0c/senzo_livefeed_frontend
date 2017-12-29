@@ -138,7 +138,6 @@ class User extends React.Component {
 					EArespond: "User edited.",
 					EArespondClass: "text-green",
 				});
-				console.log(nextProps.contactFetched);
 				if (!nextProps.contactFetched) {
 					nextProps.dispatch(listContact());
 				} 

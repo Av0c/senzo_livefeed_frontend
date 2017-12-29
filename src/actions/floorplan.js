@@ -219,6 +219,7 @@ export function createSensor(id, sensor) {
 export function updateSensor(sensor) {
   return dispatch => {
     dispatch(updateSensorInProgress(sensor));
+    console.log(sensor);
     return axios.put(config.api.root + `/sensor/update/${sensor.id}`, sensor)
       .then((response) => {
         dispatch(updateSensorCompleted(response.data));

@@ -1,4 +1,5 @@
 import * as Stats from 'actions/stats';
+import {DELETE_WIDGET, EDIT_WIDGET} from 'actions/myaccount';
 
 const initialState = {
     loading: false,
@@ -24,6 +25,19 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
+
+        case DELETE_WIDGET:
+            let newState = Object.assign({}, state);
+            newState.widgets = newState.widgets.filter((element) => {return element.id != action.nodeId});
+            newState.overview = newState.overview.filter((element) => {return element.node.id != action.nodeId});
+            return newState;
+
+        case EDIT_WIDGET:
+            return Object.assign({}, state, {
+                overview: []
+            });
+
+
         case Stats.FETCH_OCCUPANCY_OVERVIEW:
             return Object.assign({}, state, {
                 loading: true

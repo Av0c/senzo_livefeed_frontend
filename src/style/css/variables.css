@@ -1,5 +1,5 @@
 .location-block .location-dropdown-root {
-    display: none;
+    display: block;
 }
 
 .location-block:hover .location-dropdown-root{
@@ -383,4 +383,23 @@ li {
   .react-datepicker__navigation--next {
 	border-left-color: #ccc;
 	right: 1em;
+  }
+
+  .edit-widget-dropdown {
+	left: 10px;
+	text-align: left;
+	top: '100%';
+	position: absolute;
+	min-width: 100px;
+	z-index: 1000;
+	color: black;
+	background-color: white;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175)
+  }
+
+  .edit-widget-dropdown a {
+	  color: black;
   }

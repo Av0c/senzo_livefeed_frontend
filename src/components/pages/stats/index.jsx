@@ -8,6 +8,7 @@ import OccupancyRange from 'components/pages/stats/occupancyrange';
 import DailyOccupancy from 'components/pages/stats/dailyoccupancy';
 import OccupancyBreakDown from 'components/pages/stats/occupancybreakdown';
 import LeftMenu from 'components/common/leftmenu';
+
 export class Stats extends React.Component {
 
     constructor(props, context) {
@@ -21,10 +22,13 @@ export class Stats extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.findNode(this.props.tree, this.props);
+    }
+
     componentWillReceiveProps(nextProps) {
         this.findNode(nextProps.tree, nextProps);
     }
-
 
     findNode(tree, nextProps) {
         var self = this;
@@ -50,7 +54,7 @@ export class Stats extends React.Component {
                         <div className="col-md-12" style={{ backgroundColor: 'white', paddingTop: '10px' }}>
                             <LeftMenu overview='active' comparison='' />
                             <DateSelector />
-                            <StatsMenu name={this.state.currentNode.info.name} id={this.state.currentNode.id} />
+                            <StatsMenu name={this.state.currentNode.info.name} id={this.state.currentNode.id} node={this.state.currentNode} />
                         </div>
                         <div className="col-md-12">
                             <div className="col-sm-12">

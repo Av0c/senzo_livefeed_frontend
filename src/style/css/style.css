@@ -1046,3 +1046,16 @@ ul.users {
   cursor: pointer;
   position: relative;
 }
+.button-holder {
+  white-space: nowrap;
+  width: 1%;
+}
+.edit-sensor-wrapper input[type="text"] {
+  width: 230px;
+  height: 36px;
+  padding-left: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #dfdfdf;
+  border-radius: 6px;
+  box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+}

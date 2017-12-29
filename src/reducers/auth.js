@@ -18,7 +18,8 @@ function decodeToken(token) {
     var decoded = jwtDecode(token);
     return {
       username: decoded.username,
-      id: decoded.id,
+      firstname: decoded.firstname,
+      lastname: decoded.lastname,
       role: decoded.role,
       companyid: decoded.companyid,
       rootnodeid: decoded.rootnodeid

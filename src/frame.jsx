@@ -22,7 +22,7 @@ export class Frame extends React.Component {
 
   render() {
     return (
-      <div style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px', width: '100%', maxWidth: '100%' }} className="container">
+      <div style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px', maxWidth: '100%' }} className="container">
         <Toolbar user={this.props.user} actions={{ logout: this.props.logout }} companyName={this.props.companyName} tree={this.props.tree}
           statistic={this.handleTreeClick.bind(this)} />
         <div className="content">

@@ -4,16 +4,54 @@ import ReactDOM from 'react-dom';
 class Arc extends React.Component {
     render() {
         return (
-            <svg className="arc-svg" width="420" height="420">
-                <circle className="arc-base" cx="50%" cy="50%" r={this.props.r} strokeDasharray={this.props.strokeDasharrayBase} transform={this.props.rotate} stroke="#EEE" strokeWidth="16px"></circle>
-                <circle className="arc-peak" cx="50%" cy="50%" r={this.props.r} strokeDasharray={this.props.strokeDasharrayArc} transform={this.props.rotate} stroke="#2196F3" strokeWidth="16px"></circle>
+            <svg className="arc-svg" width="420" height="420" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" style={this.props.css}>
+                <circle className="arc-base" cx="50%" cy="50%" r={this.props.r} strokeDasharray={this.props.strokeDasharrayBase} stroke="#EEE" strokeWidth="16px"></circle>
+                <circle className="arc-peak" cx="50%" cy="50%" r={this.props.r} strokeDasharray={this.props.strokeDasharrayArc} stroke="#2196F3" strokeWidth="16px"></circle>
             </svg>
         );
     }
 }
 
 class Needle extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            haveTrans: false,
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener("resize", () => this.removeTrans());
+    }
+
+    componentWillReceiveProps(props) {
+        console.log(props)
+        if (!this.state.haveTrans && this.props.rotate !== props.rotate) {
+            this.addTrans();
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", () => this.removeTrans());
+    }
+
+    removeTrans() {
+        console.log("trn")
+        this.setState({
+            haveTrans: false,
+            className: "no-trans"
+        });
+    }
+
+    addTrans() {
+        this.setState({
+            haveTrans: true,
+            className: "have-trans"
+        });
+    }
+
     render() {
+        console.log(this.state);
         return (
             <svg className="needle-svg" x="0px" y="0px" width="420" height="420" viewBox="-0.3 1.1 4 55" >
                 <defs>
@@ -29,7 +67,7 @@ class Needle extends React.Component {
                         </feMerge>
                     </filter>
                 </defs>
-                <g transform={this.props.rotate}>
+                <g transform={this.props.rotate} className={this.state.className}>
                     <g filter="url(#glow-gray)">
                         <ellipse fill="#757575" strokeWidth="0" cx="1.7" cy="28.8" rx="1.6" ry="2.1" />
                         <polygon fill="#757575" strokeWidth="0" points="1.7,8.3 0.1,28.7 3.3,28.7 "/>
@@ -82,7 +120,9 @@ export default class Gauge extends React.Component {
         var scale = "scale(" + (width/420) + ")";
         var css = {
             transformOrigin: 'left top',
+            WebkitTransformOrigin: 'left top',
             transform: scale,
+            WebkitTransform: scale,
         }
         this.setState({ css: css });
 
@@ -98,7 +138,9 @@ export default class Gauge extends React.Component {
         var scale = "scale(" + (width/420) + ")";
         var css = {
             transformOrigin: 'left top',
+            WebkitTransformOrigin: 'left top',
             transform: scale,
+            WebkitTransform: scale,
             fontSize: "14px"
         }
         this.setState({ css: css });
@@ -115,13 +157,17 @@ export default class Gauge extends React.Component {
         rotAngle = (180-arcAngle)/2 + arcAngle;
         var strokeDasharrayArc = [arcDashLen, cf];
         var strokeDasharrayBase = [fullDashLen, cf];
-        var rotate = "rotate(" + rotAngle + ")";
+        var rotate = "rotate(" + rotAngle + "deg)";
+        var css = {
+            transform: rotate,
+            WebkitTransform: rotate,
+        }
         return (
             <Arc
                 r={r}
                 strokeDasharrayArc={strokeDasharrayArc}
                 strokeDasharrayBase={strokeDasharrayBase}
-                rotate={rotate}
+                css={css}
             />
         );
     }
@@ -163,8 +209,9 @@ export default class Gauge extends React.Component {
         for (var i = 0; i < count; i++) {
             markerValue = 0 + i*100/(count-1);
             markerAngle = -(362-arcAngle-offset)/2 + i*(362-arcAngle-offset)/(count-1);
-            rotate = "rotate(" + markerAngle + "deg";
+            rotate = "rotate(" + markerAngle + "deg)";
             css = {
+                WebkitTransform: rotate,
                 transform: rotate,
             }
             returnArray[i] = <Marker key={i} markerValue={markerValue} css={css}/>;

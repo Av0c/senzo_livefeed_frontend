@@ -35,13 +35,15 @@ export class Sensor extends React.Component{
 		} else {
 			className += ` unregistered`
 		}
-		if (this.props.viewFilter==config.viewFilter.LIVE && (!sensor.registered || sensor.faulty)) {
-			// hide broken / unregistered sensor in live view.
-			className += ` hidden`;
-		}
-		if (this.props.viewFilter==config.viewFilter.MAINTENANCE && (sensor.registered && !sensor.faulty)) {
-			// hide good and registered sensor in maintenance view.
-			className += ` hidden`;
+		if (this.props.viewFilter) {
+			if (this.props.viewFilter.code=="LIVE" && (!sensor.registered || sensor.faulty)) {
+				// hide broken / unregistered sensor in live view.
+				className += ` hidden`;
+			}
+			if (this.props.viewFilter.code=="MAINTENANCE" && (sensor.registered && !sensor.faulty)) {
+				// hide good and registered sensor in maintenance view.
+				className += ` hidden`;
+			}
 		}
 
 		return(

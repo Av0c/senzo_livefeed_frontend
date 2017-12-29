@@ -103,14 +103,14 @@ class DateSelector extends React.Component {
               selected={moment(this.state.from,'DD-MM-YYYY')}
               onChange={this.setStartDate.bind(this)}
             />
-            </div>
-            <div className="date-divider pull-left">-</div>
+          </div>
+          <div className="date-divider pull-left">-</div>
             <div className="end-date-datepicker pull-right" style={{marginRight:'26px'}}>
-            <DatePicker className="end-date pull-right"
-              dateFormat="DD-MM-YYYY"
-              selected={moment(this.state.to,'DD-MM-YYYY')}
-              onChange={this.setEndDate.bind(this)}
-            />
+              <DatePicker className="end-date pull-right"
+                dateFormat="DD-MM-YYYY"
+                selected={moment(this.state.to,'DD-MM-YYYY')}
+                onChange={this.setEndDate.bind(this)}
+              />
             </div>
           </div>}
         </ul>

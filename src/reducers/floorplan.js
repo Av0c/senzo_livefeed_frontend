@@ -18,20 +18,8 @@ const initialState = {
   loading: false,
   uploadImageSuccessful: false,
   uploadImageFailed: false,
-  image: ''
+  imageURL: '',
 };
-
-
-function uploadImage(data) {
-  var formData = new FormData();
-  formData.append('floorplan', data.image);
-  var axiosConfig = {
-    headers: {'Content-Type': 'multipart/form-data'}
-  };
-  return axios.post(config.api.root + `/api/area/${data.areaId}/floorplan`, formData, axiosConfig)
-  .then(uploadImageSuccessful)
-  .catch((error) => uploadImageFailed(error));
-}
 
 function fetchImage(id) {
   return axios.get(`${config.api.root}/node/image/${id}`)

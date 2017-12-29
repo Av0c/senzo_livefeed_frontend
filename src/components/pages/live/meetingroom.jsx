@@ -89,11 +89,11 @@ export class MeetingRoom extends React.Component{
 
 		className += " "+status.type;
 
-		if (this.props.viewFilter==config.viewFilter.LIVE && (type=="unregistered" || type=="faulty")) {
+		if (this.props.viewFilter.code=="LIVE" && (type=="unregistered" || type=="faulty")) {
 			// hide broken / unregistered meeting room in live view.
 			className += ` hidden`;
 		}
-		if (this.props.viewFilter==config.viewFilter.MAINTENANCE && (type!="unregistered" && type!="faulty")) {
+		if (this.props.viewFilter.code=="MAINTENANCE" && (type!="unregistered" && type!="faulty")) {
 			// hide good and registered meeting room in maintenance view.
 			className += ` hidden`;
 		}

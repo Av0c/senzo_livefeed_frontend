@@ -12,13 +12,13 @@ class DateSelector extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-        from: this.props.startdate,
-        to: this.props.enddate,
-        starthour: this.props.starthour,
-        endhour: this.props.endhour,
-        active: this.props.active,
-        groupby: this.props.groupby,
-        show: true,
+      from: this.props.startdate,
+      to: this.props.enddate,
+      starthour: this.props.starthour,
+      endhour: this.props.endhour,
+      active: this.props.active,
+      groupby: this.props.groupby,
+      show: true,
     }
     this.handleClick = this.handleClick.bind(this);
     this.dispatchPeriod = this.dispatchPeriod.bind(this);
@@ -109,7 +109,9 @@ class DateSelector extends React.Component {
   }
 
   onFormatDate(date) {
-    let d = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() % 100;
+    let day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+    let month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+    let d = day + '-' + month + '-' + date.getFullYear();
     return d;
   }
 
@@ -126,7 +128,7 @@ class DateSelector extends React.Component {
         : date.getMonth();
     let year = values.length > 2 ? parseInt(values[2], 10) : date.getFullYear();
     if (year < 100) {
-      year += date.getFullYear() - date.getFullYear() % 100;
+      year += date.getFullYear();
     }
     return new Date(year, month, day);
   }
@@ -149,7 +151,13 @@ class DateSelector extends React.Component {
           {this.state.show || <div style={{ width: '410px', marginRight: '50px', zIndex: 10006 }} className="datepicker">
             <div className="pull-left">
               <DatePicker className="start-date pull-left"
-                formatDate={this.onFormatDate}
+                formatDate={(date) => {
+                  let d = this.onFormatDate(date);
+                  if (d != this.state.from) {
+                    this.setStartDate(d);
+                  }
+                  return d;
+                }}
                 onSelectDate={this.setStartDate.bind(this)}
                 value={from}
                 firstDayOfWeek={DayOfWeek.Monday}
@@ -160,7 +168,13 @@ class DateSelector extends React.Component {
             <div className="date-divider pull-left">-</div>
             <div className="pull-right" style={{ marginRight: '26px' }}>
               <DatePicker className="end-date pull-right"
-                formatDate={this.onFormatDate}
+                formatDate={(date) => {
+                  let d = this.onFormatDate(date);
+                  if (d != this.state.to) {
+                    this.setEndDate(d);
+                  }
+                  return d;
+                }}
                 onSelectDate={this.setEndDate.bind(this)}
                 value={to}
                 firstDayOfWeek={DayOfWeek.Monday}
@@ -182,14 +196,14 @@ class DateSelector extends React.Component {
   // Set state is asynchronous, apply update in callback where state is properly updated.
   setStartDate(datestring) {
     let self = this;
-    this.setState({ from: moment(datestring).format('DD-MM-YYYY'), groupby: 'day' }, () =>
+    this.setState({ from: datestring, groupby: 'day' }, () =>
       self.dispatchPeriod()
     );
   }
 
   setEndDate(datestring) {
     let self = this;
-    this.setState({ to: moment(datestring).format('DD-MM-YYYY'), groupby: 'day' }, () =>
+    this.setState({ to: datestring, groupby: 'day' }, () =>
       self.dispatchPeriod()
     );
   }

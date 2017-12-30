@@ -34,8 +34,10 @@ export default (state = initialState, action) => {
       return  Object.assign({}, state, {
         startdate: action.period.from,
         enddate: action.period.to,
+        starthour: action.period.starthour,
+        endhour: action.period.endhour,
         groupby: action.period.groupby,
-        active: action.period.active
+        active: action.period.active,
       });
     }
     default:

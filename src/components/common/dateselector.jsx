@@ -4,17 +4,18 @@ import DatePicker from 'react-datepicker'
 import { connect } from 'react-redux';
 import { selectPeriod } from 'actions/querysettings';
 import PeriodButton from 'components/common/periodbutton';
-
+import TimePicker from 'components/common/timepicker'
 class DateSelector extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
     this.state = {
-      to: '',
-      from: '',
-      show: true,
-      active: "",
-      groupby: ''
+        from: this.props.startdate,
+        to: this.props.enddate,
+        starthour: this.props.starthour,
+        endhour: this.props.endhour,
+        active: this.props.active,
+        groupby: this.props.groupby
     }
     this.handleClick = this.handleClick.bind(this);
     this.dispatchPeriod = this.dispatchPeriod.bind(this);
@@ -26,7 +27,7 @@ class DateSelector extends React.Component {
   }
 
   handleClick(value) {
-
+    console.log(this.setState.show);
     this.setState({ show: !this.setState.show });
     this.setState({ active: value });
     if (value == "Today") {
@@ -72,6 +73,8 @@ class DateSelector extends React.Component {
     this.props.dispatch(selectPeriod({
       from: this.state.from,
       to: this.state.to,
+      starthour: this.state.starthour,
+      endhour: this.state.endhour,
       groupby: this.state.groupby,
       active: this.state.active
     }));
@@ -83,6 +86,8 @@ class DateSelector extends React.Component {
       this.setState({
         from: nextProps.startdate,
         to: nextProps.enddate,
+        starthour: nextProps.starthour,
+        endhour: nextProps.endhour,
         active: nextProps.active,
         groupby: nextProps.groupby
       });
@@ -94,6 +99,8 @@ class DateSelector extends React.Component {
       this.setState({
         from: nextProps.startdate,
         to: nextProps.enddate,
+        starthour: nextProps.starthour,
+        endhour: nextProps.endhour,
         active: nextProps.active,
         groupby: nextProps.groupby
       });
@@ -113,22 +120,30 @@ class DateSelector extends React.Component {
               <span>Custom</span></a>
           </li>
 
-          {this.state.show || <div style={{ width: '410px', marginRight: '50px', zIndex: 10006 }} className="datepicker">
-            <div className="start-date-datepicker pull-left">
-              <DatePicker className="start-date pull-left"
-                dateFormat="DD-MM-YYYY"
-                selected={moment(this.state.from, 'DD-MM-YYYY')}
-                onChange={this.setStartDate.bind(this)}
-              />
+          {this.state.show || <div  className="datepicker">
+            <div className="datepicker-body clearfix">
+              <div className="start-date-datepicker pull-left">
+                <DatePicker className="start-date pull-left"
+                  dateFormat="DD-MM-YYYY"
+                  selected={moment(this.state.from, 'DD-MM-YYYY')}
+                  onChange={this.setStartDate.bind(this)}
+                />
+              </div>
+              <div className="date-divider pull-left">-</div>
+              <div className="end-date-datepicker pull-right">
+                <DatePicker className="end-date pull-right"
+                  dateFormat="DD-MM-YYYY"
+                  selected={moment(this.state.to, 'DD-MM-YYYY')}
+                  onChange={this.setEndDate.bind(this)}
+                />
+              </div>
             </div>
-            <div className="date-divider pull-left">-</div>
-            <div className="end-date-datepicker pull-right" style={{ marginRight: '26px' }}>
-              <DatePicker className="end-date pull-right"
-                dateFormat="DD-MM-YYYY"
-                selected={moment(this.state.to, 'DD-MM-YYYY')}
-                onChange={this.setEndDate.bind(this)}
-              />
-            </div>
+            <TimePicker
+              nSegments={24}
+              values={[this.state.starthour, this.state.endhour]}
+              onChange={this.setRangehour.bind(this)}
+            />
+
           </div>}
         </ul>
       </div>
@@ -145,10 +160,16 @@ class DateSelector extends React.Component {
 
   setEndDate(datestring) {
     let self = this;
-    this.setState({ to: moment(datestring).format('DD-MM-YYYY'), groupby: 'day' }, () =>{
-      console.log(self.state);
-      self.dispatchPeriod();
-    }
+    this.setState({ to: moment(datestring).format('DD-MM-YYYY'), groupby: 'day' }, () =>
+      self.dispatchPeriod()
+    );
+  }
+
+  setRangehour(values) {
+    let self = this;
+    console.log(values);
+    this.setState({ starthour: values[0], endhour: values[1] }, () =>
+      self.dispatchPeriod()
     );
   }
 

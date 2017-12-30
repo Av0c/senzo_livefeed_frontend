@@ -25,7 +25,6 @@ export class Toolbar extends React.Component {
   }
 
   render() {
-    console.log("USER", this.props.user)
     return (
       <div style={{ width: '100%', backgroundColor: 'white', paddingBottom: '15px' }} className="container-fluid">
         <div className="row">

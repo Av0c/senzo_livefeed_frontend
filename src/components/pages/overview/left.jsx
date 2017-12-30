@@ -54,6 +54,7 @@ class OverviewLeft extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     if (nextProps.userDetails.details && nextProps.userDetails.details.location.length > 0) {
       if (!(this.props.user.details && (this.props.userDetails.details.location.length == nextProps.userDetails.details.location.length))) {
         this.getOverViewOfFavoriteNodes(nextProps.overview, nextProps.querySettings, nextProps.userDetails.details.location);

@@ -37,7 +37,6 @@ function deleteSensor(ss){
 }
 
 export default(state = initialState, action) => {
-	console.log(state, action);
 	switch (action.type) {
 		// Fetching data
 		case aNode.FETCH_LIVE_DATA: {

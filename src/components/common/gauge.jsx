@@ -18,25 +18,24 @@ class Needle extends React.Component {
         this.state = {
             haveTrans: false,
         }
+        this.removeTrans = this.removeTrans.bind(this)
     }
 
     componentDidMount() {
-        window.addEventListener("resize", () => this.removeTrans());
+        window.addEventListener("resize", this.removeTrans);
     }
 
     componentWillReceiveProps(props) {
-        console.log(props)
         if (!this.state.haveTrans && this.props.rotate !== props.rotate) {
             this.addTrans();
         }
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", () => this.removeTrans());
+        window.removeEventListener("resize", this.removeTrans);
     }
 
     removeTrans() {
-        console.log("trn")
         this.setState({
             haveTrans: false,
             className: "no-trans"
@@ -51,7 +50,6 @@ class Needle extends React.Component {
     }
 
     render() {
-        console.log(this.state);
         return (
             <svg className="needle-svg" x="0px" y="0px" width="420" height="420" viewBox="-0.3 1.1 4 55" >
                 <defs>

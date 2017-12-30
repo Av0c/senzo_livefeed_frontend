@@ -146,14 +146,13 @@ header {
   top: 44px;
   right: 0;
   background: #fff;
-  height: 60px;
-  width: 355px;
   -webkit-box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
   -moz-box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
   box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
   border-radius: 16px;
-  padding-top: 15px;
-  padding-left: 14px;
+  padding: 15px;
+  margin-right: 15px;
+  z-index: 10001;
 }
 .datepicker-circle {
   background: #fff;
@@ -190,14 +189,11 @@ header {
   font-size: 18px;
   width: 170px;
   height: 30px;
-  padding-left: 6px;
-
 }
 .start-date,
 .end-date input {
   line-height: normal !important;
 }
-
 .login-logo {
   width: 200px;
   height: 37px;
@@ -209,12 +205,58 @@ header {
 }
 .date-divider {
   color: #585858;
-  margin: -4px 6px 0 15px;
+  margin: -4px 6px 0 6px;
   font-size: 30px;
+}
+.timepicker {
+
 }
 .timepicker-icon {
   margin-left: 8px;
   margin-top: 4px;
+}
+.timepicker-body {
+  position: relative;
+  background: #d8d8d8;
+  height: 8px;
+  width: 100%;
+  border-radius: 20px;
+  margin: 20px 0 24px;
+}
+.timepicker-range {
+  position: absolute;
+  background: #7ec443;
+  height: 8px;
+  border-radius: 20px;
+}
+.range-dot {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  bottom: -6px;
+  background: #fff;
+  border-radius: 80px;
+  box-shadow: 0px 0px 4px 0px #787878;
+  transform: translate(-50%, 0%);
+  -ms-transform: translate(-50%, 0%);
+  -webkit-transform: translate(-50%, 0%);
+  -moz-transform: translate(-50%, 0%);
+  cursor: pointer;
+}
+.range-value {
+  position: absolute;
+  top: 24px;
+  transform: translate(-25%, 0%);
+  -ms-transform: translate(-25%, 0%);
+  -webkit-transform: translate(-25%, 0%);
+  -moz-transform: translate(-25%, 0%);
+}
+.timepicker-mark {
+  position: absolute;
+  top: 6px;
+  height: 9px;
+  width: 2px;
+  background: #d8d8d8;
 }
 body.login-page {
   padding: 0;

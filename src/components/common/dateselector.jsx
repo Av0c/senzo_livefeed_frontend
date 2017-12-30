@@ -15,7 +15,8 @@ class DateSelector extends React.Component {
         starthour: this.props.starthour,
         endhour: this.props.endhour,
         active: this.props.active,
-        groupby: this.props.groupby
+        groupby: this.props.groupby,
+        show: true,
     }
     this.handleClick = this.handleClick.bind(this);
     this.dispatchPeriod = this.dispatchPeriod.bind(this);

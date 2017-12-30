@@ -8,8 +8,8 @@ import InviteModal from "./inviteModal"
 import DeleteModal from "./deleteModal"
 import EditModal from "./editModal"
 
-import NodeFilterDropdown from "./nodeFilterDropdown"
-import TypeFilterDropdown from "./typeFilterDropdown"
+import NodeDropdown from "components/common/nodedropdown"
+import ListDropdown from "components/common/listdropdown"
 
 import {
 	listContact,
@@ -120,6 +120,7 @@ class User extends React.Component {
 					AArespond: "",
 					AArespondClass: "",
 				});
+				break;
 		}
 		// Editing stages
 		switch (nextProps.EAstage) {
@@ -129,7 +130,7 @@ class User extends React.Component {
 					EArespondClass: "text-loading",
 				})
 				if (nextProps.contactFetched) {
-					this.props.dispatch(needContact());
+					nextProps.dispatch(needContact());
 				}
 				break;
 			case "edited":
@@ -138,7 +139,7 @@ class User extends React.Component {
 					EArespondClass: "text-green",
 				});
 				if (!nextProps.contactFetched) {
-					this.props.dispatch(listContact());
+					nextProps.dispatch(listContact());
 				} 
 				break;
 			case "edit-failed":
@@ -156,23 +157,17 @@ class User extends React.Component {
 		// Deleting stages
 		switch (nextProps.DAstage) {
 			case "deleting" :
-				this.setState({
-					fetched: false
-				})
 				if (nextProps.contactFetched) {
-					this.props.dispatch(needContact());
+					nextProps.dispatch(needContact());
 				}
 				break;
 			case "deleted" :
-				if (!this.props.contactFetched) {
-					this.props.dispatch(listContact());
+				if (!nextProps.contactFetched) {
+					nextProps.dispatch(listContact());
 				}
 				this.DAClose();
 				break;
 			default: // nothing
-				this.setState({
-					fetched: false
-				});
 		}
 	}
 
@@ -186,6 +181,18 @@ class User extends React.Component {
 			root.children.forEach((child) => {
 				self.listNodes(child, depth+1, res);
 			})
+		}
+	}
+
+	listNodeFilter(root, res) {
+		var self = this;
+		if (root) {
+			if (root.type!="sensor") {
+				res.push(root);
+				root.children.forEach((child) => {
+					self.listNodeFilter(child, res);
+				})
+			}
 		}
 	}
 
@@ -205,19 +212,25 @@ class User extends React.Component {
 												<div key="0" className="button" style={{marginLeft: "14px"}} onClick={this.AAOpen.bind(this)}>
 													Add Account
 												</div>,
-												<NodeFilterDropdown key="1"
+												<NodeDropdown
+													key="1"
+													outsideClass="dropdown-btn settings-dropdown pull-left"
 													root={this.props.tree}
 													nodeFilter={this.props.nodeFilter}
 													click={
 														(node) => { this.props.dispatch(useradSelectNode(node)) }
 													}
+													list={this.listNodeFilter.bind(this)}
+													header="All locations"
 												/>,
-												<TypeFilterDropdown key="2"
-													typeFilter={this.props.typeFilter}
-													click={
-														(code) => { this.props.dispatch(useradSelectType(code)) }
-													}
-												/>
+												<ListDropdown
+													key="2"
+													outsideClass="dropdown-btn settings-dropdown pull-left"
+													items={config.userTypeFilter}
+													getText={(x) => x.text}
+													selected={this.props.userTypeFilter}
+													click={(code) => {this.props.dispatch(useradSelectType(code))}}
+												/>,
 											]
 										) : (
 											<div/>
@@ -229,7 +242,7 @@ class User extends React.Component {
 									openDeleteModal={this.DAOpen.bind(this)}
 									openEditModal={this.EAOpen.bind(this)}
 									nodeFilter={this.props.nodeFilter}
-									typeFilter={this.props.typeFilter}
+									userTypeFilter={this.props.userTypeFilter}
 									tree={this.props.tree}
 								/>
 							</div>
@@ -283,7 +296,7 @@ function mapStateToProps(state) {
 		contact: state.userAdminReducer.contact,
 		contactFetched: state.userAdminReducer.contactFetched,
 		nodeFilter: state.userAdminReducer.nodeFilter,
-		typeFilter: state.userAdminReducer.typeFilter
+		userTypeFilter: state.userAdminReducer.userTypeFilter
 	};
 }
 

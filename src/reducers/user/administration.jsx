@@ -17,11 +17,14 @@ const initialState = {
 		children: [],
 		type: null
 	},
-	typeFilter: config.typeFilter[0],
+	userTypeFilter: config.userTypeFilter[0],
 
 	selectedUser: {},
 	DAstage: "nothing", // DA = delete account
-	DArespond: {}
+	DArespond: {},
+	EAstage: "nothing", // EA = edit account
+	EArespond: {},
+
 };
 
 function listContact(){
@@ -125,7 +128,7 @@ export default(state = initialState, action) => {
 
 		case a.USERAD_SELECT_TYPE: {
 			return Object.assign({}, state, {
-				typeFilter: action.code,
+				userTypeFilter: action.code,
 			});
 		}
 

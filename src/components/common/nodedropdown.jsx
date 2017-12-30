@@ -5,39 +5,25 @@ import config from 'config';
 
 import { connect } from 'react-redux';
 
-export default class NodeFilterDropdown extends React.Component {
+export default class NodeDropdown extends React.Component {
 	optionClicked(node) {
 		this.props.click(node);
-	}
-
-	listAreas(root, res) {
-		var self = this;
-		if (root) {
-			if(root.type==config.room.MEETINGROOM.code || root.type==config.room.OPENAREA.code) {
-				res.push(root);
-			}
-			//  else if (root.type!="sensor") {
-			// 	root.children.forEach((child) => {
-			// 		self.listAreas(child, res);
-			// 	})
-			// }
-		}
 	}
 
 	render() {
 		var areas = [];
 		var self = this;
 		this.props.root.children.forEach((child) => {
-			self.listAreas(child, areas);
+			self.props.list(child, areas);
 		})
-		var header = (this.props.nodeFilter.id==this.props.root.id) ? "All Areas" : this.props.nodeFilter.info.name;
+		var header = (this.props.nodeFilter.id==this.props.root.id) ? this.props.header : this.props.nodeFilter.info.name;
 
 		return (
-			<div className="live-select pull-left">
-				<Dropdown header={header} toggleable>
+			<div className={this.props.outsideClass}>
+				<Dropdown header={header} toggleable customClass={this.props.customClass}>
 					<DropdownItem>
 						<div onClick={this.optionClicked.bind(this, this.props.root)}>
-							All areas
+							{this.props.header}
 						</div>
 					</DropdownItem>
 					{

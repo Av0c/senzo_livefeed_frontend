@@ -145,46 +145,53 @@ export class FloorPlan extends React.Component {
 					</tr>
 					</tbody></table>
 				</div>
-					{(this.props.root.info.hasfloorplan) ? (
-						<div className="floorplan-container">
-							<img
-								src={this.props.imageURL}
-								alt="Floorplan"
-								className="floorplan-image"
-								ref="floorplan-image"
-								onError={this.imageError.bind(this)}
-								draggable="false"
-								onClick={this.imageClick.bind(this)}
-								key="image"
-							/>
-							{this.state.sensorForm && <SensorForm node={this.props.root} sensorForm={this.state.sensorForm} closeSensorForm={this.closeSensorForm.bind(this)} mousePos={this.state.mousePos} />}
-							{sensors.map((sensor) => {
-								return (
-									<Sensor
-										openSensorForm={this.openSensorForm.bind(this)}
-										sensor={sensor}
-										viewFilter={this.props.viewFilter}
-										selectedSensor={this.props.selectedSensor}
-										key={sensor.id}
-									/>
-								);
-							})}
-							{MRs.map((node) => {
-								return (
-									<MeetingRoom
-										node={node}
-										viewFilter={this.props.viewFilter}
-										selectedMR={this.props.selectedSensor}
-										key={node.id}
-										sensorMap={this.props.sensorMap}
-									/>
-								);
-							})}
-						</div>
+					{(!this.props.root.info.empty) ? (
+						(this.props.root.info.hasfloorplan) ? (
+							<div className="floorplan-container">
+								<img
+									src={this.props.imageURL}
+									alt="Floorplan"
+									className="floorplan-image"
+									ref="floorplan-image"
+									onError={this.imageError.bind(this)}
+									draggable="false"
+									onClick={this.imageClick.bind(this)}
+									key="image"
+								/>
+								{this.state.sensorForm && <SensorForm node={this.props.root} sensorForm={this.state.sensorForm} closeSensorForm={this.closeSensorForm.bind(this)} mousePos={this.state.mousePos} />}
+								{sensors.map((sensor) => {
+									return (
+										<Sensor
+											openSensorForm={this.openSensorForm.bind(this)}
+											sensor={sensor}
+											viewFilter={this.props.viewFilter}
+											selectedSensor={this.props.selectedSensor}
+											key={sensor.id}
+										/>
+									);
+								})}
+								{MRs.map((node) => {
+									return (
+										<MeetingRoom
+											node={node}
+											viewFilter={this.props.viewFilter}
+											selectedMR={this.props.selectedSensor}
+											key={node.id}
+											sensorMap={this.props.sensorMap}
+										/>
+									);
+								})}
+							</div>
+						) : (
+							<div className="floorplan-error">
+								<br/>
+								<h2>Oops ! No floor plan uploaded for this location...</h2>
+							</div>
+						)
 					) : (
 						<div className="floorplan-error">
 							<br/>
-							<h2>Oops ! No floor plan uploaded for this location...</h2>
+							<h2>Loading...</h2>
 						</div>
 					)}
 			</div>

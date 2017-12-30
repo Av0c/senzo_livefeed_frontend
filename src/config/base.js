@@ -70,31 +70,28 @@ export default {
     }
   },
   day: ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"],
-  viewFilter: {
-    ALL: {
-      code: "ALL",
-      text: "Show All"
-    },
-    LIVE: {
-      code: "LIVE",
-      text: "Live View"
-    },
-    MAINTENANCE: {
-      code: "MAINTENANCE",
-      text: "Maintenance View"
-    }
-  },
+  viewFilter: [
+    {code: "ALL", text: "Show All"},
+    {code: "LIVE", text: "Live View"},
+    {code: "MAINTENANCE", text: "Maintenance View"},
+  ],
+  userTypeFilter: [
+    {code:"ALL", text:"All Users"},
+    {code:"CADMIN", text:"Company Admins"},
+    {code:"LADMIN", text:"Local Admins"},
+    {code:"LUSER", text:"Local Users"},
+    {code:"SUSER", text:"Support Users"}
+  ],
+  sensorStatusFilter: [
+    {code:"ALL", text:"All sensors"},
+    {code:"ONLINE", text:"Online sensors"},
+    {code:"OFFLINE", text:"Offline sensors"},
+    {code:"UNREG", text:"Unregistered sensors"},
+  ],
   roles: [
     {code:"!ADMIN", rolecode:"ADMIN", text:"Company administrator", singular: "a company administrator"},
     {code:".ADMIN", rolecode:"ADMIN", text:"Local administrator", singular: "a local administrator"},
     {code:".LOCALUSER", rolecode:"LOCALUSER", text:"Local user", singular: "a local user"},
     {code:".SUPPORTUSER", rolecode:"SUPPORTUSER", text:"Support user", singular: "a support user"}
   ],
-  typeFilter: [
-    {code:"ALL", text:"All Users"},
-    {code:"CADMIN", text:"Company Admins"},
-    {code:"LADMIN", text:"Local Admins"},
-    {code:"LUSER", text:"Local Users"},
-    {code:"SUSER", text:"Support Users"}
-  ]
 }

@@ -46,7 +46,7 @@ export class Toolbar extends React.Component {
           <div className="col-xs-4">
             <div className="user-block">
               <div className="user-icon pull-right"><img src="src/assets/images/user-settings.svg" alt="Settings" /></div>
-              <div className="user-name pull-right"><span>{this.props.user.username}</span></div>
+              <div className="user-name pull-right"><span>{this.props.user.firstname+" "+this.props.user.lastname}</span></div>
               <div className="settings-dropdown-root">
                 <ul>
                   <li><Link to="/settings/ownaccount">Own Account</Link></li>

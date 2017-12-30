@@ -31,9 +31,9 @@ class UserList extends React.Component {
 		return true;
 	}
 
-	correctType(u, typeFilter) {
+	correctType(u, userTypeFilter) {
 		var nodeMap = this.props.nodeMap;
-		switch (typeFilter.code) {
+		switch (userTypeFilter.code) {
 			case "ALL" :
 				return true;
 			case "CADMIN" :
@@ -49,7 +49,7 @@ class UserList extends React.Component {
 
 	renderUser(u, nodeNames) {
 		var ok = this.props.nodeFilter==this.props.tree || this.isDescendant(this.props.nodeFilter, u.rootnodeid);
-		ok = ok && this.correctType(u, this.props.typeFilter);
+		ok = ok && this.correctType(u, this.props.userTypeFilter);
 		if (!ok) {
 			return null;
 		}

@@ -2,9 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from "config"
-import Path from "./path"
-import NodeFilterDropdown from "./nodedropdown"
-import ViewFilterDropdown from "./viewdropdown"
+import Path from "components/common/path"
+
+import NodeDropdown from "components/common/nodedropdown"
+import ListDropdown from "components/common/listdropdown"
+
 import LiveSummary from "./summary"
 import FloorPlan from "./floorplan"
 import LeftMenu from 'components/common/leftmenu';
@@ -63,10 +65,10 @@ class Live extends React.Component {
 	}
 
 	prepare(props) {
-		var status = { found: false };
 		var path = [];
-		var res = { currentNode: null };
-		this.findNode(props.tree, props.params.id, path, status, res);
+		var res = { currentNode: {} };
+		this.findNode(props.nodeMap, props.params.id, path, res);
+		this.setState({currentNode: res.currentNode, path: path});
 
 		var oldnode = this.state.currentNode;
 		var currentNode = res.currentNode;
@@ -83,36 +85,26 @@ class Live extends React.Component {
 				groupMR: false
 			})
 		}
-		if (oldnode.id != currentNode.id) {
+		if (props.imageURL.indexOf(`/floorplans/${currentNode.id}?`)==-1) {
 			// floor changed => fetch new image
 			this.props.dispatch(fetchImage(currentNode.id));
 		}
 	}
 
-	findNode(tree, id, path, status, res) {
-		var self = this;
-		if (tree) {
-			path.push(tree);
-			if (id == tree.id) {
-				this.setState({
-					currentNode: tree,
-					path: path
-				});
-				res.currentNode = tree;
-				status.found = true;
-				return;
-			}
-
-			else if (tree.type != "meeting_room" && tree.type != "open_area" && tree.children) {
-				tree.children.forEach((child) => {
-					if (!status.found) {
-						self.findNode(child, id, path, status, res);
-					}
-				})
-			}
-			if (!status.found) {
-				path.pop();
-			}
+	findNode(nodeMap, id, path, res) {
+		res.currentNode = nodeMap[id]
+		if (!res.currentNode) {
+			res.currentNode = {};
+			return;
+		}
+		var tmp = [], cur = res.currentNode;
+		while (cur) {
+			tmp.push(cur);
+			cur = cur.parent;
+		}
+		while (tmp.length) {
+			path.push(tmp[tmp.length-1]);
+			tmp.pop();
 		}
 	}
 
@@ -120,6 +112,15 @@ class Live extends React.Component {
 		this.setState({
 			groupMR: !this.state.groupMR
 		});
+	}
+
+	listNodeFilter(root, res) {
+		var self = this;
+		if (root) {
+			if(root.type==config.room.MEETINGROOM.code || root.type==config.room.OPENAREA.code) {
+				res.push(root);
+			}
+		}
 	}
 
 	render() {
@@ -148,20 +149,23 @@ class Live extends React.Component {
 											{(this.state.groupMR) ? "Show details" : "Hide details"}
 										</div>
 
-										<NodeFilterDropdown
+										<NodeDropdown
+											outsideClass="live-select pull-left"
 											root={this.state.currentNode}
 											nodeFilter={this.props.nodeFilter}
 											click={
 												(node) => { this.props.dispatch(selectNodeFilter(node)) }
 											}
+											list={this.listNodeFilter}
+											header="All areas"
 										/>
 
-										<ViewFilterDropdown
-											viewFilter={this.props.viewFilter}
-											click={
-												(node) => { console.log(node);
-													this.props.dispatch(selectViewFilter(node)); }
-											}
+										<ListDropdown
+											outsideClass="live-select pull-left"
+											items={config.viewFilter}
+											getText={(x) => x.text}
+											selected={this.props.viewFilter}
+											click={(view) => {this.props.dispatch(selectViewFilter(view))}}
 										/>
 										<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
 									</div>
@@ -196,6 +200,7 @@ class Live extends React.Component {
 function mapStateToProps(state) {
 	return {
 		tree: state.overviewReducer.customerOverview,
+		nodeMap: state.overviewReducer.nodeMap,
 		nodeFilter: state.liveReducer.nodeFilter,
 		viewFilter: state.liveReducer.viewFilter,
 		sensorMap: state.nodeReducer.map,

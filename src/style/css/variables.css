@@ -16,6 +16,8 @@
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
 }
 
 .bar-info {
@@ -24,14 +26,26 @@
 	height: 90px;
 	top: 50%;
 	transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
 }
 
 .bar-number {
 	position: absolute;
-	transition-property: left;
-	transition-duration: 1s;
-	transition-timing-function: ease;
 	text-align: center;
+
+	transition-property: left;
+	-ms-transition-property: left;
+	-webkit-transition-property: left;
+
+	transition-duration: 1s;
+	-ms-transition-duration: 1s;
+	-webkit-transition-duration: 1s;
+
+	transition-timing-function: ease;
+	-ms-transition-timing-function: ease;
+	-webkit-transition-timing-function: ease;
+
 }
 
 .bar-number-no-trans {
@@ -72,13 +86,28 @@
 	left: 0;
 	top: 0;
     stroke-linecap: round;
+
+    -ms-transform-origin: center center;
+    -webkit-transform-origin: center center;
 	transform-origin: center center;
 }
 .arc-svg circle {
 	fill: none;
+
+	-ms-transform-origin: center center;
+	-webkit-transform-origin: center center;
 	transform-origin: center center;
+
+	-ms-transition-property: stroke-dashArray;
+	-webkit-transition-property: stroke-dashArray;
 	transition-property: stroke-dashArray;
+
+	-ms-transition-duration: 1s;
+	-webkit-transition-duration: 1s;
 	transition-duration: 1s;
+
+	-ms-transition-timing-function: ease-in-out;
+	-webkit-transition-timing-function: ease-in-out;
 	transition-timing-function: ease-in-out;
 }
 
@@ -87,11 +116,26 @@
 	left: 0;
 	top: 0;
 }
-.needle-svg g {
+.needle-svg .have-trans {
+    -ms-transition-property: transform;
+    -webkit-transition-property: transform;
 	transition-property: transform;
-	transition-duration: 1s;
-	transition-timing-function: ease-in-out;
+
+    -ms-transition-duration: 1s;
+    -webkit-transition-duration: 1s;
+    transition-duration: 1s;
+
+    -ms-transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
 }
+
+.needle-svg .no-trans {
+    -ms-transition-property: none;
+    -webkit-transition-property: none;
+	transition-property: none;
+}
+
 
 .info-container {
 	position: absolute;
@@ -100,7 +144,7 @@
 }
 .info p {
 	font-size: 1.3em;
-	font-family: "Roboto";
+	font-family: "Roboto", sans-serif;
 	color: #424242;
 	display: inline-block;
 	text-align: center;
@@ -120,6 +164,8 @@
 	width: 100%;
 	text-align: center;
 	margin: 0;
+    -ms-transform: translateY(180px);
+    -webkit-transform: translateY(180px);
 	transform: translateY(180px);
 }
 
@@ -138,7 +184,11 @@
 	top: 0px;
 	left: 0;
 	right: 0;
-	transform-origin: 50% 102.5%;
+
+    transform-origin: 50% 102.5%;
+	-ms-transform-origin: 50% 102.5%;
+	-webkit-transform-origin: 50% 102.5%;
+
 	user-select: none;
 }
 .markers-container .ticks {
@@ -196,21 +246,6 @@ li {
   padding: 6px 8px 6px 18px;
   display: inline-block;
 }
-
-.faulty {
-	position: relative;
-	left: 50px;
-	top: 10px;
-	z-index: 1000;
-	width: 20px;
-	line-height: 20px;
-	border-radius: 50%;
-	text-align: center;
-	color: white;
-	font-size: 14px;
-	background-color: #ef5350;
-}
-
 .card-bottom-menu-icon {
 	margin-top: 22px;
 }

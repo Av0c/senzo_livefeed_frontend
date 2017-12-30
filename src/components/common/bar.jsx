@@ -28,6 +28,7 @@ export default class Bar extends React.Component {
             containerCss: {},
         };
         this.updateWidth = this.updateWidth.bind(this);
+        this.removeTrans = this.removeTrans.bind(this)
     }
 
     componentDidMount() {
@@ -41,7 +42,7 @@ export default class Bar extends React.Component {
         this.setState({ containerCss: css });
 
         window.addEventListener("resize", this.updateWidth);
-        window.addEventListener("resize", () => this.removeTrans());
+        window.addEventListener("resize", this.removeTrans);
 
         // Verify values
         
@@ -56,7 +57,7 @@ export default class Bar extends React.Component {
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", () => this.removeTrans());
+        window.removeEventListener("resize", this.removeTrans);
         window.removeEventListener("resize", this.updateWidth);
     }
 

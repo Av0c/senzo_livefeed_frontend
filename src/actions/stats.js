@@ -91,12 +91,18 @@ export function getParams(nextProps) {
         id: nextProps.currentNode.id,
         from: nextProps.querySettings.startdate,
         to: nextProps.querySettings.enddate,
-        starthour: nextProps.currentNode.info.WH_from,
-        endhour: nextProps.currentNode.info.WH_to,
+        starthour: nextProps.querySettings.starthour,
+        endhour: nextProps.querySettings.endhour-1,
         startweekday: nextProps.querySettings.startweekday,
         endweekday: nextProps.querySettings.endweekday,
         marks: nextProps.querySettings.marks,
         groupby: nextProps.querySettings.groupby
+    }
+    if (!(0 <= params.starthour && params.starthour <= 23)) {
+        params.starthour = nextProps.currentNode.info.WH_from
+    }
+    if (!(0 <= params.endhour && params.endhour <= 23)) {
+        params.endhour = nextProps.currentNode.info.WH_to-1
     }
     if (nextProps.querySettings.tag == 'Occupancy') {
         params.tag = nextProps.querySettings.room.occupancyTag;
@@ -130,6 +136,7 @@ export function findEfficiencyTag(node) {
 export function getOccupancyOverview(params, node) {
     return dispatch => {
         dispatch(fetchOccupancyOverview());
+        console.log(config.api.root + `/stats/overview/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}`)
         axios.get(config.api.root + `/stats/overview/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}`)
             .then((response) => {
                 if (params.action == Comparison.RECEIVE_FIRST_LOCATION_OVERVIEW) {
@@ -151,6 +158,7 @@ export function getOccupancyOverview(params, node) {
 export function getNodeSeriesStats(params) {
     return dispatch => {
         dispatch(fetchNodeStats());
+        console.log(config.api.root + `/stats/series/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}&groupby=${params.groupby}`)
         axios.get(config.api.root + `/stats/series/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&startweekday=${params.startweekday}&endweekday=${params.endweekday}&marks=${JSON.stringify(params.marks)}&groupby=${params.groupby}`)
             .then((response) => {
                 if (params.action == Comparison.RECEIVE_FIRST_LOCATION_TOTAL) {

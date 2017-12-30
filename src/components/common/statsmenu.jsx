@@ -48,7 +48,7 @@ export class StatsMenu extends React.Component {
                             <div className="stats-occupancy-select stats-select pull-left" style={{ paddingTop: '0px' }}>
                                 <TagSelector roomType={this.props.node.type} chooseTag={this.chooseTag.bind(this)} tag={this.props.tag} />
                             </div>
-                            <Link className="stats-live-btn button-sm pull-left" to={`live/${this.props.id}`} >LIVE</Link>
+                            <Link className="stats-live-btn button-sm pull-left" to={this.props.node.info.hasfloorplan ? `live/${this.props.id}` : null} >LIVE</Link>
                             <a className="stats-export pull-left" href="#"><img src="src/assets/images/export.svg" /></a>
                         </div>
                     </div>

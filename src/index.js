@@ -47,8 +47,8 @@ import Help from 'components/pages/help';
 import LiveFeedAPI from 'components/pages/livefeedapi';
 import DefaultSettings from 'components/pages/defaultsettings';
 import SensorSettings from 'components/pages/sensorsettings';
-
-
+import { initializeIcons } from '@uifabric/icons';
+initializeIcons();
 ReactDOM.render((
   <Provider store={Store}>
     <Router history={appHistory} onUpdate={() => window.scrollTo(0, 0)}>

@@ -176,11 +176,14 @@ header {
   font-size: 18px;
   width: 170px;
   height: 30px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
   padding-left: 6px;
   background: url("../../assets/images/calendar.svg") no-repeat;
   background-position: 140px 6px;
+}
+
+.fieldGroup_95da125e {
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
 .start-date-datepicker,

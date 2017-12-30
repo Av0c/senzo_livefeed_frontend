@@ -16,6 +16,7 @@ export class Settings extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.openAddLocationForm = this.openAddLocationForm.bind(this);
+        this.confirmDeleteLocation = this.confirmDeleteLocation.bind(this);
         this.state = {
             currentNode: {},
             isAddingLocation: false,
@@ -23,7 +24,8 @@ export class Settings extends React.Component {
             isAddingFloorplan: false,
             isEditingLocation: false,
             isDeletingLocation: false,
-            isConfirmingDeleteLocation: false
+            isConfirmingDeleteLocation: false,
+            type: 'only'
         };
     }
 
@@ -147,19 +149,49 @@ export class Settings extends React.Component {
             });
         }
     }
-    deleteLocation(node) {
+
+    deleteLocation(node, type) {
+        if (type == 'all') {
+            this.setState({ type: 'all' });
+        }
+        else {
+            this.setState({ type: 'only' });
+        }
         this.closeDeleteLocationForm();
         this.openConfirmDeleteLocationForm();
     }
 
     confirmDeleteLocation(node) {
-        this.props.dispatch(deleteNode(node)).then(() => {
-            this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
-            toastr.error(`${node.info.name} has been deleted`);
-        })
-            .catch(error => {
-                toastr.error(error);
-            });
+        if (this.state.type == 'all') {
+            this.props.dispatch(deleteNode(node)).then(() => {
+                this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
+                toastr.error(`${node.info.name} has been deleted`);
+            })
+                .catch(error => {
+                    toastr.error(error);
+                });
+        }
+        else {
+            let parent = { id: -1 };
+            let length = node.children.length;
+            this.findParent(this.props.tree, node, parent);
+            for (let i = 0; i < length; i++) {
+                this.props.dispatch(setParent(node.children[i].id, parent.id)).then(() => {
+                    if (i == (length - 1)) {
+                        this.props.dispatch(deleteNode(node)).then(() => {
+                            this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
+                            toastr.error(`${node.info.name} has been deleted`);
+                        })
+                            .catch(error => {
+                                toastr.error(error);
+                            });
+                    }
+                })
+                    .catch(error => {
+                        toastr.error(error);
+                    });
+            }
+        }
     }
 
     updateLocation(node, state, locations) {
@@ -243,7 +275,7 @@ export class Settings extends React.Component {
                                     {this.state.isAddingFloorplan && <AddFloorplanForm submit={this.uploadImage.bind(this)} node={this.state.currentNode} isAddingFloorplan={this.state.isAddingFloorplan} closeAddFloorplanForm={this.closeAddFloorplanForm.bind(this)} />}
                                     {this.state.isEditingLocation && <EditLocationForm submit={this.updateLocation.bind(this)} node={this.state.currentNode} isEditingLocation={this.state.isEditingLocation} closeEditLocationForm={this.closeEditLocationForm.bind(this)} />}
                                     {this.state.isDeletingLocation && <DeleteLocationForm submit={this.deleteLocation.bind(this)} node={this.state.currentNode} isDeletingLocation={this.state.isDeletingLocation} closeDeleteLocationForm={this.closeDeleteLocationForm.bind(this)} />}
-                                    {this.state.isConfirmingDeleteLocation && <ConfirmDeleteLocationForm submit={this.confirmDeleteLocation.bind(this)} node={this.state.currentNode} isConfirmingDeleteLocation={this.state.isConfirmingDeleteLocation} closeConfirmDeleteLocationForm={this.closeConfirmDeleteLocationForm.bind(this)} />}
+                                    {this.state.isConfirmingDeleteLocation && <ConfirmDeleteLocationForm submit={this.confirmDeleteLocation.bind(this)} type={this.state.type=='all'} node={this.state.currentNode} isConfirmingDeleteLocation={this.state.isConfirmingDeleteLocation} closeConfirmDeleteLocationForm={this.closeConfirmDeleteLocationForm.bind(this)} />}
                                 </div>
                             </div>
                         </div>

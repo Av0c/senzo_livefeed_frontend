@@ -35,11 +35,11 @@ class EditWidget extends React.Component {
     }
 
     submit() {
-        if(this.props.nodeId== this.state.location) {
+        if (this.props.nodeId == this.state.location) {
             toastr.error("Please, choose a different location");
         }
         else {
-            console.log(this.props.nodeId+"    "+this.state.location);
+            console.log(this.props.nodeId + "    " + this.state.location);
             this.props.editWidget(this.props.nodeId, this.state.location);
             this.props.closeEditWidgetForm();
         }
@@ -148,7 +148,8 @@ export default class LocationBottomMenu extends React.Component {
                     </div>
                     <div className="col-xs-4 text-center card-bottom-menu-icon"><a className="card-export" href="#"><img src="src/assets/images/export.svg" /></a></div>
                     <div className="col-xs-4 text-center">
-                        <Link to={`/live/${this.props.node.id}`} className="card-settings" onClick={this.props.redirectMaintenanceView} >
+                        <Link to={this.props.node.info.hasfloorplan ? `/live/${this.props.node.id}` : null} className="card-settings"
+                            onClick={() => { this.props.redirectMaintenanceView(this.props.node); }} >
                             <div className="faulty">{this.props.faulty}</div>
                             <img src="src/assets/images/maintenance.svg" />
                         </Link>

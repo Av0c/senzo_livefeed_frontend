@@ -57,7 +57,7 @@ export class ComparisonCard extends React.Component {
                                 </div>
                                 <div className="toggle-wrapper text-center"> <a className="toggle-button">
                                     <img src="src/assets/images/toggle1.svg" />
-                                    </a></div>
+                                </a></div>
                                 <div className="comparison-second-location text-center">
                                     <LocationSelector chooseLocation={this.chooseSecondLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
                                 </div>

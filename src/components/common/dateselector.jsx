@@ -1,9 +1,11 @@
 import React from 'react';
 import moment from 'moment';
-import DatePicker from 'react-datepicker'
+import { DatePicker, DayOfWeek } from 'office-ui-fabric-react';
+import { initializeIcons } from '@uifabric/icons';
 import { connect } from 'react-redux';
 import { selectPeriod } from 'actions/querysettings';
 import PeriodButton from 'components/common/periodbutton';
+import Strings from 'components/common/strings';
 
 class DateSelector extends React.Component {
 
@@ -68,7 +70,6 @@ class DateSelector extends React.Component {
   }
 
   dispatchPeriod() {
-    console.log(this.state);
     this.props.dispatch(selectPeriod({
       from: this.state.from,
       to: this.state.to,
@@ -100,9 +101,35 @@ class DateSelector extends React.Component {
     }
   }
 
+  onFormatDate(date) {
+    let d = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() % 100;
+    return d;
+  }
+
+  onParseDateFromString(value) {
+    let date = this.state.value || new Date();
+    let values = (value || '').trim().split('/');
+    let day =
+      values.length > 0
+        ? Math.max(1, Math.min(31, parseInt(values[0], 10)))
+        : date.getDate();
+    let month =
+      values.length > 1
+        ? Math.max(1, Math.min(12, parseInt(values[1], 10))) - 1
+        : date.getMonth();
+    let year = values.length > 2 ? parseInt(values[2], 10) : date.getFullYear();
+    if (year < 100) {
+      year += date.getFullYear() - date.getFullYear() % 100;
+    }
+    return new Date(year, month, day);
+  }
+
   render() {
+    let from = this.onParseDateFromString(this.state.from);
+    let to = this.onParseDateFromString(this.state.to);
     return (
       <div className="main-menu-time pull-right">
+        <i className='ms-DatePicker-nextMonth'></i>
         <ul>
           <PeriodButton handleClick={this.handleClick} active={this.state.active} value="Today" />
           <PeriodButton handleClick={this.handleClick} active={this.state.active} value="This week" />
@@ -113,19 +140,25 @@ class DateSelector extends React.Component {
               <span>Custom</span></a>
           </li>
           {this.state.show || <div style={{ width: '410px', marginRight: '50px', zIndex: 10006 }} className="datepicker">
-            <div className="start-date-datepicker pull-left">
+            <div className="pull-left">
               <DatePicker className="start-date pull-left"
-                dateFormat="DD-MM-YYYY"
-                selected={moment(this.state.from, 'DD-MM-YYYY')}
-                onChange={this.setStartDate.bind(this)}
+                formatDate={this.onFormatDate}
+                onSelectDate={this.setStartDate.bind(this)}
+                value={from}
+                firstDayOfWeek={DayOfWeek.Monday}
+                strings={Strings}
+                parseDateFromString={this.onParseDateFromString}
               />
             </div>
             <div className="date-divider pull-left">-</div>
-            <div className="end-date-datepicker pull-right" style={{ marginRight: '26px' }}>
+            <div className="pull-right" style={{ marginRight: '26px' }}>
               <DatePicker className="end-date pull-right"
-                dateFormat="DD-MM-YYYY"
-                selected={moment(this.state.to, 'DD-MM-YYYY')}
-                onChange={this.setEndDate.bind(this)}
+                formatDate={this.onFormatDate}
+                onSelectDate={this.setEndDate.bind(this)}
+                value={to}
+                firstDayOfWeek={DayOfWeek.Monday}
+                strings={Strings}
+                parseDateFromString={this.onParseDateFromString}
               />
             </div>
           </div>}
@@ -144,7 +177,7 @@ class DateSelector extends React.Component {
 
   setEndDate(datestring) {
     let self = this;
-    this.setState({ to: moment(datestring).format('DD-MM-YYYY'), groupby: 'day' }, () =>{
+    this.setState({ to: moment(datestring).format('DD-MM-YYYY'), groupby: 'day' }, () => {
       console.log(self.state);
       self.dispatchPeriod();
     }

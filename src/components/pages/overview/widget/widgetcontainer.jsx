@@ -98,8 +98,10 @@ export class WidgetContainer extends React.Component {
     }
   }
 
-  redirectMaintenanceView() {
-    this.props.dispatch(selectViewFilter(config.viewFilter.MAINTENANCE));
+  redirectMaintenanceView(node) {
+    if (node.info.hasfloorplan) {
+      this.props.dispatch(selectViewFilter(config.viewFilter.MAINTENANCE));
+    }
   }
 
   render() {

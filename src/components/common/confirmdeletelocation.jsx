@@ -11,7 +11,7 @@ export default class ConfirmDeleteLocationForm extends React.Component {
                         <h4 className="modal-title">Confirm Delete Location</h4>
                     </div>
                     <div className="modal-body delete-user-wrapper">
-                        <p>Choosen location and all related data will be deleted !</p>
+                        <p>Choosen location {this.props.type ? 'and all related data ': ''}will be deleted !</p>
                     </div>
                     <div className="modal-footer">
                         <button className="btn btn-default" onClick={this.props.closeConfirmDeleteLocationForm} type="button" data-dismiss="modal">Cancel</button>

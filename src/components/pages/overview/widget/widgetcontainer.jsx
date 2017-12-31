@@ -100,7 +100,7 @@ export class WidgetContainer extends React.Component {
 
   redirectMaintenanceView(node) {
     if (node.info.hasfloorplan) {
-      this.props.dispatch(selectViewFilter(config.viewFilter.MAINTENANCE));
+      this.props.dispatch(selectViewFilter(config.viewFilter[2]));
     }
   }
 

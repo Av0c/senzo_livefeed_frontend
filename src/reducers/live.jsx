@@ -14,7 +14,7 @@ const initialState = {
 		children: [],
 		type: null
 	},
-	viewFilter: config.viewFilter[0],
+	viewFilter: config.viewFilter[0]
 };
 
 export default (state = initialState, action) => {

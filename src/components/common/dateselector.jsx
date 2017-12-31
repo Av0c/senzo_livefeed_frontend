@@ -148,39 +148,41 @@ class DateSelector extends React.Component {
             <a className={"button custom-time" + (this.state.active == "Custom" ? " active" : "")}>
               <span>Custom</span></a>
           </li>
-          {this.state.show || <div style={{ width: '410px', marginRight: '50px', zIndex: 10006 }} className="datepicker">
-            <div className="pull-left">
-              <DatePicker className="start-date pull-left"
-                formatDate={(date) => {
-                  let d = this.onFormatDate(date);
-                  if (d != this.state.from) {
-                    this.setStartDate(d);
-                  }
-                  return d;
-                }}
-                onSelectDate={this.setStartDate.bind(this)}
-                value={from}
-                firstDayOfWeek={DayOfWeek.Monday}
-                strings={Strings}
-                parseDateFromString={this.onParseDateFromString}
-              />
-            </div>
-            <div className="date-divider pull-left">-</div>
-            <div className="pull-right" style={{ marginRight: '26px' }}>
-              <DatePicker className="end-date pull-right"
-                formatDate={(date) => {
-                  let d = this.onFormatDate(date);
-                  if (d != this.state.to) {
-                    this.setEndDate(d);
-                  }
-                  return d;
-                }}
-                onSelectDate={this.setEndDate.bind(this)}
-                value={to}
-                firstDayOfWeek={DayOfWeek.Monday}
-                strings={Strings}
-                parseDateFromString={this.onParseDateFromString}
-              />
+          {this.state.show || <div className="datepicker">
+            <div className="clearfix">
+              <div className="pull-left">
+                <DatePicker className="start-date"
+                  formatDate={(date) => {
+                    let d = this.onFormatDate(date);
+                    if (d != this.state.from) {
+                      this.setStartDate(d);
+                    }
+                    return d;
+                  }}
+                  onSelectDate={this.setStartDate.bind(this)}
+                  value={from}
+                  firstDayOfWeek={DayOfWeek.Monday}
+                  strings={Strings}
+                  parseDateFromString={this.onParseDateFromString}
+                />
+              </div>
+              <div className="date-divider pull-left">-</div>
+              <div className="pull-right">
+                <DatePicker className="end-date"
+                  formatDate={(date) => {
+                    let d = this.onFormatDate(date);
+                    if (d != this.state.to) {
+                      this.setEndDate(d);
+                    }
+                    return d;
+                  }}
+                  onSelectDate={this.setEndDate.bind(this)}
+                  value={to}
+                  firstDayOfWeek={DayOfWeek.Monday}
+                  strings={Strings}
+                  parseDateFromString={this.onParseDateFromString}
+                />
+              </div>
             </div>
             <TimePicker
               nSegments={24}

@@ -26,11 +26,11 @@ export class Toolbar extends React.Component {
 
   render() {
     return (
-      <div style={{ width: '100%', backgroundColor: 'white', paddingBottom: '15px' }} className="container-fluid">
+      <div style={{ width: '100%', backgroundColor: 'white', paddingBottom: '15px', boxShadow: "0px 2px 3px 0px rgba(210,210,210,0.5)", marginBottom: "2px"}} className="container-fluid">
         <div className="row">
           <div className="col-xs-4" style={{ zIndex: '1007' }}>
-            <div onMouseOver={this.showChildren.bind(this)} className="location-block clearfix">
-              <div className="location-icon pull-left"><img src="src/assets/images/location-icon.svg" alt="Location" /></div>
+            <div className="location-block clearfix">
+              <div className="location-icon pull-left" onMouseOver={this.showChildren.bind(this)}><img src="src/assets/images/location-icon.svg" alt="Location" /></div>
               <div className="location-name pull-left"><span>{this.props.companyName}</span></div>
               {this.state.show && <div>
                 <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.state.show ? "" : " closed")} onClick={this.closeChildren.bind(this)}></div>

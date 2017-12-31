@@ -290,10 +290,6 @@ li {
 	border-top: 1px dashed #585858;
 }
 
-.location-name {
-	min-width: 300px;
-}
-
 .location-name img {
 	float: right;
 }

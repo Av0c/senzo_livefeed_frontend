@@ -162,7 +162,7 @@ export class Settings extends React.Component {
     }
 
     confirmDeleteLocation(node) {
-        if (this.state.type == 'all') {
+        if (this.state.type == 'all' || node.children.length == 0) {
             this.props.dispatch(deleteNode(node)).then(() => {
                 this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
                 toastr.error(`${node.info.name} has been deleted`);
@@ -275,7 +275,7 @@ export class Settings extends React.Component {
                                     {this.state.isAddingFloorplan && <AddFloorplanForm submit={this.uploadImage.bind(this)} node={this.state.currentNode} isAddingFloorplan={this.state.isAddingFloorplan} closeAddFloorplanForm={this.closeAddFloorplanForm.bind(this)} />}
                                     {this.state.isEditingLocation && <EditLocationForm submit={this.updateLocation.bind(this)} node={this.state.currentNode} isEditingLocation={this.state.isEditingLocation} closeEditLocationForm={this.closeEditLocationForm.bind(this)} />}
                                     {this.state.isDeletingLocation && <DeleteLocationForm submit={this.deleteLocation.bind(this)} node={this.state.currentNode} isDeletingLocation={this.state.isDeletingLocation} closeDeleteLocationForm={this.closeDeleteLocationForm.bind(this)} />}
-                                    {this.state.isConfirmingDeleteLocation && <ConfirmDeleteLocationForm submit={this.confirmDeleteLocation.bind(this)} type={this.state.type=='all'} node={this.state.currentNode} isConfirmingDeleteLocation={this.state.isConfirmingDeleteLocation} closeConfirmDeleteLocationForm={this.closeConfirmDeleteLocationForm.bind(this)} />}
+                                    {this.state.isConfirmingDeleteLocation && <ConfirmDeleteLocationForm submit={this.confirmDeleteLocation.bind(this)} type={this.state.type == 'all'} node={this.state.currentNode} isConfirmingDeleteLocation={this.state.isConfirmingDeleteLocation} closeConfirmDeleteLocationForm={this.closeConfirmDeleteLocationForm.bind(this)} />}
                                 </div>
                             </div>
                         </div>

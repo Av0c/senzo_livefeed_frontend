@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import toastr from 'toastr';
 import DeleteLocationForm from 'components/common/deletelocationform';
+import DeleteWidget from 'components/common/deletewidget';
 
 class EditWidget extends React.Component {
 
@@ -39,7 +40,6 @@ class EditWidget extends React.Component {
             toastr.error("Please, choose a different location");
         }
         else {
-            console.log(this.props.nodeId + "    " + this.state.location);
             this.props.editWidget(this.props.nodeId, this.state.location);
             this.props.closeEditWidgetForm();
         }
@@ -139,8 +139,8 @@ export default class LocationBottomMenu extends React.Component {
                             </div>
                         </div>)
                         }
-                        {this.state.isDeletingLocation && <DeleteLocationForm isDeletingLocation={this.state.isDeletingLocation}
-                            node={this.props.node} closeDeleteLocationForm={this.closeDeleteLocationForm.bind(this)}
+                        {this.state.isDeletingLocation && <DeleteWidget isDeletingWidget={this.state.isDeletingLocation}
+                            node={this.props.node} closeDeleteWidgetForm={this.closeDeleteLocationForm.bind(this)}
                             submit={this.deleteWidget.bind(this)} />}
                         {this.state.isEditingWidget && <EditWidget isEditingWidget={this.state.isEditingWidget}
                             closeEditWidgetForm={this.closeEditWidgetForm.bind(this)}

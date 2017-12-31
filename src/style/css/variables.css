@@ -399,3 +399,17 @@ li {
   .edit-widget-dropdown a {
 	  color: black;
   }
+
+  .faulty {
+	position: relative;
+	left: 50px;
+	top: 10px;
+	z-index: 1000;
+	width: 20px;
+	line-height: 20px;
+	border-radius: 50%;
+	text-align: center;
+	color: white;
+	font-size: 14px;
+	background-color: #ef5350;
+}

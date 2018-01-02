@@ -12,6 +12,7 @@ import Path from "components/common/path"
 import SensorList from "./sensorlist"
 import EditModal from "./editModal"
 import DeleteModal from "./deleteModal"
+import LeftMenu from 'components/common/leftmenu';
 
 class SensorSettings extends React.Component {
 	constructor(props, context) {
@@ -29,21 +30,21 @@ class SensorSettings extends React.Component {
 	}
 
 	DOpen() {
-		this.setState({DOpen: true});
+		this.setState({ DOpen: true });
 	}
 
 	DClose() {
 		this.props.dispatch(a.selectSensorButton({}));
-		this.setState({DOpen: false});
+		this.setState({ DOpen: false });
 	}
 
 	EOpen() {
-		this.setState({EOpen: true});
+		this.setState({ EOpen: true });
 	}
 
 	EClose() {
 		this.props.dispatch(a.selectSensorButton({}));
-		this.setState({EOpen: false});
+		this.setState({ EOpen: false });
 	}
 
 	fetchData() {
@@ -54,7 +55,7 @@ class SensorSettings extends React.Component {
 	componentDidMount() {
 		this.fetchData();
 		var self = this;
-		var I = setInterval(function() {self.fetchData()}, 5000);
+		var I = setInterval(function () { self.fetchData() }, 5000);
 		this.setState({ I: I });
 	}
 
@@ -64,7 +65,7 @@ class SensorSettings extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		// Init nodeFilter
-		if (this.props.nodeFilter.id==-2 && nextProps.tree.id!=-2) {
+		if (this.props.nodeFilter.id == -2 && nextProps.tree.id != -2) {
 			this.props.dispatch(a.selectNodeFilter(nextProps.tree));
 		}
 		// Editing stages
@@ -85,7 +86,7 @@ class SensorSettings extends React.Component {
 				});
 				if (!nextProps.fetched) {
 					this.fetchData();
-				} 
+				}
 				break;
 			case "edit-failed":
 				this.setState({
@@ -101,12 +102,12 @@ class SensorSettings extends React.Component {
 		}
 		// Deleting stages
 		switch (nextProps.Dstage) {
-			case "deleting" :
+			case "deleting":
 				if (nextProps.fetched) {
 					this.props.dispatch(a.needData());
 				}
 				break;
-			case "deleted" :
+			case "deleted":
 				if (!nextProps.fetched) {
 					this.fetchData();
 				}
@@ -124,7 +125,7 @@ class SensorSettings extends React.Component {
 		}
 		// reverse tmp to get the path.
 		while (tmp.length) {
-			path.push(tmp[tmp.length-1]);
+			path.push(tmp[tmp.length - 1]);
 			tmp.pop();
 		}
 		return path
@@ -133,7 +134,7 @@ class SensorSettings extends React.Component {
 	listNodeFilter(root, res) {
 		var self = this;
 		if (root) {
-			if(root.type!="sensor") {
+			if (root.type != "sensor") {
 				res.push(root);
 				root.children.forEach((child) => {
 					self.listNodeFilter(child, res);
@@ -151,6 +152,11 @@ class SensorSettings extends React.Component {
 			<div>
 				<div className="settings-wrapper">
 					<div className="container-fluid">
+						<div style={{ marginBottom: '20px' }} className="row">
+							<div className="col-md-12">
+								<LeftMenu overview='' comparison='' />
+							</div>
+						</div>
 						<div className="row">
 							<div className="col-md-12">
 								<div className="settings-header clearfix">
@@ -160,7 +166,7 @@ class SensorSettings extends React.Component {
 										root={this.props.tree}
 										nodeFilter={this.props.nodeFilter}
 										click={
-											(node) => {this.props.dispatch(a.selectNodeFilter(node))} /* this.props.dispatch(useradSelectNode(node)) }*/
+											(node) => { this.props.dispatch(a.selectNodeFilter(node)) } /* this.props.dispatch(useradSelectNode(node)) }*/
 										}
 										list={this.listNodeFilter.bind(this)}
 										header="All locations"
@@ -170,14 +176,14 @@ class SensorSettings extends React.Component {
 										items={config.sensorStatusFilter}
 										getText={(x) => x.text}
 										selected={this.props.sensorStatusFilter}
-										click={(status) => {this.props.dispatch(a.selectSensorStatusFilter(status))}}
+										click={(status) => { this.props.dispatch(a.selectSensorStatusFilter(status)) }}
 									/>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<Path path={this.getPath()}/>
+				<Path path={this.getPath()} />
 				<SensorList
 					root={this.props.nodeFilter}
 					statusFilter={this.props.sensorStatusFilter}

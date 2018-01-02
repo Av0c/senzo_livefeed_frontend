@@ -10,6 +10,7 @@ import EditModal from "./editModal"
 
 import NodeDropdown from "components/common/nodedropdown"
 import ListDropdown from "components/common/listdropdown"
+import LeftMenu from 'components/common/leftmenu';
 
 import {
 	listContact,
@@ -54,30 +55,30 @@ class User extends React.Component {
 
 	AAOpen() {
 		this.props.dispatch(resetInviteStatus());
-		this.setState({AAOpen: true});
+		this.setState({ AAOpen: true });
 	}
 
 	AAClose() {
 		this.props.dispatch(resetInviteStatus());
-		this.setState({AAOpen: false});
+		this.setState({ AAOpen: false });
 	}
 
 	DAOpen() {
-		this.setState({DAOpen: true});
+		this.setState({ DAOpen: true });
 	}
 
 	DAClose() {
 		this.props.dispatch(selectUser({}));
-		this.setState({DAOpen: false});
+		this.setState({ DAOpen: false });
 	}
 
 	EAOpen() {
-		this.setState({EAOpen: true});
+		this.setState({ EAOpen: true });
 	}
 
 	EAClose() {
 		this.props.dispatch(selectUser({}));
-		this.setState({EAOpen: false});
+		this.setState({ EAOpen: false });
 	}
 
 	clickDeleteButton() {
@@ -86,7 +87,7 @@ class User extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		// Init nodeFilter
-		if (this.props.nodeFilter.id==-2 && nextProps.tree.id!=-2) {
+		if (this.props.nodeFilter.id == -2 && nextProps.tree.id != -2) {
 			this.props.dispatch(useradSelectNode(nextProps.tree));
 		}
 		// Inviting stages
@@ -103,7 +104,7 @@ class User extends React.Component {
 			case "invited":
 				if (!nextProps.contactFetched) {
 					nextProps.dispatch(listContact());
-				} 
+				}
 				this.setState({
 					AArespond: "Invitation email sent.",
 					AArespondClass: "text-green",
@@ -140,7 +141,7 @@ class User extends React.Component {
 				});
 				if (!nextProps.contactFetched) {
 					nextProps.dispatch(listContact());
-				} 
+				}
 				break;
 			case "edit-failed":
 				this.setState({
@@ -156,12 +157,12 @@ class User extends React.Component {
 		}
 		// Deleting stages
 		switch (nextProps.DAstage) {
-			case "deleting" :
+			case "deleting":
 				if (nextProps.contactFetched) {
 					nextProps.dispatch(needContact());
 				}
 				break;
-			case "deleted" :
+			case "deleted":
 				if (!nextProps.contactFetched) {
 					nextProps.dispatch(listContact());
 				}
@@ -173,13 +174,13 @@ class User extends React.Component {
 
 	listNodes(root, depth, res) {
 		var self = this;
-		if (root && root.type!="sensor") {
+		if (root && root.type != "sensor") {
 			res.push({
 				node: root,
 				padding: "\u00a0\u00a0".repeat(depth)
 			});
 			root.children.forEach((child) => {
-				self.listNodes(child, depth+1, res);
+				self.listNodes(child, depth + 1, res);
 			})
 		}
 	}
@@ -187,7 +188,7 @@ class User extends React.Component {
 	listNodeFilter(root, res) {
 		var self = this;
 		if (root) {
-			if (root.type!="sensor") {
+			if (root.type != "sensor") {
 				res.push(root);
 				root.children.forEach((child) => {
 					self.listNodeFilter(child, res);
@@ -203,38 +204,43 @@ class User extends React.Component {
 			<div className="white-padded">
 				<div className="settings-wrapper">
 					<div className="container-fluid">
+						<div style={{ marginBottom: '20px' }} className="row">
+							<div className="col-md-12">
+								<LeftMenu overview='' comparison='' />
+							</div>
+						</div>
 						<div className="row">
 							<div className="col-md-12">
 								<div className="clearfix user-table">
-									<h2 className="pull-left">{(this.props.me.role=="ADMIN") ? "User Administration" : "Contact"}</h2>
+									<h2 className="pull-left">{(this.props.me.role == "ADMIN") ? "User Administration" : "Contact"}</h2>
 									{
-										(this.props.me.role=="ADMIN") ? ([
-												<div key="0" className="button" style={{marginLeft: "14px"}} onClick={this.AAOpen.bind(this)}>
-													Add Account
+										(this.props.me.role == "ADMIN") ? ([
+											<div key="0" className="button" style={{ marginLeft: "14px" }} onClick={this.AAOpen.bind(this)}>
+												Add Account
 												</div>,
-												<NodeDropdown
-													key="1"
-													outsideClass="dropdown-btn settings-dropdown pull-left"
-													root={this.props.tree}
-													nodeFilter={this.props.nodeFilter}
-													click={
-														(node) => { this.props.dispatch(useradSelectNode(node)) }
-													}
-													list={this.listNodeFilter.bind(this)}
-													header="All locations"
-												/>,
-												<ListDropdown
-													key="2"
-													outsideClass="dropdown-btn settings-dropdown pull-left"
-													items={config.userTypeFilter}
-													getText={(x) => x.text}
-													selected={this.props.userTypeFilter}
-													click={(code) => {this.props.dispatch(useradSelectType(code))}}
-												/>,
-											]
+											<NodeDropdown
+												key="1"
+												outsideClass="dropdown-btn settings-dropdown pull-left"
+												root={this.props.tree}
+												nodeFilter={this.props.nodeFilter}
+												click={
+													(node) => { this.props.dispatch(useradSelectNode(node)) }
+												}
+												list={this.listNodeFilter.bind(this)}
+												header="All locations"
+											/>,
+											<ListDropdown
+												key="2"
+												outsideClass="dropdown-btn settings-dropdown pull-left"
+												items={config.userTypeFilter}
+												getText={(x) => x.text}
+												selected={this.props.userTypeFilter}
+												click={(code) => { this.props.dispatch(useradSelectType(code)) }}
+											/>,
+										]
 										) : (
-											<div/>
-										)
+												<div />
+											)
 									}
 								</div>
 								<UserList
@@ -301,7 +307,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return  {
+	return {
 		dispatch
 	};
 }

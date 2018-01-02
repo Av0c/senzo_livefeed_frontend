@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import toastr from 'toastr';
 import { updateUser } from 'actions/myaccount';
 import { fetchCurrentUser } from 'actions/myaccount';
+import LeftMenu from 'components/common/leftmenu';
 
 class Index extends React.Component {
   constructor() {
@@ -48,6 +49,11 @@ class Index extends React.Component {
     return (
       <div className="settings-wrapper">
         <div className="container-fluid">
+          <div style={{marginBottom: '20px'}} className="row">
+            <div className="col-md-12">
+              <LeftMenu overview='' comparison='' />
+            </div>
+          </div>
           <div className="row">
             <div className="col-md-12">
               <h2 className="account-title">Own Account</h2>

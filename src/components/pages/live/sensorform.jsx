@@ -76,11 +76,11 @@ export class SensorForm extends React.Component {
     let locations = this.createLocationOptions(options);
     return (
       <div>
-        <div className="point unregistered" style={this.props.mousePos} >
+        <div className="point unregistered" style={{ top: this.props.mousePos.top + '%', left: this.props.mousePos.left + '%' }} >
         </div>
         <div>
           <div className={"modal-sensorform" + (this.props.sensorForm ? "" : " closed")} onClick={this.props.closeSensorForm}></div>
-          <div style={{zIndex: 1}} className={"add-account-wrapper invite-modal" + (this.props.sensorForm ? "" : " closed")}>
+          <div style={{ zIndex: 10000 }} className={"add-account-wrapper invite-modal" + (this.props.sensorForm ? "" : " closed")}>
             <div className="modal-header">
               <button onClick={this.props.closeSensorForm} className="close">×</button>
               <h4 className="modal-title">Sensor Form</h4>

@@ -116,6 +116,8 @@ class DateSelector extends React.Component {
   }
 
   onParseDateFromString(value) {
+    console.log(typeof value);
+    console.log(value);
     let values = (value || '').trim().split('-');
     let day = Math.max(1, Math.min(31, parseInt(values[0], 10)));
     let month = Math.max(1, Math.min(12, parseInt(values[1], 10))) - 1;

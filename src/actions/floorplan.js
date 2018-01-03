@@ -209,9 +209,11 @@ export function createSensor(id, sensor) {
     return axios.post(config.api.root + `/sensor/create/0/${id}`, sensor)
       .then((response) => {
         dispatch(saveSensorCompleted(response.data));
+        return response;
       })
       .catch(function (response) {
         dispatch(saveSensorFailed());
+        return response;
       })
   }
 }
@@ -219,7 +221,6 @@ export function createSensor(id, sensor) {
 export function updateSensor(sensor) {
   return dispatch => {
     dispatch(updateSensorInProgress(sensor));
-    console.log(sensor);
     return axios.put(config.api.root + `/sensor/update/${sensor.id}`, sensor)
       .then((response) => {
         dispatch(updateSensorCompleted(response.data));

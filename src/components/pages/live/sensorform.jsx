@@ -28,8 +28,14 @@ export class SensorForm extends React.Component {
     }
     else {
       if (this.state.name && this.state.mac) {
-        this.props.dispatch(createSensor(nodeId, sensor)).then(() => {
-          toastr.success(`Add new sensor successfully`)
+        this.props.dispatch(createSensor(nodeId, sensor)).then((response) => {
+          if(response.status==200) {
+            toastr.success(`Add new sensor successfully`);
+          }
+          else if(response.status==403) {
+            toastr.error('Permisson denied');
+          }
+          
         })
           .catch(error => {
             toastr.error(error);

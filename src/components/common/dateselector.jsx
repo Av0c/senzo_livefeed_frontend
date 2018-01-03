@@ -116,16 +116,19 @@ class DateSelector extends React.Component {
   }
 
   onParseDateFromString(value) {
-    console.log(typeof value);
-    console.log(value);
-    let values = (value || '').trim().split('-');
-    let day = Math.max(1, Math.min(31, parseInt(values[0], 10)));
-    let month = Math.max(1, Math.min(12, parseInt(values[1], 10))) - 1;
-    let year = parseInt(values[2], 10);
-    if (year < 100) {
-      year += date.getFullYear();
+    if (typeof value == 'string') {
+      let values = (value || '').split('-');
+      let day = Math.max(1, Math.min(31, parseInt(values[0], 10)));
+      let month = Math.max(1, Math.min(12, parseInt(values[1], 10))) - 1;
+      let year = parseInt(values[2], 10);
+      if (year < 100) {
+        year += date.getFullYear();
+      }
+      return new Date(year, month, day);
     }
-    return new Date(year, month, day);
+    else {
+      return value;
+    }
   }
 
   render() {

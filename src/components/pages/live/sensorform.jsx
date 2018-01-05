@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { createSensor, removeSensor, updateSensor } from 'actions/floorplan';
-import { deleteNode } from 'actions/node';
+import { deleteNode, fetchLiveData } from 'actions/node';
+import { fetchCustomerOverview } from 'actions/overview';
 import Sensor from './sensor';
 
 export class SensorForm extends React.Component {
@@ -10,17 +11,35 @@ export class SensorForm extends React.Component {
   constructor() {
     super();
     this.submit = this.submit.bind(this);
-    this.state = {};
+    this.state = {
+    };
   }
 
   submit(nodeId) {
-    let sensor = Object.assign({}, this.props.selectedSensor, {
-      name: this.state.name || this.props.selectedSensor.name,
-      macaddress: this.state.mac || this.props.selectedSensor.macaddress
-    });
+    let sensor = {};
+    if (this.props.selectedSensor.id > 0) {
+      sensor = Object.assign({}, this.props.selectedSensor, {
+        name: this.state.name || this.props.selectedSensor.name,
+        macaddress: this.state.mac || this.props.selectedSensor.macaddress
+      });
+    }
+    else {
+      sensor = Object.assign({}, {
+        name: this.state.name,
+        macaddress: this.state.mac,
+        xpercent: this.props.mousePos.left,
+        ypercent: this.props.mousePos.top
+      });
+    }
     if (sensor.id) {
       this.props.dispatch(updateSensor(sensor)).then(() => {
-        toastr.success(`Update sensor successfully`)
+        this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid)).then(() => {
+          this.props.dispatch(fetchLiveData(nodeId));
+        })
+          .catch(error => {
+            toastr.error(error);
+          });
+        toastr.success("Update sensor successfully");
       })
         .catch(error => {
           toastr.error(error);
@@ -29,13 +48,18 @@ export class SensorForm extends React.Component {
     else {
       if (this.state.name && this.state.mac) {
         this.props.dispatch(createSensor(nodeId, sensor)).then((response) => {
-          if(response.status==200) {
+          if (response.status == 200) {
+            this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid)).then(() => {
+              this.props.dispatch(fetchLiveData(nodeId));
+            }).catch(error => {
+              toastr.error(error);
+            });;
             toastr.success(`Add new sensor successfully`);
           }
-          else if(response.status==403) {
+          else if (response.status == 403) {
             toastr.error('Permisson denied');
           }
-          
+
         })
           .catch(error => {
             toastr.error(error);
@@ -48,8 +72,9 @@ export class SensorForm extends React.Component {
     this.props.closeSensorForm();
   }
 
-  deleteSensor(sensor) {
+  deleteSensor(nodeId) {
     this.props.dispatch(deleteNode(this.props.selectedSensor)).then(() => {
+      this.props.dispatch(fetchLiveData(nodeId));
       toastr.success(`Delete sensor successfully`)
     })
       .catch(error => {
@@ -111,7 +136,7 @@ export class SensorForm extends React.Component {
               </div>
             </div>
             <div className="modal-footer">
-              <button className="btn btn-default" onClick={this.deleteSensor.bind(this)} >Remove</button>
+              <button className="btn btn-default" onClick={() => { this.deleteSensor(this.state.location || options[0].id); }} >Remove</button>
               <button onClick={this.props.closeSensorForm} className="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
               <button className="btn btn-success" type="button" onClick={() => { this.submit(this.state.location || options[0].id) }}>Confirm</button>
             </div>
@@ -130,6 +155,7 @@ export class SensorForm extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    user: state.authReducer.user,
     selectedSensor: state.floorPlanSensorReducer.selectedSensor
   }
 }

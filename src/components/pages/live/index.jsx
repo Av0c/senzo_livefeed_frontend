@@ -68,15 +68,16 @@ class Live extends React.Component {
 		var path = [];
 		var res = { currentNode: {} };
 		this.findNode(props.nodeMap, props.params.id, path, res);
-		this.setState({currentNode: res.currentNode, path: path});
+		this.setState({ currentNode: res.currentNode, path: path });
 
 		var oldnode = this.state.currentNode;
 		var currentNode = res.currentNode;
 
 		var cond1 = (oldnode.id != currentNode.id && !this.empty(currentNode));
 		var cond2 = (props.nodeFilter.info.empty && !this.empty(currentNode));
+		var cond3 = (oldnode.id == currentNode.id && oldnode.children.length != currentNode.children.length);
 		// console.log(oldnode, currentNode, cond1, cond2);
-		if (cond1 || cond2) {
+		if (cond1 || cond2 || cond3) {
 			// either floor changed or no node filter yet => set node filter to all areas.
 			this.props.dispatch(selectNodeFilter(currentNode));
 		}
@@ -85,7 +86,7 @@ class Live extends React.Component {
 				groupMR: false
 			})
 		}
-		if (props.imageURL.indexOf(`/floorplans/${currentNode.id}?`)==-1) {
+		if (props.imageURL.indexOf(`/floorplans/${currentNode.id}?`) == -1) {
 			// floor changed => fetch new image
 			this.props.dispatch(fetchImage(currentNode.id));
 		}
@@ -103,7 +104,7 @@ class Live extends React.Component {
 			cur = cur.parent;
 		}
 		while (tmp.length) {
-			path.push(tmp[tmp.length-1]);
+			path.push(tmp[tmp.length - 1]);
 			tmp.pop();
 		}
 	}
@@ -117,7 +118,7 @@ class Live extends React.Component {
 	listNodeFilter(root, res) {
 		var self = this;
 		if (root) {
-			if(root.type==config.room.MEETINGROOM.code || root.type==config.room.OPENAREA.code) {
+			if (root.type == config.room.MEETINGROOM.code || root.type == config.room.OPENAREA.code) {
 				res.push(root);
 			}
 		}
@@ -139,7 +140,6 @@ class Live extends React.Component {
 							<div className="row">
 								<div className="col-sm-12">
 									<LeftMenu overview='active' comparison='' />
-
 									<div className="live-title pull-left">
 										<h1>{this.state.currentNode.info.name}</h1>
 									</div>
@@ -165,7 +165,7 @@ class Live extends React.Component {
 											items={config.viewFilter}
 											getText={(x) => x.text}
 											selected={this.props.viewFilter}
-											click={(view) => {this.props.dispatch(selectViewFilter(view))}}
+											click={(view) => { this.props.dispatch(selectViewFilter(view)) }}
 										/>
 										<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
 									</div>

@@ -49,7 +49,6 @@ export default class LocationSelector extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
         if (nextProps.tree.children) {
             if (nextProps.tree.type == 'customer') {
                 this.setState({ name: nextProps.tree.children[0].info.name });

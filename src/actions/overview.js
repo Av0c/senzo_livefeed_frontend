@@ -114,7 +114,7 @@ export function receiveTreeOverview(data) {
 export function loadTreeOverview(id) {
   return dispatch => {
     dispatch(fetchTreeOverview());
-    axios.get(config.api.root + '/node/structure/' + id).then((response) => {
+    return axios.get(config.api.root + '/node/structure/' + id).then((response) => {
       dispatch(receiveTreeOverview(response.data));
     });
   }

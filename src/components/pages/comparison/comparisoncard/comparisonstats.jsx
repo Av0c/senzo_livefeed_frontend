@@ -24,6 +24,7 @@ export class ComparisonStats extends React.Component {
             });
         }
     }
+    
     render() {
         return (
             <div className="col-sm-4">

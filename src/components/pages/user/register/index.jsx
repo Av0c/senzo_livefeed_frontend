@@ -77,7 +77,6 @@ class Register extends React.Component {
 	}
 
 	render() {
-		console.log(this.props, this.state)
 		switch (this.props.stage) {
 			case "keychecked" :
 			case "creating" :
@@ -156,7 +155,7 @@ class Form extends React.Component {
 										<label>Title</label>
 										<select ref="title">
 											<option value="Mr." default="default">Mr.</option>
-											<option value="Ms.">Ms.</option>
+											<option value="Ms/Mrs.">Ms/Mrs.</option>
 										</select>
 									</div>
 									<div className="account-firstname">

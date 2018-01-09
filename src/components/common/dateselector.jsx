@@ -96,7 +96,7 @@ class DateSelector extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.startdate != this.state.from && nextProps.enddate != this.state.to) {
+    if (nextProps.startdate != this.state.from || nextProps.enddate != this.state.to) {
       this.setState({
         from: nextProps.startdate,
         to: nextProps.enddate,
@@ -112,13 +112,10 @@ class DateSelector extends React.Component {
     let day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
     let month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
     let d = day + '-' + month + '-' + date.getFullYear();
-    console.log(date, d);
     return d;
   }
 
   onParseDateFromString(value) {
-    console.log(typeof value);
-    console.log(value);
     let values = (value || '').trim().split('-');
     let day = Math.max(1, Math.min(31, parseInt(values[0], 10)));
     let month = Math.max(1, Math.min(12, parseInt(values[1], 10))) - 1;
@@ -180,7 +177,6 @@ class DateSelector extends React.Component {
 
   // Set state is asynchronous, apply update in callback where state is properly updated.
   setStartDate(date) {
-    console.log(date);
     let d = this.onFormatDate(date);
     let self = this;
     this.setState({ from: d, groupby: 'day' }, () =>
@@ -189,7 +185,6 @@ class DateSelector extends React.Component {
   }
 
   setEndDate(date) {
-    console.log(date);
     let d = this.onFormatDate(date);
     let self = this;
     this.setState({ to: d, groupby: 'day' }, () =>

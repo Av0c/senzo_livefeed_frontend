@@ -11,8 +11,7 @@ const initialState = {
             enddate: "18-11-2017",
             starthour: 8,
             endhour: 17,
-            startweekday: 1,
-            endweekday: 5
+            weekdaymask: "0111110",
         },
         points: []
     },

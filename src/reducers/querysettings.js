@@ -9,8 +9,6 @@ const initialState = {
   id: -1,
   starthour: 8,
   endhour: 17,
-  startweekday: 1,
-  endweekday: 5,
   marks: [0.1, 0.3, 0.5],
   groupby: 'day',
   active: 'This week'

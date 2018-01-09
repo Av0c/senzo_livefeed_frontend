@@ -24,6 +24,7 @@ import userInviteReducer from 'reducers/user/invite';
 import userRegisterReducer from 'reducers/user/register';
 import userAdminReducer from 'reducers/user/administration';
 import sensorSettingsReducer from 'reducers/sensorsettings';
+import defaultSettingsReducer from 'reducers/defaultsettings';
 
 import { clearToken } from 'actions/authentication';
 import { showNotification } from 'actions/common';
@@ -49,6 +50,7 @@ const reducer = combineReducers({
   userRegisterReducer,
   userAdminReducer,
   sensorSettingsReducer,
+  defaultSettingsReducer,
 });
 
 const store = createStore(

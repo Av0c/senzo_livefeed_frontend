@@ -96,7 +96,7 @@ class DateSelector extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.startdate != this.state.from && nextProps.enddate != this.state.to) {
+    if (nextProps.startdate != this.state.from || nextProps.enddate != this.state.to) {
       this.setState({
         from: nextProps.startdate,
         to: nextProps.enddate,
@@ -150,35 +150,22 @@ class DateSelector extends React.Component {
             <div className="clearfix">
               <div className="pull-left">
                 <DatePicker className="start-date"
-                  formatDate={(date) => {
-                    let d = this.onFormatDate(date);
-                    if (d != this.state.from) {
-                      this.setStartDate(d);
-                    }
-                    return d;
-                  }}
+                  formatDate={(date) => this.onFormatDate(date)}
                   onSelectDate={this.setStartDate.bind(this)}
                   value={from}
                   firstDayOfWeek={DayOfWeek.Monday}
                   strings={Strings}
-                  parseDateFromString={this.onParseDateFromString}
                 />
+                  {/*parseDateFromString={this.onParseDateFromString}*/}
               </div>
               <div className="date-divider pull-left">-</div>
               <div className="pull-right">
                 <DatePicker className="end-date"
-                  formatDate={(date) => {
-                    let d = this.onFormatDate(date);
-                    if (d != this.state.to) {
-                      this.setEndDate(d);
-                    }
-                    return d;
-                  }}
+                  formatDate={(date) => this.onFormatDate(date)}
                   onSelectDate={this.setEndDate.bind(this)}
                   value={to}
                   firstDayOfWeek={DayOfWeek.Monday}
                   strings={Strings}
-                  parseDateFromString={this.onParseDateFromString}
                 />
               </div>
             </div>
@@ -194,16 +181,18 @@ class DateSelector extends React.Component {
   }
 
   // Set state is asynchronous, apply update in callback where state is properly updated.
-  setStartDate(datestring) {
+  setStartDate(date) {
+    let d = this.onFormatDate(date);
     let self = this;
-    this.setState({ from: datestring, groupby: 'day' }, () =>
+    this.setState({ from: d, groupby: 'day' }, () =>
       self.dispatchPeriod()
     );
   }
 
-  setEndDate(datestring) {
+  setEndDate(date) {
+    let d = this.onFormatDate(date);
     let self = this;
-    this.setState({ to: datestring, groupby: 'day' }, () =>
+    this.setState({ to: d, groupby: 'day' }, () =>
       self.dispatchPeriod()
     );
   }

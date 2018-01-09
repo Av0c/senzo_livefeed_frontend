@@ -16,7 +16,6 @@ class EditModal extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps.sensor);
 		if (this.props.open != nextProps.open) {
 			this.setState({
 				macaddress: nextProps.sensor.macaddress,

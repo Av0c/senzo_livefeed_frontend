@@ -646,6 +646,9 @@ h2.account-title {
   margin-bottom: 18px;
 }
 .card {
+  width: 900px;
+  margin-left:50px;
+  margin-bottom:50px;
   padding: 12px 26px 20px;
   background: #fff;
   border-radius: 20px;
@@ -901,9 +904,15 @@ td.table-heading h4 {
 }
 .location-picker {
   position: relative;
-  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 .location-picker a {
+  cursor: pointer;
   line-height: 38px;
   color: #585e66;
 }
@@ -912,6 +921,8 @@ td.table-heading h4 {
   font-family: 'Catamaran';
   font-size: 16px;
   font-weight: normal;
+  white-space: nowrap;
+  cursor: pointer;
 }
 .location-picker-dropdown {
   padding: 10px 20px;
@@ -965,12 +976,6 @@ td.table-heading h4 {
 }
 .default-settings-bottom {
   margin-top: 12px;
-}
-.hours-picker {
-  height: 60px;
-  width: 100%;
-  background: #ccc;
-  margin-top: 14px;
 }
 .add-loc-button {
   margin-left: 36px;
@@ -1118,4 +1123,11 @@ ul.users {
 .comparison-stats-card span {
   float: right;
   margin-right: 60px;
+}
+.disabled {
+  color: #BDBDBD;
+}
+.add-card {
+  width: 900px;
+  margin-left: 50px;
 }

@@ -96,9 +96,9 @@ export default class TimePicker extends React.Component {
 			<div className="timepicker" ref="body">
 				<div className="timepicker-body">
 					{
-						Array.apply(null, { length: this.props.nSegments }).map((x, idx) => (
+						Array.apply(null, { length: this.props.nSegments-1}).map((x, idx) => (
 							<div className="timepicker-mark"
-								style={{left: this.getPercent(idx)+"%"}}
+								style={{left: this.getPercent(idx+1)+"%"}}
 								key={idx}
 							></div>
 						))

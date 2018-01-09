@@ -130,6 +130,9 @@ class InviteModal extends React.Component {
 						<label>Location</label>
 						<select required ref="location" disabled={this.state.disabled} value={this.findNode()} onChange={this.changeLocation.bind(this)}>
 						{this.props.nodes.map((x, i) => {
+							if (x.node.type!="location" && x.node.type!="customer") {
+								return null;
+							}
 							return (
 								<option value={i} key={"o"+x.node.id} disabled={i==0}>
 									{x.padding}

@@ -18,7 +18,7 @@ export default class Widget extends React.Component {
         return (
             <div style={{ marginBottom: '20px' }} className={style || "col-sm-3 col-xs-12"}>
                 <div className="the-card clearfix">
-                    <h1 className="card-location">{this.props.node.info.name}</h1>
+                    <h1 className="card-location" title={this.props.node.info.name}>{this.props.node.info.name}</h1>
                     <div className="card-buttons clearfix">
                         <div className="card-inner-location pull-left">
                             <RoomTypeSelector roomType={this.props.node.type} type={this.props.type} chooseType={this.props.getOverview} />

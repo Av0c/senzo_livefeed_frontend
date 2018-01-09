@@ -45,7 +45,7 @@ export default class Bar extends React.Component {
         window.addEventListener("resize", this.removeTrans);
 
         // Verify values
-        
+
         const values = this.props.values.slice();
         values[0] = Math.max(0, Math.min( values[0], 1 ));
         values[1] = Math.max(0, Math.min( values[1], 1-values[0] ));
@@ -110,7 +110,7 @@ export default class Bar extends React.Component {
 
     renderInfo(i) {
         // Convert values to percent first
-        var percent = Math.round(this.state.lengths[i] * 10000)/100;
+        var percent = Math.round(this.state.lengths[i] * 1000)/10;
         var marker;
         if (Number(i) === 1) {
             marker = percent + "%\n|";

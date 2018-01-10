@@ -1,6 +1,7 @@
 @import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import url("https://fonts.googleapis.com/css?family=Catamaran");
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
+
 body {
     background: #f6f7f9;
     font-family: 'Roboto';

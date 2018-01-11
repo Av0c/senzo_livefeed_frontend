@@ -1,77 +1,77 @@
 @import "../variables.less";
 
 .dropdown {
-  position: relative;
-  background-color: transparent;
-  &.open {
-    .dropdown-items {
-      display: block;
-    }
-  }
-  .dropdown-toggle {
+    position: relative;
     background-color: transparent;
-    border: none;
-    width: 100%;
-    color: #585858;
-    font-size: 17px;
-    font-family: @font-family-default;
-    text-align: left;
-    cursor: pointer;
-    &:focus {
-      outline: none;
+    &.open {
+        .dropdown-items {
+            display: block;
+            box-shadow: 0 2px 6px 0px rgba(0,0,0,0.4);
+        }
     }
-
-    .icon {
-      height: 1em;
-      width: 1em;
-      float: right;
-    }
-  }
-  .dropdown-items {
-    display: none;
-    position: absolute;
-    left:0;
-    top: 100%;
-    min-width: 100%;
-    background-color: white;
-    margin-top: 2px;
-    padding: 10px;
-    line-height: 20px;
-    box-sizing: border-box;
-
-    .dropdown-item {
-      white-space: nowrap;
-      &:hover {
+    .dropdown-toggle {
+        background-color: transparent;
+        border: none;
+        width: 100%;
+        color: #585858;
+        font-size: 17px;
+        font-family: @font-family-default;
+        text-align: left;
         cursor: pointer;
-        background-color: wheat;
-      }
+        &:focus {
+            outline: none;
+        }
 
-      .react-date-picker__calendar {
-        color: black;
-      }
+        .icon {
+            height: 1em;
+            width: 1em;
+            float: right;
+        }
     }
-  }
-
-  &.datepicker {
     .dropdown-items {
-     & > div {
-        display: flex;
+        display: none;
+        position: absolute;
+        left:0;
+        top: 100%;
+        min-width: 100%;
+        background-color: white;
+        margin-top: 2px;
+        padding: 10px;
+        line-height: 20px;
+        box-sizing: border-box;
 
-      }
+        .dropdown-item {
+            white-space: nowrap;
+            &:hover {
+                cursor: pointer;
+                background-color: #7ec443;
+            }
+            .react-date-picker__calendar {
+                color: black;
+            }
+        }
     }
-  }
+
+    &.datepicker {
+        .dropdown-items {
+            & > div {
+                display: flex;
+
+            }
+        }
+    }
 
 }
 
 .dropdown-header-text {
-  flex:10;
+    flex:10;
 }
 .dropdown-icon-container {
-  flex:1;
+    flex:1;
 }
 .dropdown-icon {
-  width: 1.3em;
-  height: 0.74em;
-  background-size: 1.3em 0.74em;
-  margin-top: 0.5em;
+    width: 1.3em;
+    height: 0.74em;
+    background-size: 1.3em 0.74em;
+    margin-top: 0.5em;
 }

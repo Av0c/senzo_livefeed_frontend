@@ -6,28 +6,8 @@ import * as a from 'actions/overview'
 
 const initialState = {
   loading: false,
-  currentNode: {
-    sensorStatistics: {
-      sensors: 0,
-      sensorsInUse: 0,
-      desks: 0,
-      meetingRooms: 0,
-      maintenance: 0
-    },
-    info: {
-      name: ''
-    },
-    children: []
-  },
-  customerOverview: {
-    id: -2,
-    parent: null,
-    info: {
-      name: '',
-      empty: true
-    },
-    children: []
-  },
+  currentNode: null,
+  customerOverview: null,
   nodeMap: {},
   widgets: [],
   card: {},

@@ -7,7 +7,7 @@ const initialState = {
   loading: false,
   roomInUse: 0,
   deskInUse: 0,
-  map: new Map()
+  map: null,
 };
 
 function fetchLiveData(id) {

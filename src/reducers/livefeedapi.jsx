@@ -36,6 +36,7 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				generated: true,
 				apikey: action.apikey,
+				wrongPassword: false,
 			})
 		}
 

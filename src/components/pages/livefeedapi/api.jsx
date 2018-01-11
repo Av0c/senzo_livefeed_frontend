@@ -22,7 +22,11 @@ class API extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		if (this.props.apikey != nextProps.apikey) {
 			this.setState({forcedClose: true});
-		} else {
+		}
+	}
+
+	onToggle(open) {
+		if (open) {
 			this.setState({forcedClose: false});
 		}
 	}
@@ -39,7 +43,6 @@ class API extends React.Component {
 	}
 
 	render() {
-		console.log(this.props);
 		return (
 			<div className="row">
 				<div className="col-md-6">
@@ -65,6 +68,7 @@ class API extends React.Component {
 								entry={
 									!this.props.generated && <div className="button settings-button generate pull-right">Generate New Key</div>
 								}
+								onToggle={this.onToggle.bind(this)}
 								forcedClose={this.state.forcedClose}
 							>
 								<p>Are you sure you want to generate a new API key ? <b>Every previous keys would become invalid.</b></p>

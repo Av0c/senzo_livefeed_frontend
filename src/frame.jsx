@@ -8,6 +8,10 @@ import { setCurrentNode } from 'actions/overview';
 import 'react-datepicker/dist/react-datepicker.css';
 import './style/main.less';
 
+import { fetchCustomerOverview } from 'actions/overview';
+import { fetchCard } from 'actions/defaultsettings';
+import { fetchLiveData } from 'actions/node';
+
 export class Frame extends React.Component {
 
   handleTreeClick(node) {
@@ -21,24 +25,30 @@ export class Frame extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.dispatch(fetchCard());
+    this.props.dispatch(fetchCustomerOverview(this.props.user.companyid));
+    this.props.dispatch(fetchLiveData(this.props.user.companyid));
+  }
+
+
   render() {
-    return (
+    return (this.props.tree && this.props.cards && this.props.sensorMap) ?
       <div style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px', maxWidth: '100%' }} className="container">
-        <Toolbar user={this.props.user} actions={{ logout: this.props.logout }} companyName={this.props.companyName} tree={this.props.tree}
-          statistic={this.handleTreeClick.bind(this)} />
+        <Toolbar actions={{ logout: this.props.logout }} statistic={this.handleTreeClick.bind(this)} />
         <div className="content">
-          {this.props.children}
+          { this.props.children }
         </div>
-      </div>
-    )
+      </div> : null
   }
 }
 
 function mapStateToProps(state) {
   return {
     user: state.authReducer.user,
-    companyName: state.overviewReducer.customerOverview.info.name,
-    tree: state.overviewReducer.customerOverview
+    tree: state.overviewReducer.customerOverview,
+    cards: state.defaultSettingsReducer.card,
+    sensorMap: state.nodeReducer.map,
   }
 }
 

@@ -350,7 +350,7 @@ input:focus {
   font-size: 16px;
 }
 .overview-block {
-  margin-top: 60px;
+  padding-top: 20px;
 }
 .the-card {
   padding: 12px 26px 42px;
@@ -363,7 +363,7 @@ input:focus {
 }
 .card-shape {
   background: #fff;
-  border-radius: 20px;
+  border-radius: 10px;
   box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
   max-width: 1200px;
   margin: auto;

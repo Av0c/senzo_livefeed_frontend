@@ -10,7 +10,7 @@ export default class Comparison extends React.Component {
         return (
             <div className="comparison-stats-wrapper">
                 <div className="container-fluid">
-                    <div style={{ paddingTop: '30px', marginBottom: '30px' }} className="row">
+                    <div style={{ paddingTop: '20px', marginBottom: '30px' }} className="row">
                         <div className="col-md-12">
                             <LeftMenu overview='' comparison='active' />
                             <DateSelector />

@@ -28,6 +28,9 @@ export default class Modal extends React.Component {
 			loaded: true,
 			forcedClose: false,
 		});
+		if (typeof this.props.onToggle == "function") {
+			this.props.onToggle(!this.state.open);
+		}
 	}
 
 	render() {

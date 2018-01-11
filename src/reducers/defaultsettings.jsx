@@ -6,7 +6,7 @@ import * as a from 'actions/defaultsettings'
 import { fetchCustomerOverview } from 'actions/overview'
 
 const initialState = {
-	card: {},
+	card: null,
 };
 
 function fetchCard() {

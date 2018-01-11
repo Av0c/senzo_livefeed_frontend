@@ -69,47 +69,75 @@ class SensorList extends React.Component {
 		this.listSensors(this.props.root, sensors);
 		return (
 			<div className="container-fluid">
-				<div className="row">
-					<div className="col-md-6">
-						<table className="table sensor-settings-table"><tbody>
-							<tr>
-								<td> </td>
-								<td> <strong>MAC Address</strong></td>
-								<td> <strong>Name</strong></td>
-								<td><strong>Offline Since</strong></td>
-								<td colSpan="3">   </td>
-							</tr>
-							{
-								sensors.map((x, idx) => {
-									var ss = Object.assign({}, this.props.sensorMap.get(x.id));
-									if (!ss) {
-										return null;
-									}
-									ss.xpercent = 50;
-									ss.ypercent = 50;
-									var par = this.props.nodeMap[x.id].parent;
-									return (
-										<tr key={idx} className={this.props.selectedSensor.id == x.id && "bold"}>
-											<td className="color-note-td"><Sensor sensor={ss}/></td>
-											<td>{ss.macaddress}</td>
-											<td>{ss.name}</td>
-											<td><Timestamp time={ss.lastonl}/></td>
-											<td className="button-holder">
-												<div className="button" onClick={() => this.openEdit(ss)}>Edit</div>
-											</td>
-											<td className="button-holder">
-												<Link className="button" to={"/live/"+par.id} target="_blank">Floorplan</Link>
-											</td>
-											<td className="button-holder">
-												<img className="bin" onClick={() => this.openDelete(ss)} src="/src/assets/images/bin.svg"/>
-											</td>
-										</tr>
-									);
-								})
+				<table className="users-table pull-left"><tbody>
+					<tr>
+						<th> </th>
+						<th> <strong>MAC Address</strong></th>
+						<th> <strong>Name</strong></th>
+						<th><strong>Offline Since</strong></th>
+						<th colSpan="3">   </th>
+					</tr>
+					{
+						sensors.map((x, idx) => {
+							var ss = Object.assign({}, this.props.sensorMap.get(x.id));
+							if (!ss) {
+								return null;
 							}
-						</tbody></table>
-					</div>
-				</div>
+							ss.xpercent = 50;
+							ss.ypercent = 50;
+							var par = this.props.nodeMap[x.id].parent;
+							return (
+								<tr key={idx} className={this.props.selectedSensor.id == x.id && "bold"}>
+									<td className="sensor-color-note-td"><Sensor sensor={ss}/></td>
+									<td>{ss.macaddress}</td>
+									<td>{ss.name}</td>
+									<td><Timestamp time={ss.lastonl}/></td>
+									<td className="button-holder">
+										<div className="button" onClick={() => this.openEdit(ss)}>Edit</div>
+									</td>
+									<td className="button-holder">
+										<Link className="button" to={"/live/"+par.id} target="_blank">Floorplan</Link>
+									</td>
+									<td className="button-holder">
+										<img className="bin" onClick={() => this.openDelete(ss)} src="/src/assets/images/bin.svg"/>
+									</td>
+								</tr>
+							);
+						})
+					}
+				</tbody></table>
+				<table className="user-color-note"><tbody>
+						<tr>
+							<td>
+								<span className="user-color-note-td red">Occupied</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span className="user-color-note-td yellow">Standby</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span className="user-color-note-td green">Unoccupied</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+                                {/* Spacing */}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span className="user-color-note-td blue">Offline</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span className="user-color-note-td brown">Unregistered</span>
+							</td>
+						</tr>
+				</tbody></table>
 			</div>
 		);
 	}

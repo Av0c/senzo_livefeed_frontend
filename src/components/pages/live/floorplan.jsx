@@ -120,27 +120,27 @@ export class FloorPlan extends React.Component {
 		}
 		return (
 			<div className="container-fluid">
-				<div className="color-note">
+				<div className="sensor-color-note">
 					<table><tbody>
 						<tr>
-							<td className="color-note-td"><Sensor sensor={{ id: -2, inuse: true, standby: false, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
+							<td className="sensor-color-note-td"><Sensor sensor={{ id: -2, inuse: true, standby: false, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
 							<td>Occupied</td>
 						</tr>
 						<tr>
-							<td className="color-note-td"><Sensor sensor={{ id: -3, inuse: false, standby: true, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
+							<td className="sensor-color-note-td"><Sensor sensor={{ id: -3, inuse: false, standby: true, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
 							<td>Standby</td>
 						</tr>
 						<tr>
-							<td className="color-note-td"><Sensor sensor={{ id: -1, inuse: false, standby: false, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
+							<td className="sensor-color-note-td"><Sensor sensor={{ id: -1, inuse: false, standby: false, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
 							<td>Unoccupied</td>
 						</tr>
 						<tr><td><br /></td><td></td></tr>
 						<tr>
-							<td className="color-note-td"><Sensor sensor={{ id: -4, inuse: false, standby: false, faulty: true, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
+							<td className="sensor-color-note-td"><Sensor sensor={{ id: -4, inuse: false, standby: false, faulty: true, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
 							<td>Offline</td>
 						</tr>
 						<tr>
-							<td className="color-note-td"><Sensor sensor={{ id: -5, inuse: false, standby: false, faulty: false, registered: false, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
+							<td className="sensor-color-note-td"><Sensor sensor={{ id: -5, inuse: false, standby: false, faulty: false, registered: false, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
 							<td>Unregistered</td>
 						</tr>
 					</tbody></table>

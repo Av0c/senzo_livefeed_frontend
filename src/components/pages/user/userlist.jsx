@@ -81,15 +81,15 @@ class UserList extends React.Component {
 	}
 
 	render() {
-		let userrows = [
-			[this.props.contact.companyadmins, "Company administrators"],
-			[this.props.contact.localadmins, "Local administrators"],
-			[this.props.contact.localusers, "Local Users"],
-			[this.props.contact.supportusers, "Support"],
+		let userRows = [
+			[this.props.contact.companyadmins, "COMPANY ADMINISTRATORS"],
+			[this.props.contact.localadmins, "LOCAL ADMINISTRATORS"],
+			[this.props.contact.localusers, "LOCAL USERS"],
+			[this.props.contact.supportusers, "SUPPORT"],
 		]
 		let nodeNames = this.props.contact.nodenames;
 		let ok = true;
-		userrows.map((row) => {
+		userRows.map((row) => {
 			if (!row[0]) {
 				ok = false;
 			}
@@ -97,19 +97,36 @@ class UserList extends React.Component {
 		if (ok && nodeNames) {
 			return (
 				<div className="users-section">
-					<table className="table"><tbody>
-					{
-						userrows.map((urow) => {
+					<table className="users-table pull-left"><tbody> {
+						userRows.map((urow) => {
 							return [
-								<tr>
-									<td className="table-heading">
-									<h4>{urow[1]}</h4>
-									</td>
-								</tr>,
-								urow[0].map((u) => this.renderUser(u, nodeNames))
-							];
-						})
-					}
+									<tr className="table-header-row">
+										<th>
+											<h4>{urow[1]}</h4>
+										</th>
+										<th>EMAIL</th>
+										<th>MOBILE</th>
+										<th>LOCATION</th>
+										<th></th>
+										<th></th>
+									</tr>,
+									urow[0].map((u) => this.renderUser(u, nodeNames)),
+									<tr className="table-spacing"></tr>
+								];
+							})
+						}
+					</tbody></table>
+					<table className="user-color-note"><tbody>
+						<tr>
+							<td>
+								<span className="user-color-note-td green">Registered</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span className="user-color-note-td brown">Pending</span>
+							</td>
+						</tr>
 					</tbody></table>
 				</div>
 			);

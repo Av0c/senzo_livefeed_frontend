@@ -823,12 +823,6 @@ h2.account-title {
 .table-email {
     color: #585e66;
 }
-table.table tr td {
-    border-top: none;
-}
-td.table-heading h4 {
-    margin-top: 18px;
-}
 .white {
     background-color: #fff;
 }
@@ -879,8 +873,6 @@ td.table-heading h4 {
 .single-faq h5 {
     margin-bottom: 8px;
 }
-
-//
 .live-feeds-table {
     margin-top: 20px;
 }
@@ -1144,8 +1136,8 @@ ul.users {
     /* margin-left: 50px; */
 }
 .settings-divider {
-    border-top: 1px dotted grey;
-    opacity: 0.5;
+    border-top: 1px dotted black;
+    opacity: 1;
     margin: 15px 0;
     display: block;
     width: 100%;

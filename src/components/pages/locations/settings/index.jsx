@@ -106,6 +106,7 @@ export class Settings extends React.Component {
         newNode.info.name = state.name || node.info.name;
         newNode.info.WH_from = node.info.WH_from;
         newNode.info.WH_to = node.info.WH_to;
+        newNode.info.cardid = node.info.cardid;
         if (state.location == 'sub') {
             newNode.type = (node.type == 'customer' ? 'location' : node.type);
             this.props.dispatch(createNode(node.id, newNode)).then(() => {
@@ -200,14 +201,17 @@ export class Settings extends React.Component {
             toastr.info("Nothing changed");
         }
         else {
-            let newNode = Object.assign({}, node);
-            newNode.info.location = state.timezone;
-            newNode.info.name = state.name
-            newNode.info.details.country = state.country;
+            var newNode = {
+                id: node.id,
+                info: {
+                    name: state.name,
+                    location: state.timezone,
+                    country: state.country,
+                }
+            };
             this.props.dispatch(updateNode(newNode)).then(() => {
-                node = Object.assign({}, newNode);
-                toastr.success(`${node.info.name} has been updated`);
-                self.updateChildren(node, node);
+                this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
+                toastr.success(`${newNode.info.name} has been updated`);
             })
                 .catch(error => {
                     toastr.error(error);
@@ -217,30 +221,8 @@ export class Settings extends React.Component {
 
     }
 
-    updateChildren(node, parent) {
-        let self = this;
-        if (node.type != 'meeting_room' && node.type != 'open_area') {
-            node.children.forEach((element) => {
-                let newNode = Object.assign({}, element);
-                newNode.info.location = parent.info.location;
-                newNode.info.details.country = parent.info.details.country;
-                element = Object.assign({}, newNode);
-                self.props.dispatch(updateNode(newNode));
-                self.updateChildren(element, parent);
-            });
-        }
-    }
     uploadImage(node, image, type) {
-        this.props.dispatch(uploadFloorplanView(node.id, image)).then(() => {
-            toastr.success(`${node.info.name}'s floorplan view has been uploaded`);
-        })
-            .catch(error => {
-                toastr.error(error);
-            });
-        let newNode = Object.assign({}, node);
-        newNode.type = type;
-        this.props.dispatch(updateNode(newNode))
-
+        this.props.dispatch(uploadFloorplanView(node, image, type));
     }
 
     render() {

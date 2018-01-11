@@ -16,27 +16,34 @@ export default class AddFloorPlanFrom extends React.Component {
         this.setState({ [key]: value });
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.node.type && this.state.type != nextProps.node.type) {
+            this.setState({type: nextProps.node.type})
+        }
+    }
+
     render() {
         let node = this.props.node;
+        console.log(node);
         return (
             <div>
                 <div className={"modal-overlay" + (this.props.isAddingFloorplan ? "" : " closed")} onClick={this.props.closeAddFloorplanForm}></div>
                 <div className={"add-account-wrapper invite-modal" + (this.props.isAddingFloorplan ? "" : " closed")}>
                     <div className="modal-header">
                         <button className="close" onClick={this.props.closeAddFloorplanForm}>×</button>
-                        <h4 className="modal-title">Add Floorplan</h4>
+                        <h4 className="modal-title">Add Floor Plan</h4>
                     </div>
                     <div className="modal-body settings-add-location-wrapper">
                         <div className="area-type">
-                            <label>Area Type</label>
-                            <select id="type" onChange={this.changeHandler.bind(this)}>
+                            <label>Change area type</label>
+                            <select id="type" value={this.state.type} onChange={this.changeHandler.bind(this)}>
                                 <option value="location"> Mixed Area </option>
                                 <option value='meeting_room' >Meeting Room</option>
                                 <option value='open_area' >Open Area</option>
                             </select>
                         </div>
                         <div className="upload-floorplan">
-                            <label>Plan</label>
+                            <label>{node.info.hasfloorplan ? "Replace Floor Plan" : "New Floor Plan"}</label>
                             <input type="file" id="img" ref="floorplanimage"/>
                         </div>
                     </div>

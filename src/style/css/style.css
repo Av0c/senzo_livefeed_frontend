@@ -673,15 +673,6 @@ h2.account-title {
 .add-loc-button {
     margin-left: 36px;
 }
-.locations-list {
-    margin: 0;
-    padding: 0;
-    margin-top: 30px;
-}
-.locations-list .location-name {
-    font-size: 28px;
-    font-weight: bold;
-}
 .change-pwd-wrapper label,
 .add-account-wrapper label,
 .edit-sensor-wrapper label,
@@ -719,6 +710,8 @@ h2.account-title {
 .locations-list .location-name {
     font-size: 18px;
     font-weight: bold;
+    width: 200px;
+    cursor: pointer;
 }
 .edit-btn {
     position: relative;
@@ -730,6 +723,7 @@ h2.account-title {
 }
 .settings-location-dropdown a {
     color: #585e66;
+    cursor: pointer;
 }
 .settings-location-dropdown a:hover {
     color: #7ec443;
@@ -746,7 +740,8 @@ h2.account-title {
     margin-top: 5px;
 }
 .locations-list ul {
-    margin-left: 28px;
+    margin-left: 18px;
+    margin-right: 10px;
     padding: 0;
 }
 .locations-list li ul li .location-name {
@@ -759,6 +754,7 @@ h2.account-title {
 .settings-edit {
     position: relative;
 }
+
 .edit-dropdown {
     width: 200px;
     text-align: left;
@@ -873,8 +869,6 @@ td.table-heading h4 {
 .single-faq h5 {
     margin-bottom: 8px;
 }
-
-//
 .live-feeds-table {
     margin-top: 20px;
 }
@@ -979,65 +973,6 @@ td.table-heading h4 {
 }
 .days-picker label {
     width: 120px;
-}
-.default-settings-bottom {
-    margin-top: 12px;
-}
-.add-loc-button {
-    margin-left: 36px;
-}
-.locations-list {
-    margin: 0;
-    padding: 0;
-    margin-top: 30px;
-}
-.locations-list .location-name {
-    font-size: 18px;
-    font-weight: bold;
-}
-.edit-btn {
-    position: relative;
-}
-.settings-location-dropdown {
-    left: auto;
-    right: 0;
-    min-width: 130px;
-}
-.settings-location-dropdown a {
-    color: #585e66;
-}
-.settings-location-dropdown a:hover {
-    color: #7ec443;
-}
-.settings-location-dropdown a:active,
-.settings-location-dropdown a:visited {
-    color: #585e66;
-}
-.location-options .button,
-.location-options .bin {
-    margin-left: 20px;
-}
-.location-options .bin {
-    margin-top: 5px;
-}
-.locations-list ul {
-    margin-left: 18px;
-    padding: 0;
-}
-.locations-list li ul li .location-name {
-    font-weight: normal;
-}
-.locations-list li {
-    margin-top: 14px;
-    margin-bottom: 14px;
-}
-.settings-edit {
-    position: relative;
-}
-.edit-dropdown {
-    width: 200px;
-    text-align: left;
-    padding: 2px;
 }
 .zone-type input[type="radio"] {
     margin-right: 6px;

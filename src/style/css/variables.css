@@ -292,7 +292,7 @@ li {
 }
 
 .location-name img {
-    float: right;
+    float: left;
 }
 
 .account-change-password .chpwd {

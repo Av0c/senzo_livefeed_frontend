@@ -25,15 +25,17 @@ export default class Location extends React.Component {
 
     renderIcon() {
         if (this.props.node.type != 'meeting_room' && this.props.node.type != 'open_area') {
+            var src = "";
             if (this.state.isShowingChildren) {
-                return <img src="src/assets/images/minus-button.png" style={{ marginLeft: '10px', height: '80%' }} />
+                src = "src/assets/images/minus-button.png"
             }
             else {
-                return <img src="src/assets/images/plus-button.png" style={{ marginLeft: '10px', height: '80%' }} />
+                src = "src/assets/images/plus-button.png"
             }
+            return <img src={src} style={{ marginRight: '10px', height: '80%' }} />
         }
         else {
-            return '';
+            return null;
         }
     }
     render() {
@@ -41,8 +43,9 @@ export default class Location extends React.Component {
         return (
             <li className="location-item-li">
                 <div className="location-wrapper clearfix">
-                    <div className="location-name pull-left" data-toggle="collapse" onClick={this.showChildren.bind(this)} >{this.props.node.info.name}
+                    <div className="location-name pull-left" data-toggle="collapse" onClick={this.showChildren.bind(this)} >
                         {icon}
+                        {this.props.node.info.name}
                     </div>
                     <div style={{ marginRight: '100px' }} className="location-options pull-right"> <a onClick={() => this.props.openAddLocationForm(this.props.node)} className="button btn-green pull-left" data-toggle="modal">Add Location</a>
                         <div className="edit-btn pull-left">
@@ -55,11 +58,13 @@ export default class Location extends React.Component {
                                             this.closeEditDropdown();
                                             this.props.openEditLocationForm(this.props.node);
                                         }}><a>Edit Location</a></li>
+
                                         <li onClick={() => {
                                             this.closeEditDropdown();
                                             this.props.openAddFloorplanForm(this.props.node);
-                                        }}> <a>Add Floorplan</a></li>
-                                        <Link to={'live/' + this.props.node.id}>Add Sensor</Link>
+                                        }}> <a>Edit Floor Plan</a></li>
+
+                                        <li><Link to={'live/' + this.props.node.id}>Add Sensor</Link></li>
                                     </ul>
                                 </div>
                             </div>

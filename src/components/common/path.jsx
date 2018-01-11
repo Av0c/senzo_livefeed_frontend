@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 export default class Path extends React.Component {
 	render() {
@@ -12,15 +13,14 @@ export default class Path extends React.Component {
 									(idx == 0) ? (<a className="bc-root" key={idx}>{x.info.name}</a>) :
 									([
 										<span className="bc-divider" key={-idx}> > </span>,
-										/* Must fix hash sign in the future !!!*/
-										(x.info.hasfloorplan) ? (
-											<a className="bc-element-on" key={idx} href={"#/live/" + x.id}>
+										this.props.linkOn(x) ? (
+											<Link className="bc-element-on" key={idx} to={this.props.link(x)}>
 												{x.info.name}
-											</a>
+											</Link>
 										) : (
-											<a className="bc-element-off" key={idx}>
+											<Link className="bc-element-off" key={idx}>
 												{x.info.name}
-											</a>
+											</Link>
 										)
 									])
 								)

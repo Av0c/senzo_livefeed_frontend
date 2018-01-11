@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from "config"
 import { selectUser } from "actions/user"
+import Modal from "components/common/modal"
+import * as a from "actions/user"
 
 class UserList extends React.Component {
 	constructor(props, context) {
@@ -11,10 +13,6 @@ class UserList extends React.Component {
 	openEdit(user) {
 		this.props.dispatch(selectUser(user));
 		this.props.openEditModal();
-	}
-	openDelete(user) {
-		this.props.dispatch(selectUser(user));
-		this.props.openDeleteModal();
 	}
 
 	isDescendant(root, id) {
@@ -47,6 +45,10 @@ class UserList extends React.Component {
 		}
 	}
 
+	clickDeleteButton(user) {
+		this.props.dispatch(a.deleteUser(user));
+	}
+
 	renderUser(u, nodeNames) {
 		var ok = this.props.nodeFilter==this.props.tree || this.isDescendant(this.props.nodeFilter, u.rootnodeid);
 		ok = ok && this.correctType(u, this.props.userTypeFilter);
@@ -63,16 +65,24 @@ class UserList extends React.Component {
 					{
 						(u.canmodify && u.username != this.props.me.username) ?
 						[
-							<td className="text-right edit-delete" key="0">
+							<td key="0">
 								<img className="pencil" onClick={() => this.openEdit(u)} src="/src/assets/images/pencil.png"/>
 							</td>,
-							<td className="text-right edit-delete" key="1">
-								<img className="bin" onClick={() => this.openDelete(u)} src="/src/assets/images/bin.svg"/>
+							<td key="1">
+								<Modal
+									clickButton={this.clickDeleteButton.bind(this, u)}
+									header="Delete User"
+									buttonText="Delete"
+									buttonClass="btn-danger"
+									entry={ <img className="bin" src="/src/assets/images/bin.svg"/> }
+								>
+									<p>Are you sure you want to delete this user account and all related information ?</p>
+								</Modal>
 							</td>
 						] : [
-							<td className="text-right edit-delete" key="0">
+							<td key="0">
 							</td>,
-							<td className="text-right edit-delete" key="1">
+							<td key="1">
 							</td>
 						]
 					}

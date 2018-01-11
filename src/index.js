@@ -48,6 +48,26 @@ import LiveFeedAPI from 'components/pages/livefeedapi';
 import DefaultSettings from 'components/pages/defaultsettings';
 import SensorSettings from 'components/pages/sensorsettings';
 import { initializeIcons } from '@uifabric/icons';
+import toastr from "toastr"
+
+toastr.options = {
+  "closeButton": true,
+  "debug": true,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": true,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "300",
+  "timeOut": "3000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
 initializeIcons();
 ReactDOM.render((
   <Provider store={Store}>

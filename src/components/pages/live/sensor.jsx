@@ -2,6 +2,7 @@ import React from 'react';
 import config from 'config';
 import { connect } from 'react-redux';
 import {selectSensor} from 'actions/floorplan'
+import ReactTooltip from 'react-tooltip'
 
 export class Sensor extends React.Component{
 	constructor(props){
@@ -46,9 +47,18 @@ export class Sensor extends React.Component{
 			}
 		}
 
+		console.log()
 		return(
-			<div className={className} style={style}
-				onClick={this.onClick.bind(this)}>
+			<div>
+				<div className={className} style={style}
+					onClick={!sensor.dummy && this.onClick.bind(this)}
+					data-tip="" data-for={!sensor.dummy && sensor.id}>
+				</div>
+				{
+					!sensor.dummy && <ReactTooltip  place="top" type="dark" effect="float" id={sensor.id}>
+						{sensor.Name}
+					</ReactTooltip>
+				}
 			</div>
 		)
 	}

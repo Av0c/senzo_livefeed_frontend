@@ -21,9 +21,11 @@ export function resetOverviewStats() {
     }
 }
 
-export function fetchOccupancyOverview() {
+export function fetchOccupancyOverview(params, node) {
     return {
-        type: FETCH_OCCUPANCY_OVERVIEW
+        type: FETCH_OCCUPANCY_OVERVIEW,
+        params,
+        node,
     };
 }
 
@@ -111,15 +113,18 @@ export function getParams(nextProps) {
         groupby: nextProps.querySettings.groupby
     }
     var cards = store.getState().defaultSettingsReducer.card
+    var card = cards[nextProps.currentNode.info.cardid];
 
-    if (!(0 <= params.starthour && params.starthour <= 23)) {
-        params.starthour = cards[nextProps.currentNode.info.cardid].starthour
-    }
-    if (!(0 <= params.endhour && params.endhour <= 23)) {
-        params.endhour = cards[nextProps.currentNode.info.cardid].endhour-1
-    }
-    if (!checkWeekdayMask(params.weekdaymask)) {
-        params.weekdaymask = cards[nextProps.currentNode.info.cardid].weekdaymask
+    if (card) {
+        if (!(0 <= params.starthour && params.starthour <= 23)) {
+            params.starthour = card.starthour
+        }
+        if (!(0 <= params.endhour && params.endhour <= 23)) {
+            params.endhour = card.endhour-1
+        }
+        if (!checkWeekdayMask(params.weekdaymask)) {
+            params.weekdaymask = card.weekdaymask
+        }
     }
 
     if (nextProps.querySettings.tag == 'Occupancy') {
@@ -128,7 +133,6 @@ export function getParams(nextProps) {
     else {
         params.tag = nextProps.querySettings.room.efficiencyTag || nextProps.querySettings.room.occupancyTag;
     }
-    console.log(params)
     return params;
 }
 export function findOccupancyTag(node) {
@@ -154,7 +158,7 @@ export function findEfficiencyTag(node) {
 
 export function getOccupancyOverview(params, node) {
     return dispatch => {
-        dispatch(fetchOccupancyOverview());
+        dispatch(fetchOccupancyOverview(params, node));
         axios.get(config.api.root + `/stats/overview/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}`)
             .then((response) => {
                 if (params.action == Comparison.RECEIVE_FIRST_LOCATION_OVERVIEW) {

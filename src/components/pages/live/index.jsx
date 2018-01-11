@@ -43,11 +43,10 @@ class Live extends React.Component {
 	}
 
 	fetchLive(id) {
-		this.props.dispatch(fetchLiveData(id));
+	    this.props.dispatch(fetchLiveData(this.props.user.companyid));
 	}
 
 	componentDidMount() {
-		this.fetchLive(this.props.user.rootnodeid);
 		var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
 		this.setState({ I: I });
 	}
@@ -180,7 +179,7 @@ class Live extends React.Component {
 						</div>
 					</div>
 				</div>
-				<Path path={this.state.path} />
+				<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "live/"+x.id}/>
 				<FloorPlan
 					imageURL={this.props.imageURL}
 					root={this.props.nodeFilter}

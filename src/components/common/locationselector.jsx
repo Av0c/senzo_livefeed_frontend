@@ -24,8 +24,8 @@ export class LocationSelector extends React.Component {
     generateListItems(tree, list) {
         var self = this;
         if (tree.type != 'customer') {
-            list.push(<DropdownItem key={tree.id * tree.id} class={self.props.class}>
-                <div key={tree.id} onClick={self.clickOption.bind(self, tree)}>
+            list.push(<DropdownItem key={tree.id} class={self.props.class}>
+                <div onClick={self.clickOption.bind(self, tree)}>
                     {tree.info.name}
                 </div>
             </DropdownItem>);

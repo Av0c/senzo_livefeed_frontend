@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from "config"
+import API from "./api"
 
 class LiveFeedAPI extends React.Component {
 	constructor(props, context) {
@@ -27,7 +28,7 @@ class LiveFeedAPI extends React.Component {
 								<div className="live-feeds clearfix">
 									<h3 className="pull-left">Live Feeds</h3>
 									<div className="add-feed" href="#">Add Feed
-										<div className="location-dropdown-root api-location-root">
+										<div className="location-dropdown-root api-location-root hidden">
 											<ul> 
 												<li><a href="#">Manchester</a></li>
 												<li><a href="#">Glasgow	</a>
@@ -67,20 +68,7 @@ class LiveFeedAPI extends React.Component {
 								</ul>
 							</div>
 						</div>
-						<div className="row">
-							<div className="col-md-6">
-								<div className="senzo-api">
-									<h3>SenzoAPI </h3>
-									<form className="apikey">
-										<div className="current-api-key">
-											<label>Current SenzoAPI key:</label>
-										</div>
-										<textarea rows="10" disabled="disabled"></textarea>
-										<input className="button settings-button generate pull-right" href="#generate-api-modal" data-toggle="modal" type="button" value="Generate New Key"/>
-									</form>
-								</div>
-							</div>
-						</div>
+						<API />
 					</div>
 				</div>
 				<div className="modal fade" id="delete-feed-modal">
@@ -100,24 +88,7 @@ class LiveFeedAPI extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className="modal fade" id="generate-api-modal">
-					<div className="modal-dialog modal-sm">
-						<div className="modal-content">
-							<div className="modal-header">
-								<button className="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
-								<h4 className="modal-title">Generate New API Key</h4>
-							</div>
-							<div className="modal-body delete-user-wrapper">
-								<p>Please note: creating a new SenzoAPI key will lock the current key!</p>
-								<p>We now have sent a confirmation code to your e-mail. Please copy the code to the text field below in two minutes in order to create a new key.</p>
-							</div>
-							<div className="modal-footer">
-								<button className="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-								<button className="btn btn-danger" type="button">Generate Key</button>
-							</div>
-						</div>
-					</div>
-				</div>
+
 				<div className="modal fade" id="delete-user-modal">
 					<div className="modal-dialog modal-sm">
 						<div className="modal-content">

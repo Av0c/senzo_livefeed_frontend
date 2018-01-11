@@ -1,10 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { fetchCustomerOverview } from 'actions/overview';
-import { fetchCard } from 'actions/defaultsettings';
 import Tree from 'containers/tree';
-import { fetchLiveData } from 'actions/node';
 
 export class Toolbar extends React.Component {
 
@@ -21,10 +18,6 @@ export class Toolbar extends React.Component {
     this.setState({ show: false });
   }
 
-  componentDidMount() {
-    this.props.dispatch(fetchCard());
-    this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
-  }
 
   render() {
     return (
@@ -33,7 +26,7 @@ export class Toolbar extends React.Component {
           <div className="col-xs-4" style={{ zIndex: '1007' }}>
             <div className="location-block clearfix">
               <div className="location-icon pull-left" onMouseOver={this.showChildren.bind(this)}><img src="src/assets/images/location-icon.svg" alt="Location" /></div>
-              <div className="location-name pull-left"><span>{this.props.companyName}</span></div>
+              <div className="location-name pull-left"><span>{this.props.tree.info.name}</span></div>
               {this.state.show && <div>
                 <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.state.show ? "" : " closed")} onClick={this.closeChildren.bind(this)}></div>
                 <div style={{ marginTop: '13px', zIndex: 1000 }} className={"location-dropdown-root"}>
@@ -77,7 +70,8 @@ export class Toolbar extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.authReducer.user,
-    currentSensor: state.nodeReducer.map
+    tree: state.overviewReducer.customerOverview,
+    cards: state.defaultSettingsReducer.card,
   };
 }
 function mapDispatchToProps(dispatch) {

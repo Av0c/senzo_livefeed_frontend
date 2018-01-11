@@ -33,8 +33,8 @@
   padding: 1px;
 }
 .floorplan-image {
-  min-height: 80vh;
-  min-width: 20vh;
+  min-width: 60vw;
+  max-width: 80vw;
   display: inline-block;
   vertical-align: middle;
   background-repeat: no-repeat;
@@ -136,7 +136,7 @@
   margin-top: 22px;
 }
 .breadcrumbs a {
-  color: bgrey;
+  /*color: bgrey;*/
   font-size: 16px;
 }
 .bc-divider {

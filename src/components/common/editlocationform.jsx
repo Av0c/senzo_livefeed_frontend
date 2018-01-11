@@ -93,7 +93,6 @@ export default class EditLocationForm extends React.Component {
                             <button className="btn btn-default" type="button" onClick={this.props.closeEditLocationForm}>Cancel</button>
                             <button className="btn btn-success" type="button" onClick={() => {
                                 this.props.submit(node, this.state, locations);
-                                this.props.closeEditLocationForm();
                             }} >Confirm</button>
                         </div>
                     </div>

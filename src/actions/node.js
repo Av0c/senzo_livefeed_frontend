@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from 'config';
 import appHistory from 'components/common/appHistory';
+import toastr from 'toastr';
 
 export const FETCH_LIVE_DATA = "FETCH_LIVE_DATA";
 export const RECEIVE_LIVE_DATA = "RECEIVE_LIVE_DATA";
@@ -26,208 +27,216 @@ export const SET_PARENT_SUCCESSFULLY = 'SET_PARENT_SUCCESSFULLY';
 export const SET_PARENT_FAILED = 'SET_PARENT_FAILED';
 
 export function setParentInProgess() {
-  return {
-    type: SET_PARENT_IN_PROGRESS
-  };
+	return {
+		type: SET_PARENT_IN_PROGRESS
+	};
 }
 
 export function setParentSuccessfully(data) {
-  return {
-    type: SET_PARENT_SUCCESSFULLY,
-    data
-  }
+	return {
+		type: SET_PARENT_SUCCESSFULLY,
+		data
+	}
 }
 
 export function setParentFailed(){
-  return {
-    type: SET_PARENT_FAILED,
-    data
-  }
+	return {
+		type: SET_PARENT_FAILED,
+		data
+	}
 }
 
 export function updateNodeInProgress() {
-  return {
-    type: UPDATE_NODE_IN_PROGRESS
-  };
+	return {
+		type: UPDATE_NODE_IN_PROGRESS
+	};
 }
 
 export function updateFailed(data) {
-  return {
-    type: UPDATE_FAILED,
-    data
-  };
+	return {
+		type: UPDATE_FAILED,
+		data
+	};
 }
 
 export function updateNodeSuccessfully(data) {
-  return {
-    type: UPDATE_NODE_SUCCESSFULLY,
-    data
-  }
+	return {
+		type: UPDATE_NODE_SUCCESSFULLY,
+		data
+	}
 }
 
 export function createNodeInProgress() {
-  return {
-    type: CREATE_NODE_IN_PROGRESS
-  };
+	return {
+		type: CREATE_NODE_IN_PROGRESS
+	};
 }
 
 export function createFailed(data) {
-  return {
-    type: CREATE_FAILED,
-    data
-  };
+	return {
+		type: CREATE_FAILED,
+		data
+	};
 }
 
 export function createNodeSuccessfully(data) {
-  return {
-    type: CREATE_NODE_SUCCESSFULLY,
-    data
-  }
+	return {
+		type: CREATE_NODE_SUCCESSFULLY,
+		data
+	}
 }
 
 export function deleteNodeInProgress() {
-  return {
-    type: DELETE_NODE_IN_PROGRESS
-  };
+	return {
+		type: DELETE_NODE_IN_PROGRESS
+	};
 }
 
 export function deleteFailed(data) {
-  return {
-    type: DELETE_FAILED,
-    data
-  };
+	return {
+		type: DELETE_FAILED,
+		data
+	};
 }
 
 export function deleteNodeSuccessfully(data) {
-  return {
-    type: DELETE_NODE_SUCCESSFULLY,
-    data
-  }
+	return {
+		type: DELETE_NODE_SUCCESSFULLY,
+		data
+	}
 }
 
 export function uploadImage (data){
-  return {
-    type:UPLOAD_IMAGE,
-    data
-  }
+	return {
+		type:UPLOAD_IMAGE,
+		data
+	}
 }
 
 export function uploadImageFailed() {
-  return {
-    type: UPLOAD_IMAGE_FAILED
-  }
+	return {
+		type: UPLOAD_IMAGE_FAILED
+	}
 }
 
 export function uploadImageSuccessful() {
-  return {
-    type: UPLOAD_IMAGE_SUCCESSFUL
-  }
+	return {
+		type: UPLOAD_IMAGE_SUCCESSFUL
+	}
 }
 
 export function updateNode(node) {
-  return dispatch => {
-    dispatch(updateNodeInProgress());
-    return axios.put(config.api.root + `/node/update/${node.id}`, node)
-      .then((response) => {
-        dispatch(updateNodeSuccessfully(response.data));
-      })
-      .catch(function (response) {
-        dispatch(updateFailed(response.data));
-      })
-  }
+	return dispatch => {
+		dispatch(updateNodeInProgress());
+		console.log(node);
+		return axios.put(config.api.root + `/node/update/${node.id}`, node)
+			.then((response) => {
+				dispatch(updateNodeSuccessfully(response.data));
+			})
+			.catch(function (response) {
+				dispatch(updateFailed(response.data));
+			})
+	}
 }
 
 export function createNode(id, node) {
-  return dispatch => {
-    dispatch(createNodeInProgress());
-    return axios.post(config.api.root + `/node/create/${id}`, node)
-      .then((response) => {
-        dispatch(createNodeSuccessfully(response.data));
-        return response.data;
-      })
-      .catch(function (response) {
-        dispatch(createFailed(response.data));
-      })
-  }
+	return dispatch => {
+		dispatch(createNodeInProgress());
+		return axios.post(config.api.root + `/node/create/${id}`, node)
+			.then((response) => {
+				dispatch(createNodeSuccessfully(response.data));
+				return response.data;
+			})
+			.catch(function (response) {
+				dispatch(createFailed(response.data));
+			})
+	}
 }
 
 export function deleteNode(node) {
-  return dispatch => {
-    dispatch(deleteNodeInProgress());
-    return axios.delete(config.api.root + `/node/delete/${node.id}`)
-      .then((response) => {
-        dispatch(deleteNodeSuccessfully(response.data));
-      })
-      .catch(function (response) {
-        dispatch(deleteFailed(response.data));
-      })
-  }
+	return dispatch => {
+		dispatch(deleteNodeInProgress());
+		return axios.delete(config.api.root + `/node/delete/${node.id}`)
+			.then((response) => {
+				dispatch(deleteNodeSuccessfully(response.data));
+			})
+			.catch(function (response) {
+				dispatch(deleteFailed(response.data));
+			})
+	}
 }
 
-export function uploadFloorplanView(id, image) {
-  let formData = new FormData();
-  formData.append('floorplan', image);
-  let axiosConfig = {
-    headers: {'Content-Type': 'multipart/form-data'}
-  };
-  return dispatch => {
-    dispatch(uploadImage(image));
-    return axios.post(config.api.root + `/node/image/upload/${id}`, formData, axiosConfig)
-      .then((response) => {
-        dispatch(uploadImageSuccessfully(response.data));
-      })
-      .catch(function (response) {
-        dispatch(uploadImageFailed());
-      })
-  }
+export function uploadFloorplanView(node, image, type) {
+	return (dispatch) => {
+		let formData = new FormData();
+		formData.append('floorplan', image);
+		let axiosConfig = {
+			headers: {'Content-Type': 'multipart/form-data'}
+		};
+		var newNode = {
+				id: node.id,
+				type: type,
+		};
+		return axios.put(config.api.root + `/node/update/${node.id}`, newNode)
+			.then((response) => {
+				return axios.post(config.api.root + `/node/image/upload/${node.id}`, formData, axiosConfig)
+						.then((response) => {
+							toastr.success("Edit floor plan successfully !");
+						}).catch((response) => {
+							toastr.error("Edit floor plan failed : " + response.data);
+						})
+			}).catch((response) => {
+				toastr.error("Edit floor plan failed : " + response.data);
+			})
+	}
 }
 
 export function selectNodeStats(node) {
-  appHistory.push("/statistic");
+	appHistory.push("/statistic");
 }
 
 export function fetchLiveData(id) {
-  return {
-    type: FETCH_LIVE_DATA,
-    id
-  };
+	return {
+		type: FETCH_LIVE_DATA,
+		id
+	};
 }
 
 export function receiveLiveData(response) {
-  return {
-    type: RECEIVE_LIVE_DATA,
-    data: response.data
-  };
+	return {
+		type: RECEIVE_LIVE_DATA,
+		data: response.data
+	};
 }
 
 export function fetchFailed(data) {
-  return {
-    type: FETCH_FAILED,
-    data
-  };
+	return {
+		type: FETCH_FAILED,
+		data
+	};
 }
 
 export function getLiveData(id) {
-  return dispatch => {
-    dispatch(fetchLiveData(id));
-    axios.get(config.api.root + '/sensor/live/' + id)
-      .then((response) => {
-        dispatch(receiveLiveData(response.data));
-      })
-      .catch(function (response) {
-        dispatch(fetchFailed(response.data));
-      });
-  };
+	return dispatch => {
+		dispatch(fetchLiveData(id));
+		axios.get(config.api.root + '/sensor/live/' + id)
+			.then((response) => {
+				dispatch(receiveLiveData(response.data));
+			})
+			.catch(function (response) {
+				dispatch(fetchFailed(response.data));
+			});
+	};
 }
 
 export function setParent(id1, id2) {
-  return dispatch => {
-    dispatch(setParentInProgess());
-    return axios.put(config.api.root+`/node/setparent/${id1}/${id2}`).then((response) => {
-      dispatch(setParentSuccessfully(response.data));
-    })
-    .catch((response) => {
-      dispatch(setParentFailed(response.data));
-    });
-  }
+	return dispatch => {
+		dispatch(setParentInProgess());
+		return axios.put(config.api.root+`/node/setparent/${id1}/${id2}`).then((response) => {
+			dispatch(setParentSuccessfully(response.data));
+		})
+		.catch((response) => {
+			dispatch(setParentFailed(response.data));
+		});
+	}
 }

@@ -351,7 +351,7 @@ input:focus {
     font-size: 16px;
 }
 .overview-block {
-    margin-top: 60px;
+    margin-top: 20px;
     overflow-x: hidden;
 }
 .the-card {
@@ -368,7 +368,7 @@ input:focus {
 }
 .card-shape {
     background: #fff;
-    border-radius: 20px;
+    border-radius: 15px;
     box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
     max-width: 1200px;
     margin: auto;
@@ -679,15 +679,6 @@ h2.account-title {
 .add-loc-button {
     margin-left: 36px;
 }
-.locations-list {
-    margin: 0;
-    padding: 0;
-    margin-top: 30px;
-}
-.locations-list .location-name {
-    font-size: 28px;
-    font-weight: bold;
-}
 .change-pwd-wrapper label,
 .add-account-wrapper label,
 .edit-sensor-wrapper label,
@@ -725,6 +716,8 @@ h2.account-title {
 .locations-list .location-name {
     font-size: 18px;
     font-weight: bold;
+    width: 200px;
+    cursor: pointer;
 }
 .edit-btn {
     position: relative;
@@ -736,6 +729,7 @@ h2.account-title {
 }
 .settings-location-dropdown a {
     color: #585e66;
+    cursor: pointer;
 }
 .settings-location-dropdown a:hover {
     color: #7ec443;
@@ -752,7 +746,8 @@ h2.account-title {
     margin-top: 5px;
 }
 .locations-list ul {
-    margin-left: 28px;
+    margin-left: 18px;
+    margin-right: 10px;
     padding: 0;
 }
 .locations-list li ul li .location-name {
@@ -765,6 +760,7 @@ h2.account-title {
 .settings-edit {
     position: relative;
 }
+
 .edit-dropdown {
     width: 200px;
     text-align: left;
@@ -978,65 +974,6 @@ h2.account-title {
 .days-picker label {
     width: 120px;
 }
-.default-settings-bottom {
-    margin-top: 12px;
-}
-.add-loc-button {
-    margin-left: 36px;
-}
-.locations-list {
-    margin: 0;
-    padding: 0;
-    margin-top: 30px;
-}
-.locations-list .location-name {
-    font-size: 18px;
-    font-weight: bold;
-}
-.edit-btn {
-    position: relative;
-}
-.settings-location-dropdown {
-    left: auto;
-    right: 0;
-    min-width: 130px;
-}
-.settings-location-dropdown a {
-    color: #585e66;
-}
-.settings-location-dropdown a:hover {
-    color: #7ec443;
-}
-.settings-location-dropdown a:active,
-.settings-location-dropdown a:visited {
-    color: #585e66;
-}
-.location-options .button,
-.location-options .bin {
-    margin-left: 20px;
-}
-.location-options .bin {
-    margin-top: 5px;
-}
-.locations-list ul {
-    margin-left: 18px;
-    padding: 0;
-}
-.locations-list li ul li .location-name {
-    font-weight: normal;
-}
-.locations-list li {
-    margin-top: 14px;
-    margin-bottom: 14px;
-}
-.settings-edit {
-    position: relative;
-}
-.edit-dropdown {
-    width: 200px;
-    text-align: left;
-    padding: 2px;
-}
 .zone-type input[type="radio"] {
     margin-right: 6px;
 }
@@ -1141,4 +1078,13 @@ ul.users {
     margin: 15px 0;
     display: block;
     width: 100%;
+}
+textarea.has-error,
+input[type="text"].has-error,
+input[type="username"].has-error,
+input[type="email"].has-error,
+input[type="password"].has-error {
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)
 }

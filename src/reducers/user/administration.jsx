@@ -20,8 +20,6 @@ const initialState = {
 	userTypeFilter: config.userTypeFilter[0],
 
 	selectedUser: {},
-	DAstage: "nothing", // DA = delete account
-	DArespond: {},
 	EAstage: "nothing", // EA = edit account
 	EArespond: {},
 
@@ -39,7 +37,7 @@ function editUser(user){
 }
 function deleteUser(user){
 	return axios.delete(`${config.api.root}/user/delete/${user.username}`)
-		.then((res) => a.deleteUserOk(res))
+		.then((res) => a.listContact())
 		.catch((error) => a.deleteUserFail(error));
 }
 
@@ -101,22 +99,16 @@ export default(state = initialState, action) => {
 		case a.DELETE_USER: {
   			return loop (
 				Object.assign({}, state, {
-					DAstage: "deleting",
-					DArespond: {}
 				}),
 				Effects.promise(deleteUser, action.username)
 			)
 		}
 		case a.DELETE_USER_OK: {
 			return Object.assign({}, state, {
-				DAstage: "deleted",
-				DArespond: {}
 			})
 		}
 		case a.DELETE_USER_FAIL: {
 			return Object.assign({}, state, {
-				DAstage: "delete-failed",
-				DArespond: action.e
 			})
 		}
 		// Filters

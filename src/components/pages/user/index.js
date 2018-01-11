@@ -197,7 +197,7 @@ class User extends React.Component {
 		this.listNodes(this.props.nodeMap[this.props.me.rootnodeid], 0, nodes)
 		return (
 			<div style={{height:"100%"}}>
-				<div className="stats-menu">
+				<div className="settings-wrapper">
 					<div className="container-fluid">
 						<div className="row">
 							<div className="col-md-12">

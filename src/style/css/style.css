@@ -352,6 +352,7 @@ input:focus {
 }
 .overview-block {
     margin-top: 60px;
+    overflow-x: hidden;
 }
 .the-card {
     padding: 12px 26px 42px;
@@ -361,6 +362,9 @@ input:focus {
     max-width: 400px;
     margin: auto;
     min-height: 730px;
+}
+.card-buttons {
+    margin-top: 20px;
 }
 .card-shape {
     background: #fff;
@@ -374,13 +378,18 @@ input:focus {
     max-width: 400px;
     white-space: nowrap;
     overflow: hidden;
-
     text-align: center;
     font-size: 28px;
 }
 .card-inner-location {
     font-size: 16px;
     position: relative;
+}
+.card-nav {
+
+}
+.card-area-dropdown {
+
 }
 .nav-stats {
     margin-right: 10px;
@@ -393,9 +402,6 @@ input:focus {
 .total-desks-inuse,
 .total-rooms-inuse {
     color: #a7a6a6;
-}
-.card-buttons {
-    margin-top: 20px;
 }
 .card-stats-numeric {
     margin-top: 20px;
@@ -1135,7 +1141,7 @@ ul.users {
 }
 .add-card {
     width: 900px;
-    margin-left: 50px;
+    /* margin-left: 50px; */
 }
 .settings-divider {
     border-top: 1px dotted grey;

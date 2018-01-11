@@ -175,6 +175,7 @@ export default class Bar extends React.Component {
     }
 
     render() {
+        console.log(this.props.values);
         return (
             <div>
                 <div className="bar-container" ref={input => {this.myBar = input}} style={this.state.containerCss}>

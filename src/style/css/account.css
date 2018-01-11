@@ -3,53 +3,52 @@
 .account-form input[type="tel"],
 .account-form select,
 .account-form input[type="password"] {
-  width: 230px;
-  height: 36px;
-  padding-left: 10px;
-  margin-bottom: 18px;
-  border: 1px solid #dfdfdf;
-  border-radius: 6px;
-  box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
-  margin-left: 12px;
+    width: 230px;
+    height: 36px;
+    padding-left: 10px;
+    margin-bottom: 18px;
+    border: 1px solid #dfdfdf;
+    border-radius: 6px;
+    box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+    margin-left: 12px;
 }
 .account-form select {
-  background: #fff;
+    background: #fff;
 }
 .account-form input[disabled] {
-  background: #f5f5f5;
+    background: #f5f5f5;
 }
 .account-form label {
-  width: 125px;
-  text-align: right;
-  font-family: 'Catamaran';
-  font-size: 16px;
-  font-weight: normal;
+    width: 125px;
+    text-align: right;
+    font-family: 'Catamaran';
+    font-size: 16px;
+    font-weight: normal;
 }
 .account-form input[type="button"] {
-  font-family: 'Catamaran';
-  font-size: 18px;
-  border-radius: 7px;
-  padding: 4px 18px;
-
-  background: #7ec443;
-  color: #fff;
-  border: none;
-  width: 230px;
-  margin-left: 109px;
-  margin-top: 0;
+    font-family: 'Catamaran';
+    font-size: 18px;
+    border-radius: 7px;
+    padding: 4px 18px;
+    background: #7ec443;
+    color: #fff;
+    border: none;
+    width: 230px;
+    margin-left: 109px;
+    margin-top: 0;
 }
 .account-form {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 .settings-wrapper {
-  padding-top: 24px;
+    padding-top: 24px;
 }
 h2.account-title {
-  margin-bottom: 18px;
+    margin-bottom: 18px;
 }
 .account-submit input[type="button"].disabled {
-  background: none;
-  float: right;
-  border: 1px solid #979797;
-  color: #979797;
+    background: none;
+    float: right;
+    border: 1px solid #979797;
+    color: #979797;
 }

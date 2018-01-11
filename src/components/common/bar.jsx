@@ -45,12 +45,10 @@ export default class Bar extends React.Component {
         window.addEventListener("resize", this.removeTrans);
 
         // Verify values
-        
         const values = this.props.values.slice();
-        values[0] = Math.max(0, Math.min( values[0], 1 ));
-        values[1] = Math.max(0, Math.min( values[1], 1-values[0] ));
-        values[2] = Math.round(Math.max(0, Math.min( 1 - (values[0] + values[1]), 1 )) * 10000) / 10000;
-
+        // values[0] = Math.max(0, Math.min( values[0], 1 ));
+        // values[1] = Math.max(0, Math.min( values[1], 1-values[0] ));
+        // values[2] = Math.round(Math.max(0, Math.min( 1 - (values[0] + values[1]), 1 )) * 10000) / 10000;
         this.setState({
             lengths: values,
         });
@@ -66,9 +64,9 @@ export default class Bar extends React.Component {
             this.addTrans();
         }
         const values = props.values.slice();
-        values[0] = Math.max( 0, Math.min(1, values[0]) ); // Middle segment can't be zero or it will dissappear
-        values[1] = Math.max( 0.00001, Math.min(1, values[1]) ); // Middle segment can't be zero or it will dissappear
-        values[2] = Math.round(Math.max(0, Math.min(1,  1 - (values[0] + values[1]) )) * 10000) / 10000;
+        // values[0] = Math.max( 0, Math.min(1, values[0]) );
+        // values[1] = Math.max( 0, Math.min(1, values[1]) ); // Middle segment can't be zero or it will dissappear
+        // values[2] = Math.round(Math.max(0, Math.min(1,  1 - (values[0] + values[1]) )) * 10000) / 10000;
         this.setState({ lengths: values });
     }
 
@@ -110,7 +108,7 @@ export default class Bar extends React.Component {
 
     renderInfo(i) {
         // Convert values to percent first
-        var percent = Math.round(this.state.lengths[i] * 10000)/100;
+        var percent = Math.round(this.state.lengths[i] * 1000)/10;
         var marker;
         if (Number(i) === 1) {
             marker = percent + "%\n|";
@@ -154,6 +152,11 @@ export default class Bar extends React.Component {
         for (var n = 0; n < i; n++) {
             x1 += this.state.lengths[n];
         }
+        // Don't draw if length is zero
+        const strokeColors = this.state.colors.slice();
+        if (Number(this.state.lengths[i]) <= 0.001) {
+            strokeColors[i] = "none";
+        }
         x1 = Math.max(0, x1*maxLength+padding);
         var translateX = "translate(" + x1 + ")";
         // Set strokeDasharray
@@ -165,13 +168,14 @@ export default class Bar extends React.Component {
                 x1={translateX}
                 strokeDasharray={strokeDasharray}
                 maxLength={maxLength}
-                color={this.state.colors[i]}
+                color={strokeColors[i]}
                 css={this.state.css}
             />
         );
     }
 
     render() {
+        console.log(this.props.values);
         return (
             <div>
                 <div className="bar-container" ref={input => {this.myBar = input}} style={this.state.containerCss}>

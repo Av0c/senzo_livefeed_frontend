@@ -197,60 +197,56 @@ class User extends React.Component {
 		this.listNodes(this.props.nodeMap[this.props.me.rootnodeid], 0, nodes)
 		return (
 			<div style={{height:"100%"}}>
-				<div className="live-header-wrapper">
-					<div className="stats-menu">
-						<div className="container-fluid">
-							<div className="row">
-								<div className="col-md-12">
-									<LeftMenu overview='' comparison='' />
-								</div>
-							</div>
-							<hr className="settings-divider"></hr>
-						</div>
-					</div>
-				</div>
-				<div className="live-header-wrapper" style={{paddingTop:"20px"}}>
+				<div className="stats-menu">
 					<div className="container-fluid">
 						<div className="row">
 							<div className="col-md-12">
-								<div className="clearfix user-table">
-									<h2 className="pull-left">{(this.props.me.role == "ADMIN") ? "User Administration" : "Contact"}</h2>
-									{
-										(this.props.me.role == "ADMIN") ? ([
-											<div key="0" className="button" style={{ marginLeft: "14px" }} onClick={this.AAOpen.bind(this)}>Add Account</div>,
-											<NodeDropdown
-												key="1"
-												outsideClass="dropdown-btn settings-dropdown pull-left"
-												root={this.props.tree}
-												nodeFilter={this.props.nodeFilter}
-												click={
-													(node) => { this.props.dispatch(useradSelectNode(node)) }
-												}
-												list={this.listNodeFilter.bind(this)}
-												header="All locations"
-											/>,
-											<ListDropdown
-												key="2"
-												outsideClass="dropdown-btn settings-dropdown pull-left"
-												items={config.userTypeFilter}
-												getText={(x) => x.text}
-												selected={this.props.userTypeFilter}
-												click={(code) => { this.props.dispatch(useradSelectType(code)) }}
-											/>,
-										]
-										) : (
-												<div />
-											)
-									}
-								</div>
-								<UserList
-									contact={this.props.contact}
-									openEditModal={this.EAOpen.bind(this)}
-									nodeFilter={this.props.nodeFilter}
-									userTypeFilter={this.props.userTypeFilter}
-									tree={this.props.tree}
-								/>
+								<LeftMenu overview='' comparison='' />
 							</div>
+						</div>
+						<hr className="settings-divider"></hr>
+					</div>
+				</div>
+				<div className="container-fluid">
+					<div className="row">
+						<div className="col-md-12">
+							<div className="clearfix user-table">
+								<h2 className="pull-left">{(this.props.me.role == "ADMIN") ? "User Administration" : "Contact"}</h2>
+								{
+									(this.props.me.role == "ADMIN") ? ([
+										<div key="0" className="button" style={{ marginLeft: "14px" }} onClick={this.AAOpen.bind(this)}>Add Account</div>,
+										<NodeDropdown
+											key="1"
+											outsideClass="dropdown-btn settings-dropdown pull-left"
+											root={this.props.tree}
+											nodeFilter={this.props.nodeFilter}
+											click={
+												(node) => { this.props.dispatch(useradSelectNode(node)) }
+											}
+											list={this.listNodeFilter.bind(this)}
+											header="All locations"
+										/>,
+										<ListDropdown
+											key="2"
+											outsideClass="dropdown-btn settings-dropdown pull-left"
+											items={config.userTypeFilter}
+											getText={(x) => x.text}
+											selected={this.props.userTypeFilter}
+											click={(code) => { this.props.dispatch(useradSelectType(code)) }}
+										/>,
+									]
+									) : (
+											<div />
+										)
+								}
+							</div>
+							<UserList
+								contact={this.props.contact}
+								openEditModal={this.EAOpen.bind(this)}
+								nodeFilter={this.props.nodeFilter}
+								userTypeFilter={this.props.userTypeFilter}
+								tree={this.props.tree}
+							/>
 						</div>
 					</div>
 				</div>

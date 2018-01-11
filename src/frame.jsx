@@ -26,6 +26,7 @@ export class Frame extends React.Component {
   }
 
   componentDidMount() {
+    // Neccessary api init here.
     this.props.dispatch(fetchCard());
     this.props.dispatch(fetchCustomerOverview(this.props.user.companyid));
     this.props.dispatch(fetchLiveData(this.props.user.companyid));

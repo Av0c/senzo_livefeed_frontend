@@ -58,7 +58,6 @@ class UserList extends React.Component {
 		return (
 			<tr key={u.username} className={(u.username == this.props.me.username) ? "bold" : ""}>
 				<td className="tab-left"> <span className={u.registered ? "active-user" : "pending-user"}>{u.title + " " + u.firstname + " " + u.lastname}</span></td>
-				<td>{u.title}</td>
 {/*				<td>{u.username}</td>*/}
 				<td> <a className="table-email" href={"mailto:"+u.email}>{u.email}</a></td>
 				<td>{u.phone}</td>

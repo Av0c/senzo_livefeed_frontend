@@ -21,6 +21,12 @@ const initialState = {
   imageURL: '',
 };
 
+// function uploadImage(id) {
+//   return axios.get(`${config.api.root}/node/image/${id}`)
+//     .then(receiveImage)
+//     .catch((error) => console.log(error))
+// }
+
 function fetchImage(id) {
   return axios.get(`${config.api.root}/node/image/${id}`)
     .then(receiveImage)

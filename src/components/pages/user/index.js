@@ -216,9 +216,7 @@ class User extends React.Component {
 									<h2 className="pull-left">{(this.props.me.role == "ADMIN") ? "User Administration" : "Contact"}</h2>
 									{
 										(this.props.me.role == "ADMIN") ? ([
-											<div key="0" className="button" style={{ marginLeft: "14px" }} onClick={this.AAOpen.bind(this)}>
-												Add Account
-												</div>,
+											<div key="0" className="button" style={{ marginLeft: "14px" }} onClick={this.AAOpen.bind(this)}>Add Account</div>,
 											<NodeDropdown
 												key="1"
 												outsideClass="dropdown-btn settings-dropdown pull-left"

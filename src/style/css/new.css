@@ -164,7 +164,7 @@ td.table-heading h4 {
 }
 .settings-dropdown {
   margin-left: 24px;
-  margin-top: 7px;
+  margin-top: 3px;
 }
 .feedback-container label {
   display: block;
@@ -459,5 +459,3 @@ td.table-heading h4 {
 .tb-closed .toolbar-arrow-left {
   display: block;
 }
-
-

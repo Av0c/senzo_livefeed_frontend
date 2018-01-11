@@ -30,11 +30,11 @@ class User extends React.Component {
 			AArespond: "",
 			AArespondClass: "",
 
-			DAOpen: false, // delete account modal open ? 
+			DAOpen: false, // delete account modal open ?
 			DArespond: "",
 			DArespondClass: "",
 
-			EAOpen: false, // edit account modal open ? 
+			EAOpen: false, // edit account modal open ?
 			EArespond: "",
 			EArespondClass: "",
 
@@ -204,11 +204,12 @@ class User extends React.Component {
 			<div className="white-padded">
 				<div className="settings-wrapper">
 					<div className="container-fluid">
-						<div style={{ marginBottom: '20px' }} className="row">
+						<div className="row">
 							<div className="col-md-12">
 								<LeftMenu overview='' comparison='' />
 							</div>
 						</div>
+						<hr className="settings-divider"></hr>
 						<div className="row">
 							<div className="col-md-12">
 								<div className="clearfix user-table">

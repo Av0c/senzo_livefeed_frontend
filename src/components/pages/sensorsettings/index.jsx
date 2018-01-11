@@ -19,11 +19,11 @@ class SensorSettings extends React.Component {
 		super(props, context);
 		this.state = {
 			I: {},
-			DOpen: false, // delete sensor modal open ? 
+			DOpen: false, // delete sensor modal open ?
 			Drespond: "",
 			DrespondClass: "",
 
-			EOpen: false, // edit sensor modal open ? 
+			EOpen: false, // edit sensor modal open ?
 			Erespond: "",
 			ErespondClass: "",
 		};
@@ -152,11 +152,12 @@ class SensorSettings extends React.Component {
 			<div>
 				<div className="settings-wrapper">
 					<div className="container-fluid">
-						<div style={{ marginBottom: '20px' }} className="row">
+						<div className="row">
 							<div className="col-md-12">
 								<LeftMenu overview='' comparison='' />
 							</div>
 						</div>
+						<hr className="settings-divider"></hr>
 						<div className="row">
 							<div className="col-md-12">
 								<div className="settings-header clearfix">

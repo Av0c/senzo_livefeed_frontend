@@ -248,16 +248,15 @@ export class Settings extends React.Component {
             <div>
                 <div className="settings-wrapper">
                     <div className="container-fluid">
-                        <LeftMenu overview='' comparison='' />
                         <div className="row">
                             <div className="col-md-12">
-                                <h2 className="account-title" style={{ marginTop: '30px' }}>Location Settings</h2>
+                                <LeftMenu overview='' comparison='' />
                             </div>
                         </div>
-                    </div>
-                    <div className="container-fluid">
+                        <hr className="settings-divider"></hr>
                         <div className="row">
                             <div className="col-md-12">
+                                <h2 className="account-title">Location Settings</h2>
                                 <div className="card">
                                     <div className="heading clearfix">
                                         <h3 className="pull-left">{this.props.tree.info.name}</h3><a onClick={() => this.openAddLocationForm(this.props.tree)} className="button btn-green add-loc-button" data-toggle="modal">Add Location   </a>

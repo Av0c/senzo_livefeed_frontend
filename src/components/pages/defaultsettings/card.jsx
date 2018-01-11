@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from "config"
 import TimePicker from 'components/common/timepicker'
+import Modal from 'components/common/modal'
 import enhanceWithClickOutside from "react-click-outside";
 import * as a from 'actions/defaultsettings'
 
@@ -153,7 +154,17 @@ class Card extends React.Component {
 				</div>
 				<div className="default-settings-bottom">
 					<div className="pull-right">
-						{ !this.props.card.isdefault ? <DeleteModal clickButton={this.deleteCard.bind(this)}/> : null }
+						{ !this.props.card.isdefault ? 
+							<Modal
+								clickButton={this.deleteCard.bind(this)}
+								header="Delete Card"
+								buttonText="Delete"
+								buttonClass="btn-danger"
+								entry={ <img className="bin" src="/src/assets/images/bin.svg"/> }
+							>
+								<p>Are you sure you want to delete this setting card ?</p>
+							</Modal>
+						: null }
 					</div>
 				</div>
 			</div>
@@ -248,43 +259,3 @@ class LocationPicker extends React.Component {
 }
 
 LocationPicker = enhanceWithClickOutside(LocationPicker);
-
-class DeleteModal extends React.Component {
-	constructor(props, context) {
-		super(props, context);
-		this.state = {
-			loaded: false,
-			open: false,
-		};
-	}
-
-	toggle() {
-		this.setState({open: !this.state.open, loaded: true});
-	}
-
-	render() {
-		let type = "hidden";
-		if (this.state.loaded) {
-			type = this.state.open ? "open" : "closed";
-		}
-		return (
-			<div>
-				<img className="bin" onClick={this.toggle.bind(this)} src="/src/assets/images/bin.svg"/>
-				<div className={"modal-overlay "+type} onClick={this.toggle.bind(this)}></div>
-				<div className={"add-account-wrapper invite-modal "+type}>
-					<div className="modal-header">
-						<button className="close" onClick={this.toggle.bind(this)}>×</button>
-						<h4 className="modal-title">Delete Card</h4>
-					</div>
-					<div className="modal-body">
-						<p>Are you sure you want to delete this setting card ?</p>
-					</div>
-					<div className="modal-footer">
-						<button className="btn btn-default" type="button" onClick={this.toggle.bind(this)}>Cancel</button>
-						<button className="btn btn-danger" type="button" onClick={this.props.clickButton}>Delete</button>
-					</div>
-				</div>
-			</div>
-		);
-	}
-}

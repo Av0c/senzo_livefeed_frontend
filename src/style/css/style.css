@@ -842,7 +842,7 @@ td.table-heading h4 {
   border-radius: 6px;
   box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
 }
-.feedback-submit input[type="submit"] {
+.feedback-submit input[type="button"] {
   background: #7ec443;
   color: #fff;
   border: none;
@@ -1130,4 +1130,13 @@ ul.users {
 .add-card {
   width: 900px;
   margin-left: 50px;
+}
+textarea.has-error,
+input[type="text"].has-error,
+input[type="username"].has-error,
+input[type="email"].has-error,
+input[type="password"].has-error {
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)
 }

@@ -25,6 +25,7 @@ import userRegisterReducer from 'reducers/user/register';
 import userAdminReducer from 'reducers/user/administration';
 import sensorSettingsReducer from 'reducers/sensorsettings';
 import defaultSettingsReducer from 'reducers/defaultsettings';
+import livefeedAPIReducer from 'reducers/livefeedapi';
 
 import { clearToken } from 'actions/authentication';
 import { showNotification } from 'actions/common';
@@ -51,6 +52,7 @@ const reducer = combineReducers({
   userAdminReducer,
   sensorSettingsReducer,
   defaultSettingsReducer,
+  livefeedAPIReducer,
 });
 
 const store = createStore(

@@ -5,7 +5,6 @@ import config from "config"
 import UserList from "./userlist"
 
 import InviteModal from "./inviteModal"
-import DeleteModal from "./deleteModal"
 import EditModal from "./editModal"
 
 import NodeDropdown from "components/common/nodedropdown"
@@ -44,7 +43,7 @@ class User extends React.Component {
 
 	componentWillMount() {
 		this.props.dispatch(listContact());
-		var itv = setInterval(this.props.dispatch, 3000000, listContact());
+		var itv = setInterval(this.props.dispatch, 3000, listContact());
 		this.setState({ interval: itv });
 	}
 
@@ -79,10 +78,6 @@ class User extends React.Component {
 	EAClose() {
 		this.props.dispatch(selectUser({}));
 		this.setState({ EAOpen: false });
-	}
-
-	clickDeleteButton() {
-		this.props.dispatch(deleteUser(this.props.selectedUser));
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -201,14 +196,20 @@ class User extends React.Component {
 		var nodes = [];
 		this.listNodes(this.props.nodeMap[this.props.me.rootnodeid], 0, nodes)
 		return (
-			<div className="white-padded">
-				<div className="settings-wrapper">
-					<div className="container-fluid">
-						<div style={{ marginBottom: '20px' }} className="row">
-							<div className="col-md-12">
-								<LeftMenu overview='' comparison='' />
+			<div style={{height:"100%"}}>
+				<div className="live-header-wrapper">
+					<div className="stats-menu">
+						<div className="container-fluid">
+							<div className="row">
+								<div className="col-md-12">
+									<LeftMenu overview='' comparison='' />
+								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div className="live-header-wrapper" style={{paddingTop:"20px"}}>
+					<div className="container-fluid">
 						<div className="row">
 							<div className="col-md-12">
 								<div className="clearfix user-table">
@@ -245,7 +246,6 @@ class User extends React.Component {
 								</div>
 								<UserList
 									contact={this.props.contact}
-									openDeleteModal={this.DAOpen.bind(this)}
 									openEditModal={this.EAOpen.bind(this)}
 									nodeFilter={this.props.nodeFilter}
 									userTypeFilter={this.props.userTypeFilter}
@@ -271,13 +271,6 @@ class User extends React.Component {
 					respond={this.state.EArespond}
 					respondClass={this.state.EArespondClass}
 				/>
-				<DeleteModal
-					open={this.state.DAOpen}
-					closeModal={this.DAClose.bind(this)}
-					respond={this.state.DArespond}
-					respondClass={this.state.DArespondClass}
-					clickButton={this.clickDeleteButton.bind(this)}
-				/>
 			</div>
 		);
 	}
@@ -294,9 +287,6 @@ function mapStateToProps(state) {
 
 		EAstage: state.userAdminReducer.EAstage,
 		EArespond: state.userAdminReducer.EArespond,
-
-		DAstage: state.userAdminReducer.DAstage,
-		DArespond: state.userAdminReducer.DArespond,
 
 		selectedUser: state.userAdminReducer.selectedUser,
 		contact: state.userAdminReducer.contact,

@@ -180,7 +180,7 @@ class Live extends React.Component {
 						</div>
 					</div>
 				</div>
-				<Path path={this.state.path} />
+				<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "live/"+x.id}/>
 				<FloorPlan
 					imageURL={this.props.imageURL}
 					root={this.props.nodeFilter}

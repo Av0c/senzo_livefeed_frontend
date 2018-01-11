@@ -62,6 +62,7 @@ table.users-table {
     position: fixed;
     right: 5%;
     margin: auto;
+    border-radius: 4px;
     box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.4);
 }
 .user-color-note tr {

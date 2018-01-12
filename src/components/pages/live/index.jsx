@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from "config"
+import ReactTooltip from 'react-tooltip'
 import Path from "components/common/path"
 
 import NodeDropdown from "components/common/nodedropdown"
@@ -47,6 +48,7 @@ class Live extends React.Component {
 	}
 
 	componentDidMount() {
+		this.prepare(this.props);
 		var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
 		this.setState({ I: I });
 	}
@@ -124,13 +126,6 @@ class Live extends React.Component {
 	}
 
 	render() {
-		// ?? how to fix this ??
-		// console.log("live render", this.state.currentNode.info, this.props.tree.info);
-		if (this.state.currentNode.info.empty && !this.empty(this.props.tree)) {
-			// console.log("render prep", this.props);
-			this.prepare(this.props);
-		}
-		// ??
 		return (
 			<div>
 				<div className="live-header-wrapper">

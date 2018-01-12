@@ -4,6 +4,7 @@ import Sensor from './sensor';
 import MeetingRoom from './meetingroom';
 import config from 'config';
 import { Link } from 'react-router'
+import ReactTooltip from 'react-tooltip'
 import SensorForm from './sensorform';
 
 import {

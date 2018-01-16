@@ -24,7 +24,7 @@ class Password extends React.Component {
         })
           .catch(error => {
             toastr.error(error);
-          });; 
+          });;
       }
       else {
         toastr.error("Password does not match! ");
@@ -66,8 +66,14 @@ class Password extends React.Component {
                   <label>Confirm Password</label>
                   <input type="password" id="confirm" onChange={this.handleChange.bind(this)} />
                 </div>
-                <div className="account-change-password"><a onClick={this.save.bind(this)} className="chpwd">Change Password </a></div>
-                <div className="account-change-password"><a onClick={this.cancel.bind(this)} className="cancel">Cancel </a></div>
+                <div className="account-change-password">
+                    <label></label>
+                    <a onClick={this.save.bind(this)} className="chpwd flat-button">Change Password </a>
+                </div>
+                <div className="account-change-password">
+                    <label></label>
+                    <a onClick={this.cancel.bind(this)} className="cancel flat-button">Cancel </a>
+                </div>
               </form>
             </div>
           </div>

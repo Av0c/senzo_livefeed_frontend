@@ -107,34 +107,36 @@ class UserList extends React.Component {
 		if (ok && nodeNames) {
 			return (
 				<div className="users-section">
-					<table className="users-table pull-left"><tbody> {
-						userRows.map((urow) => {
-							return [
-									<tr className="table-header-row">
-										<th>
-											<h4>{urow[1]}</h4>
-										</th>
-										<th>EMAIL</th>
-										<th>MOBILE</th>
-										<th>LOCATION</th>
-										<th></th>
-										<th></th>
-									</tr>,
-									urow[0].map((u) => this.renderUser(u, nodeNames)),
-									<tr className="table-spacing"></tr>
-								];
-							})
-						}
-					</tbody></table>
-					<table className="user-color-note"><tbody>
+					<div className="popup-container">
+						<table className="flat-table"><tbody> {
+								userRows.map((urow) => {
+									return [
+										<tr className="table-header-row">
+											<th>
+												<h4>{urow[1]}</h4>
+											</th>
+											<th>EMAIL</th>
+											<th>MOBILE</th>
+											<th>LOCATION</th>
+											<th></th>
+											<th></th>
+										</tr>,
+										urow[0].map((u) => this.renderUser(u, nodeNames)),
+										<tr className="table-spacing"></tr>
+									];
+								})
+							}
+						</tbody></table>
+					</div>
+					<table className="popup-color-note"><tbody>
 						<tr>
 							<td>
-								<span className="user-color-note-td green">Registered</span>
+								<span className="popup-color-note-td green">Registered</span>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span className="user-color-note-td brown">Pending</span>
+								<span className="popup-color-note-td brown">Pending</span>
 							</td>
 						</tr>
 					</tbody></table>

@@ -351,7 +351,6 @@ input:focus {
     font-size: 16px;
 }
 .overview-block {
-    margin-top: 20px;
     overflow-x: hidden;
 }
 .the-card {
@@ -650,9 +649,6 @@ li {
 .location-dropdown-root ul ul li {
     background: #fff;
     /* Flyout CSS menu */
-}
-.settings-wrapper {
-    padding-top: 24px;
 }
 h2.account-title {
     margin-bottom: 18px;

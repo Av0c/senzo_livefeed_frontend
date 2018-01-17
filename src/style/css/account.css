@@ -30,7 +30,7 @@
     margin-top: 30px;
 }
 .settings-wrapper {
-    padding-top: 24px;
+    padding-top: 18px;
 }
 h2.account-title {
     margin-bottom: 18px;
@@ -61,8 +61,7 @@ h2.account-title {
 }
 .account-change-password .cancel {
     text-align: center;
-    float: right;
-    display: block;
+    display: inline-block;
     width: 230px;
     color: #979797;
     border: 1px solid #979797;

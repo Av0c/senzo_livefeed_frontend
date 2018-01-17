@@ -51,7 +51,7 @@ export class Stats extends React.Component {
             <div className="stats-body" id="stats-body">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-12" style={{ backgroundColor: 'white', paddingTop: '10px' }}>
+                        <div className="col-md-12 static-menu">
                             <LeftMenu overview='active' comparison='' />
                             <DateSelector />
                             <StatsMenu name={this.state.currentNode.info.name} id={this.state.currentNode.id} node={this.state.currentNode} />

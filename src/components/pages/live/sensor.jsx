@@ -11,8 +11,9 @@ export class Sensor extends React.Component{
 
 	onClick(e){
 		e.stopPropagation();
-		this.props.selectSensor(this.props.sensor);
-		this.props.openSensorForm();
+		if (typeof this.props.onMouseDown == "function") {
+			this.props.onMouseDown(this.props.sensor);
+		}
 	}
 
 	render(){
@@ -47,20 +48,23 @@ export class Sensor extends React.Component{
 			}
 		}
 
-		console.log()
-		return(
-			<div>
-				<div className={className} style={style}
-					onClick={!sensor.dummy && this.onClick.bind(this)}
-					data-tip="" data-for={!sensor.dummy && sensor.id}>
-				</div>
-				{
-					!sensor.dummy && <ReactTooltip  place="top" type="dark" effect="float" id={sensor.id}>
-						{sensor.Name}
+		if (sensor.dummy) {
+			return (
+				<div className={className} style={style} />
+			);
+		} else {
+			return(
+				<div>
+					<div className={className} style={style}
+						onClick={this.onClick.bind(this)}
+						data-tip data-for={"sensor"+sensor.id}>
+					</div>
+					<ReactTooltip id={"sensor"+sensor.id} place="top" type="dark" effect="solid">
+					{sensor.name}
 					</ReactTooltip>
-				}
-			</div>
-		)
+				</div>
+			);
+		}
 	}
 }
 

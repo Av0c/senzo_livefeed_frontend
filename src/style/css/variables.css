@@ -349,7 +349,7 @@ li {
     position: relative;
     left: 50px;
     top: 10px;
-    z-index: 1000;
+    z-index: 300;
     width: 20px;
     line-height: 20px;
     border-radius: 50%;

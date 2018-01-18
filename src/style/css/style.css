@@ -351,13 +351,13 @@ input:focus {
     font-size: 16px;
 }
 .overview-block {
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .the-card {
     padding: 12px 26px 42px;
     background: #fff;
     border-radius: 20px;
-    box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
     max-width: 400px;
     margin: auto;
     min-height: 730px;
@@ -411,6 +411,7 @@ input:focus {
 .add-cart-zone {
     cursor: pointer;
     height: 683px;
+    margin-bottom: 30px;
     display: flex;
     position: relative;
     align-items: center;

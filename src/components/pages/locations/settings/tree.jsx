@@ -9,7 +9,7 @@ export default class Tree extends React.Component {
         var self = this;
         if (this.props.tree.children != null && this.props.tree.type != 'meeting_room' && this.props.tree.type != 'open_area') {
             childNodes = this.props.tree.children.map(function (node, index) {
-                return <Location
+                return (<Location
                     openAddLocationForm={self.props.openAddLocationForm}
                     openAddFloorplanForm={self.props.openAddFloorplanForm}
                     closeAddFloorplanForm={self.props.closeAddFloorplanForm}
@@ -17,14 +17,14 @@ export default class Tree extends React.Component {
                     closeEditLocationForm={self.props.closeEditLocationForm}
                     closeDeleteLocationForm={self.props.closeDeleteLocationForm}
                     openDeleteLocationForm={self.props.openDeleteLocationForm} key={index} node={node}>
-                    <Tree openAddLocationForm={self.props.openAddLocationForm} style={style} tree={node}
+                        <Tree openAddLocationForm={self.props.openAddLocationForm} style={style} tree={node}
                         openAddFloorplanForm={self.props.openAddFloorplanForm}
                         closeAddFloorplanForm={self.props.closeAddFloorplanForm}
                         openEditLocationForm={self.props.openEditLocationForm}
                         closeEditLocationForm={self.props.closeEditLocationForm}
                         closeDeleteLocationForm={self.props.closeDeleteLocationForm}
-                        openDeleteLocationForm={self.props.openDeleteLocationForm}
-                    /></Location>
+                        openDeleteLocationForm={self.props.openDeleteLocationForm}/>
+                </Location>);
             });
         }
         return (

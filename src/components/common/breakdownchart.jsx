@@ -1,5 +1,5 @@
-import React from 'react';
-import { core as Core } from 'zingchart-react';
+import React from "react";
+import { core as Core } from "zingchart-react";
 
 export default class BreakDownChart extends React.Component {
 
@@ -8,14 +8,30 @@ export default class BreakDownChart extends React.Component {
             {
                 type: "bar",
                 plotarea: {
-                    marginTop: '10px',
-                    marginRight: '50px',
-                    marginLeft: '40',
+                    marginTop: "10px",
+                    marginRight: "50px",
+                    marginLeft: "40",
                     backgroundColor: "#f6f7fa"
                 },
                 scaleX: {
+                    minorTicks: "0",
+                    maxTicks: "0",
                     labels: this.props.data.labels,
-                    minorTicks: 0
+                    maxLabels: "7",
+                    item: {
+                        maxWidth: "180px",
+                        wrapText: "true",
+                    },
+                    tooltip: {
+                        text: "%v",
+                        backgroundColor: "#424242",
+                        borderRadius: 3,
+                        borderWidth: 0,
+                        fontColor: "white",
+                        fontFamily: "Roboto",
+                        fontSize: "14px",
+                        padding: "6px 12px",
+                    }
                 },
                 scaleY: {
                     lineColor: "#f6f7f8",
@@ -28,7 +44,6 @@ export default class BreakDownChart extends React.Component {
                     },
                     minorTicks: 0,
                     markers: [
-                        
                         {
                             type: "area",
                             range: [80, 100],
@@ -85,4 +100,3 @@ export default class BreakDownChart extends React.Component {
         );
     }
 }
-

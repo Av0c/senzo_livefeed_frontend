@@ -31,7 +31,6 @@ export class BreakdownChartContainer extends React.Component {
         );
     }
 
-
 }
 
 function mapStateToProps(state) {

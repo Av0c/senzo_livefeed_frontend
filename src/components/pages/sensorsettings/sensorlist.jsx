@@ -69,57 +69,61 @@ class SensorList extends React.Component {
 		this.listSensors(this.props.root, sensors);
 		return (
 			<div className="container-fluid">
-				<table className="users-table pull-left"><tbody>
-					<tr>
-						<th> </th>
-						<th> <strong>MAC Address</strong></th>
-						<th> <strong>Name</strong></th>
-						<th><strong>Offline Since</strong></th>
-						<th colSpan="3">   </th>
-					</tr>
-					{
-						sensors.map((x, idx) => {
-							var ss = Object.assign({}, this.props.sensorMap.get(x.id));
-							if (!ss) {
-								return null;
+				<div className="sensors-section">
+					<div className="popup-container">
+						<table className="flat-table"><tbody>
+							<tr>
+								<th></th>
+								<th><strong>MAC Address</strong></th>
+								<th><strong>Name</strong></th>
+								<th><strong>Offline Since</strong></th>
+								<th colSpan="3"></th>
+							</tr>
+							{
+								sensors.map((x, idx) => {
+									var ss = Object.assign({}, this.props.sensorMap.get(x.id));
+									if (!ss) {
+										return null;
+									}
+									ss.xpercent = 50;
+									ss.ypercent = 50;
+									var par = this.props.nodeMap[x.id].parent;
+									return (
+										<tr key={idx} className={this.props.selectedSensor.id == x.id && "bold"}>
+											<td className="sensor-color-note-td"><Sensor sensor={ss}/></td>
+											<td>{ss.macaddress}</td>
+											<td>{ss.name}</td>
+											<td><Timestamp time={ss.lastonl}/></td>
+											<td className="button-holder">
+												<div className="button" onClick={() => this.openEdit(ss)}>Edit</div>
+											</td>
+											<td className="button-holder">
+												<Link className="button" to={"/live/"+par.id} target="_blank">Floorplan</Link>
+											</td>
+											<td className="button-holder">
+												<img className="bin" onClick={() => this.openDelete(ss)} src="/src/assets/images/bin.svg"/>
+											</td>
+										</tr>
+									);
+								})
 							}
-							ss.xpercent = 50;
-							ss.ypercent = 50;
-							var par = this.props.nodeMap[x.id].parent;
-							return (
-								<tr key={idx} className={this.props.selectedSensor.id == x.id && "bold"}>
-									<td className="sensor-color-note-td"><Sensor sensor={ss}/></td>
-									<td>{ss.macaddress}</td>
-									<td>{ss.name}</td>
-									<td><Timestamp time={ss.lastonl}/></td>
-									<td className="button-holder">
-										<div className="button" onClick={() => this.openEdit(ss)}>Edit</div>
-									</td>
-									<td className="button-holder">
-										<Link className="button" to={"/live/"+par.id} target="_blank">Floorplan</Link>
-									</td>
-									<td className="button-holder">
-										<img className="bin" onClick={() => this.openDelete(ss)} src="/src/assets/images/bin.svg"/>
-									</td>
-								</tr>
-							);
-						})
-					}
-				</tbody></table>
-				<table className="user-color-note"><tbody>
+						</tbody></table>
+					</div>
+				</div>
+				<table className="popup-color-note"><tbody>
 						<tr>
 							<td>
-								<span className="user-color-note-td red">Occupied</span>
+								<span className="popup-color-note-td red">Occupied</span>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span className="user-color-note-td yellow">Standby</span>
+								<span className="popup-color-note-td yellow">Standby</span>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span className="user-color-note-td green">Unoccupied</span>
+								<span className="popup-color-note-td green">Unoccupied</span>
 							</td>
 						</tr>
 						<tr>
@@ -129,12 +133,12 @@ class SensorList extends React.Component {
 						</tr>
 						<tr>
 							<td>
-								<span className="user-color-note-td blue">Offline</span>
+								<span className="popup-color-note-td blue">Offline</span>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<span className="user-color-note-td brown">Unregistered</span>
+								<span className="popup-color-note-td brown">Unregistered</span>
 							</td>
 						</tr>
 				</tbody></table>

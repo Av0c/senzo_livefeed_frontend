@@ -10,8 +10,8 @@
     border: 1px solid #dfdfdf;
     border-radius: 6px;
     box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
-    margin-left: 12px;
 }
+
 .account-form select {
     background: #fff;
 }
@@ -24,18 +24,7 @@
     font-family: 'Catamaran';
     font-size: 16px;
     font-weight: normal;
-}
-.account-form input[type="button"] {
-    font-family: 'Catamaran';
-    font-size: 18px;
-    border-radius: 7px;
-    padding: 4px 18px;
-    background: #7ec443;
-    color: #fff;
-    border: none;
-    width: 230px;
-    margin-left: 109px;
-    margin-top: 0;
+    margin-right: 12px;
 }
 .account-form {
     margin-top: 30px;
@@ -51,4 +40,65 @@ h2.account-title {
     float: right;
     border: 1px solid #979797;
     color: #979797;
+}
+.flat-button {
+    text-align: center;
+    display: inline-block;
+    width: 230px;
+    padding: 4px 18px;
+    margin-bottom: 18px;
+    cursor: pointer;
+    font-family: 'Catamaran';
+    font-size: 18px;
+    color: #979797;
+    border: 1px solid #979797;
+    border-radius: 7px;
+    background: none;
+}
+.account-change-password .chpwd {
+    color: #7ec443;
+    border: 1px solid #7ec443;
+}
+.account-change-password .cancel {
+    text-align: center;
+    float: right;
+    display: block;
+    width: 230px;
+    color: #979797;
+    border: 1px solid #979797;
+    border-radius: 7px;
+    padding: 4px 18px;
+    margin-bottom: 18px;
+    cursor: pointer;
+    font-family: 'Catamaran';
+    font-size: 18px;
+}
+
+.account-change-password {
+    margin-top: 9px;
+    width: 367px;
+}
+
+.account-submit input[type="submit"].disabled {
+    background: none;
+    float: right;
+    border: 1px solid #979797;
+    color: #979797;
+}
+.account-submit {
+    width: 367px;
+}
+.account-form input[type="submit"] {
+    background: #7ec443;
+    color: #fff;
+    border: none;
+    width: 230px;
+    margin-left: 109px;
+    margin-top: 0;
+    font-family: 'Catamaran';
+    font-size: 18px;
+    background: #fff;
+    border: 1px solid #585858;
+    border-radius: 7px;
+    padding: 4px 18px;
 }

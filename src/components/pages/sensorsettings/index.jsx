@@ -147,6 +147,19 @@ class SensorSettings extends React.Component {
 		this.props.dispatch(a.deleteSensor(this.props.selectedSensor));
 	}
 
+	linkOn(x) {
+		return true;
+	}
+
+	link(x) {
+		return ""
+	}
+
+	onClick(e, x) {
+		e.preventDefault()
+		this.props.dispatch(a.selectNodeFilter(x));
+	}
+
 	render() {
 		return (
 			<div>
@@ -184,7 +197,12 @@ class SensorSettings extends React.Component {
 						</div>
 					</div>
 				</div>
-				<Path path={this.getPath()} />
+				<Path
+					path={this.getPath()}
+					linkOn={this.linkOn.bind(this)}
+					link={this.link.bind(this)}
+					onClick={this.onClick.bind(this)}
+				/>
 				<SensorList
 					root={this.props.nodeFilter}
 					statusFilter={this.props.sensorStatusFilter}

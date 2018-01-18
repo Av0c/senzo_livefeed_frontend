@@ -19,7 +19,7 @@ export default class DeleteLocationForm extends React.Component {
         return (
             <div>
                 <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.props.isDeletingLocation ? "" : " closed")} onClick={this.props.closeDeleteLocationForm}></div>
-                <div style={{ zIndex: 1999 }} className={"add-account-wrapper invite-modal" + (this.props.isDeletingLocation ? "" : " closed")}>
+                <div className={"add-account-wrapper invite-modal" + (this.props.isDeletingLocation ? "" : " closed")}>
                     <div className="modal-header">
                         <button className="close" onClick={this.props.closeDeleteLocationForm} type="button" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 className="modal-title">Delete Location</h4>

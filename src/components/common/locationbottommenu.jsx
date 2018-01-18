@@ -51,8 +51,8 @@ class EditWidget extends React.Component {
         return (
             <div>
                 <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.props.isEditingWidget ? "" : " closed")} onClick={this.props.closeEditWidgetForm}></div>
-                <div style={{ zIndex: '10000' }} className={"add-account-wrapper invite-modal" + (this.props.isEditingWidget ? "" : " closed")}>
-                    <div className="modal-content">
+                <div className={"add-account-wrapper invite-modal" + (this.props.isEditingWidget ? "" : " closed")}>
+                    <div>
                         <div className="modal-header">
                             <button className="close" onClick={this.props.closeEditWidgetForm}>×</button>
                             <h4 className="modal-title">Edit Widget</h4>

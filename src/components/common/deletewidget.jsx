@@ -1,12 +1,12 @@
 import React from 'react';
 
-export default class DeleteWidget extends React.Component { 
+export default class DeleteWidget extends React.Component {
 
     render() {
         return (
             <div>
                 <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.props.isDeletingWidget ? "" : " closed")} onClick={this.props.closeDeleteWidgetForm}></div>
-                <div style={{ zIndex: 1999 }} className={"add-account-wrapper invite-modal" + (this.props.isDeletingWidget ? "" : " closed")}>
+                <div className={"add-account-wrapper invite-modal" + (this.props.isDeletingWidget ? "" : " closed")}>
                     <div className="modal-header">
                         <button className="close" onClick={this.props.closeDeleteWidgetForm} type="button" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 className="modal-title">Delete Widget</h4>

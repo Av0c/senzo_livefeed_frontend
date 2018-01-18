@@ -1,0 +1,11 @@
+/* Set z-index of all special elements here to make sure they have the correct order */
+
+.invite-modal, .popup-modal {
+    z-index: 7092 !important;
+}
+.static-header {
+    z-index: 7091 !important;
+}
+.static-menu {
+    z-index: 7090 !important;
+}

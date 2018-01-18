@@ -35,22 +35,20 @@ export class StatsMenu extends React.Component {
 
     render() {
         return (
-            <div className="stats-menu" style={{ paddingTop: '50px', marginBottom: '10px' }}>
-                <div className="container-fluid" style={{ paddingLeft: '0px' }}>
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <div className="stats-title pull-left">
-                                <h1>{this.props.name}</h1>
-                            </div>
-                            <div className="stats-room-select stats-select pull-left" style={{ paddingTop: '0px' }}>
-                                <RoomTypeSelector roomType={this.props.node.type} chooseType={this.chooseType.bind(this)} type={this.props.room.type} />
-                            </div>
-                            <div className="stats-occupancy-select stats-select pull-left" style={{ paddingTop: '0px' }}>
-                                <TagSelector roomType={this.props.node.type} chooseTag={this.chooseTag.bind(this)} tag={this.props.tag} />
-                            </div>
-                            <Link className="stats-live-btn button-sm pull-left" to={this.props.node.info.hasfloorplan ? `live/${this.props.id}` : null} >LIVE</Link>
-                            <a className="stats-export pull-left" href="#"><img src="src/assets/images/export.svg" /></a>
+            <div className="container-fluid" style={{ paddingLeft: '0px' }}>
+                <div className="row">
+                    <div className="col-sm-12 stats-menu">
+                        <div className="stats-title pull-left">
+                            <h1>{this.props.name}</h1>
                         </div>
+                        <div className="stats-room-select stats-select pull-left" style={{ paddingTop: '0px' }}>
+                            <RoomTypeSelector roomType={this.props.node.type} chooseType={this.chooseType.bind(this)} type={this.props.room.type} />
+                        </div>
+                        <div className="stats-occupancy-select stats-select pull-left" style={{ paddingTop: '0px' }}>
+                            <TagSelector roomType={this.props.node.type} chooseTag={this.chooseTag.bind(this)} tag={this.props.tag} />
+                        </div>
+                        <Link className="stats-live-btn button-sm pull-left" to={this.props.node.info.hasfloorplan ? `live/${this.props.id}` : null} >LIVE</Link>
+                        <a className="stats-export pull-left" href="#"><img src="src/assets/images/export.svg" /></a>
                     </div>
                 </div>
             </div>

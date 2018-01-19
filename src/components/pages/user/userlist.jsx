@@ -58,7 +58,6 @@ class UserList extends React.Component {
 		return (
 			<tr key={u.username} className={(u.username == this.props.me.username) ? "bold" : ""}>
 				<td className="tab-left"> <span className={u.registered ? "active-user" : "pending-user"}>{u.title + " " + u.firstname + " " + u.lastname}</span></td>
-{/*				<td>{u.username}</td>*/}
 				<td> <a className="table-email" href={"mailto:"+u.email}>{u.email}</a></td>
 				<td>{u.phone}</td>
 				<td>{nodeNames[String(u.rootnodeid)]}</td>
@@ -104,47 +103,43 @@ class UserList extends React.Component {
 				ok = false;
 			}
 		})
-		if (ok && nodeNames) {
-			return (
-				<div className="users-section">
-					<div className="popup-container">
-						<table className="flat-table"><tbody> {
-								userRows.map((urow) => {
-									return [
-										<tr className="table-header-row">
-											<th>
-												<h4>{urow[1]}</h4>
-											</th>
-											<th>EMAIL</th>
-											<th>MOBILE</th>
-											<th>LOCATION</th>
-											<th></th>
-											<th></th>
-										</tr>,
-										urow[0].map((u) => this.renderUser(u, nodeNames)),
-										<tr className="table-spacing"></tr>
-									];
-								})
-							}
-						</tbody></table>
-					</div>
-					<table className="popup-color-note"><tbody>
-						<tr>
-							<td>
-								<span className="popup-color-note-td green">Registered</span>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span className="popup-color-note-td brown">Pending</span>
-							</td>
-						</tr>
+		return (ok && nodeNames &&
+			<div className="users-section">
+				<div className="popup-container">
+					<table className="flat-table"><tbody> {
+							userRows.map((urow) => {
+								return [
+									<tr className="table-header-row">
+										<th>
+											<h4>{urow[1]}</h4>
+										</th>
+										<th>EMAIL</th>
+										<th>MOBILE</th>
+										<th>LOCATION</th>
+										<th></th>
+										<th></th>
+									</tr>,
+									urow[0].map((u) => this.renderUser(u, nodeNames)),
+									<tr className="table-spacing"></tr>
+								];
+							})
+						}
 					</tbody></table>
 				</div>
-			);
-		} else {
-			return <div/>
-		}
+				<table className="popup-color-note"><tbody>
+					<tr>
+						<td>
+							<span className="popup-color-note-td green">Registered</span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span className="popup-color-note-td brown">Pending</span>
+						</td>
+					</tr>
+				</tbody></table>
+			</div>
+		);
 	}
 }
 

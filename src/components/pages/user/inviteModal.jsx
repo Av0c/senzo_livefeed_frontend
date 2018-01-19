@@ -27,6 +27,7 @@ class InviteModal extends React.Component {
 		if (this.props.open != nextProps.open) {
 			this.setState({
 				role: config.roles[hasCompany ? 0 : 1].code,
+				disabled: hasCompany,
 				loaded: true,
 			});
 		}
@@ -68,6 +69,17 @@ class InviteModal extends React.Component {
 		return res;
 	}
 
+	PairOk(roleCode, location) {
+		switch (roleCode) {
+			case config.roles[0].code : // Company admin
+				return location.type==config.nodeType.customer.code;
+			case config.roles[1].code : // Local admin
+				return location.type!=config.nodeType.customer.code;
+			default :
+				return true;
+		}
+	}
+
 	changeRole(e) {
 		if (e.target.value==config.roles[0].code) {
 			this.setState({
@@ -77,7 +89,7 @@ class InviteModal extends React.Component {
 			});
 		} else {
 			let loc = this.state.location;
-			if (loc.node.type==config.nodeType.customer.code) {
+			if (e.target.value==config.roles[1].code && loc.node.type==config.nodeType.customer.code) {
 				loc = this.findNotCustomerNode(this.props.nodes);
 			}
 			this.setState({
@@ -134,7 +146,7 @@ class InviteModal extends React.Component {
 								return null;
 							}
 							return (
-								<option value={i} key={"o"+x.node.id} disabled={i==0}>
+								<option value={i} key={"o"+x.node.id} disabled={!this.PairOk(this.state.role, x.node)}>
 									{x.padding}
 									{x.node.info.name}
 								</option>

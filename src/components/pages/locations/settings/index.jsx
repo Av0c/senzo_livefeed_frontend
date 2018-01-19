@@ -208,14 +208,7 @@ export class Settings extends React.Component {
                     country: state.country,
                 }
             };
-            this.props.dispatch(updateNode(newNode)).then(() => {
-                this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
-                toastr.success(`${newNode.info.name} has been updated`);
-            })
-                .catch(error => {
-                    toastr.error(error);
-                });
-
+            this.props.dispatch(updateNode(newNode));
         }
 
     }

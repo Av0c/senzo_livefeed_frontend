@@ -132,9 +132,12 @@ export function updateNode(node) {
 		dispatch(updateNodeInProgress());
 		return axios.put(config.api.root + `/node/update/${node.id}`, node)
 			.then((response) => {
-				dispatch(updateNodeSuccessfully(response.data));
+				toastr.success(`${node.info.name} has been updated`);
+				dispatch(overviewAction.fetchCustomerOverview(store.getState().authReducer.user.companyid))
 			})
 			.catch(function (response) {
+				console.log(response);
+				toastr.error("Update node failed: ", response);
 				dispatch(updateFailed(response.data));
 			})
 	}

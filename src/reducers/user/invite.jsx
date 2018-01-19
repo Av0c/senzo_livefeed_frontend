@@ -4,8 +4,6 @@ import { Effects, loop } from 'redux-loop';
 
 import * as a from "actions/user"
 
-import {showNotification} from 'actions/common';
-
 const initialState = {
   stage: "nothing",
   respond: {}

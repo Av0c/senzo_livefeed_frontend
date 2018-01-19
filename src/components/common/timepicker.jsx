@@ -28,12 +28,11 @@ export default class TimePicker extends React.Component {
 		e.preventDefault ();
 		e.stopPropagation ();
 		this.setState({"attached": idx})
-        window.addEventListener("mouseup", this.mouseUp);
-        window.addEventListener("mousemove", this.mouseMove);
+		window.addEventListener("mouseup", this.mouseUp);
+		window.addEventListener("mousemove", this.mouseMove);
 	}
 
 	mouseMove(e) {
-		e.stopPropagation();
 		var mousePos = this.getMousePos(e);
 		var imageElement = this.refs['body'];
 		var containerX = imageElement.offsetWidth;
@@ -67,6 +66,19 @@ export default class TimePicker extends React.Component {
 		}
 	}
 
+	mouseUp(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		if (this.state.attached!=-1) {
+			this.setState({"attached": -1})
+	        window.removeEventListener("mouseup", this.mouseUp);
+        	window.removeEventListener("mousemove", this.mouseMove);
+		}
+		if (typeof this.props.onChange === 'function') {
+			this.props.onChange(this.state.indices.splice(0));
+		}
+	}
+
 	getLabel(idx) {
 		return this.state.indices[idx] + ":00";
 	}
@@ -80,18 +92,6 @@ export default class TimePicker extends React.Component {
 		return Math.round(percent * this.props.nSegments / 100)
 	}
 
-	mouseUp(e) {
-		e.preventDefault();
-		e.stopPropagation();
-		if (this.state.attached!=-1) {
-			this.setState({"attached": -1})
-	        window.removeEventListener("mouseup", this.mouseUp);
-        	window.removeEventListener("mousemove", this.mouseMove);
-		}
-		if (typeof this.props.onChange === 'function') {
-			this.props.onChange(this.state.indices.splice(0));
-		}
-	}
 
 
 	render() {

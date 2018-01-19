@@ -9,10 +9,11 @@ export class Sensor extends React.Component{
 		super(props);
 	}
 
-	onClick(e){
+	onMouseDown(e){
 		e.stopPropagation();
+		e.preventDefault();
 		if (typeof this.props.onMouseDown == "function") {
-			this.props.onMouseDown(this.props.sensor);
+			this.props.onMouseDown(e, this.props.sensor);
 		}
 	}
 
@@ -20,6 +21,9 @@ export class Sensor extends React.Component{
 		let sensor = this.props.sensor;
 
 		let style ={left: sensor.xpercent + '%', top: sensor.ypercent + '%'};
+		if (this.props.dragged) {
+			style ={left: this.props.draggingX + '%', top: this.props.draggingY + '%'};
+		}
 		let className='point';
 		if (this.props.selectedSensor && (this.props.selectedSensor.id == sensor.id)){
 			className += ' selected'
@@ -48,17 +52,17 @@ export class Sensor extends React.Component{
 			}
 		}
 
-		if (sensor.dummy) {
+		if (sensor.dummy || this.props.dragged) {
 			return (
-				<div className={className} style={style} />
+				<div className={className} style={style}/>
 			);
 		} else {
 			return(
 				<div>
 					<div className={className} style={style}
-						onClick={this.onClick.bind(this)}
-						data-tip data-for={"sensor"+sensor.id}>
-					</div>
+						data-tip data-for={"sensor"+sensor.id}
+						onMouseDown={this.onMouseDown.bind(this)}
+					/>
 					<ReactTooltip id={"sensor"+sensor.id} place="top" type="dark" effect="solid">
 					{sensor.name}
 					</ReactTooltip>

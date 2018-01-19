@@ -48,7 +48,7 @@ export class Widgets extends React.Component {
     render() {
         let widgets = this.generateWidgets();
         return (
-            <div>
+            <div className="card-container">
                 {widgets}
             </div>
         );

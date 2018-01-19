@@ -71,7 +71,7 @@ class OverviewLeft extends React.Component {
                             <DateSelector />
                         </div>
                     </div>
-                    <div className="row">
+                    <div style={{width: "100%"}}>
                         <Widgets tree={this.props.overview} querySettings={this.props.querySettings} allSensors={this.props.currentSensor} />
                         <SearchContainer tree={this.props.overview} querySettings={this.props.querySettings} />
                     </div>

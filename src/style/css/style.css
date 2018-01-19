@@ -353,11 +353,15 @@ input:focus {
 .overview-block {
     overflow: hidden;
 }
+.card-container {
+    text-align:center;
+    display:inline-block;
+    width:100%;
+}
 .the-card {
     width: 350px;
-    float: left;
+    display: inline-block;
     position: relative;
-    min-height: 1px;
     margin: 15px;
 
     padding: 30px 26px 42px;
@@ -365,7 +369,6 @@ input:focus {
     border-radius: 20px;
     box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
     max-width: 400px;
-    min-height: 730px;
 }
 .card-buttons {
     margin-top: 20px;
@@ -430,7 +433,7 @@ input:focus {
     content: "";
     margin-top: 7px;
     max-width: 400px;
-    width: 91%;
+    width: 350px;
     height: 107%;
     border-radius: 20px;
     transition: box-shadow 0.4s;

@@ -2,6 +2,8 @@ import axios from 'axios';
 import config from 'config';
 import appHistory from 'components/common/appHistory';
 import toastr from 'toastr';
+import * as overviewAction from "./overview"
+import store from '../store';
 
 export const FETCH_LIVE_DATA = "FETCH_LIVE_DATA";
 export const RECEIVE_LIVE_DATA = "RECEIVE_LIVE_DATA";
@@ -128,7 +130,6 @@ export function uploadImageSuccessful() {
 export function updateNode(node) {
 	return dispatch => {
 		dispatch(updateNodeInProgress());
-		console.log(node);
 		return axios.put(config.api.root + `/node/update/${node.id}`, node)
 			.then((response) => {
 				dispatch(updateNodeSuccessfully(response.data));
@@ -181,7 +182,8 @@ export function uploadFloorplanView(node, image, type) {
 			.then((response) => {
 				return axios.post(config.api.root + `/node/image/upload/${node.id}`, formData, axiosConfig)
 						.then((response) => {
-							toastr.success("Edit floor plan successfully !");
+							toastr.success("Edit floor plan successfully @@!");
+							dispatch(overviewAction.fetchCustomerOverview(store.getState().authReducer.user.companyid))
 						}).catch((response) => {
 							toastr.error("Edit floor plan failed : " + response.data);
 						})

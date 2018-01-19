@@ -24,18 +24,22 @@ export default class Location extends React.Component {
     }
 
     renderIcon() {
-        if (this.props.node.type != 'meeting_room' && this.props.node.type != 'open_area') {
-            var src = "";
-            if (this.state.isShowingChildren) {
-                src = "src/assets/images/minus-button.png"
-            }
-            else {
-                src = "src/assets/images/plus-button.png"
-            }
-            return <img src={src} style={{ marginRight: '10px', height: '80%' }} />
-        }
-        else {
-            return null;
+        switch (this.props.node.type) {
+            case "meeting_room" :
+                src = "src/assets/images/meeting_room.png"
+                return <img src={src} className="location-icon" title="Meeting room" />
+
+            case "open_area":
+                src = "src/assets/images/open_area.png"
+                return <img src={src} className="location-icon" title="Meeting room" />
+
+            case "location":
+            case "customer":
+                var src =  (this.state.isShowingChildren) ? "src/assets/images/minus-button.png" : "src/assets/images/plus-button.png"
+                return <img src={src} className="location-icon"  title="Location : can contains other sub-locations and rooms."/>
+
+            default:
+                return null;
         }
     }
     render() {

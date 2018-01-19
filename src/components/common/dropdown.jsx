@@ -1,7 +1,8 @@
 import React from 'react';
 import DropdownItems from 'components/common/dropdownitems';
+import enhanceWithClickOutside from "react-click-outside";
 
-export default class DropDown extends React.Component {
+class DropDown extends React.Component {
     constructor(props) {
         super(props);
         this.state={opened:false};
@@ -13,6 +14,12 @@ export default class DropDown extends React.Component {
 
     close() {
         this.setState({opened: false });
+    }
+
+    handleClickOutside() {
+        if (this.state.opened) {
+            this.close();
+        }
     }
 
     render() {
@@ -30,3 +37,5 @@ export default class DropDown extends React.Component {
         )
     }
 }
+
+export default enhanceWithClickOutside(DropDown);

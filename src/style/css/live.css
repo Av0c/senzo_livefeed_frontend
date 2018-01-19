@@ -67,7 +67,7 @@
   border-radius: 20px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
+  box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
 }
 .toolbar-seat {
   height: 30px;
@@ -133,6 +133,9 @@
   display: block;
 }
 .breadcrumbs {
+  margin-bottom: 22px;
+}
+.margin-top {
   margin-top: 22px;
 }
 .breadcrumbs a {
@@ -142,12 +145,9 @@
 .bc-divider {
   padding: 0 10px;
 }
+.bc-element-on {
+  cursor: pointer;
+}
 .bc-element-off, .bc-root {
   color: gray;
-}
-.card {
-  padding: 12px 26px 20px;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
 }

@@ -49,7 +49,7 @@ export class ComparisonCard extends React.Component {
             <div className="container-fluid">
                 <div className="row">
                     <ComparisonStats />
-                    <div className="col-sm-8">
+                    <div style={{float:"left"}}>
                         <div className="comparison-location-title-card card-shape">
                             <div className="row">
                                 <div className="comparison-first-location text-center">
@@ -63,9 +63,8 @@ export class ComparisonCard extends React.Component {
                                 </div>
                             </div>
                         </div>
+                        <Widgets querySettings={this.props.querySettings} allSensors={this.props.allSensors} />
                     </div>
-                    <Widgets querySettings={this.props.querySettings} allSensors={this.props.allSensors} />
-
                 </div>
             </div>
         );

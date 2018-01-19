@@ -1,4 +1,6 @@
 import React from 'react';
+import store from '../../store';
+
 import CountriesAndTimezones from 'countries-and-timezones';
 import getCountryName, { isoCountries } from '../../countries';
 
@@ -56,6 +58,7 @@ export default class AddLocationForm extends React.Component {
         let isArea = (this.props.node.type == 'meeting_room' || this.props.node.type == 'open_area');
         let node = this.props.node;
         let multi = (node.info.details.country == 'Multi');
+        let noTop = (node.id == store.getState().authReducer.user.rootnodeid);
         let timezones = this.generateTimeZoneOptions();
         let countries = this.generateCountryOptions();
         return (
@@ -84,7 +87,7 @@ export default class AddLocationForm extends React.Component {
                             </label>
                         </div>
 
-                        {this.state.option == 'Multi' || <div className="country">
+                        {this.state.option == 'Multi' || noTop || <div className="country">
                             <label>Location</label>
                             <select value={this.state.location} id="location" onChange={this.changeHandler.bind(this)}>
                                 <option value='sub'>Sub location</option>

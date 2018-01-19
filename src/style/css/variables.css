@@ -345,16 +345,20 @@ li {
     color: black;
 }
 
-.faulty {
-    position: relative;
-    left: 50px;
-    top: 10px;
+.faulty-number {
+    position: absolute;
+    right: -10px;
+    top: -15px;
     z-index: 300;
     width: 20px;
-    line-height: 20px;
     border-radius: 50%;
     text-align: center;
     color: white;
     font-size: 14px;
-    background-color: #ef5350;
+}
+.background-red {
+    background-color: #F44336;
+}
+.background-blue {
+    background-color: #7C4DFF;
 }

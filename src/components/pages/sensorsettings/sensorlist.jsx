@@ -20,11 +20,8 @@ class SensorList extends React.Component {
 		this.props.dispatch(a.selectSensorButton(sensor));
 		this.props.openDeleteModal();
 	}
-	filter(sensor) {
-		var ss = this.props.sensorMap.get(sensor.id);
-		if (!ss) {
-			return false;
-		}
+
+	getStatus(ss) {
 		var status = "free";
 		if (ss.registered) {
 			if (ss.faulty) {
@@ -39,17 +36,39 @@ class SensorList extends React.Component {
 		} else {
 			status = "unregistered"
 		}
+		return status
+	}
+
+	filter(sensor) {
+		var ss = this.props.sensorMap.get(sensor.id);
+		if (!ss) {
+			return false;
+		}
+		var status = this.getStatus(ss);
 		switch (this.props.statusFilter.code) {
-			case "ALL":
+			case config.sensorStatusFilter[0].code: // All
 				return true;
-			case "ONLINE":
+			case config.sensorStatusFilter[1].code: // Online
 				return status=="free" || status=="inuse" || status=="standby";
-			case "OFFLINE":
-				return status=="faulty";
-			case "UNREG":
-				return status=="unregistered";
+			case config.sensorStatusFilter[2].code: // Offine
+				return status=="faulty" || status=="unregistered";
+			// case "UNREG":
+			// 	return status=="unregistered";
 			default:
 				return false;
+		}
+	}
+
+	OfflineSince(ss) {
+		if (!ss) {
+			return null;
+		}
+		var status = this.getStatus(ss);
+		switch (status) {
+			case "faulty" :
+				return <Timestamp time={ss.lastonl}/>;
+			default :
+				return <span className="dash-dash">--</span>;
 		}
 	}
 
@@ -93,7 +112,7 @@ class SensorList extends React.Component {
 											<td className="sensor-color-note-td"><Sensor sensor={ss}/></td>
 											<td>{ss.macaddress}</td>
 											<td>{ss.name}</td>
-											<td><Timestamp time={ss.lastonl}/></td>
+											<td>{this.OfflineSince(ss)}</td>
 											<td className="button-holder">
 												<div className="button" onClick={() => this.openEdit(ss)}>Edit</div>
 											</td>

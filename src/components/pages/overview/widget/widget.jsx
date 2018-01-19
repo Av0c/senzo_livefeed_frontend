@@ -1,5 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import config from "config"
+import {
+    selectViewFilter
+} from "actions/live/filter"
+
 import Gauge from 'components/common/gauge';
 import Bar from 'components/common/bar';
 import RoomTypeSelector from 'components/common/roomtypeselector';
@@ -8,15 +14,14 @@ import LocationBottomMenu from 'components/common/locationbottommenu';
 import { RECEIVE_FIRST_LOCATION_OVERVIEW, RECEIVE_SECOND_LOCATION_OVERVIEW } from 'actions/comparison';
 
 
-export default class Widget extends React.Component {
+class Widget extends React.Component {
 
     render() {
         let style = null;
         if ((this.props.action == RECEIVE_SECOND_LOCATION_OVERVIEW) || (this.props.action == RECEIVE_FIRST_LOCATION_OVERVIEW)) {
-            style = "col-sm-4 col-xs-12";
+            style = "widget";
         }
         return (
-            <div style={{ marginBottom: '20px' }} className={style || "col-sm-3 col-xs-12"}>
                 <div className="the-card clearfix">
                     <h1 className="card-location" title={this.props.node.info.name}>{this.props.node.info.name}</h1>
                     <div className="card-buttons clearfix">
@@ -26,7 +31,10 @@ export default class Widget extends React.Component {
                         <div className="card-nav pull-right">
                             {
                                 this.props.node.info.hasfloorplan ?
-                                    <Link className='button-sm pull-right' to={'live/' + this.props.node.id}> Live</Link>
+                                    <Link className='button-sm pull-right'
+                                        to={'live/' + this.props.node.id}
+                                        onClick={() => this.props.dispatch(selectViewFilter(config.viewFilter[1]))}
+                                    > Live</Link>
                                 : <div className='button-disabled pull-right'> Live</div>
                             }
                             <Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.props.node.id}> Stats</Link>
@@ -44,7 +52,14 @@ export default class Widget extends React.Component {
                         deleteWidget={this.props.deleteWidget}
                         tree={this.props.tree} editWidget={this.props.editWidget} />
                 </div>
-            </div>
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        dispatch
+    };
+}
+
+export default connect(null, mapDispatchToProps)(Widget);

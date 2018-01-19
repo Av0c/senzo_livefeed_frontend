@@ -1,8 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import config from "config"
+
 import toastr from 'toastr';
 import DeleteLocationForm from 'components/common/deletelocationform';
 import DeleteWidget from 'components/common/deletewidget';
+
+import * as a from "actions/sensorsettings"
 
 class EditWidget extends React.Component {
 
@@ -78,7 +83,7 @@ class EditWidget extends React.Component {
     }
 }
 
-export default class LocationBottomMenu extends React.Component {
+class LocationBottomMenu extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -122,7 +127,10 @@ export default class LocationBottomMenu extends React.Component {
         return (
             <div className="card-bottom-menu" ref="container" onScroll={this.onscroll}>
                 <div className="row">
-                    <div className="col-xs-4 text-center card-bottom-menu-icon"><a onClick={this.openSettingDropdown.bind(this)} className="card-settings" ><img src="src/assets/images/card-settings.svg" /></a>
+                    <div className="col-xs-4 text-center card-bottom-menu-icon">
+                        <a onClick={this.openSettingDropdown.bind(this)} className="card-settings" >
+                            <img src="src/assets/images/card-settings.svg" className="cursor-pointer"/>
+                        </a>
                         {this.state.isShowingSetting && (<div>
                             <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.state.isShowingSetting ? "" : " closed")} onClick={this.closeSettingDropdown.bind(this)} ></div>
                             <div className={"edit-widget-dropdown " + (this.state.isShowingSetting ? "" : " closed")}>
@@ -130,11 +138,11 @@ export default class LocationBottomMenu extends React.Component {
                                     <li onClick={() => {
                                         this.closeSettingDropdown();
                                         this.openDeleteLocationForm();
-                                    }}><a>Delete</a></li>
+                                    }} className="cursor-pointer">Delete</li>
                                     <li style={{ marginTop: '10px' }} onClick={() => {
                                         this.closeSettingDropdown();
                                         this.openEditWidgetForm();
-                                    }}> <a>Edit</a></li>
+                                    }} className="cursor-pointer">Edit</li>
                                 </ul>
                             </div>
                         </div>)
@@ -147,10 +155,26 @@ export default class LocationBottomMenu extends React.Component {
                             tree={this.props.tree} nodeId={this.props.node.id} editWidget={this.props.editWidget} />}
                     </div>
                     <div className="col-xs-4 text-center card-bottom-menu-icon"><a className="card-export" href="#"><img src="src/assets/images/export.svg" /></a></div>
-                    <div className="col-xs-4 text-center">
-                        <Link to={this.props.node.info.hasfloorplan ? `/live/${this.props.node.id}` : null} className="card-settings"
-                            onClick={() => { this.props.redirectMaintenanceView(this.props.node); }} >
-                            <div className="faulty">{this.props.faulty}</div>
+                    <div className="col-xs-4 text-center card-bottom-menu-icon">
+                        <Link
+                            to={(this.props.node.info.hasfloorplan && this.props.faulty) ? `/live/${this.props.node.id}` : "/settings/sensor"}
+                            className="card-settings"
+                            onClick={() => {
+                                if (this.props.node.info.hasfloorplan && this.props.faulty) { // live view
+                                    this.props.redirectMaintenanceView(this.props.node);
+                                } else { // sensor settings
+                                    this.props.dispatch(a.selectNodeFilter(this.props.node));
+                                    // Filter : No fault sensor => all sensors, else offline sensor
+                                    var statusFilter = config.sensorStatusFilter[(this.props.faulty == 0) ? 0 : 2]
+                                    this.props.dispatch(a.selectSensorStatusFilter(statusFilter));
+                                }
+                            }}
+                        >
+                            {(this.props.faulty > 0) &&
+                                <div className={"faulty-number " + (this.props.node.info.hasfloorplan ? "background-red" : "background-blue")}>
+                                    {this.props.faulty}
+                                </div>
+                            }
                             <img src="src/assets/images/maintenance.svg" />
                         </Link>
                     </div>
@@ -159,3 +183,11 @@ export default class LocationBottomMenu extends React.Component {
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        dispatch
+    };
+}
+
+export default connect(null, mapDispatchToProps)(LocationBottomMenu);

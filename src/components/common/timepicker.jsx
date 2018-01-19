@@ -22,6 +22,9 @@ export default class TimePicker extends React.Component {
 	}
 
 	mouseDown(e, idx) {
+		if (this.props.disabled) {
+			return;
+		}
 		e.preventDefault ();
 		e.stopPropagation ();
 		this.setState({"attached": idx})

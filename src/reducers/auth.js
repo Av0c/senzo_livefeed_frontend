@@ -61,9 +61,7 @@ export default (state = initialState, action ) => {
 
     case CLEAR_TOKEN: {
       localStorage.removeItem("token");
-      return Object.assign({}, initialState, {
-        token: null
-      })
+      return Object.assign({}, initialState);
     }
     
     default: {

@@ -104,9 +104,8 @@ export class Settings extends React.Component {
             newNode.info.location = node.info.location || state.timezone;
         }
         newNode.info.name = state.name || node.info.name;
-        newNode.info.WH_from = node.info.WH_from;
-        newNode.info.WH_to = node.info.WH_to;
         newNode.info.cardid = node.info.cardid;
+        newNode.info.hasfloorplan = false;
         if (state.location == 'sub') {
             newNode.type = (node.type == 'customer' ? 'location' : node.type);
             this.props.dispatch(createNode(node.id, newNode)).then(() => {

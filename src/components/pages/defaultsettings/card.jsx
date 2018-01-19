@@ -93,10 +93,19 @@ class Card extends React.Component {
 		return "Settings: " + res;
 	}
 
+	isCompanyAdmin(user) {
+		var node = this.props.nodeMap[this.props.me.rootnodeid];
+		console.log(node);
+		return (user.role == "ADMIN") && node && (node.type == "customer");
+	}
+
 	render() {
 		var nodes = [];
 		this.getNodes(this.props.root, nodes);
 		var header = this.props.card.isdefault ? "Company Settings" : this.makeName(nodes);
+		var editable = this.isCompanyAdmin(this.props.me);
+		var deletable = editable && (this.props.card.isdefault == 0);
+
 		return (
 			<div className="card default-settings-card clearfix">
 				<div className="card-heading clearfix">
@@ -104,7 +113,7 @@ class Card extends React.Component {
 					<LocationPicker
 						root={this.props.root}
 						card={this.props.card}
-						disabled={this.props.disabled}
+						disabled={this.props.disabled || !editable}
 						defaultCard={this.props.defaultCard}
 						handleChange={this.addNodeToCard.bind(this)}
 					/>
@@ -113,6 +122,7 @@ class Card extends React.Component {
 					<h4>Working Hours    </h4>
 					<div className="hours-picker">
 						<TimePicker
+							disabled={!editable}
 							nSegments={24}
 							values={[this.props.card.starthour, this.props.card.endhour]}
 							onChange={this.changeHour.bind(this)}
@@ -123,38 +133,38 @@ class Card extends React.Component {
 					<h4>Working Days</h4>
 					<div className="days-picker clearfix">
 						<label className="text-center"> 
-							<input className="chbx" type="checkbox" checked={this.maskChecked(1)} onChange={this.changeWeekday.bind(this, 1)}/>
+							<input className="chbx" type="checkbox" checked={this.maskChecked(1)} onChange={this.changeWeekday.bind(this, 1)} disabled={!editable}/>
 							<span className="custom-checkbox"></span><span className="week-day">Monday</span>
 						</label>
 						<label className="text-center">
-							<input className="chbx" type="checkbox" checked={this.maskChecked(2)} onChange={this.changeWeekday.bind(this, 2)}/>
+							<input className="chbx" type="checkbox" checked={this.maskChecked(2)} onChange={this.changeWeekday.bind(this, 2)} disabled={!editable}/>
 							<span className="custom-checkbox"></span><span className="week-day">Tuesday</span>
 						</label>
 						<label className="text-center"> 
-							<input className="chbx" type="checkbox" checked={this.maskChecked(3)} onChange={this.changeWeekday.bind(this, 3)}/>
+							<input className="chbx" type="checkbox" checked={this.maskChecked(3)} onChange={this.changeWeekday.bind(this, 3)} disabled={!editable}/>
 							<span className="custom-checkbox"></span><span className="week-day">Wednesday</span>
 						</label>
 						<label className="text-center"> 
-							<input className="chbx" type="checkbox" checked={this.maskChecked(4)} onChange={this.changeWeekday.bind(this, 4)}/>
+							<input className="chbx" type="checkbox" checked={this.maskChecked(4)} onChange={this.changeWeekday.bind(this, 4)} disabled={!editable}/>
 							<span className="custom-checkbox"></span><span className="week-day">Thursday</span>
 						</label>
 						<label className="text-center"> 
-							<input className="chbx" type="checkbox" checked={this.maskChecked(5)} onChange={this.changeWeekday.bind(this, 5)}/>
+							<input className="chbx" type="checkbox" checked={this.maskChecked(5)} onChange={this.changeWeekday.bind(this, 5)} disabled={!editable}/>
 							<span className="custom-checkbox"></span><span className="week-day">Friday</span>
 						</label>
 						<label className="text-center"> 
-							<input className="chbx" type="checkbox" checked={this.maskChecked(6)} onChange={this.changeWeekday.bind(this, 6)}/>
+							<input className="chbx" type="checkbox" checked={this.maskChecked(6)} onChange={this.changeWeekday.bind(this, 6)} disabled={!editable}/>
 							<span className="custom-checkbox"></span><span className="week-day">Saturday</span>
 						</label>
 						<label className="text-center"> 
-							<input className="chbx" type="checkbox" checked={this.maskChecked(0)} onChange={this.changeWeekday.bind(this, 0)}/>
+							<input className="chbx" type="checkbox" checked={this.maskChecked(0)} onChange={this.changeWeekday.bind(this, 0)} disabled={!editable}/>
 							<span className="custom-checkbox"></span><span className="week-day">Sunday</span>
 						</label>
 					</div>
 				</div>
 				<div className="default-settings-bottom">
 					<div className="pull-right">
-						{ !this.props.card.isdefault ? 
+						{ deletable && 
 							<Modal
 								clickButton={this.deleteCard.bind(this)}
 								header="Delete Card"
@@ -164,7 +174,7 @@ class Card extends React.Component {
 							>
 								<p>Are you sure you want to delete this setting card ?</p>
 							</Modal>
-						: null }
+						}
 					</div>
 				</div>
 			</div>
@@ -174,6 +184,8 @@ class Card extends React.Component {
 
 function mapStateToProps(state) {
 	return {
+		me: state.authReducer.user,
+		nodeMap: state.overviewReducer.nodeMap,
 	};
 }
 

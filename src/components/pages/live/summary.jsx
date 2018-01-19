@@ -64,7 +64,7 @@ export default class LiveSummary extends React.Component {
 					  {
 					  	(OAs.length > 0) ? ([
 							<tr className="objects-list" key="OAs"> 
-								<td className="live-stats-heading">Working Areas </td>
+								<td className="live-stats-heading">Open Areas </td>
 								<td> </td>
 								<td>In Use</td>
 								<td>Unused</td>

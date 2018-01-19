@@ -83,13 +83,13 @@ export class Toolbar extends React.Component {
                                         {
                                             (this.props.user.role == "ADMIN") ? [
                                                 <li key="0"><Link to="locations">Locations Settings</Link></li>,
-                                                    <li key="1"><Link to="/settings/sensor">Sensor Settings</Link></li>,
-                                                        <li key="2"><Link to="/api">Live Feed/SenzoAPI</Link></li>,
-                                                            <li key="3"><Link to="/settings/default">Default Settings</Link></li>
+                                                <li key="1"><Link to="/settings/sensor">Sensor Settings</Link></li>,
+                                                <li key="2"><Link to="/api">Live Feed/SenzoAPI</Link></li>,
+                                                <li key="3"><Link to="/settings/default">Default Settings</Link></li>
                                             ] : null
                                         }
                                         <li><Link to="/help">Help !</Link></li>
-                                        <li><a href="#" onClick={this.props.actions.logout}>Log Out</a></li>
+                                        <li><Link className="cursor-pointer" onClick={this.props.actions.logout}>Log Out</Link></li>
                                     </ul>
                                 </div>
                             </div>

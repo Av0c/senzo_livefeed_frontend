@@ -36,23 +36,6 @@ class OverviewLeft extends React.Component {
     }
   }
 
-  fixLocationSensor(node) {
-    let self = this;
-    if (node.children && node.children.length > 0) {
-      node.children.forEach((element) => {
-        if (element.type == 'sensor') {
-          let sensor = Object.assign({}, element);
-          sensor.info.xpercent = sensor.info.xpercent - 0.7;
-          sensor.info.ypercent = sensor.info.ypercent - 0.7;
-          self.props.dispatch(updateNode(sensor));
-        }
-        else {
-          self.fixLocationSensor(element);
-        }
-      })
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.userDetails.details && nextProps.userDetails.details.location.length > 0) {
       if (!(this.props.user.details && (this.props.userDetails.details.location.length == nextProps.userDetails.details.location.length))) {

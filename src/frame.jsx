@@ -1,8 +1,7 @@
 import React from 'react';
-import Toolbar from 'containers/toolbar';
-import Notification from 'components/common/notification';
 import { connect } from 'react-redux';
 import appHistory from 'components/common/appHistory';
+
 import { clearToken } from 'actions/authentication';
 import { setCurrentNode } from 'actions/overview';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -11,6 +10,8 @@ import './style/main.less';
 import { fetchCustomerOverview } from 'actions/overview';
 import { fetchCard } from 'actions/defaultsettings';
 import { fetchLiveData } from 'actions/node';
+
+import Toolbar from 'containers/toolbar';
 
 export class Frame extends React.Component {
 

@@ -7,15 +7,8 @@ import { Link } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import SensorForm from './sensorform';
 
-import {
-	saveSensor,
-	removeSensor,
-	fetchSensorFloorplanInfo,
-	updateSensor,
-	fetchImage,
-	selectSensor,
-	moveSensor
-} from 'actions/floorplan';
+import * as a from 'actions/floorplan';
+import { updateSensor } from 'actions/floorplan';
 
 export class FloorPlan extends React.Component {
 	constructor(props, context) {
@@ -23,7 +16,11 @@ export class FloorPlan extends React.Component {
 		this.state = {
 			imageError: false,
 			sensorForm: false,
-			mousePos: {}
+			dragging: false,
+			draggedSensor: {},
+			mousePos: {},
+			upFunc: {},
+			moveFunc: {},
 		};
 	}
 	closeSensorForm() {
@@ -85,11 +82,6 @@ export class FloorPlan extends React.Component {
 	imageClick(e) {
 		e.stopPropagation();
 		var mousePos = this.getMousePos(e);
-		var imageElement = this.refs['floorplan-image'];
-		var containerX = imageElement.offsetWidth;
-		var containerY = imageElement.offsetHeight;
-		var xpercent = ((mousePos.x) / containerX) * 100;
-		var ypercent = ((mousePos.y) / containerY) * 100;
 		this.setState({ mousePos: { top: ypercent, left: xpercent }, sensorForm: true });
 		if (this.props.selectedSensor && typeof this.props.selectedSensor.id != "undefined") {
 			this.props.dispatch(moveSensor(this.props.selectedSensor, xpercent, ypercent));
@@ -105,10 +97,64 @@ export class FloorPlan extends React.Component {
 		var imageElement = this.refs['floorplan-image'].getBoundingClientRect();
 		var mouseX = evt.clientX - imageElement.left;
 		var mouseY = evt.clientY - imageElement.top;
+		var imageElement = this.refs['floorplan-image'];
+		var containerX = imageElement.offsetWidth;
+		var containerY = imageElement.offsetHeight;
+		var xpercent = (mouseX / containerX) * 100;
+		var ypercent = (mouseY / containerY) * 100;
 		return {
-			x: mouseX,
-			y: mouseY
+			x: xpercent,
+			y: ypercent,
 		}
+	}
+
+	onMouseDownSensor(e, sensor) {
+		var upFunc = (e) => this.onMouseUpSensor(e, sensor);
+		var moveFunc = (e) => this.onMouseMoveSensor(e, sensor);
+
+		var mousePos = this.getMousePos(e);
+		console.log(">>>WTF")
+		this.setState({
+			dragging: true,
+			draggedSensor: sensor,
+			mousePos: mousePos,
+			upFunc: upFunc,
+			moveFunc: moveFunc,
+		})
+		window.addEventListener("mouseup", upFunc);
+		window.addEventListener("mousemove", moveFunc);
+	}
+	onMouseUpSensor(e, sensor) {
+		e.stopPropagation();
+		console.log("WTF")
+		window.removeEventListener("mouseup", this.state.upFunc);
+		window.removeEventListener("mousemove", this.state.moveFunc);
+		this.props.dispatch(this.moveSensor(this.state.draggedSensor, this.state.mousePos)).then(() => {
+			console.log("done");
+			this.setState({
+				dragging: false,
+				sensor: {},
+				mousePos: {},
+				upFunc: {},
+				moveFunc: {},
+			});
+		})
+	}
+	onMouseMoveSensor(e, sensor) {
+		this.setState({
+			mousePos: this.getMousePos(e),
+		});
+	}
+
+	moveSensor(ss, pos) {
+		console.log(ss, pos);
+		var newSensor = {
+			id: ss.id,
+			xpercent: pos.x,
+			ypercent: pos.y,
+		}
+		console.log(newSensor);
+		return updateSensor(newSensor);
 	}
 
 	render() {
@@ -124,24 +170,24 @@ export class FloorPlan extends React.Component {
 				<div className="sensor-color-note">
 					<table><tbody>
 						<tr>
-							<td className="sensor-color-note-td"><Sensor sensor={{ id: -2, inuse: true, standby: false, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
+							<td className="sensor-color-note-td"><Sensor sensor={{dummy:true, id: -2, inuse: true, standby: false, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
 							<td>Occupied</td>
 						</tr>
 						<tr>
-							<td className="sensor-color-note-td"><Sensor sensor={{ id: -3, inuse: false, standby: true, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
+							<td className="sensor-color-note-td"><Sensor sensor={{dummy:true, id: -3, inuse: false, standby: true, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
 							<td>Standby</td>
 						</tr>
 						<tr>
-							<td className="sensor-color-note-td"><Sensor sensor={{ id: -1, inuse: false, standby: false, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
+							<td className="sensor-color-note-td"><Sensor sensor={{dummy:true, id: -1, inuse: false, standby: false, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
 							<td>Unoccupied</td>
 						</tr>
 						<tr><td><br /></td><td></td></tr>
 						<tr>
-							<td className="sensor-color-note-td"><Sensor sensor={{ id: -4, inuse: false, standby: false, faulty: true, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
+							<td className="sensor-color-note-td"><Sensor sensor={{dummy:true, id: -4, inuse: false, standby: false, faulty: true, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
 							<td>Offline</td>
 						</tr>
 						<tr>
-							<td className="sensor-color-note-td"><Sensor sensor={{ id: -5, inuse: false, standby: false, faulty: false, registered: false, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
+							<td className="sensor-color-note-td"><Sensor sensor={{dummy:true, id: -5, inuse: false, standby: false, faulty: false, registered: false, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
 							<td>Unregistered</td>
 						</tr>
 					</tbody></table>
@@ -156,18 +202,24 @@ export class FloorPlan extends React.Component {
 								ref="floorplan-image"
 								onError={this.imageError.bind(this)}
 								draggable="false"
-								onClick={this.imageClick.bind(this)}
+								// onClick={this.imageClick.bind(this)}
 								key="image"
 							/>
-							{this.state.sensorForm && <SensorForm node={this.props.root} sensorForm={this.state.sensorForm} closeSensorForm={this.closeSensorForm.bind(this)} mousePos={this.state.mousePos} />}
+							{false && this.state.sensorForm && <SensorForm node={this.props.root} sensorForm={this.state.sensorForm} closeSensorForm={this.closeSensorForm.bind(this)} mousePos={this.state.mousePos} />}
 							{sensors.map((sensor) => {
 								return (
 									<Sensor
+										key={sensor.id}
+
 										openSensorForm={this.openSensorForm.bind(this)}
 										sensor={sensor}
 										viewFilter={this.props.viewFilter}
 										selectedSensor={this.props.selectedSensor}
-										key={sensor.id}
+
+										onMouseDown={(e, ss) => this.onMouseDownSensor(e, ss)}
+										dragged={this.state.dragging && this.state.draggedSensor.id == sensor.id}
+										draggingX={this.state.dragging && this.state.mousePos.x}
+										draggingY={this.state.dragging && this.state.mousePos.y}
 									/>
 								);
 							})}

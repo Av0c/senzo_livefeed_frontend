@@ -6,117 +6,79 @@ import favIcon from './favicon.ico';
 import Frame from './frame';
 import Store from './store';
 import login from './containers/login';
-import register from './containers/register';
-import Settings from './components/pages/settings/settings';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, Link, hashHistory, useRouterHistory } from 'react-router';
-import { requireAuthentication } from 'components/common/authenticatedComponent';
 import appHistory from 'components/common/appHistory';
 
-import Locations from 'components/pages/locations/';
-import LocationsIntroPage from 'components/pages/locations/intropage';
-import SiteView from 'components/pages/locations/site';
-import AreaView from 'components/pages/locations/area';
-import MeetingRoomView from 'components/pages/locations/meetingroom';
+import { requireAuthentication } from 'components/common/authenticatedComponent';
 
-import Overview from 'components/pages/overview/index';
-
-import MyAccount from 'components/pages/settings/myaccount/index';
-import Password from 'components/pages/settings/myaccount/password';
-import EditLocations from 'components/pages/settings/editlocations/index';
-import EditAreas from 'components/pages/settings/editareas/index';
-import EditSensors from 'components/pages/settings/editsensors/index';
-import Users from 'components/pages/settings/users';
-import CreateUser from 'components/pages/settings/users/create';
-import EditUser from 'components/pages/settings/users/edit';
-import Customers from 'components/pages/settings/customers';
-import CreateCustomer from 'components/pages/settings/customers/create';
-import EditCustomer from 'components/pages/settings/customers/edit';
-import Profile from 'components/pages/profile';
-import FloorPlan from 'components/pages/locations/area/floorplan/index';
-import AddFloorPlan from 'components/pages/addfloorplan';
-
-import Stats from 'components/pages/stats';
-
+// Pages
+import Overview from 'components/pages/overview';
 import Comparison from 'components/pages/comparison';
-
+import Stats from 'components/pages/stats';
 import Live from 'components/pages/live';
+
+import Locations from 'components/pages/locations/';
+import DefaultSettings from 'components/pages/defaultsettings';
+
+import MyAccount from 'components/pages/settings/myaccount';
+import Password from 'components/pages/settings/myaccount/password';
+
 import User from 'components/pages/user';
 import Register from 'components/pages/user/register';
+
+import SensorSettings from 'components/pages/sensorsettings';
 import Help from 'components/pages/help';
 import LiveFeedAPI from 'components/pages/livefeedapi';
-import DefaultSettings from 'components/pages/defaultsettings';
-import SensorSettings from 'components/pages/sensorsettings';
+// --
+
 import { initializeIcons } from '@uifabric/icons';
 import toastr from "toastr"
 
 toastr.options = {
-  "closeButton": true,
-  "debug": true,
-  "newestOnTop": false,
-  "progressBar": false,
-  "positionClass": "toast-bottom-right",
-  "preventDuplicates": true,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "300",
-  "timeOut": "3000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
+	"closeButton": true,
+	"debug": true,
+	"newestOnTop": false,
+	"progressBar": false,
+	"positionClass": "toast-bottom-right",
+	"preventDuplicates": true,
+	"onclick": null,
+	"showDuration": "300",
+	"hideDuration": "300",
+	"timeOut": "3000",
+	"extendedTimeOut": "1000",
+	"showEasing": "swing",
+	"hideEasing": "linear",
+	"showMethod": "fadeIn",
+	"hideMethod": "fadeOut"
 }
 
 initializeIcons();
 ReactDOM.render((
-  <Provider store={Store}>
-    <Router history={appHistory} onUpdate={() => window.scrollTo(0, 0)}>
-      <Route path="/" component={requireAuthentication(Frame)}>
-        <IndexRoute component={Overview} />
-        <Route path="/locations" component={Locations}>
-          <IndexRoute component={LocationsIntroPage} />
-          <Route path="/locations/site/:id" component={SiteView} />
-          <Route path="/locations/area/:id" component={AreaView} />
-          <Route path="/locations/meetingroom/:id" component={MeetingRoomView} />
-          <Route path="/locations/area/:id/floorplan" component={FloorPlan} />
-          <Route path="/locations/area/:id/sensor/:sensorId" component={FloorPlan} />
-        </Route>
-        <Route path="/profile" component={Profile} />
+	<Provider store={Store}>
+		<Router history={appHistory} onUpdate={() => window.scrollTo(0, 0)}>
+			<Route path="/" component={requireAuthentication(Frame)}>
+				<IndexRoute component={Overview} />
 
-        <Route path="/statistic/:id" component={Stats} />
+				<Route path="/locations" component={Locations}/>
 
-        <Route path="/comparison" component={Comparison} />
+				<Route path="/statistic/:id" component={Stats} />
+				<Route path="/comparison" component={Comparison} />
+				<Route path="/live/:id" component={Live} />
 
-        <Route path="/live/:id" component={Live} />
-        <Route path="/user" component={User} />
+				<Route path="/user" component={User} />
+				<Route path="/help" component={Help} />
+				<Route path="/api" component={LiveFeedAPI} />
 
-        <Route path="/help" component={Help} />
-        <Route path="/api" component={LiveFeedAPI} />
-
-        <Route path="/locations/area/:id/floorplan/add" component={AddFloorPlan} />
-        <Route path="/settings" component={Settings}>
-          <Route path="/settings/default" component={DefaultSettings} />
-          <Route path="/settings/sensor" component={SensorSettings} />
-          <Route path="/settings/ownaccount/password" component={Password} />
-          <Route path="/settings/ownaccount" component={MyAccount} />
-          <Route path="/settings/locations/edit" component={EditLocations} />
-          <Route path="/settings/areas/edit" component={EditAreas} />
-          <Route path="/settings/sensors/edit" component={EditSensors} />
-          <Route path="/settings/users/" >
-            <IndexRoute component={Users} />
-            <Route path="/settings/users/create" component={CreateUser} />
-            <Route path="/settings/users/edit/:id" component={EditUser} />
-          </Route>
-          <Route path="/settings/customers/" >
-            <IndexRoute component={Customers} />
-            <Route path="/settings/customers/create" component={CreateCustomer} />
-            <Route path="/settings/customers/edit/:id" component={EditCustomer} />
-          </Route>
-        </Route>
-      </Route>
-      <Route path="/login" component={login} />
-      <Route path="/invitation" component={Register} />
-    </Router>
-  </Provider>
+				<Route path="/settings">
+					<Route path="/settings/default" component={DefaultSettings} />
+					<Route path="/settings/sensor" component={SensorSettings} />
+					<Route path="/settings/ownaccount" component={MyAccount} />
+					<Route path="/settings/ownaccount/password" component={Password} />
+				</Route>
+			</Route>
+			<Route path="/login" component={login} />
+			<Route path="/invitation" component={Register} />
+		</Router>
+	</Provider>
 ), document.getElementById('app'));

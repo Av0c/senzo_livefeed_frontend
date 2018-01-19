@@ -30,7 +30,6 @@ class Help extends React.Component {
 				toastr.remove();
 				toastr.success("Submit successfully !");
 			}).catch((error) => {
-				console.log(error);
 				toastr.remove();
 				toastr.success("Submit failed !");
 			});

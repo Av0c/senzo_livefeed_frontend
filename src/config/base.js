@@ -85,8 +85,8 @@ export default {
   sensorStatusFilter: [
     {code:"ALL", text:"All sensors"},
     {code:"ONLINE", text:"Online sensors"},
-    {code:"OFFLINE", text:"Offline sensors"},
-    {code:"UNREG", text:"Unregistered sensors"},
+    {code:"MAINTENANCE", text:"Offline sensors"},
+    // {code:"UNREG", text:"Unregistered sensors"},
   ],
   roles: [
     {code:"!ADMIN", rolecode:"ADMIN", text:"Company administrator", singular: "a company administrator"},

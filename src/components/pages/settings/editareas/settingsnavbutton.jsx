@@ -206,7 +206,6 @@ export class SettingsNavbutton extends React.Component {
       this.setState({active: nextState});
     }
     delete(e){
-      console.log('delete called');
       e.stopPropagation();
       //call server
       //remove the element from the ui

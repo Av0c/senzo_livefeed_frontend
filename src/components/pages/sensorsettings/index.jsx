@@ -152,7 +152,7 @@ class SensorSettings extends React.Component {
 	}
 
 	link(x) {
-		return ""
+		return null
 	}
 
 	onClick(e, x) {

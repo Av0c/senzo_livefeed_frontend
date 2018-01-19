@@ -24,7 +24,6 @@ export default class AddFloorPlanFrom extends React.Component {
 
     render() {
         let node = this.props.node;
-        console.log(node);
         return (
             <div>
                 <div className={"modal-overlay" + (this.props.isAddingFloorplan ? "" : " closed")} onClick={this.props.closeAddFloorplanForm}></div>
@@ -43,7 +42,11 @@ export default class AddFloorPlanFrom extends React.Component {
                             </select>
                         </div>
                         <div className="upload-floorplan">
-                            <label>{node.info.hasfloorplan ? "Replace Floor Plan" : "New Floor Plan"}</label>
+                            <label>
+                                {node.info.hasfloorplan ? 
+                                    <span><b>Already has floorplan.</b> Replace :</span>
+                                : "New Floor Plan :"}
+                            </label>
                             <input type="file" id="img" ref="floorplanimage"/>
                         </div>
                     </div>

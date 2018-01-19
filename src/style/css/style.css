@@ -427,6 +427,9 @@ input:focus {
     font-weight: normal;
     margin-top: 10px;
 }
+.card-settings {
+    position: relative;
+}
 .card-settings-sticker {
     background: #ff6868;
     border-radius: 100px;
@@ -716,7 +719,8 @@ h2.account-title {
 .locations-list .location-name {
     font-size: 18px;
     font-weight: bold;
-    width: 200px;
+    display: block;
+    /*width: 200px;*/
     cursor: pointer;
 }
 .edit-btn {
@@ -1087,4 +1091,8 @@ input[type="password"].has-error {
     border-color: #a94442;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)
+}
+.location-icon {
+    margin-right: 10px;
+    height: 80%;
 }

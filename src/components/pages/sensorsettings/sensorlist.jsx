@@ -40,14 +40,14 @@ class SensorList extends React.Component {
 			status = "unregistered"
 		}
 		switch (this.props.statusFilter.code) {
-			case "ALL":
+			case config.sensorStatusFilter[0].code: // All
 				return true;
-			case "ONLINE":
+			case config.sensorStatusFilter[1].code: // Online
 				return status=="free" || status=="inuse" || status=="standby";
-			case "OFFLINE":
-				return status=="faulty";
-			case "UNREG":
-				return status=="unregistered";
+			case config.sensorStatusFilter[2].code: // Offine
+				return status=="faulty" || status=="unregistered";
+			// case "UNREG":
+			// 	return status=="unregistered";
 			default:
 				return false;
 		}

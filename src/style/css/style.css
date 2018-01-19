@@ -1120,6 +1120,7 @@ input[type="password"].has-error {
 .location-icon {
     margin-right: 10px;
     height: 80%;
+    cursor: pointer;
 }
 .cursor-pointer {
     cursor: pointer;

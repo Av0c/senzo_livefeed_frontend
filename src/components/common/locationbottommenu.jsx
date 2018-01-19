@@ -129,7 +129,7 @@ class LocationBottomMenu extends React.Component {
                 <div className="row">
                     <div className="col-xs-4 text-center card-bottom-menu-icon">
                         <a onClick={this.openSettingDropdown.bind(this)} className="card-settings" >
-                            <img src="src/assets/images/card-settings.svg" />
+                            <img src="src/assets/images/card-settings.svg" className="cursor-pointer"/>
                         </a>
                         {this.state.isShowingSetting && (<div>
                             <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.state.isShowingSetting ? "" : " closed")} onClick={this.closeSettingDropdown.bind(this)} ></div>
@@ -138,11 +138,11 @@ class LocationBottomMenu extends React.Component {
                                     <li onClick={() => {
                                         this.closeSettingDropdown();
                                         this.openDeleteLocationForm();
-                                    }}><a>Delete</a></li>
+                                    }} className="cursor-pointer">Delete</li>
                                     <li style={{ marginTop: '10px' }} onClick={() => {
                                         this.closeSettingDropdown();
                                         this.openEditWidgetForm();
-                                    }}> <a>Edit</a></li>
+                                    }} className="cursor-pointer">Edit</li>
                                 </ul>
                             </div>
                         </div>)

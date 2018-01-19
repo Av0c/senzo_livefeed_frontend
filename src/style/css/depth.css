@@ -1,6 +1,11 @@
 /* Set z-index of all special elements here to make sure they have the correct order */
-
+.location-dropdown-root {
+    z-index: 7094 !important;
+}
 .invite-modal, .popup-modal {
+    z-index: 7093 !important;
+}
+.modal-overlay {
     z-index: 7092 !important;
 }
 .static-header {

@@ -618,7 +618,7 @@ input:focus {
     margin-left: 30px;
 }
 
-.location-dropdown-root {
+/* .location-dropdown-root {
     position: absolute;
     background: #fff;
     z-index: 99;
@@ -631,7 +631,6 @@ li {
     list-style: none;
     margin: 0;
     padding: 0;
-    /* Flyout CSS menu */
 }
 .location-dropdown-root ul,
 .location-dropdown-root li {
@@ -679,8 +678,7 @@ li {
 }
 .location-dropdown-root ul ul li {
     background: #fff;
-    /* Flyout CSS menu */
-}
+} */
 h2.account-title {
     margin-bottom: 18px;
 }

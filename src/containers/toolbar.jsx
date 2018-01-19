@@ -55,14 +55,15 @@ export class Toolbar extends React.Component {
                     <div className="row">
                         <div className="col-xs-4">
                             <div className="location-block clearfix">
-                                <div className="location-icon pull-left" onMouseOver={this.showChildren.bind(this)}>
+                                <div className="location-icon pull-left" onClick={this.showChildren.bind(this)}>
                                     <img src="src/assets/images/location-icon.svg" alt="Location" />
                                 </div>
                                 <div className="location-name pull-left">
                                     <span>{this.props.tree.info.name}</span>
                                 </div>
-                                {this.state.show && <div>
-                                    <div style={{ marginTop: '13px', zIndex: '1001' }} className={"location-dropdown-root"}>
+                                {this.state.show &&
+                                <div>
+                                    <div className={"location-dropdown-root"}>
                                         <Tree tree={this.props.tree} statistic={(node) => { this.props.statistic(node); this.closeChildren(); }} />
                                     </div>
                                     <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.state.show ? "" : " closed")} onClick={this.closeChildren.bind(this)}></div>

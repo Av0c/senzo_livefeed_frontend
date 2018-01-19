@@ -4,20 +4,37 @@ export default class Node extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-        this.state = { show: false };
+        this.state = {
+            show: false,
+            symbol: "+",
+            className: "dropdown-button",
+        };
     }
 
-    openChildren() {
+    toggleChildren() {
         if (!this.state.show) {
-            this.setState({ show: true });
+            this.setState({
+                show: true,
+                symbol: "-",
+                className: "dropdown-button dropdown-active",
+            });
+        } else {
+            this.setState({
+                show: false,
+                symbol: "+",
+                className: "dropdown-button",
+            });
         }
     }
 
-   render() {
-      return (
-         <li onMouseOver={this.openChildren.bind(this)} ><a onClick={() => {this.props.statistic(this.props.node)}}>{this.props.node.info.name}</a>
-            { this.state.show && this.props.children}
-         </li>
-      );
-   }
+    render() {
+        console.log(this.props.node);
+        return (
+            <div className="dropdown-div">
+                <a onClick={() => {this.props.statistic(this.props.node)}}>{this.props.node.info.name}</a>
+                {(this.props.node.type == "location" && this.props.node.children.length > 0) && <button onClick={this.toggleChildren.bind(this)} className={this.state.className}>{this.state.symbol}</button>}
+                {this.state.show && this.props.children}
+            </div>
+        );
+    }
 }

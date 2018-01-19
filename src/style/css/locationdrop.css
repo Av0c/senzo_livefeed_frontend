@@ -1,0 +1,73 @@
+.location-dropdown-root {
+    display: block;
+    position: absolute;
+    background: #fff;
+    top: 48px;
+    width: 270px;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.3);
+    max-height: 560px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.location-dropdown-root a {
+    display: inline-block;
+    text-decoration: none;
+    color: #585e66;
+    padding: 12px 10px;
+    box-sizing: border-box;
+    transition: box-shadow 0.2s, font-weight 0.2s;
+}
+.location-dropdown-root a:hover {
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 0px 0px 0px #7ec443 inset;
+}
+.dropdown-div {
+    white-space: nowrap;
+}
+.location-dropdown-root a, .dropdown-button {
+    line-height: 24px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+}
+.location-dropdown-root > .dropdown-container {
+    /* First layer with no margin and bg color */
+    margin-left: 0;
+    background-color: rgba(0, 0, 0, 0.0);
+}
+.dropdown-container {
+    margin-left: 10px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.dropdown-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 200px;
+}
+.dropdown-button {
+    float: right;
+    display: inline-block;
+    background: none;
+    color: #585e66;
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+    vertical-align: middle;
+    font-family: monospace;
+    font-size: 20px;
+    margin-right: 10px;
+    padding: 0;
+    transform-origin: 50% 50%;
+    transition: transform 0.4s ease-in-out, font-weight 0.2s;
+}
+.dropdown-button:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+.dropdown-active {
+    transform: rotateZ(180deg) translateY(-2px);
+}
+.dropdown-button:active, .dropdown-button:focus {
+    outline: none;
+    border: none;
+}

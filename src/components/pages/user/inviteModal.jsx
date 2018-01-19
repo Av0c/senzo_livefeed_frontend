@@ -18,7 +18,6 @@ class InviteModal extends React.Component {
 					id: -2
 				}
 			},
-			disabled: true
 		};
 	}
 
@@ -27,14 +26,12 @@ class InviteModal extends React.Component {
 		if (this.props.open != nextProps.open) {
 			this.setState({
 				role: config.roles[hasCompany ? 0 : 1].code,
-				disabled: hasCompany,
 				loaded: true,
 			});
 		}
 		if (!this.state.loaded && nextProps.nodes.length) {
 			this.setState({
 				location: nextProps.nodes[0],
-				disabled: hasCompany
 			});
 		}
 	}
@@ -50,7 +47,7 @@ class InviteModal extends React.Component {
 	}
 
 	findCustomerNode(nodes) {
-		var res = {};
+		var res = null;
 		nodes.map((x) => {
 			if (x.node.type==config.nodeType.customer.code) {
 				res = x;
@@ -60,7 +57,7 @@ class InviteModal extends React.Component {
 	}
 
 	findNotCustomerNode(nodes) {
-		var res = {};
+		var res = null;
 		for (var i = 0; i < nodes.length; i++) {
 			if (nodes[i].node.type!=config.nodeType.customer.code) {
 				return (nodes[i]);
@@ -81,23 +78,24 @@ class InviteModal extends React.Component {
 	}
 
 	changeRole(e) {
-		if (e.target.value==config.roles[0].code) {
-			this.setState({
-				role: e.target.value,
-				location: this.findCustomerNode(this.props.nodes),
-				disabled: true
-			});
-		} else {
-			let loc = this.state.location;
-			if (e.target.value==config.roles[1].code && loc.node.type==config.nodeType.customer.code) {
+		var loc = {};
+		switch (e.target.value) {
+			case config.roles[0].code:
+				loc = this.findCustomerNode(this.props.nodes);
+				break;
+			case config.roles[1].code:
 				loc = this.findNotCustomerNode(this.props.nodes);
-			}
-			this.setState({
-				role: e.target.value,
-				location: loc,
-				disabled: false
-			});
+				break;
+			case config.roles[2].code:
+			case config.roles[3].code:
+			default:
+				loc = this.state.location;
+				break;
 		}
+		this.setState({
+			role: e.target.value,
+			location: loc,
+		});
 	}
 
 	changeLocation(e) {
@@ -119,7 +117,8 @@ class InviteModal extends React.Component {
 		if (this.state.loaded) {
 			type = this.props.open ? "open" : "closed";
 		}
-		let hasCompany = (this.props.nodes.length && this.props.nodes[0].node.type == config.nodeType.customer.code);
+		let hasCompany = this.findCustomerNode(this.props.nodes) != null;
+		let hasNonCompany = this.findNotCustomerNode(this.props.nodes) != null;
 		return (
 			<div>
 				<div className={"modal-overlay "+type} onClick={this.props.closeModal}></div>
@@ -135,12 +134,15 @@ class InviteModal extends React.Component {
 								if (!hasCompany && i==0) {
 									return null
 								}
+								if (!hasNonCompany && i==1) {
+									return null
+								}
 								return <option value={role.code} key={role.text}> {role.text} </option>
 							})}
 						</select>
 
 						<label>Location</label>
-						<select required ref="location" disabled={this.state.disabled} value={this.findNode()} onChange={this.changeLocation.bind(this)}>
+						<select required ref="location" value={this.findNode()} onChange={this.changeLocation.bind(this)}>
 						{this.props.nodes.map((x, i) => {
 							if (x.node.type!="location" && x.node.type!="customer") {
 								return null;

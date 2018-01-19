@@ -6,7 +6,7 @@
     z-index: 7093 !important;
 }
 .modal-overlay {
-    z-index: 7092 !important;
+    z-index: 999 !important;
 }
 .static-header {
     z-index: 7091 !important;

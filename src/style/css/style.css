@@ -1102,3 +1102,11 @@ input[type="password"].has-error {
 .dash-dash {
     padding-left:33px;
 }
+.widget {
+    width: 350px;
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}

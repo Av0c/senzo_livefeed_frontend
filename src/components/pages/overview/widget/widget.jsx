@@ -22,7 +22,7 @@ class Widget extends React.Component {
             style = "col-sm-4 col-xs-12";
         }
         return (
-            <div style={{ marginBottom: '20px' }} className={style || "col-sm-3 col-xs-12"}>
+            <div style={{ marginBottom: '20px' }} className={style || "widget"}>
                 <div className="the-card clearfix">
                     <h1 className="card-location" title={this.props.node.info.name}>{this.props.node.info.name}</h1>
                     <div className="card-buttons clearfix">

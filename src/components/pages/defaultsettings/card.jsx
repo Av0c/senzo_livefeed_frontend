@@ -104,7 +104,7 @@ class Card extends React.Component {
 		this.getNodes(this.props.root, nodes);
 		var header = this.props.card.isdefault ? "Company Settings" : this.makeName(nodes);
 		var editable = this.isCompanyAdmin(this.props.me);
-		var deletable = editable && this.props.card.isdefault;
+		var deletable = editable && (this.props.card.isdefault == 0);
 
 		return (
 			<div className="card default-settings-card clearfix">

@@ -19,10 +19,9 @@ class Widget extends React.Component {
     render() {
         let style = null;
         if ((this.props.action == RECEIVE_SECOND_LOCATION_OVERVIEW) || (this.props.action == RECEIVE_FIRST_LOCATION_OVERVIEW)) {
-            style = "col-sm-4 col-xs-12";
+            style = "widget";
         }
         return (
-            <div style={{ marginBottom: '20px' }} className={style || "widget"}>
                 <div className="the-card clearfix">
                     <h1 className="card-location" title={this.props.node.info.name}>{this.props.node.info.name}</h1>
                     <div className="card-buttons clearfix">
@@ -53,7 +52,6 @@ class Widget extends React.Component {
                         deleteWidget={this.props.deleteWidget}
                         tree={this.props.tree} editWidget={this.props.editWidget} />
                 </div>
-            </div>
         );
     }
 }

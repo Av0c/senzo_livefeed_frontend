@@ -289,7 +289,7 @@ body.login-page {
     padding: 27px 26px 22px;
     background: #fff;
     border-radius: 20px;
-    box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
+    box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
     width: 480px;
     margin-top: -60px;
 }
@@ -355,12 +355,17 @@ input:focus {
     overflow-x: hidden;
 }
 .the-card {
-    padding: 12px 26px 42px;
+    width: 350px;
+    float: left;
+    position: relative;
+    min-height: 1px;
+    margin: 15px;
+
+    padding: 30px 26px 42px;
     background: #fff;
     border-radius: 20px;
-    box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
+    box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
     max-width: 400px;
-    margin: auto;
     min-height: 730px;
 }
 .card-buttons {
@@ -368,9 +373,8 @@ input:focus {
 }
 .card-shape {
     background: #fff;
-    border-radius: 15px;
-    box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
-    max-width: 1200px;
+    border-radius: 4px;
+    box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
     margin: auto;
 }
 .card-location {
@@ -480,7 +484,7 @@ input:focus {
     font-weight: normal;
 }
 .comparison-location-title-card {
-    margin-bottom: 20px;
+    margin: 0 15px 20px 15px;
 }
 .comparison-location-title-card h2 {
     font-size: 22px;
@@ -661,13 +665,13 @@ h2.account-title {
     margin-bottom: 18px;
 }
 .card {
-    width: 900px;
-    margin-left:50px;
-    margin-bottom:50px;
     padding: 12px 26px 20px;
     background: #fff;
     border-radius: 20px;
-    box-shadow: 0px 10px 14px 0px rgba(216,216,216,0.5);
+    box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
+    margin-left:50px;
+    margin-bottom:50px;
+    width: 900px;
 }
 .btn-green {
     color: #7ec443;
@@ -1103,10 +1107,4 @@ input[type="password"].has-error {
     padding-left:33px;
 }
 .widget {
-    width: 350px;
-    float: left;
-    position: relative;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
 }

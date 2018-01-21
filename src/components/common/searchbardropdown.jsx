@@ -1,12 +1,16 @@
 import React from 'react';
 import Select from 'react-select';
 
-//Searchbar used in add card 
+//Searchbar used in location dropdown
 
-export default class SearchBar extends React.Component {
+export default class SearchBarDropDown extends React.Component {
 
     onChange(val) {
-        this.props.addNodeWidget(val.values);
+        this.props.onChange(val.values);
+    }
+
+    onClose() {
+        this.props.onClose();
     }
 
     constructOptions(tree, options) {
@@ -28,14 +32,17 @@ export default class SearchBar extends React.Component {
         let options = [];
         this.constructOptions(this.props.tree, options);
         return (
-            <div style={{ width: '300px', textAlign: 'left', position: 'absolute', top: '0px' }}>
-                <Select
-                    name="form-field-name"
-                    options={options}
-                    onChange={this.onChange.bind(this)}
-                    onClose={this.props.hideSearchBar}
-                />
-            </div>
+            <Select
+                name="form-field-name"
+                options={options}
+                onChange={this.onChange.bind(this)}
+                onFocus={this.props.onFocus}
+                onClose={this.onClose.bind(this)}
+                placeholder="Search..."
+                clearable={false}
+                openOnFocuse={false}
+                openOnClick={false}
+            />
         );
     }
 }

@@ -28,7 +28,6 @@ export default class Node extends React.Component {
     }
 
     render() {
-        console.log(this.props.node);
         return (
             <div className="dropdown-div">
                 <a onClick={() => {this.props.statistic(this.props.node)}}>{this.props.node.info.name}</a>

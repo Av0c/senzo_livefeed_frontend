@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Tree from 'containers/tree';
+import SearchBar from 'components/common/searchbar';
+import SearchBarDropDown from 'components/common/searchbardropdown';
+import SearchContainer from 'components/pages/overview/searchcontainer.jsx';
 
 export class Toolbar extends React.Component {
 
@@ -9,17 +12,32 @@ export class Toolbar extends React.Component {
         super(props, context);
         this.state = {
             show: false,
+            searchActive: false,
             headerClass: "container-fluid normal-header",
             spacingClass: "header-spacing",
         };
     }
 
     showChildren() {
-        this.setState({ show: true });
+        this.setState({
+            show: true,
+        });
     }
 
     closeChildren() {
-        this.setState({ show: false });
+        this.setState({
+            show: false,
+        });
+    }
+
+    searchFocus() {
+        console.log("focused!");
+        this.setState({ searchActive: true });
+    }
+
+    searchClose() {
+        console.log("lose focused!");
+        this.setState({ searchActive: false });
     }
 
     componentDidMount() {
@@ -61,10 +79,18 @@ export class Toolbar extends React.Component {
                                 <div className="location-name pull-left">
                                     <span>{this.props.tree.info.name}</span>
                                 </div>
-                                {this.state.show &&
-                                <div>
-                                    <div className={"location-dropdown-root"}>
-                                        <Tree tree={this.props.tree} statistic={(node) => { this.props.statistic(node); this.closeChildren(); }} />
+                                {this.state.show && <div>
+                                    <div className="location-dropdown-root">
+                                        <div className={"search-container"}>
+                                            <SearchBarDropDown
+                                                querySettings={this.props.querySettings}
+                                                onChange={(node) => {this.props.statistic(node); this.closeChildren();}}
+                                                onFocus={() => {}}
+                                                onClose={() => {}}
+                                                tree={this.props.tree}
+                                            />
+                                        </div>
+                                        <Tree tree={this.props.tree} statistic={(node) => {this.props.statistic(node); this.closeChildren();}} />
                                     </div>
                                     <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.state.show ? "" : " closed")} onClick={this.closeChildren.bind(this)}></div>
                                 </div>}

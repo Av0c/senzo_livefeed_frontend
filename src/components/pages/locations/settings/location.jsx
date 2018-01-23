@@ -51,7 +51,7 @@ export default class Location extends React.Component {
                         {icon}
                         {this.props.node.info.name}
                     </div>
-                    <div style={{ marginRight: '100px' }} className="location-options pull-right"> <a onClick={() => this.props.openAddLocationForm(this.props.node)} className="button btn-green pull-left" data-toggle="modal">Add Location</a>
+                    <div className="location-options pull-right"> <a onClick={() => this.props.openAddLocationForm(this.props.node)} className="button btn-green pull-left" data-toggle="modal">Add Location</a>
                         <div className="edit-btn pull-left">
                             <div className="button btn-green settings-edit" id="dLabel" onClick={this.showEditDropdown.bind(this)}>Edit</div>
                             {this.state.isShowingEdit && <div aria-labelledby="dLabel">

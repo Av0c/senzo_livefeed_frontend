@@ -38,7 +38,7 @@ The style we are following is called [**Material Design**](https://material.io/)
     - Gray: ![#616161](https://placehold.it/15/616161/000000?text=+) `#616161` - `rgba(97, 97, 97, 1)`
     - *Use `rgba(red, green, blue, alpha)` format for darker/lighter shades as needed.*
  - Always make sure text and background have different contrast and are clearly legible.
- - If additional colors are needed, consult this [Material Color Palletes](https://material.io/guidelines/style/color.html#color-color-palette)
+ - If additional colors are needed, consult this [Material Color Palletes](https://material.io/guidelines/style/color.html#color-color-palette) and [Color Picker/Changer](https://www.w3schools.com/colors/colors_picker.asp)
 
 ### Icon:
  - Icons should always be used to improve visual understandability.

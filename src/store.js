@@ -3,53 +3,50 @@ import thunkMiddleware from 'redux-thunk';
 import { install, combineReducers } from 'redux-loop';
 import axios from 'axios';
 
-import organizationReducer from 'reducers/organization';
-import utilizationReducer from 'reducers/utilization';
-import locationsReducer from 'reducers/locations';
 import authReducer from 'reducers/auth';
+
 import overviewReducer from 'reducers/overview';
-import floorPlanSensorReducer from 'reducers/floorplansensor';
-import myAccountReducer from 'reducers/myaccount';
-import editLocationsReducer from 'reducers/editlocations';
-import querySettingsReducer from 'reducers/querysettings';
-import settingsPageReducer from 'reducers/settings';
-import floorPlanReducer from 'reducers/floorplan';
-import commonReducer from 'reducers/common';
 import nodeReducer from 'reducers/node';
-import statsReducer from 'reducers/stats';
 
 import comparisonReducer from 'reducers/comparison';
+import statsReducer from 'reducers/stats';
+import querySettingsReducer from 'reducers/querysettings';
 import liveReducer from 'reducers/live';
+
+import floorPlanSensorReducer from 'reducers/floorplansensor';
+import floorPlanReducer from 'reducers/floorplan';
+
+import myAccountReducer from 'reducers/myaccount';
+
+import userAdminReducer from 'reducers/user/administration';
 import userInviteReducer from 'reducers/user/invite';
 import userRegisterReducer from 'reducers/user/register';
-import userAdminReducer from 'reducers/user/administration';
+
 import sensorSettingsReducer from 'reducers/sensorsettings';
 import defaultSettingsReducer from 'reducers/defaultsettings';
 import livefeedAPIReducer from 'reducers/livefeedapi';
 
 import { clearToken } from 'actions/authentication';
-import { showNotification } from 'actions/common';
 
 const reducer = combineReducers({
-  organizationReducer,
   authReducer,
-  utilizationReducer,
-  locationsReducer,
   overviewReducer,
-  floorPlanSensorReducer,
-  myAccountReducer,
-  editLocationsReducer,
-  querySettingsReducer,
-  settingsPageReducer,
-  floorPlanReducer,
-  commonReducer,
   nodeReducer,
-  statsReducer,
+
   comparisonReducer,
+  statsReducer,
+  querySettingsReducer,
   liveReducer,
+
+
+  floorPlanSensorReducer,
+  floorPlanReducer,
+
+  myAccountReducer,
+  userAdminReducer,
   userInviteReducer,
   userRegisterReducer,
-  userAdminReducer,
+
   sensorSettingsReducer,
   defaultSettingsReducer,
   livefeedAPIReducer,

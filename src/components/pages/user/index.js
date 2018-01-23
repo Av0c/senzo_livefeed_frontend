@@ -204,7 +204,7 @@ class User extends React.Component {
 								<LeftMenu overview='' comparison='' />
 							</div>
 						</div>
-						<hr className="settings-divider"></hr>
+						<hr className="setting-divider"></hr>
 					</div>
 				</div>
 				<div className="container-fluid">

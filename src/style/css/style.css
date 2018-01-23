@@ -1098,8 +1098,8 @@ ul.users {
     width: 900px;
     /* margin-left: 50px; */
 }
-.settings-divider {
-    border-top: 1px dotted black;
+.setting-divider {
+    border-top: 1px solid black;
     opacity: 1;
     margin: 15px 0;
     display: block;

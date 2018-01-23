@@ -54,7 +54,7 @@ class Index extends React.Component {
                             <LeftMenu overview='' comparison='' />
                         </div>
                     </div>
-                    <hr className="settings-divider"></hr>
+                    <hr className="setting-divider"></hr>
                     <div className="row">
                         <div className="col-md-12">
                             <h2 className="account-title">Own Account</h2>

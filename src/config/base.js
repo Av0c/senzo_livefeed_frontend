@@ -1,4 +1,5 @@
 export default {
+  floorplanURLBase: "/floorplans-v2/",
   time: {
     period: {
       DAY: {

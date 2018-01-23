@@ -87,7 +87,8 @@ class Live extends React.Component {
 				groupMR: false
 			})
 		}
-		if (props.imageURL.indexOf(`/floorplans/${currentNode.id}?`) == -1) {
+		if (props.imageURL.indexOf(config.floorplanURLBase+`${currentNode.id}?`) == -1) {
+			console.log(props.imageURL);
 			// floor changed => fetch new image
 			this.props.dispatch(fetchImage(currentNode.id));
 		}

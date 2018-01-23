@@ -69,7 +69,6 @@ class OverviewLeft extends React.Component {
                         <div className="col-md-12 static-menu">
                             <LeftMenu overview='active' comparison='' />
                             <DateSelector />
-                            <div><i className="material-icons">face</i></div>
                         </div>
                     </div>
                     <div style={{width: "100%"}}>

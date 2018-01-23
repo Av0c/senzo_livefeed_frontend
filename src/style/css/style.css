@@ -1133,3 +1133,6 @@ input[type="password"].has-error {
 .modal-body option[disabled] {
     color: #BDBDBD;
 }
+.material-icons {
+    vertical-align: middle;
+}

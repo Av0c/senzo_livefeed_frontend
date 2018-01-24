@@ -73,11 +73,13 @@ export class Toolbar extends React.Component {
                     <div className="row">
                         <div className="col-xs-4">
                             <div className="location-block clearfix">
-                                <div className="location-icon pull-left" onClick={this.showChildren.bind(this)}>
-                                    <img src="src/assets/images/location-icon.svg" alt="Location" />
-                                </div>
-                                <div className="location-name pull-left">
-                                    <span>{this.props.tree.info.name}</span>
+                                <div onClick={this.showChildren.bind(this)} className="cursor-pointer">
+                                    <div className="location-icon pull-left">
+                                        <img src="src/assets/images/location-icon.svg" alt="Location" />
+                                    </div>
+                                    <div className="location-name pull-left">
+                                        <span>{this.props.tree.info.name}</span>
+                                    </div>
                                 </div>
                                 {this.state.show && <div>
                                     <div className="location-dropdown-root">

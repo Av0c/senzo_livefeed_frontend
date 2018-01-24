@@ -1,0 +1,19 @@
+/* Global modifers for special stylings of elements */
+
+.no-select { /* Disable highlighting selection */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.no-drag { /* Disable dragging */
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+}
+
+.cursor-pointer { /* Turn cursor into pointer (hand) when hovering */
+    cursor: pointer;
+}

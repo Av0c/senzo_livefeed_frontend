@@ -1122,9 +1122,6 @@ input[type="password"].has-error {
     height: 80%;
     cursor: pointer;
 }
-.cursor-pointer {
-    cursor: pointer;
-}
 .dash-dash {
     padding-left: 33px;
 }

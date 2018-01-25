@@ -5,7 +5,7 @@
     width: 80%;
 }
 .sensors-section {
-    width: 75%;
+    width: 70%;
 }
 .user-button,.sensor-button {
     font-size: 30px;
@@ -43,7 +43,7 @@
 }
 .flat-table.sensor-table .table-header-row th:nth-child(3) {
     /* Name */
-    width: 14%;
+    width: 15%;
 }
 .flat-table.sensor-table .table-header-row th:nth-child(4) {
     /* Location */
@@ -51,7 +51,7 @@
 }
 .flat-table.sensor-table .table-header-row th:nth-child(5) {
     /* Offline since */
-    width: 18%;
+    width: 19%;
 }
 .flat-table.sensor-table .table-header-row th:nth-child(6) {
     /* Edit, Delete */
@@ -106,8 +106,9 @@ table.flat-table {
 .popup-color-note {
     background-color: #ffffff;
     position: fixed;
-    top: 35%;
-    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 30px;
     border-radius: 4px;
     box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.4);
 }

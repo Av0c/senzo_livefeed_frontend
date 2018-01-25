@@ -118,13 +118,13 @@ class SensorList extends React.Component {
 											<td>{this.OfflineSince(ss)}</td>
 
 											<td className="button-holder">
-												<div className="button" onClick={() => this.openEdit(ss)}>Edit</div>
-											</td>
-											<td className="button-holder">
-												<Link className="button" to={"/live/"+par.id} target="_blank">Floorplan</Link>
+												<i title="Edit" className="material-icons cursor-pointer sensor-button" onClick={() => this.openEdit(ss)}>edit</i>
 											</td>
 											<td className="button-holder" style={{paddingLeft: "0px"}}>
-												<i className="material-icons cursor-pointer red-500 sensor-button" onClick={() => this.openDelete(ss)}>{"delete_forever"}</i>
+												<Link title="Floorplan" to={"/live/"+par.id} target="_blank" style={{color: "inherit"}}><i className="material-icons cursor-pointer sensor-button">layers</i></Link>
+											</td>
+											<td className="button-holder">
+												<i title="Delete" className="material-icons cursor-pointer red-500 sensor-button" onClick={() => this.openDelete(ss)}>{"delete_forever"}</i>
 											</td>
 										</tr>
 									);

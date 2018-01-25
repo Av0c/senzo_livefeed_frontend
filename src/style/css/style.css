@@ -1133,3 +1133,30 @@ input[type="password"].has-error {
 .material-icons {
     vertical-align: middle;
 }
+.scroll-top-button {
+    display: block;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    outline: none;
+    background-color: #7ec443;
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 12px 0px rgba(50, 50, 50, 0.3);
+    z-index: -1000;
+    cursor: default;
+    opacity: 0;
+    transition: box-shadow 0.2s, opacity 0.4s;
+}
+.scroll-top-button.scroll-show {
+    opacity: 1;
+    cursor: pointer;
+    z-index: 2203;
+}
+.scroll-top-button:hover {
+    box-shadow: 0px 4px 12px 0px rgba(50, 50, 50, 0.5);
+}
+.scroll-top-button i {
+    font-size: 30px;
+}

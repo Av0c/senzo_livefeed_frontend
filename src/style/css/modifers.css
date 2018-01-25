@@ -14,7 +14,7 @@
     user-drag: none;
 }
 
-.cursor-pointer { /* Turn cursor into pointer (hand) when hovering */
+.cursor-pointer {
     cursor: pointer;
 }
 
@@ -24,4 +24,35 @@
 
 .bold {
     font-weight: bold;
+}
+
+.red-50 {
+    color: #FFEBEE;
+}
+.red-100 {
+    color: #FFCDD2;
+}
+.red-200 {
+    color: #EF9A9A;
+}
+.red-300 {
+    color: #E57373;
+}
+.red-400 {
+    color: #EF5350;
+}
+.red-500 {
+    color: #F44336;
+}
+.red-600 {
+    color: #E53935;
+}
+.red-700 {
+    color: #D32F2F;
+}
+.red-800 {
+    color: #C62828;
+}
+.red-900 {
+    color: #B71C1C;
 }

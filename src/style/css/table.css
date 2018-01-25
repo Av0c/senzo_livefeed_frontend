@@ -7,6 +7,9 @@
 .sensors-section {
     width: 75%;
 }
+.user-button,.sensor-button {
+    font-size: 30px;
+}
 
 /* User list */
 .flat-table.user-table .table-header-row th:nth-child(1) {

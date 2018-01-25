@@ -65,7 +65,7 @@ class UserList extends React.Component {
 						(u.canmodify && u.username != this.props.me.username) ?
 						[
 							<td key="0">
-								<img className="pencil" onClick={() => this.openEdit(u)} src="/src/assets/images/pencil.png"/>
+								<i className="material-icons cursor-pointer user-button" onClick={() => this.openEdit(u)}>edit</i>
 							</td>,
 							<td key="1">
 								<Modal
@@ -73,7 +73,7 @@ class UserList extends React.Component {
 									header="Delete User"
 									buttonText="Delete"
 									buttonClass="btn-danger"
-									entry={ <img className="bin" src="/src/assets/images/bin.svg"/> }
+									entry={ <i className="material-icons red-500 user-button cursor-pointer">delete_forever</i> }
 								>
 									<p>Are you sure you want to delete this user account and all related information ?</p>
 								</Modal>

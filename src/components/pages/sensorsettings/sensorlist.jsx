@@ -124,7 +124,7 @@ class SensorList extends React.Component {
 												<Link className="button" to={"/live/"+par.id} target="_blank">Floorplan</Link>
 											</td>
 											<td className="button-holder" style={{paddingLeft: "0px"}}>
-												<i className="material-icons cursor-pointer" style={{color: "#F44336", fontSize: "2em"}} onClick={() => this.openDelete(ss)}>{"delete_forever"}</i>
+												<i className="material-icons cursor-pointer red-500 sensor-button" onClick={() => this.openDelete(ss)}>{"delete_forever"}</i>
 											</td>
 										</tr>
 									);

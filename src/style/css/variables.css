@@ -190,8 +190,6 @@ transition-timing-function: ease-in-out;
     line-height: 1.8em;
 }
 
-
-
 .settings-dropdown-root {
     visibility: hidden;
     position: absolute;
@@ -203,11 +201,7 @@ transition-timing-function: ease-in-out;
     margin-top: 10px;
 }
 
-.user-block:hover .settings-dropdown-root {
-    visibility: visible;
-}
-
-.settings-dropdown-root:hover {
+.settings-dropdown-root.setting-show {
     visibility: visible;
 }
 

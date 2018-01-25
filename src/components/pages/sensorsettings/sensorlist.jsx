@@ -102,7 +102,6 @@ class SensorList extends React.Component {
 							{
 								sensors.map((x, idx) => {
 									var ss = Object.assign({}, this.props.sensorMap.get(x.id));
-									console.log(this.props);
 									if (!ss) {
 										return null;
 									}

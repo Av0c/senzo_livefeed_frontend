@@ -11,35 +11,19 @@ export class Toolbar extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            show: false,
+            showLocation: false,
+            showSetting: false,
             searchActive: false,
             headerClass: "container-fluid normal-header",
             spacingClass: "header-spacing",
         };
     }
-
-    showChildren() {
+    closeAll() {
         this.setState({
-            show: true,
+            showLocation: false,
+            showSetting: false,
         });
     }
-
-    closeChildren() {
-        this.setState({
-            show: false,
-        });
-    }
-
-    searchFocus() {
-        console.log("focused!");
-        this.setState({ searchActive: true });
-    }
-
-    searchClose() {
-        console.log("lose focused!");
-        this.setState({ searchActive: false });
-    }
-
     componentDidMount() {
         this.checkStatic();
     }
@@ -73,7 +57,7 @@ export class Toolbar extends React.Component {
                     <div className="row">
                         <div className="col-xs-4">
                             <div className="location-block clearfix">
-                                <div onClick={this.showChildren.bind(this)} className="cursor-pointer">
+                                <div onClick={() => {this.setState({ showLocation: true})}} className="cursor-pointer">
                                     <div className="location-icon pull-left">
                                         <img src="src/assets/images/location-icon.svg" alt="Location" />
                                     </div>
@@ -81,20 +65,19 @@ export class Toolbar extends React.Component {
                                         <span>{this.props.tree.info.name}</span>
                                     </div>
                                 </div>
-                                {this.state.show && <div>
+                                {this.state.showLocation && <div>
                                     <div className="location-dropdown-root">
                                         <div className={"search-container"}>
                                             <SearchBarDropDown
                                                 querySettings={this.props.querySettings}
-                                                onChange={(node) => {this.props.statistic(node); this.closeChildren();}}
+                                                onChange={(node) => {this.props.statistic(node); this.closeAll();}}
                                                 onFocus={() => {}}
                                                 onClose={() => {}}
                                                 tree={this.props.tree}
                                             />
                                         </div>
-                                        <Tree tree={this.props.tree} statistic={(node) => {this.props.statistic(node); this.closeChildren();}} />
+                                        <Tree tree={this.props.tree} statistic={(node) => {this.props.statistic(node); this.closeAll();}} />
                                     </div>
-                                    <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.state.show ? "" : " closed")} onClick={this.closeChildren.bind(this)}></div>
                                 </div>}
                             </div>
                         </div>
@@ -103,26 +86,29 @@ export class Toolbar extends React.Component {
                         </div>
                         <div className="col-xs-4">
                             <div className="user-block">
-                                <div className="user-icon pull-right"><img src="src/assets/images/user-settings.svg" alt="Settings" /></div>
-                                <div className="user-name pull-right"><span>{this.props.user.firstname+" "+this.props.user.lastname}</span></div>
-                                <div className="settings-dropdown-root">
+                                <div className="user-icon pull-right cursor-pointer" onClick={() => this.setState({showSetting: true})}><img src="src/assets/images/user-settings.svg" alt="Settings" /></div>
+                                <div className="user-name pull-right cursor-pointer" onClick={() => this.setState({showSetting: true})}><span>{this.props.user.firstname+" "+this.props.user.lastname}</span></div>
+                                <div className={(this.state.showSetting && "setting-show") + " settings-dropdown-root"}>
                                     <ul>
-                                        <li><Link to="/settings/ownaccount">Own Account</Link></li>
-                                        <li><Link to="/user">{(this.props.user.role == "ADMIN") ? "User Administration" : "Contact"}</Link></li>
+                                        <li><Link to="/settings/ownaccount" onClick={() => {this.closeAll()}} >Own Account</Link></li>
+                                        <li><Link to="/user" onClick={() => {this.closeAll()}} >{(this.props.user.role == "ADMIN") ? "User Administration" : "Contact"}</Link></li>
                                         {
                                             (this.props.user.role == "ADMIN") ? [
-                                                <li key="0"><Link to="locations">Locations Settings</Link></li>,
-                                                <li key="1"><Link to="/settings/sensor">Sensor Settings</Link></li>,
-                                                <li key="2"><Link to="/api">Live Feed/SenzoAPI</Link></li>,
-                                                <li key="3"><Link to="/settings/default">Default Settings</Link></li>
+                                                <li key="0"><Link onClick={() => {this.closeAll()}}  to="locations">Locations Settings</Link></li>,
+                                                <li key="1"><Link onClick={() => {this.closeAll()}}  to="/settings/sensor">Sensor Settings</Link></li>,
+                                                <li key="2"><Link onClick={() => {this.closeAll()}} to="/api">Live Feed/SenzoAPI</Link></li>,
+                                                <li key="3"><Link onClick={() => {this.closeAll()}} to="/settings/default">Default Settings</Link></li>
                                             ] : null
                                         }
-                                        <li><Link to="/help">Help !</Link></li>
+                                        <li><Link onClick={() => {this.closeAll()}} to="/help">Help !</Link></li>
                                         <li><Link className="cursor-pointer" onClick={this.props.actions.logout}>Log Out</Link></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                        {(this.state.showLocation || this.state.showSetting) &&
+                            <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + ((this.state.showLocation || this.state.showSetting) ? "" : " closed")} onClick={this.closeAll.bind(this)}></div>
+                        }
                     </div>
                 </div>
                 <div className={this.state.spacingClass}></div>

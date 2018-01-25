@@ -1,13 +1,68 @@
 .users-section,.sensors-section {
     margin-top: 20px;
-    width: 100%;
 }
+.users-section {
+    width: 80%;
+}
+.sensors-section {
+    width: 75%;
+}
+
+/* User list */
+.flat-table.user-table .table-header-row th:nth-child(1) {
+    /* Name */
+    width: 25%;
+}
+.flat-table.user-table .table-header-row th:nth-child(2) {
+    /* Email */
+    width: 22%;
+}
+.flat-table.user-table .table-header-row th:nth-child(3) {
+    /* Mobile */
+    width: 14%;
+}
+.flat-table.user-table .table-header-row th:nth-child(4) {
+    /* Location */
+}
+.flat-table.user-table .table-header-row th:nth-child(5) {
+    /* Edit & Delete */
+    width: 8%;
+}
+
+/* Sensor list */
+.flat-table.sensor-table .table-header-row th:nth-child(1) {
+    /* Sensor icon */
+    width: 3%;
+}
+.flat-table.sensor-table .table-header-row th:nth-child(2) {
+    /* MAC Address */
+    width: 17%;
+}
+.flat-table.sensor-table .table-header-row th:nth-child(3) {
+    /* Name */
+    width: 14%;
+}
+.flat-table.sensor-table .table-header-row th:nth-child(4) {
+    /* Location */
+    width: auto;
+}
+.flat-table.sensor-table .table-header-row th:nth-child(5) {
+    /* Offline since */
+    width: 18%;
+}
+.flat-table.sensor-table .table-header-row th:nth-child(6) {
+    /* Edit, Delete */
+    width: 12%;
+}
+
+
 .popup-container {
     border-radius: 4px;
     box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
     background-color: #fff;
     padding: 16px;
-    width: 80%;
+    width: 100%;
+    margin-left: 20px;
 }
 .account-container {
     width: 400px;
@@ -32,28 +87,8 @@ table.flat-table {
     color: #616161;
     margin-bottom: 6px;
 }
-.flat-table .table-header-row th:nth-child(1) {
-    /* Name */
-    width: 25%;
-}
-.flat-table .table-header-row th:nth-child(2) {
-    /* Email */
-    width: 22%;
-}
-.flat-table .table-header-row th:nth-child(3) {
-    /* Mobile */
-    width: 14%;
-}
-.flat-table .table-header-row th:nth-child(4) {
-    /* Location */
-}
-.flat-table .table-header-row th:nth-child(5) {
-    /* Edit */
-    width: 4%;
-}
-.flat-table .table-header-row th:nth-child(6) {
-    /* Delete */
-    width: 4%;
+.flat-table tr:hover td {
+    background-color: rgba(100, 100, 100, 0.1);
 }
 .flat-table .table-header-row h4 {
     font-size: 17px;
@@ -65,7 +100,6 @@ table.flat-table {
     border: none;
     opacity: 0;
 }
-
 .popup-color-note {
     background-color: #ffffff;
     position: fixed;

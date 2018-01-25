@@ -17,3 +17,11 @@
 .cursor-pointer { /* Turn cursor into pointer (hand) when hovering */
     cursor: pointer;
 }
+
+.percent:after {
+    content: "%";
+}
+
+.bold {
+    font-weight: bold;
+}

@@ -90,17 +90,19 @@ class SensorList extends React.Component {
 			<div className="container-fluid">
 				<div className="sensors-section">
 					<div className="popup-container">
-						<table className="flat-table"><tbody>
-							<tr>
+						<table className="flat-table sensor-table"><tbody>
+							<tr className="table-header-row">
 								<th></th>
-								<th><strong>MAC Address</strong></th>
-								<th><strong>Name</strong></th>
-								<th><strong>Offline Since</strong></th>
+								<th>MAC ADDRESS</th>
+								<th>NAME</th>
+								<th>LOCATION</th>
+								<th>OFFLINE SINCE</th>
 								<th colSpan="3"></th>
 							</tr>
 							{
 								sensors.map((x, idx) => {
 									var ss = Object.assign({}, this.props.sensorMap.get(x.id));
+									console.log(this.props);
 									if (!ss) {
 										return null;
 									}
@@ -111,16 +113,18 @@ class SensorList extends React.Component {
 										<tr key={idx} className={this.props.selectedSensor.id == x.id && "bold"}>
 											<td className="sensor-color-note-td"><Sensor sensor={ss}/></td>
 											<td>{ss.macaddress}</td>
-											<td>{ss.name}</td>
+											<td><Link to={"/live/"+par.id} target="_blank">{ss.name}</Link></td>
+											<td>{par.info.name}</td>
 											<td>{this.OfflineSince(ss)}</td>
+
 											<td className="button-holder">
 												<div className="button" onClick={() => this.openEdit(ss)}>Edit</div>
 											</td>
 											<td className="button-holder">
 												<Link className="button" to={"/live/"+par.id} target="_blank">Floorplan</Link>
 											</td>
-											<td className="button-holder">
-												<img className="bin" onClick={() => this.openDelete(ss)} src="/src/assets/images/bin.svg"/>
+											<td className="button-holder" style={{paddingLeft: "0px"}}>
+												<i className="material-icons cursor-pointer" style={{color: "#F44336", fontSize: "2em"}} onClick={() => this.openDelete(ss)}>{"delete_forever"}</i>
 											</td>
 										</tr>
 									);

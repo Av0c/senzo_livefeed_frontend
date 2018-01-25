@@ -65,10 +65,6 @@ transition-timing-function: ease-in-out;
 }
 */
 
-.bold {
-    font-weight: bold;
-}
-
 .clock-container {
     margin-top: 40px;
     height: 270px;
@@ -194,12 +190,7 @@ transition-timing-function: ease-in-out;
     line-height: 1.8em;
 }
 
-.percent:after {
-    content: "%";
-}
-.bold {
-    font-weight: bold;
-}
+
 
 .settings-dropdown-root {
     visibility: hidden;

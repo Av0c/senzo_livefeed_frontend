@@ -24,19 +24,21 @@ export default class Location extends React.Component {
     }
 
     renderIcon() {
+        var type;
         switch (this.props.node.type) {
             case "meeting_room" :
-                src = "src/assets/images/meeting_room.png"
-                return <img src={src} className="location-icon" title="Meeting room" />
+                type = "group";
+                return <i className="material-icons" style={{ marginRight: "5px" }}>{type}</i>
 
             case "open_area":
-                src = "src/assets/images/open_area.png"
-                return <img src={src} className="location-icon" title="Meeting room" />
+                type = "nature_people";
+                return <i className="material-icons" style={{ marginRight: "5px" }}>{type}</i>
 
             case "location":
+
             case "customer":
-                var src =  (this.state.isShowingChildren) ? "src/assets/images/minus-button.png" : "src/assets/images/plus-button.png"
-                return <img src={src} className="location-icon"  title="Location : can contains other sub-locations and rooms."/>
+                type = (this.state.isShowingChildren) ? "remove_circle_outline" : "add_circle_outline"
+                return <i className="material-icons" style={{ marginRight: "5px" }}>{type}</i>
 
             default:
                 return null;
@@ -51,7 +53,7 @@ export default class Location extends React.Component {
                         {icon}
                         {this.props.node.info.name}
                     </div>
-                    <div style={{ marginRight: '100px' }} className="location-options pull-right"> <a onClick={() => this.props.openAddLocationForm(this.props.node)} className="button btn-green pull-left" data-toggle="modal">Add Location</a>
+                    <div className="location-options pull-right"> <a onClick={() => this.props.openAddLocationForm(this.props.node)} className="button btn-green pull-left" data-toggle="modal">Add Location</a>
                         <div className="edit-btn pull-left">
                             <div className="button btn-green settings-edit" id="dLabel" onClick={this.showEditDropdown.bind(this)}>Edit</div>
                             {this.state.isShowingEdit && <div aria-labelledby="dLabel">

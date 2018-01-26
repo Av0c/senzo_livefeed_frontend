@@ -90,12 +90,13 @@ class SensorList extends React.Component {
 			<div className="container-fluid">
 				<div className="sensors-section">
 					<div className="popup-container">
-						<table className="flat-table"><tbody>
-							<tr>
+						<table className="flat-table sensor-table"><tbody>
+							<tr className="table-header-row">
 								<th></th>
-								<th><strong>MAC Address</strong></th>
-								<th><strong>Name</strong></th>
-								<th><strong>Offline Since</strong></th>
+								<th>MAC ADDRESS</th>
+								<th>NAME</th>
+								<th>LOCATION</th>
+								<th>OFFLINE SINCE</th>
 								<th colSpan="3"></th>
 							</tr>
 							{
@@ -111,16 +112,18 @@ class SensorList extends React.Component {
 										<tr key={idx} className={this.props.selectedSensor.id == x.id && "bold"}>
 											<td className="sensor-color-note-td"><Sensor sensor={ss}/></td>
 											<td>{ss.macaddress}</td>
-											<td>{ss.name}</td>
+											<td><Link to={"/live/"+par.id} target="_blank">{ss.name}</Link></td>
+											<td>{par.info.name}</td>
 											<td>{this.OfflineSince(ss)}</td>
+
 											<td className="button-holder">
-												<div className="button" onClick={() => this.openEdit(ss)}>Edit</div>
+												<i title="Edit" className="material-icons cursor-pointer sensor-button" onClick={() => this.openEdit(ss)}>edit</i>
+											</td>
+											<td className="button-holder" style={{paddingLeft: "0px"}}>
+												<Link title="Floorplan" to={"/live/"+par.id} target="_blank" style={{color: "inherit"}}><i className="material-icons cursor-pointer sensor-button">layers</i></Link>
 											</td>
 											<td className="button-holder">
-												<Link className="button" to={"/live/"+par.id} target="_blank">Floorplan</Link>
-											</td>
-											<td className="button-holder">
-												<img className="bin" onClick={() => this.openDelete(ss)} src="/src/assets/images/bin.svg"/>
+												<i title="Delete" className="material-icons cursor-pointer red-500 sensor-button" onClick={() => this.openDelete(ss)}>{"delete_forever"}</i>
 											</td>
 										</tr>
 									);

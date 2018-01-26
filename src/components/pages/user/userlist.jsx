@@ -65,7 +65,7 @@ class UserList extends React.Component {
 						(u.canmodify && u.username != this.props.me.username) ?
 						[
 							<td key="0">
-								<img className="pencil" onClick={() => this.openEdit(u)} src="/src/assets/images/pencil.png"/>
+								<i title="Edit" className="material-icons cursor-pointer user-button" onClick={() => this.openEdit(u)}>edit</i>
 							</td>,
 							<td key="1">
 								<Modal
@@ -73,7 +73,7 @@ class UserList extends React.Component {
 									header="Delete User"
 									buttonText="Delete"
 									buttonClass="btn-danger"
-									entry={ <img className="bin" src="/src/assets/images/bin.svg"/> }
+									entry={ <i title="Delete" className="material-icons red-500 user-button cursor-pointer">delete_forever</i> }
 								>
 									<p>Are you sure you want to delete this user account and all related information ?</p>
 								</Modal>
@@ -106,7 +106,8 @@ class UserList extends React.Component {
 		return (ok && nodeNames &&
 			<div className="users-section">
 				<div className="popup-container">
-					<table className="flat-table"><tbody> {
+					<table className="flat-table user-table"><tbody>
+						{
 							userRows.map((urow) => {
 								return [
 									<tr className="table-header-row">
@@ -116,8 +117,7 @@ class UserList extends React.Component {
 										<th>EMAIL</th>
 										<th>MOBILE</th>
 										<th>LOCATION</th>
-										<th></th>
-										<th></th>
+										<th colSpan="2"></th>
 									</tr>,
 									urow[0].map((u) => this.renderUser(u, nodeNames)),
 									<tr className="table-spacing"></tr>

@@ -38,7 +38,7 @@ export class SearchContainer extends React.Component {
 
     render() {
         return (
-            <div className=" text-center add-cart-zone">
+            <div className="text-center add-cart-zone">
                 {this.state.showSearch ? <SearchBar querySettings={this.props.querySettings} addNodeWidget={this.addNodeWidget} tree={this.props.tree} hideSearchBar={this.showSearchBar} /> : <a className="add-card" onClick={this.showSearchBar}> <img src="src/assets/images/plus.svg" />
                     <div className="add-card-descr">
                         Add Location</div>

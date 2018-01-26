@@ -3,18 +3,18 @@
     position: absolute;
     background: #fff;
     top: 48px;
-    width: 270px;
     box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.3);
+    min-width: 250px;
     max-height: 560px;
     overflow-y: auto;
     overflow-x: hidden;
+    box-sizing: content-box;
 }
 .location-dropdown-root a {
     display: inline-block;
     text-decoration: none;
     color: #585e66;
     padding: 12px 10px;
-    box-sizing: border-box;
     transition: box-shadow 0.2s, font-weight 0.2s;
 }
 .location-dropdown-root a:hover {
@@ -37,7 +37,7 @@
 }
 .dropdown-container {
     margin-left: 10px;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.03);
 }
 .dropdown-scroll {
     overflow-y: auto;
@@ -53,21 +53,51 @@
     border-radius: 3px;
     text-align: center;
     vertical-align: middle;
-    font-family: monospace;
-    font-size: 20px;
     margin-right: 10px;
     padding: 0;
+    min-width: 15px;
     transform-origin: 50% 50%;
     transition: transform 0.4s ease-in-out, font-weight 0.2s;
 }
 .dropdown-button:hover {
-    cursor: pointer;
     font-weight: bold;
 }
 .dropdown-active {
-    transform: rotateZ(180deg) translateY(-2px);
+    transform: scaleX(-1);
 }
 .dropdown-button:active, .dropdown-button:focus {
     outline: none;
     border: none;
+}
+.search-container {
+    padding: 12px 10px;
+    width: 250px;
+    border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+}
+.search-container .Select-control {
+}
+.search-container .Select.is-focused .Select-control {
+    outline: none !important;
+}
+.search-container .Select-menu-outer {
+    position: relative;
+    width: 229px;
+}
+.search-container .Select-menu {
+    max-height: 180px;
+}
+.search-container .Select-option.is-focused {
+    background: none;
+    color: #666;
+}
+.search-container .Select-menu {
+    margin-left: -1px;
+}
+.search-container .Select-option {
+    border-left: 1px solid #ccc;
+    transition: box-shadow 0.2s, font-weight 0.2s;
+}
+.search-container .Select-option:hover {
+    font-weight: bold;
+    box-shadow: 2px 0px 0px 0px #7ec443 inset;
 }

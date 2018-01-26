@@ -51,10 +51,10 @@ export default class LiveSummary extends React.Component {
 		this.listAreas(this.props.root, config.room.MEETINGROOM, MRs);
 
 		return (
-			<div className="container-fluid"> 
+			<div className="container-fluid">
 			  <div className="row">
 				<div className="col-md-6">
-				  <div className="live-stats-card card">
+				  <div className="live-stats-card card" style={{width: "925px"}}>
 					<table className="table text-center"><tbody>
 					  <tr>
 						<td></td>
@@ -63,7 +63,7 @@ export default class LiveSummary extends React.Component {
 					  </tr>
 					  {
 					  	(OAs.length > 0) ? ([
-							<tr className="objects-list" key="OAs"> 
+							<tr className="objects-list" key="OAs">
 								<td className="live-stats-heading">Open Areas </td>
 								<td> </td>
 								<td>In Use</td>
@@ -73,7 +73,7 @@ export default class LiveSummary extends React.Component {
 						  	OAs.map((x) => {
 								var smr = this.summary(x);
 								return (
-									<tr className="objects-list" key={x.id}> 
+									<tr className="objects-list" key={x.id}>
 										<td className="object-name">{x.info.name}</td>
 										<td>{smr.total}</td>
 										<td>{smr.inUse}</td>
@@ -86,7 +86,7 @@ export default class LiveSummary extends React.Component {
 					  }
 					  {
 					  	(MRs.length > 0) ? ([
-							<tr className="objects-list" key="MRs"> 
+							<tr className="objects-list" key="MRs">
 								<td className="live-stats-heading">Meeting Rooms</td>
 								<td> </td>
 								<td>Status</td>
@@ -96,7 +96,7 @@ export default class LiveSummary extends React.Component {
 						  	MRs.map((x) => {
 								var smr = this.summary(x);
 								return (
-									<tr className="objects-list" key={x.id}> 
+									<tr className="objects-list" key={x.id}>
 										<td className="object-name">{x.info.name}</td>
 										<td>{smr.total}</td>
 										<td><Status taken={(smr.inUse >0)} /></td>

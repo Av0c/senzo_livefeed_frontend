@@ -12,6 +12,7 @@ import { fetchCard } from 'actions/defaultsettings';
 import { fetchLiveData } from 'actions/node';
 
 import Toolbar from 'containers/toolbar';
+import ScrollTop from 'components/common/scrolltop';
 
 export class Frame extends React.Component {
 
@@ -37,9 +38,14 @@ export class Frame extends React.Component {
     render() {
         return (this.props.tree && this.props.cards && this.props.sensorMap) ?
         <div style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px', maxWidth: '100%' }} className="container">
-            <Toolbar actions={{ logout: this.props.logout }} statistic={this.handleTreeClick.bind(this)} location={this.props.location} />
+            <Toolbar
+                actions={{ logout: this.props.logout }}
+                statistic={this.handleTreeClick.bind(this)}
+                location={this.props.location}
+            />
             <div className="content">
                 { this.props.children }
+                <ScrollTop></ScrollTop>
             </div>
         </div> : null
     }

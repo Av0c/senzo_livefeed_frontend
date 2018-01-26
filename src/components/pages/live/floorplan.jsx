@@ -6,6 +6,7 @@ import config from 'config';
 import { Link } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import SensorForm from './sensorform';
+import ColorNote from "components/common/popupcolornote"
 
 import * as a from 'actions/floorplan';
 import { updateSensor } from 'actions/floorplan';
@@ -167,31 +168,7 @@ export class FloorPlan extends React.Component {
 		}
 		return (
 			<div className="container-fluid">
-				<div className="sensor-color-note">
-					<table><tbody>
-						<tr>
-							<td className="sensor-color-note-td"><Sensor sensor={{dummy:true, id: -2, inuse: true, standby: false, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
-							<td>Occupied</td>
-						</tr>
-						<tr>
-							<td className="sensor-color-note-td"><Sensor sensor={{dummy:true, id: -3, inuse: false, standby: true, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
-							<td>Standby</td>
-						</tr>
-						<tr>
-							<td className="sensor-color-note-td"><Sensor sensor={{dummy:true, id: -1, inuse: false, standby: false, faulty: false, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
-							<td>Unoccupied</td>
-						</tr>
-						<tr><td><br /></td><td></td></tr>
-						<tr>
-							<td className="sensor-color-note-td"><Sensor sensor={{dummy:true, id: -4, inuse: false, standby: false, faulty: true, registered: true, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
-							<td>Offline</td>
-						</tr>
-						<tr>
-							<td className="sensor-color-note-td"><Sensor sensor={{dummy:true, id: -5, inuse: false, standby: false, faulty: false, registered: false, xpercent: 50, ypercent: 50 }} viewFilter={config.viewFilter.ALL} /></td>
-							<td>Unregistered</td>
-						</tr>
-					</tbody></table>
-				</div>
+				<ColorNote />
 				{(!this.props.root.info.empty) ? (
 					(this.props.root.info.hasfloorplan) ? (
 						<div className="floorplan-container">

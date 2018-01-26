@@ -1098,8 +1098,8 @@ ul.users {
     width: 900px;
     /* margin-left: 50px; */
 }
-.settings-divider {
-    border-top: 1px dotted black;
+.setting-divider {
+    border-top: 1px solid black;
     opacity: 1;
     margin: 15px 0;
     display: block;
@@ -1120,8 +1120,6 @@ input[type="password"].has-error {
 .location-icon {
     margin-right: 10px;
     height: 80%;
-}
-.cursor-pointer {
     cursor: pointer;
 }
 .dash-dash {
@@ -1131,4 +1129,34 @@ input[type="password"].has-error {
 }
 .modal-body option[disabled] {
     color: #BDBDBD;
+}
+.material-icons {
+    vertical-align: middle;
+}
+.scroll-top-button {
+    display: block;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    outline: none;
+    background-color: #7ec443;
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 12px 0px rgba(50, 50, 50, 0.3);
+    z-index: -1000;
+    cursor: default;
+    opacity: 0;
+    transition: box-shadow 0.2s, opacity 0.4s;
+}
+.scroll-top-button.scroll-show {
+    opacity: 1;
+    cursor: pointer;
+    z-index: 2203;
+}
+.scroll-top-button:hover {
+    box-shadow: 0px 4px 12px 0px rgba(50, 50, 50, 0.5);
+}
+.scroll-top-button i {
+    font-size: 30px;
 }

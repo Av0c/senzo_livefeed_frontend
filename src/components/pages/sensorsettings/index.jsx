@@ -170,7 +170,7 @@ class SensorSettings extends React.Component {
 								<LeftMenu overview='' comparison='' />
 							</div>
 						</div>
-						<hr className="settings-divider"></hr>
+						<hr className="setting-divider"></hr>
 						<div className="row">
 							<div className="col-md-12">
 								<div className="settings-header clearfix">

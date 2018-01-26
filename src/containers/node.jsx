@@ -6,8 +6,8 @@ export default class Node extends React.Component {
         super(props, context);
         this.state = {
             show: false,
-            symbol: "+",
-            className: "dropdown-button",
+            icon: "add_circle_outline",
+            className: "",
         };
     }
 
@@ -15,24 +15,23 @@ export default class Node extends React.Component {
         if (!this.state.show) {
             this.setState({
                 show: true,
-                symbol: "-",
-                className: "dropdown-button dropdown-active",
+                icon: "remove_circle_outline",
+                className: "dropdown-active",
             });
         } else {
             this.setState({
                 show: false,
-                symbol: "+",
-                className: "dropdown-button",
+                icon: "add_circle_outline",
+                className: "",
             });
         }
     }
 
     render() {
-        console.log(this.props.node);
         return (
             <div className="dropdown-div">
                 <a onClick={() => {this.props.statistic(this.props.node)}}>{this.props.node.info.name}</a>
-                {(this.props.node.type == "location" && this.props.node.children.length > 0) && <button onClick={this.toggleChildren.bind(this)} className={this.state.className}>{this.state.symbol}</button>}
+                {(this.props.node.type == "location" && this.props.node.children.length > 0) && <i onClick={this.toggleChildren.bind(this)} className={this.state.className + " dropdown-button material-icons no-select no-drag cursor-pointer"}>{this.state.icon}</i>}
                 {this.state.show && this.props.children}
             </div>
         );

@@ -1,13 +1,39 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-export default class Location extends React.Component {
+class Location extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+        var node = this.props.nodeMap[this.props.location.query["n"]];
+        var qnode = node;
+        var open = false;
+        if (node) {
+            while (node.parent) {
+                if (node.parent.id==this.props.node.id) {
+                    open = true;
+                    break;
+                }
+                node = node.parent;
+            }
+        }
+
         this.state = {
-            isShowingChildren: false,
+            isShowingChildren: open,
             isShowingEdit: false,
+            qnode: qnode,
+        }
+        if (open) {
+            console.log(this.props.node)
+        }
+    }
+
+    componentDidMount() {
+        if (this.state.qnode) {
+            if (this.state.qnode.id == this.props.node.id) {
+                this.name.scrollIntoView();
+            }
         }
     }
 
@@ -49,9 +75,10 @@ export default class Location extends React.Component {
         return (
             <li className="location-item-li">
                 <div className="location-wrapper clearfix">
-                    <div className="location-name pull-left" data-toggle="collapse" onClick={this.showChildren.bind(this)} >
+                    <div ref={e => this.name = e} className={"location-name pull-left"+((this.state.qnode && this.props.node.id==this.state.qnode.id) ? " highlight" : "")} onClick={this.showChildren.bind(this)} >
                         {icon}
                         {this.props.node.info.name}
+                        {this.props.node.info.useownfp && <i className="material-icons" style={{ marginLeft: "5px" }} title="Use its own floor plan. If this symbol is not showed, parent's floor plan is used instead.">picture_in_picture</i>}
                     </div>
                     <div className="location-options pull-right"> <a onClick={() => this.props.openAddLocationForm(this.props.node)} className="button btn-green pull-left" data-toggle="modal">Add Location</a>
                         <div className="edit-btn pull-left">
@@ -79,8 +106,23 @@ export default class Location extends React.Component {
                         <img className="bin pull-left" onClick={() => this.props.openDeleteLocationForm(this.props.node)} src="/src/assets/images/bin.svg"/>
                     </div>
                 </div>
-                {this.state.isShowingChildren && this.props.children}
+                <div className={!this.state.isShowingChildren ? "hidden" : ""}>
+                    {this.props.children}
+                </div>
             </li>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        nodeMap: state.overviewReducer.nodeMap,
+    };
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        dispatch
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Location);

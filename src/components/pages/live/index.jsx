@@ -8,6 +8,7 @@ import Path from "components/common/path"
 import NodeDropdown from "components/common/nodedropdown"
 import ListDropdown from "components/common/listdropdown"
 
+import ColorNote from "components/common/popupcolornote"
 import LiveSummary from "./summary"
 import FloorPlan from "./floorplan"
 import LeftMenu from 'components/common/leftmenu';
@@ -38,9 +39,10 @@ class Live extends React.Component {
 				type: null
 			},
 			path: [],
-			groupMR: false,
+			showDetails: true,
 			I: {}
 		};
+		this.prepare(this.props);
 	}
 
 	fetchLive(id) {
@@ -49,7 +51,7 @@ class Live extends React.Component {
 
 	componentDidMount() {
 		this.prepare(this.props);
-		var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
+		var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 500000);
 		this.setState({ I: I });
 	}
 
@@ -84,13 +86,8 @@ class Live extends React.Component {
 		}
 		if (currentNode.type == config.room.MEETINGROOM.code || props.nodeFilter.type == config.room.MEETINGROOM.code || props.viewFilter == config.viewFilter.MAINTENANCE) {
 			this.setState({
-				groupMR: false
+				showDetails: true
 			})
-		}
-		if (props.imageURL.indexOf(config.floorplanURLBase+`${currentNode.id}?`) == -1) {
-			console.log(props.imageURL);
-			// floor changed => fetch new image
-			this.props.dispatch(fetchImage(currentNode.id));
 		}
 	}
 
@@ -113,7 +110,7 @@ class Live extends React.Component {
 
 	changeMRMode() {
 		this.setState({
-			groupMR: !this.state.groupMR
+			showDetails: !this.state.showDetails
 		});
 	}
 
@@ -122,6 +119,11 @@ class Live extends React.Component {
 		if (root) {
 			if (root.type == config.room.MEETINGROOM.code || root.type == config.room.OPENAREA.code) {
 				res.push(root);
+			}
+			if (root.children) {
+				root.children.forEach((child) => {
+					self.listNodeFilter(child, res);
+				})
 			}
 		}
 	}
@@ -141,7 +143,7 @@ class Live extends React.Component {
 
 									<div className="live-top-menu pull-right">
 										<div className="button-sm pull-left nav-stats show-hide-details" onClick={this.changeMRMode.bind(this)}>
-											{(this.state.groupMR) ? "Show details" : "Hide details"}
+											{(this.state.showDetails) ? "Hide details" : "Show details"}
 										</div>
 
 										<NodeDropdown
@@ -151,7 +153,7 @@ class Live extends React.Component {
 											click={
 												(node) => { this.props.dispatch(selectNodeFilter(node)) }
 											}
-											list={this.listNodeFilter}
+											list={this.listNodeFilter.bind(this)}
 											header="All areas"
 										/>
 
@@ -176,13 +178,18 @@ class Live extends React.Component {
 					</div>
 				</div>
 				<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "live/"+x.id} marginTop={true}/>
-				<FloorPlan
-					imageURL={this.props.imageURL}
-					root={this.props.nodeFilter}
-					viewFilter={this.props.viewFilter}
-					sensorMap={this.props.sensorMap}
-					groupMR={this.state.groupMR}
-				/>
+				<ColorNote />
+				<div className="container-fluid">
+					<div className="floorplan-margin">
+						<FloorPlan
+							root={this.props.nodeMap[this.props.nodeFilter.id]}
+							viewFilter={this.props.viewFilter}
+							showDetails={this.state.showDetails}
+							tooltipGroup="index"
+							thumbnail={false}
+						/>
+					</div>
+				</div>
 				<LiveSummary
 					root={this.state.currentNode}
 					sensorMap={this.props.sensorMap}
@@ -201,7 +208,7 @@ function mapStateToProps(state) {
 		sensorMap: state.nodeReducer.map,
 		sensorMapError: state.nodeReducer.error,
 		user: state.authReducer.user,
-		imageURL: state.floorPlanReducer.imageURL
+		images: state.floorPlanReducer.images,
 	};
 }
 

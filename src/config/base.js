@@ -56,6 +56,12 @@ export default {
       occupancyTag: "TTO"
     }
   },
+  textOf: {
+    meeting_room: "meeting room",
+    open_area: "working area",
+    location: "location",
+    customer: "company",
+  },
   nodeType: {
     customer: {
       code: "customer",

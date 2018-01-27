@@ -3,6 +3,7 @@ import config from 'config';
 import appHistory from 'components/common/appHistory';
 import toastr from 'toastr';
 import * as overviewAction from "./overview"
+import * as floorplanAction from "./floorplan"
 import store from '../store';
 
 export const FETCH_LIVE_DATA = "FETCH_LIVE_DATA";
@@ -132,7 +133,17 @@ export function updateNode(node) {
 		dispatch(updateNodeInProgress());
 		return axios.put(config.api.root + `/node/update/${node.id}`, node)
 			.then((response) => {
+				// Dirty hack !
+				var oldNode = store.getState().overviewReducer.nodeMap[node.id];
+				Object.assign(oldNode, node, {
+					info: {
+						...oldNode.info,
+						...node.info,
+					},
+				});
+
 				toastr.success(`${node.info.name} has been updated`);
+				dispatch(fetchLiveData(store.getState().authReducer.user.companyid));
 				dispatch(overviewAction.fetchCustomerOverview(store.getState().authReducer.user.companyid))
 			})
 			.catch(function (response) {
@@ -187,6 +198,7 @@ export function uploadFloorplanView(node, image, type) {
 						.then((response) => {
 							toastr.success("Edit floor plan successfully @@!");
 							dispatch(overviewAction.fetchCustomerOverview(store.getState().authReducer.user.companyid))
+							dispatch(floorplanAction.fetchImage(store.getState().authReducer.user.companyid))
 						}).catch((response) => {
 							toastr.error("Edit floor plan failed : " + response.data);
 						})
@@ -218,19 +230,6 @@ export function fetchFailed(data) {
 	return {
 		type: FETCH_FAILED,
 		data
-	};
-}
-
-export function getLiveData(id) {
-	return dispatch => {
-		dispatch(fetchLiveData(id));
-		axios.get(config.api.root + '/sensor/live/' + id)
-			.then((response) => {
-				dispatch(receiveLiveData(response.data));
-			})
-			.catch(function (response) {
-				dispatch(fetchFailed(response.data));
-			});
 	};
 }
 

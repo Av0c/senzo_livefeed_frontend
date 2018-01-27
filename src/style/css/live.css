@@ -20,19 +20,23 @@
   height: 100%;
 }
 
-.floorplan-container {
-  margin-top: 20px;
-  margin-bottom: 40px;
+.floorplan-container,
+.floorplan-container-thumbnail {
   position: relative;
-  margin-left: 50px;
-
   display: inline-block;
   border: 1px solid black;
   padding: 1px;
+  width: 925px;
+}
+.floorplan-container-thumbnail {
+  width: 500px;
+}
+.floorplan-margin {
+  margin-left: 50px;
+  margin-bottom: 50px;
 }
 .floorplan-image {
-  min-width: 60vw;
-  max-width: 80vw;
+  width: 100%;
   display: inline-block;
   vertical-align: middle;
   background-repeat: no-repeat;
@@ -44,7 +48,6 @@
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
-
 }
 .objects-list td:first-of-type {
   text-align: left;

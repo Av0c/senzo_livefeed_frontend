@@ -10,31 +10,8 @@ import store from '../store';
 /**
  * Floorplan image related
  */
-export const UPLOAD_IMAGE_FAILED = 'UPLOAD_IMAGE_FAILED';
-export const UPLOAD_IMAGE_SUCCESSFUL = 'UPLOAD_SUCCESSFUL';
-export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 export const FETCH_IMAGE = 'FETCH_IMAGE';
 export const RECEIVE_IMAGE = 'RECEIVE_IMAGE';
-
-export function uploadImage(data) {
-	return {
-		type: UPLOAD_IMAGE,
-		data
-	}
-}
-
-export function uploadImageFailed() {
-	return {
-		type: UPLOAD_IMAGE_FAILED
-	}
-}
-
-export function uploadImageSuccessful() {
-	history.push('/settings/areas/edit');
-	return {
-		type: UPLOAD_IMAGE_SUCCESSFUL
-	}
-}
 
 export function fetchImage(id) {
 	return {
@@ -78,6 +55,7 @@ export function updateSensor(sensor) {
 		dispatch(updateSensorInProgress(sensor));
 		return axios.put(config.api.root + `/sensor/update/${sensor.id}`, sensor)
 			.then((response) => {
+				// Dirty hack !
 				var ss = Object.assign({}, store.getState().nodeReducer.map.get(sensor.id), sensor);
 				store.getState().nodeReducer.map.set(sensor.id, ss);
 

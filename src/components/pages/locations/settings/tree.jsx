@@ -16,14 +16,19 @@ export default class Tree extends React.Component {
                     openEditLocationForm={self.props.openEditLocationForm}
                     closeEditLocationForm={self.props.closeEditLocationForm}
                     closeDeleteLocationForm={self.props.closeDeleteLocationForm}
-                    openDeleteLocationForm={self.props.openDeleteLocationForm} key={index} node={node}>
-                        <Tree openAddLocationForm={self.props.openAddLocationForm} style={style} tree={node}
-                        openAddFloorplanForm={self.props.openAddFloorplanForm}
-                        closeAddFloorplanForm={self.props.closeAddFloorplanForm}
-                        openEditLocationForm={self.props.openEditLocationForm}
-                        closeEditLocationForm={self.props.closeEditLocationForm}
-                        closeDeleteLocationForm={self.props.closeDeleteLocationForm}
-                        openDeleteLocationForm={self.props.openDeleteLocationForm}/>
+                    openDeleteLocationForm={self.props.openDeleteLocationForm} key={index} node={node}
+                    location={self.props.location}
+                    >
+
+                    <Tree openAddLocationForm={self.props.openAddLocationForm} style={style} tree={node}
+                    openAddFloorplanForm={self.props.openAddFloorplanForm}
+                    closeAddFloorplanForm={self.props.closeAddFloorplanForm}
+                    openEditLocationForm={self.props.openEditLocationForm}
+                    closeEditLocationForm={self.props.closeEditLocationForm}
+                    closeDeleteLocationForm={self.props.closeDeleteLocationForm}
+                    openDeleteLocationForm={self.props.openDeleteLocationForm}
+                    location={self.props.location}
+                    />
                 </Location>);
             });
         }

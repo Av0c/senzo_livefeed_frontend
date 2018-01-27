@@ -213,8 +213,30 @@ export class Settings extends React.Component {
 
     }
 
-    uploadImage(node, image, type) {
-        this.props.dispatch(uploadFloorplanView(node, image, type));
+    uploadImage(node, image, state) {
+        if (!node.info.hasfloorplan && state.hasfloorplan && state.useownfp && !image) {
+            return [false, "This location doesn't have any floorplan yet. Please upload a new one !"]
+        }
+        if (image) {
+            console.log("upload", state.type)
+            this.props.dispatch(uploadFloorplanView(node, image, state.type));
+            return [true, ""];
+        } else {
+            var hasfloorplan = state.hasfloorplan;
+            var useownfp = hasfloorplan && state.useownfp;
+            var newNode = {
+                id: node.id,
+                info: {
+                    name: node.info.name,
+                    hasfloorplan: hasfloorplan,
+                    useownfp: useownfp
+                },
+                type: state.type
+            }
+            console.log("update", newNode)
+            this.props.dispatch(updateNode(newNode));
+            return [true, ""];
+        }
     }
 
     render() {
@@ -243,6 +265,7 @@ export class Settings extends React.Component {
                                         closeEditLocationForm={this.closeEditLocationForm.bind(this)}
                                         openDeleteLocationForm={this.openDeleteLocationForm.bind(this)}
                                         closeDeleteLocationForm={this.closeDeleteLocationForm.bind(this)}
+                                        location={this.props.location}
                                     />
                                     {this.state.isAddingLocation && <AddLocationForm submit={this.addLocation.bind(this)} node={this.state.currentNode} tree={this.props.tree} isAddingLocation={this.state.isAddingLocation} closeAddLocationForm={this.closeAddLocationForm.bind(this)} />}
                                     {this.state.isAddingFloorplan && <AddFloorplanForm submit={this.uploadImage.bind(this)} node={this.state.currentNode} isAddingFloorplan={this.state.isAddingFloorplan} closeAddFloorplanForm={this.closeAddFloorplanForm.bind(this)} />}

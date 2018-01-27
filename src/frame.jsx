@@ -10,6 +10,7 @@ import './style/main.less';
 import { fetchCustomerOverview } from 'actions/overview';
 import { fetchCard } from 'actions/defaultsettings';
 import { fetchLiveData } from 'actions/node';
+import { fetchImage } from 'actions/floorplan';
 
 import Toolbar from 'containers/toolbar';
 import ScrollTop from 'components/common/scrolltop';
@@ -32,11 +33,12 @@ export class Frame extends React.Component {
         this.props.dispatch(fetchCard());
         this.props.dispatch(fetchCustomerOverview(this.props.user.companyid));
         this.props.dispatch(fetchLiveData(this.props.user.companyid));
+        this.props.dispatch(fetchImage(this.props.user.companyid));
     }
 
 
     render() {
-        return (this.props.tree && this.props.cards && this.props.sensorMap) ?
+        return (this.props.tree && this.props.cards && this.props.sensorMap && this.props.images) ?
         <div style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px', maxWidth: '100%' }} className="container">
             <Toolbar
                 actions={{ logout: this.props.logout }}
@@ -57,6 +59,7 @@ function mapStateToProps(state) {
         tree: state.overviewReducer.customerOverview,
         cards: state.defaultSettingsReducer.card,
         sensorMap: state.nodeReducer.map,
+        images: state.floorPlanReducer.images,
     }
 }
 

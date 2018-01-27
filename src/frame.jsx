@@ -67,7 +67,6 @@ function mapDispatchToProps(dispatch) {
     return {
         logout: () => {
             dispatch(clearToken());
-            window.location.reload();
         },
         setCurrentNode: (node) => {
             dispatch(setCurrentNode(node));

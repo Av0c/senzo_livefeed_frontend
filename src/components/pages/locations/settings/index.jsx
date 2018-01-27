@@ -231,11 +231,11 @@ export class Settings extends React.Component {
                         <div className="row">
                             <div className="col-md-12">
                                 <h2 className="account-title">Location Settings</h2>
-                                <div className="card">
+                                <div className="popup-container" style={{width: "50%"}}>
                                     <div className="heading clearfix">
                                         <h3 className="pull-left">{this.props.tree.info.name}</h3><a onClick={() => this.openAddLocationForm(this.props.tree)} className="button btn-green add-loc-button" data-toggle="modal">Add Location   </a>
                                     </div>
-                                    <Tree openAddLocationForm={this.openAddLocationForm.bind(this)} style="locations-list clearfix"
+                                    <Tree openAddLocationForm={this.openAddLocationForm.bind(this)} style="location-list clearfix"
                                         tree={this.props.tree}
                                         openAddFloorplanForm={this.openAddFloorplanForm.bind(this)}
                                         closeAddFloorplanForm={this.closeAddFloorplanForm.bind(this)}

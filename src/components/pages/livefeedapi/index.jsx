@@ -47,7 +47,7 @@ class LiveFeedAPI extends React.Component {
 										</div>
 									</div>
 								</div>
-								<ul className="api-locations-list">
+								<ul className="api-location-list">
 									<li className="clearfix">
 										<div className="api-loc clearfix">
 											<div className="location-name pull-left">Helsinki/Main office/Floor 1 </div>

@@ -53,9 +53,9 @@ export default class Location extends React.Component {
                         {icon}
                         {this.props.node.info.name}
                     </div>
-                    <div className="location-options pull-right"> <a onClick={() => this.props.openAddLocationForm(this.props.node)} className="button btn-green pull-left" data-toggle="modal">Add Location</a>
+                    <div className="location-options pull-right"> <i title="Add location" onClick={() => this.props.openAddLocationForm(this.props.node)} className="location-button material-icons cursor-pointer pull-left" data-toggle="modal">add_location</i>
                         <div className="edit-btn pull-left">
-                            <div className="button btn-green settings-edit" id="dLabel" onClick={this.showEditDropdown.bind(this)}>Edit</div>
+                            <i title="Edit" className="location-button material-icons cursor-pointer" id="dLabel" onClick={this.showEditDropdown.bind(this)}>edit</i>
                             {this.state.isShowingEdit && <div aria-labelledby="dLabel">
                                 <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.state.isShowingEdit ? "" : " closed")} onClick={this.closeEditDropdown.bind(this)} ></div>
                                 <div className={" dropdown-menu settings-location-dropdown " + (this.state.isShowingEdit ? "" : " closed")}>
@@ -76,7 +76,7 @@ export default class Location extends React.Component {
                             </div>
                             }
                         </div>
-                        <img className="bin pull-left" onClick={() => this.props.openDeleteLocationForm(this.props.node)} src="/src/assets/images/bin.svg"/>
+                        <i title="Delete" className="location-button material-icons cursor-pointer red-500 pull-left" style={{paddingLeft: "10px"}} onClick={() => this.props.openDeleteLocationForm(this.props.node)}>delete_forever</i>
                     </div>
                 </div>
                 {this.state.isShowingChildren && this.props.children}

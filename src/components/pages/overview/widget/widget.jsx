@@ -23,7 +23,9 @@ class Widget extends React.Component {
         }
         return (
             <div className="the-card clearfix">
-                <h1 className="card-location" title={this.props.node.info.name}>{this.props.node.info.name}</h1>
+                <div data-tooltip={this.props.node.info.name}>
+                    <h1 className="card-location">{this.props.node.info.name}</h1>
+                </div>
                 <div className="card-buttons clearfix">
                     <div className="card-inner-location pull-left">
                         <RoomTypeSelector roomType={this.props.node.type} type={this.props.type} chooseType={this.props.getOverview} />

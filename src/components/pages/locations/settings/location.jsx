@@ -78,11 +78,11 @@ class Location extends React.Component {
                     <div ref={e => this.name = e} className={"location-name pull-left"+((this.state.qnode && this.props.node.id==this.state.qnode.id) ? " highlight" : "")} onClick={this.showChildren.bind(this)} >
                         {icon}
                         {this.props.node.info.name}
-                        {this.props.node.info.useownfp && <i className="material-icons" style={{ marginLeft: "5px" }} title="Use its own floor plan. If this symbol is not showed, parent's floor plan is used instead.">picture_in_picture</i>}
+                        {this.props.node.info.useownfp && <i className="material-icons" style={{ marginLeft: "5px" }} data-tooltip="Use its own floor plan. If this symbol is not showed, parent's floor plan is used instead.">picture_in_picture</i>}
                     </div>
-                    <div className="location-options pull-right"> <i title="Add location" onClick={() => this.props.openAddLocationForm(this.props.node)} className="location-button material-icons cursor-pointer pull-left" data-toggle="modal">add_location</i>
+                    <div className="location-options pull-right"> <i data-tooltip="Add location" onClick={() => this.props.openAddLocationForm(this.props.node)} className="location-button material-icons cursor-pointer pull-left" data-toggle="modal">add_location</i>
                         <div className="edit-btn pull-left">
-                            <i title="Edit" className="location-button material-icons cursor-pointer" id="dLabel" onClick={this.showEditDropdown.bind(this)}>edit</i>
+                            <i data-tooltip="Edit" className="location-button material-icons cursor-pointer" id="dLabel" onClick={this.showEditDropdown.bind(this)}>edit</i>
                             {this.state.isShowingEdit && <div aria-labelledby="dLabel">
                                 <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.state.isShowingEdit ? "" : " closed")} onClick={this.closeEditDropdown.bind(this)} ></div>
                                 <div className={" dropdown-menu settings-location-dropdown " + (this.state.isShowingEdit ? "" : " closed")}>
@@ -103,7 +103,7 @@ class Location extends React.Component {
                             </div>
                             }
                         </div>
-                        <i title="Delete" className="location-button material-icons cursor-pointer red-500 pull-left" style={{paddingLeft: "10px"}} onClick={() => this.props.openDeleteLocationForm(this.props.node)}>delete_forever</i>
+                        <i data-tooltip="Delete" className="location-button material-icons cursor-pointer red-500 pull-left" style={{marginLeft: "10px"}} onClick={() => this.props.openDeleteLocationForm(this.props.node)}>delete_forever</i>
                     </div>
                 </div>
                 <div className={!this.state.isShowingChildren ? "hidden" : ""}>

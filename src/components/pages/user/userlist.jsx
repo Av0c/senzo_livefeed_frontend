@@ -65,7 +65,7 @@ class UserList extends React.Component {
 						(u.canmodify && u.username != this.props.me.username) ?
 						[
 							<td key="0">
-								<i title="Edit" className="material-icons cursor-pointer user-button" onClick={() => this.openEdit(u)}>edit</i>
+								<i data-tooltip="Edit" className="material-icons cursor-pointer user-button" onClick={() => this.openEdit(u)}>edit</i>
 							</td>,
 							<td key="1">
 								<Modal
@@ -73,7 +73,7 @@ class UserList extends React.Component {
 									header="Delete User"
 									buttonText="Delete"
 									buttonClass="btn-danger"
-									entry={ <i title="Delete" className="material-icons red-500 user-button cursor-pointer">delete_forever</i> }
+									entry={ <i data-tooltip="Delete" className="material-icons red-500 user-button cursor-pointer">delete_forever</i> }
 								>
 									<p>Are you sure you want to delete this user account and all related information ?</p>
 								</Modal>

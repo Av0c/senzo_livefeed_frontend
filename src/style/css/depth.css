@@ -1,16 +1,21 @@
 /* Set z-index of all special elements here to make sure they have the correct order */
+/* !important rule is used to override other depth setting */
+[data-tooltip]:before,
+[data-tooltip]:after {
+	z-index: 7095 !important;
+}
 .location-dropdown-root {
     z-index: 7094 !important;
 }
 .invite-modal, .popup-modal {
     z-index: 7093 !important;
 }
-.modal-overlay {
-    z-index: 999 !important;
-}
 .static-header {
     z-index: 7091 !important;
 }
 .static-menu {
     z-index: 7090 !important;
+}
+.modal-overlay {
+    z-index: 999 !important;
 }

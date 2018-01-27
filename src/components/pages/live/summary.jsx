@@ -119,9 +119,9 @@ export default class LiveSummary extends React.Component {
 class Status extends React.Component {
 	render() {
 		if (this.props.taken) {
-			return (<img src="/src/assets/images/room-taken.svg" alt="Taken" title="Taken"/>);
+			return (<img src="/src/assets/images/room-taken.svg" alt="Taken" data-tooltip="Taken"/>);
 		} else {
-			return (<img src="/src/assets/images/room-free.svg" alt="Free" title="Available"/>);
+			return (<img src="/src/assets/images/room-free.svg" alt="Free" data-tooltip="Available"/>);
 		}
 	}
 }

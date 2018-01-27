@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
 
 body {
-    background: #f6f7f9;
+    background: rgba(245, 245, 245, 1);
     font-family: 'Roboto';
     color: #585858;
     padding-bottom: 80px;

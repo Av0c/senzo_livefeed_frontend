@@ -4,6 +4,7 @@ import { addNodeWidget } from 'actions/overview';
 import SearchBar from 'components/common/searchbar';
 import { getOccupancyOverview, getParams } from 'actions/stats';
 import { updateUser } from 'actions/myaccount';
+import toastr from 'toastr';
 
 export class SearchContainer extends React.Component {
 
@@ -26,14 +27,11 @@ export class SearchContainer extends React.Component {
             user.details.location = [node.id];
         }
         else if(user.details.location.includes(node.id)){
-
-        }
-        else {
+            toastr.error("Already has a widget for this location.")
+        } else {
             user.details.location = [...user.details.location, node.id];
+            this.props.dispatch(updateUser(user.username, user));
         }
-
-        let params = getParams({ currentNode: node, querySettings: this.props.querySettings });
-        this.props.dispatch(updateUser(user.username, user));
     }
 
     render() {

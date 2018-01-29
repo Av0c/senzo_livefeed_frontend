@@ -119,7 +119,7 @@ export class Toolbar extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.authReducer.user,
+        user: state.myAccountReducer.user,
         tree: state.overviewReducer.customerOverview,
         cards: state.defaultSettingsReducer.card,
     };

@@ -87,7 +87,7 @@ class Password extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        auth: state.authReducer.user,
+        auth: state.myAccountReducer.user,
         user: state.myAccountReducer.user
     }
 }

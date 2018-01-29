@@ -27,6 +27,7 @@ import defaultSettingsReducer from 'reducers/defaultsettings';
 import livefeedAPIReducer from 'reducers/livefeedapi';
 
 import { clearToken } from 'actions/authentication';
+import appHistory from 'components/common/appHistory';
 
 const reducer = combineReducers({
   authReducer,

@@ -14,14 +14,26 @@ export class ComparisonStats extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let overview = nextProps.overview;
-        if (nextProps.overview.length == 2) {
-            this.setState({
-                peak: Math.round((overview[0].data.peak - overview[1].data.peak) * 100),
-                average: Math.round((overview[0].data.average - overview[1].data.average) * 100),
-                aboveHighMark: Math.round((overview[0].data.marks[1] - overview[1].data.marks[1]) * 100),
-                belowHighMark: Math.round((overview[0].data.marks[0] - overview[1].data.marks[0]) * 100)
-            });
+        if (nextProps.nodes[0] && nextProps.nodes[1]) {
+            var overview0 = nextProps.overviewMap[nextProps.nodes[0].id];
+            var overview1 = nextProps.overviewMap[nextProps.nodes[1].id];
+            if (overview0 && overview1 && !overview0.loading && !overview1.loading) {
+                var data0 = overview0.data;
+                var data1 = overview1.data;
+                if (data0 && data1) {
+                    var mHigh = 0, mLow = 0;
+                    if (data0.marks && data1.marks) {
+                        mHigh = Math.round((data0.marks[2] - data1.marks[2]) * 10000)/100;
+                        mLow = Math.round((data0.marks[0] - data1.marks[0]) * 10000)/100;
+                    }
+                    this.setState({
+                        peak: Math.round((data0.peak - data1.peak) * 10000)/100,
+                        average: Math.round((data0.average - data1.average) * 10000)/100,
+                        aboveHighMark: mHigh,
+                        belowHighMark: mLow,
+                    });
+                }
+            }
         }
     }
 
@@ -45,7 +57,8 @@ export class ComparisonStats extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        overview: state.comparisonReducer.overview
+        nodes: state.comparisonReducer.nodes,
+        overviewMap: state.statsReducer.overviewMap,
     };
 }
 

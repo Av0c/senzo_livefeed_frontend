@@ -1,10 +1,12 @@
 import * as Stats from 'actions/stats';
+import store from '../store';
 import {DELETE_WIDGET, EDIT_WIDGET} from 'actions/myaccount';
+import { RECEIVE_CUSTOMER_OVERVIEW } from 'actions/overview';
+import { USER_UPDATE_COMPLETED } from 'actions/overview';
 
 const initialState = {
     loading: false,
-    overview: [],
-    widgets: [],
+    overviewMap : {},
     stats: {
         constraint: {
             startdate: "13-11-2017",
@@ -24,43 +26,31 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-
-        case DELETE_WIDGET:
-            let newState = Object.assign({}, state);
-            newState.widgets = newState.widgets.filter((element) => {return element.id != action.nodeId});
-            newState.overview = newState.overview.filter((element) => {return element.node.id != action.nodeId});
-            return newState;
-
-        case EDIT_WIDGET:
-            return Object.assign({}, state, {
-                overview: []
-            });
-
-
         case Stats.FETCH_OCCUPANCY_OVERVIEW:
+            var map = {
+                ...state.overviewMap,
+                [action.node.id]: {
+                    loading: true,
+                }
+            }
+            // console.log(map)
             return Object.assign({}, state, {
-                loading: true
+                overviewMap: map
             });
 
         case Stats.RECEIVE_OCCUPANCY_OVERVIEW:
-            let contained = false;
-            for (let i = 0; i < state.overview.length; i++) {
-                if (state.overview[i].node.id == action.data.node.id) {
-                    contained = true;
-                    state.overview[i].data = action.data.data;
+            var map = {
+                ...state.overviewMap,
+                [action.node.id]: {
+                    params: action.params,
+                    data: action.data,
+                    loading: false,
                 }
             }
-            if (contained) {
-                return Object.assign({}, state, {
-                    overview: [...state.overview]
-                });
-            }
-            else {
-                return Object.assign({}, state, {
-                    overview: [...state.overview, { node: action.data.node, data: action.data.data }],
-                    widgets: [...state.widgets, action.data.node]
-                });
-            }
+            // console.log(map)
+            return Object.assign({}, state, {
+                overviewMap: map,
+            });
 
         case Stats.RECEIVE_NODE_STATS:
             return Object.assign({}, state, {

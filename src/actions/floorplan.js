@@ -61,8 +61,8 @@ export function updateSensor(sensor) {
 
 				// toastr.success(`Sensor ${ss.name} has been moved.`);
 
-				dispatch(nodeAction.fetchLiveData(store.getState().authReducer.user.companyid));
-				dispatch(overviewAction.fetchCustomerOverview(store.getState().authReducer.user.companyid));
+				dispatch(nodeAction.fetchLiveData(store.getState().myAccountReducer.user.companyid));
+				dispatch(overviewAction.fetchCustomerOverview(store.getState().myAccountReducer.user.companyid));
 			})
 			.catch(function (response) {
 		toastr.error("Move sensor failed : ", response);

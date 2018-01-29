@@ -275,7 +275,7 @@ function mapStateToProps(state) {
 	return {
 		tree: state.overviewReducer.customerOverview,
 		nodeMap: state.overviewReducer.nodeMap,
-		me: state.authReducer.user,
+		me: state.myAccountReducer.user,
 
 		AAstage: state.userInviteReducer.stage,
 		AArespond: state.userInviteReducer.respond,

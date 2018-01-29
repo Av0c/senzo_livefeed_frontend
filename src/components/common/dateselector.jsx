@@ -12,8 +12,8 @@ class DateSelector extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      from: this.props.startdate,
-      to: this.props.enddate,
+      startdate: this.props.startdate,
+      enddate: this.props.enddate,
       starthour: this.props.starthour,
       endhour: this.props.endhour,
       active: this.props.active,
@@ -34,8 +34,8 @@ class DateSelector extends React.Component {
     this.setState({ active: value });
     if (value == "Today") {
       this.setState({
-        from: moment().format('DD-MM-YYYY'),
-        to: moment().format('DD-MM-YYYY'),
+        startdate: moment().format('DD-MM-YYYY'),
+        enddate: moment().format('DD-MM-YYYY'),
         groupby: 'hour'
       }, () =>
           this.dispatchPeriod());
@@ -43,8 +43,8 @@ class DateSelector extends React.Component {
 
     else if (value == "This week") {
       this.setState({
-        to: moment().format('DD-MM-YYYY'),
-        from: moment().subtract(1, "weeks").add(1, "days").format('DD-MM-YYYY'),
+        enddate: moment().format('DD-MM-YYYY'),
+        startdate: moment().subtract(1, "weeks").add(1, "days").format('DD-MM-YYYY'),
         groupby: 'day'
       }, () =>
           this.dispatchPeriod());
@@ -52,8 +52,8 @@ class DateSelector extends React.Component {
 
     else if (value == "This month") {
       this.setState({
-        to: moment().format('DD-MM-YYYY'),
-        from: moment().subtract(1, "months").add(1, "days").format('DD-MM-YYYY'),
+        enddate: moment().format('DD-MM-YYYY'),
+        startdate: moment().subtract(1, "months").add(1, "days").format('DD-MM-YYYY'),
         groupby: 'day'
       }, () =>
           this.dispatchPeriod());
@@ -61,8 +61,8 @@ class DateSelector extends React.Component {
 
     else if (value == "This year") {
       this.setState({
-        to: moment().format('DD-MM-YYYY'),
-        from: moment().subtract(1, "years").add(1, "days").format('DD-MM-YYYY'),
+        enddate: moment().format('DD-MM-YYYY'),
+        startdate: moment().subtract(1, "years").add(1, "days").format('DD-MM-YYYY'),
         groupby: 'day'
       }, () =>
           this.dispatchPeriod());
@@ -72,8 +72,8 @@ class DateSelector extends React.Component {
 
   dispatchPeriod() {
     this.props.dispatch(selectPeriod({
-      from: this.state.from,
-      to: this.state.to,
+      startdate: this.state.startdate,
+      enddate: this.state.enddate,
       starthour: this.state.starthour,
       endhour: this.state.endhour,
       groupby: this.state.groupby,
@@ -83,10 +83,10 @@ class DateSelector extends React.Component {
 
   componentWillMount() {
     let nextProps = this.props;
-    if (nextProps.from != this.state.from && nextProps.to != this.state.to) {
+    if (nextProps.startdate != this.state.startdate && nextProps.enddate != this.state.enddate) {
       this.setState({
-        from: nextProps.startdate,
-        to: nextProps.enddate,
+        startdate: nextProps.startdate,
+        enddate: nextProps.enddate,
         starthour: nextProps.starthour,
         endhour: nextProps.endhour,
         active: nextProps.active,
@@ -96,10 +96,10 @@ class DateSelector extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.startdate != this.state.from || nextProps.enddate != this.state.to) {
+    if (nextProps.startdate != this.state.startdate || nextProps.enddate != this.state.enddate) {
       this.setState({
-        from: nextProps.startdate,
-        to: nextProps.enddate,
+        startdate: nextProps.startdate,
+        enddate: nextProps.enddate,
         starthour: nextProps.starthour,
         endhour: nextProps.endhour,
         active: nextProps.active,
@@ -132,8 +132,8 @@ class DateSelector extends React.Component {
   }
 
   render() {
-    let from = this.onParseDateFromString(this.state.from);
-    let to = this.onParseDateFromString(this.state.to);
+    let from = this.onParseDateFromString(this.state.startdate);
+    let to = this.onParseDateFromString(this.state.enddate);
     return (
       <div className="main-menu-time pull-right">
         <i className='ms-DatePicker-nextMonth'></i>
@@ -184,7 +184,7 @@ class DateSelector extends React.Component {
   setStartDate(date) {
     let d = this.onFormatDate(date);
     let self = this;
-    this.setState({ from: d, groupby: 'day' }, () =>
+    this.setState({ startdate: d, groupby: 'day' }, () =>
       self.dispatchPeriod()
     );
   }
@@ -192,7 +192,7 @@ class DateSelector extends React.Component {
   setEndDate(date) {
     let d = this.onFormatDate(date);
     let self = this;
-    this.setState({ to: d, groupby: 'day' }, () =>
+    this.setState({ enddate: d, groupby: 'day' }, () =>
       self.dispatchPeriod()
     );
   }

@@ -163,6 +163,7 @@ export class FloorPlan extends React.Component {
 		}
 		var areas = [], sensors = [];
 		this.listNodes(this.props.root, areas, sensors)
+		console.log(areas, sensors)
 		if (!this.state.loading && !this.props.root.info.empty) {
 			var url = this.getImage(this.props.images, this.props.root)
 			if (url && this.props.root.info.hasfloorplan) {
@@ -237,7 +238,7 @@ function mapStateToProps(state) {
 		sensorMap: state.nodeReducer.map,
 		nodeMap: state.overviewReducer.nodeMap,
 		images: state.floorPlanReducer.images,
-		user: state.authReducer.user,
+		user: state.myAccountReducer.user,
 		selectedSensor: state.floorPlanSensorReducer.selectedSensor,
 	}
 }

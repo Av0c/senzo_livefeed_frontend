@@ -4,7 +4,7 @@ import { Effects, loop } from 'redux-loop';
 
 import {
   UPDATE_USER,
-  UPDATE_COMPLETED,
+  USER_UPDATE_COMPLETED,
   updateFailed,
   updateCompleted, 
   RECEIVE_USER,
@@ -13,16 +13,7 @@ import {
 
 const initialState = {
   loading: false,
-  user: {
-    email: '',
-    title: '',
-    firstName: '',
-    lastName: '',
-    company: '',
-    username: '',
-    password:'',
-    phone: ''
-  }
+  user: null
 }
 
 function updateUser(user){
@@ -41,7 +32,7 @@ export default (state = initialState, action ) => {
     //  )
     //}
 
-    case UPDATE_COMPLETED: {
+    case USER_UPDATE_COMPLETED: {
       console.log(action.data);
       return Object.assign({}, state, {
         loading: false,

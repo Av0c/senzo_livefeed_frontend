@@ -1,25 +1,18 @@
 import * as Comparison from 'actions/comparison';
 
 const initialState = {
-    overview: [],
+    nodes: [null, null],
     daily: [],
     total: [],
-    range: []
+    range: [],
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case Comparison.RECEIVE_FIRST_LOCATION_OVERVIEW: {
-            state.overview[0] = { node: action.node, data: action.data };
+        case Comparison.COMPARISON_PUT_NODE: {
+            // set nodes[action.pos] = action.node
             return Object.assign({}, state, {
-                overview: [...state.overview]
-            });
-        }
-
-        case Comparison.RECEIVE_SECOND_LOCATION_OVERVIEW: {
-            state.overview[1] = { node: action.node, data: action.data };
-            return Object.assign({}, state, {
-                overview: [...state.overview]
+                nodes: Object.assign([...state.nodes], {[action.pos]: action.node}),
             });
         }
 

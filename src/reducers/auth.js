@@ -7,30 +7,10 @@ import {
 } from 'actions/authentication';
 
 const initialState = {
-  user: decodeToken(localStorage.getItem("token")),
   token: localStorage.getItem("token"),
   loginInProgress: false,
   errorMessage : ''
 };
-
-function decodeToken(token) {
-  if (token) {
-    var decoded = jwtDecode(token);
-    return {
-      username: decoded.username,
-      firstname: decoded.firstname,
-      lastname: decoded.lastname,
-      role: decoded.role,
-      companyid: decoded.companyid,
-      rootnodeid: decoded.rootnodeid
-    }
-  } else {
-    return {
-      firstName: '',
-      role: ''
-    }
-  }
-}
 
 // Reducing function
 export default (state = initialState, action ) => {
@@ -51,9 +31,7 @@ export default (state = initialState, action ) => {
 
     case LOGIN_SUCCESSFUL: {
       localStorage.setItem("token",  action.token);
-      var decoded = decodeToken(action.token);
       return Object.assign({}, state, {
-        user: decoded,
         token: action.token,
         loginInProgress: false
       })

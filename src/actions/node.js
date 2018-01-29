@@ -129,6 +129,7 @@ export function uploadImageSuccessful() {
 }
 
 export function updateNode(node) {
+	console.log(node)
 	return dispatch => {
 		dispatch(updateNodeInProgress());
 		return axios.put(config.api.root + `/node/update/${node.id}`, node)
@@ -143,8 +144,8 @@ export function updateNode(node) {
 				});
 
 				toastr.success(`${node.info.name} has been updated`);
-				dispatch(fetchLiveData(store.getState().authReducer.user.companyid));
-				dispatch(overviewAction.fetchCustomerOverview(store.getState().authReducer.user.companyid))
+				dispatch(fetchLiveData(store.getState().myAccountReducer.user.companyid));
+				dispatch(overviewAction.fetchCustomerOverview(store.getState().myAccountReducer.user.companyid))
 			})
 			.catch(function (response) {
 				console.log(response);
@@ -186,8 +187,11 @@ export function uploadFloorplanView(node, image, type) {
 		let formData = new FormData();
 		formData.append('floorplan', image);
 		let axiosConfig = {
-			headers: {'Content-Type': 'multipart/form-data'}
-		};
+			headers: {'Content-Type': 'multipart/form-data'},
+            onUploadProgress: e => {
+                console.log(e)
+            }
+        };
 		var newNode = {
 				id: node.id,
 				type: type,
@@ -197,8 +201,8 @@ export function uploadFloorplanView(node, image, type) {
 				return axios.post(config.api.root + `/node/image/upload/${node.id}`, formData, axiosConfig)
 						.then((response) => {
 							toastr.success("Edit floor plan successfully @@!");
-							dispatch(overviewAction.fetchCustomerOverview(store.getState().authReducer.user.companyid))
-							dispatch(floorplanAction.fetchImage(store.getState().authReducer.user.companyid))
+							dispatch(overviewAction.fetchCustomerOverview(store.getState().myAccountReducer.user.companyid))
+							dispatch(floorplanAction.fetchImage(store.getState().myAccountReducer.user.companyid))
 						}).catch((response) => {
 							toastr.error("Edit floor plan failed : " + response.data);
 						})

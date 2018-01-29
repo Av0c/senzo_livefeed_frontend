@@ -72,6 +72,7 @@ class Location extends React.Component {
     }
     render() {
         let icon = this.renderIcon();
+        let canBeParent = (this.props.node.type!="open_area" && this.props.node.type!="meeting_room" && this.props.node.type!="sensor");
         return (
             <li className="location-item-li">
                 <div className="location-wrapper clearfix">
@@ -80,7 +81,12 @@ class Location extends React.Component {
                         {this.props.node.info.name}
                         {this.props.node.info.useownfp && <div data-tooltip="Use its own floor plan. If this symbol is not showed, parent's floor plan is used instead."><i className="material-icons" style={{ marginLeft: "5px" }}>picture_in_picture</i></div>}
                     </div>
-                    <div className="location-options pull-right"> <i data-tooltip="Add location" onClick={() => this.props.openAddLocationForm(this.props.node)} className="location-button material-icons cursor-pointer pull-left" data-toggle="modal">add_location</i>
+                    <div className="location-options pull-right">
+                        {
+                            canBeParent && <i data-tooltip="Add location" onClick={() => this.props.openAddLocationForm(this.props.node)} className="location-button material-icons cursor-pointer pull-left" data-toggle="modal">
+                                add_location
+                            </i>
+                        }
                         <div className="edit-btn pull-left">
                             <i data-tooltip="Edit" className="location-button material-icons cursor-pointer" id="dLabel" onClick={this.showEditDropdown.bind(this)}>edit</i>
                             {this.state.isShowingEdit && <div aria-labelledby="dLabel">

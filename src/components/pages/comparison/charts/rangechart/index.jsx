@@ -41,8 +41,9 @@ class RangeChartComparison extends React.Component {
     getValues(index) {
         let attribute = this.state.mode == 'Average' ? 'avg' : 'pk';
         let values = [0, 0, 0, 0, 0, 0, 0];
+        console.log(this.props.stats[index].data.points)
         this.props.stats[index].data.points.forEach((point) => {
-            if (point[attribute] == 0) {
+            if (point[attribute] < 0.00001) {
                 values[0] += 1;
                 values[1] += 1;
             }
@@ -58,7 +59,7 @@ class RangeChartComparison extends React.Component {
             else if (point[attribute] < 0.8) {
                 values[4] += 1;
             }
-            else if (point[attribute] < 1) {
+            else if (point[attribute] < 0.99999) {
                 values[5] += 1;
             }
             else {

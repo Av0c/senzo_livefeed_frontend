@@ -11,6 +11,7 @@ import { fetchCustomerOverview } from 'actions/overview';
 import { fetchCard } from 'actions/defaultsettings';
 import { fetchLiveData } from 'actions/node';
 import { fetchImage } from 'actions/floorplan';
+import { fetchCurrentUser } from 'actions/myaccount';
 
 import Toolbar from 'containers/toolbar';
 import ScrollTop from 'components/common/scrolltop';
@@ -30,15 +31,19 @@ export class Frame extends React.Component {
 
     componentDidMount() {
         // Neccessary api init here.
-        this.props.dispatch(fetchCard());
-        this.props.dispatch(fetchCustomerOverview(this.props.user.companyid));
-        this.props.dispatch(fetchLiveData(this.props.user.companyid));
-        this.props.dispatch(fetchImage(this.props.user.companyid));
+        this.props.dispatch(fetchCurrentUser()).then(() => {
+            this.props.dispatch(fetchCard());
+            this.props.dispatch(fetchCustomerOverview(this.props.user.companyid));
+            this.props.dispatch(fetchLiveData(this.props.user.companyid));
+            this.props.dispatch(fetchImage(this.props.user.companyid));
+        }).catch((err) => {
+            console.log(err)
+        });
     }
 
 
     render() {
-        return (this.props.tree && this.props.cards && this.props.sensorMap && this.props.images) ?
+        return (this.props.user && this.props.tree && this.props.cards && this.props.sensorMap && this.props.images) ?
         <div style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px', maxWidth: '100%' }} className="container">
             <Toolbar
                 actions={{ logout: this.props.logout }}
@@ -55,7 +60,7 @@ export class Frame extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.authReducer.user,
+        user: state.myAccountReducer.user,
         tree: state.overviewReducer.customerOverview,
         cards: state.defaultSettingsReducer.card,
         sensorMap: state.nodeReducer.map,

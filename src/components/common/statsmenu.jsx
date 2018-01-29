@@ -6,6 +6,7 @@ import TagSelector from 'components/common/tagselector';
 import { selectTag } from 'actions/querysettings';
 import { selectRoomType } from 'actions/querysettings';
 import config from 'config';
+import * as aStats from "actions/stats"
 
 export class StatsMenu extends React.Component {
 
@@ -34,6 +35,7 @@ export class StatsMenu extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <div className="container-fluid" style={{ paddingLeft: '0px' }}>
                 <div className="row">
@@ -48,7 +50,9 @@ export class StatsMenu extends React.Component {
                             <TagSelector roomType={this.props.node.type} chooseTag={this.chooseTag.bind(this)} tag={this.props.tag} />
                         </div>
                         <Link className="stats-live-btn button-sm pull-left" to={this.props.node.info.hasfloorplan ? `live/${this.props.id}` : null} >LIVE</Link>
-                        <a className="stats-export pull-left" href="#"><img src="src/assets/images/export.svg" /></a>
+                        <Link className="card-export cursor-pointer pull-left" onClick={() => aStats.downloadCSV(this.props.node, this.props.querySettings)}>
+                            <img src="src/assets/images/export.svg" />
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -53,8 +53,32 @@ export class LocationSelector extends React.Component {
         }
     }
 
+    querySettingsChanged(params1, params2) {
+        return (
+            params1.startdate !== params2.startdate ||
+            params1.enddate !== params2.enddate ||
+            params1.starthour !== params2.starthour ||
+            params1.endhour !== params2.endhour ||
+            params1.weekdaymask !== params2.weekdaymask ||
+            params1.tag !== params2.tag ||
+            params1.room !== params2.room
+        );
+    }
+
     componentWillReceiveProps(nextProps) {
-        if (nextProps.tree.children && nextProps.overview.length < 2) {
+        // if (nextProps.tree.children && nextProps.overview.length < 2) {
+        //     if (nextProps.tree.type == 'customer') {
+        //         this.setState({ node: nextProps.tree.children[0] });
+        //         this.props.chooseLocation(nextProps.tree.children[0]);
+        //     }
+        //     else {
+        //         this.setState({ node: nextProps.tree });
+        //         this.props.chooseLocation(nextProps.tree);
+        //     }
+        // } else if (this.props.querySettings.active != nextProps.querySettings.active) {
+        //     this.props.chooseLocation(this.state.node);
+        // }
+        if (nextProps.tree.children && !nextProps.nodes[nextProps.index]) {
             if (nextProps.tree.type == 'customer') {
                 this.setState({ node: nextProps.tree.children[0] });
                 this.props.chooseLocation(nextProps.tree.children[0]);
@@ -63,10 +87,10 @@ export class LocationSelector extends React.Component {
                 this.setState({ node: nextProps.tree });
                 this.props.chooseLocation(nextProps.tree);
             }
-        }
-        else if (this.props.querySettings.active != nextProps.querySettings.active) {
+        } else if (this.querySettingsChanged(this.props.querySettings, nextProps.querySettings)) {
             this.props.chooseLocation(this.state.node);
         }
+
     }
 
     render() {
@@ -82,7 +106,7 @@ export class LocationSelector extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        overview: state.comparisonReducer.overview
+        nodes: state.comparisonReducer.nodes,
     };
 }
 

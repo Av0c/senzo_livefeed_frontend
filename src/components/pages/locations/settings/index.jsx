@@ -77,78 +77,45 @@ export class Settings extends React.Component {
         this.setState({ isConfirmingDeleteLocation: false });
     }
 
-    addLocation(node, state, timezone) {
+    addLocation(parent, state, timezone) {
         let newNode = {
             info: {
-                name: "",
+                name: state.name,
                 details: {},
-                location: "",
-                WH_from: 0,
-                WH_to: 0,
-                xpercent: -1,
-                ypercent: -1
+                location: state.timezone,
             },
-            type: ""
+            type: (this.state.option=="Multi" ? "multicountry" : "location")
         }
-        if (node.info.details.country == 'Multi') {
-            if (state.option == 'Multi') {
-                newNode.info.details.country = 'Multi';
-            }
-            else {
-                newNode.info.details.country = state.country || 'Afghanistan';
-                newNode.info.location = state.timezone || timezone;
-            }
+        if (state.name.length == 0) {
+            toastr.error("Name must not be empty.")
         }
-        else {
-            newNode.info.details.country = node.info.details.country;
-            newNode.info.location = node.info.location || state.timezone;
-        }
-        newNode.info.name = state.name || node.info.name;
-        newNode.info.cardid = node.info.cardid;
-        newNode.info.hasfloorplan = false;
+
         if (state.location == 'sub') {
-            newNode.type = (node.type == 'customer' ? 'location' : node.type);
-            this.props.dispatch(createNode(node.id, newNode)).then(() => {
-                this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
+            this.props.dispatch(createNode(parent.id, newNode)).then(() => {
+                this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
                 toastr.success(`Add ${newNode.info.name} successfully`)
-            })
-                .catch(error => {
-                    toastr.error(error);
-                });
-        }
-        else {
-            let parent = { id: -1 };
-            this.findParent(this.props.tree, node, parent);
+            }).catch(error => {
+                toastr.error(error);
+            });
+        } else {
+            if (parent.type=="multicountry") {
+                toastr.error("Cannot add top location above a multi-country location.")
+                return;
+            }
             newNode.type = 'location';
-            this.props.dispatch(createNode(parent.id, newNode)).then((response) => {
-                this.props.dispatch(setParent(node.id, response.id)).then(() => {
-                    this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid, this.props.currentSensor));
+            this.props.dispatch(createNode(parent.parent.id, newNode)).then((response) => {
+                this.props.dispatch(setParent(parent.id, response.id)).then(() => {
+                    this.props.dispatch(fetchCustomerOverview(this.props.user.rootnodeid));
                     toastr.success(`Add ${newNode.info.name} successfully`)
-                })
-                    .catch(error => {
-                        toastr.error(error);
-                    });
-            })
-                .catch(error => {
+                }).catch(error => {
                     toastr.error(error);
                 });
-        }
-    }
-
-
-    findParent(tree, node, parent) {
-        let self = this;
-        if (tree.children && tree.children.length > 0 && tree.children[0].type != 'sensor') {
-            tree.children.forEach((element) => {
-                if (element.id == node.id) {
-                    parent.id = tree.id;
-                }
-                else {
-                    self.findParent(element, node, parent);
-                }
+            }).catch(error => {
+                toastr.error(error);
             });
         }
     }
+
 
     deleteLocation(node, type) {
         if (type == 'all') {
@@ -172,9 +139,8 @@ export class Settings extends React.Component {
                 });
         }
         else {
-            let parent = { id: -1 };
+            let parent = node.parent;
             let length = node.children.length;
-            this.findParent(this.props.tree, node, parent);
             for (let i = 0; i < length; i++) {
                 this.props.dispatch(setParent(node.children[i].id, parent.id)).then(() => {
                     if (i == (length - 1)) {
@@ -194,8 +160,8 @@ export class Settings extends React.Component {
         }
     }
 
-    updateLocation(node, state, locations) {
-        var self = this;
+    updateLocation(node, state) {
+        console.log(state)
         if (!state.name && !state.timezone && !state.country) {
             toastr.info("Nothing changed");
         }
@@ -205,9 +171,11 @@ export class Settings extends React.Component {
                 info: {
                     name: state.name,
                     location: state.timezone,
-                    country: state.country,
                 }
             };
+            if (state.country == "Multi") {
+                newNode.info.type = "multicountry"
+            }
             this.props.dispatch(updateNode(newNode));
         }
 
@@ -284,7 +252,7 @@ export class Settings extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.authReducer.user,
+        user: state.myAccountReducer.user,
         currentSensor: state.nodeReducer.map,
         tree: state.overviewReducer.customerOverview
     };

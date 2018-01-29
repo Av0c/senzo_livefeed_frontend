@@ -98,7 +98,7 @@ class API extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		me: state.authReducer.user,
+		me: state.myAccountReducer.user,
 		generated: state.livefeedAPIReducer.generated,
 		wrongPassword: state.livefeedAPIReducer.wrongPassword,
 		apikey: state.livefeedAPIReducer.apikey

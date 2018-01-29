@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from "config"
+import axios from "axios"
 
 import toastr from 'toastr';
 import DeleteLocationForm from 'components/common/deletelocationform';
 import DeleteWidget from 'components/common/deletewidget';
 
 import * as a from "actions/sensorsettings"
+import * as aStats from "actions/stats"
 
 class EditWidget extends React.Component {
 
@@ -154,7 +156,11 @@ class LocationBottomMenu extends React.Component {
                             closeEditWidgetForm={this.closeEditWidgetForm.bind(this)}
                             tree={this.props.tree} nodeId={this.props.node.id} editWidget={this.props.editWidget} />}
                     </div>
-                    <div className="col-xs-4 text-center card-bottom-menu-icon"><a className="card-export" href="#"><img src="src/assets/images/export.svg" /></a></div>
+                    <div className="col-xs-4 text-center card-bottom-menu-icon">
+                        <Link className="card-export cursor-pointer" onClick={() => aStats.downloadCSV(this.props.node, this.props.querySettings)}>
+                            <img src="src/assets/images/export.svg" />
+                        </Link>
+                    </div>
                     <div className="col-xs-4 text-center card-bottom-menu-icon">
                         <Link
                             to={(this.props.node.info.hasfloorplan && this.props.faulty) ? `/live/${this.props.node.id}` : "/settings/sensor"}
@@ -184,10 +190,18 @@ class LocationBottomMenu extends React.Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        querySettings: state.querySettingsReducer,
+        token: state.authReducer.token,
+        cards: state.defaultSettingsReducer.card,
+    };
+}
+
 function mapDispatchToProps(dispatch) {
     return {
         dispatch
     };
 }
 
-export default connect(null, mapDispatchToProps)(LocationBottomMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(LocationBottomMenu);

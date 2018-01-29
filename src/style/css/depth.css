@@ -4,7 +4,7 @@
 [data-tooltip]:after {
 	z-index: 7095 !important;
 }
-.location-dropdown-root {
+.location-dropdown-root, .settings-dropdown-root {
     z-index: 7094 !important;
 }
 .invite-modal, .popup-modal {

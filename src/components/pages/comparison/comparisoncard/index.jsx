@@ -47,24 +47,24 @@ export class ComparisonCard extends React.Component {
     render() {
         return (
             <div className="container-fluid">
-                <div className="row">
-                    <ComparisonStats />
-                    <div style={{float:"left"}}>
-                        <div className="comparison-location-title-card card-shape">
-                            <div className="row">
-                                <div className="comparison-first-location text-center">
-                                    <LocationSelector querySettings={this.props.querySettings} chooseLocation={this.chooseFirstLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
-                                </div>
-                                <div className="toggle-wrapper text-center"> <a style={{ marginRight: '10px' }} className="toggle-button">
+                <div style={{float:"left"}}>
+                    <div className="comparison-location-title-card card-shape">
+                        <div className="row">
+                            <div className="comparison-first-location text-center">
+                                <LocationSelector querySettings={this.props.querySettings} chooseLocation={this.chooseFirstLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
+                            </div>
+                            <div className="toggle-wrapper text-center"> <a style={{ marginRight: '10px' }} className="toggle-button">
 
-                                </a></div>
-                                <div className="comparison-second-location text-center">
-                                    <LocationSelector querySettings={this.props.querySettings} chooseLocation={this.chooseSecondLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
-                                </div>
+                            </a></div>
+                            <div className="comparison-second-location text-center">
+                                <LocationSelector querySettings={this.props.querySettings} chooseLocation={this.chooseSecondLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
                             </div>
                         </div>
-                        <Widgets querySettings={this.props.querySettings} allSensors={this.props.allSensors} />
                     </div>
+                    <Widgets querySettings={this.props.querySettings} allSensors={this.props.allSensors} />
+                </div>
+                <div style={{float:"right"}}>
+                    <ComparisonStats />
                 </div>
             </div>
         );

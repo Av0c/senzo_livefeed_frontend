@@ -78,7 +78,7 @@ class Location extends React.Component {
                     <div ref={e => this.name = e} className={"location-name pull-left"+((this.state.qnode && this.props.node.id==this.state.qnode.id) ? " highlight" : "")} onClick={this.showChildren.bind(this)} >
                         {icon}
                         {this.props.node.info.name}
-                        {this.props.node.info.useownfp && <i className="material-icons" style={{ marginLeft: "5px" }} data-tooltip="Use its own floor plan. If this symbol is not showed, parent's floor plan is used instead.">picture_in_picture</i>}
+                        {this.props.node.info.useownfp && <div data-tooltip="Use its own floor plan. If this symbol is not showed, parent's floor plan is used instead."><i className="material-icons" style={{ marginLeft: "5px" }}>picture_in_picture</i></div>}
                     </div>
                     <div className="location-options pull-right"> <i data-tooltip="Add location" onClick={() => this.props.openAddLocationForm(this.props.node)} className="location-button material-icons cursor-pointer pull-left" data-toggle="modal">add_location</i>
                         <div className="edit-btn pull-left">

@@ -13,106 +13,108 @@
 }
 
 
-// .floorplan-container {
-  .point {
-    // unused :
-    background-color: @color-highlight-green;
+.point {
+  // unused :
+  background-color: @color-highlight-green;
 
-    width: 12px;
-    height: 12px;
-    position: absolute;
-    border-radius: 30px;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  border-radius: 30px;
 
-    // -ms-transform: translate(-10px, -10px); /* IE 9 */
-    // -webkit-transform: translate(-10px, -10px); /* Safari */
-    // transform: translate(-10px, -10px);
-    // transform: translate(-10px, -10px);
+  // -ms-transform: translate(-10px, -10px); /* IE 9 */
+  // -webkit-transform: translate(-10px, -10px); /* Safari */
+  // transform: translate(-10px, -10px);
+  // transform: translate(-10px, -10px);
 
-    -ms-transform: translate(-50%, -50%); /* IE 9 */
-    -webkit-transform: translate(-50%, -50%); /* Safari */
-    transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    -webkit-transition: background-color 100ms linear;
-    -ms-transition: background-color 100ms linear;
-    transition: background-color 100ms linear;
+  -ms-transform: translate(-50%, -50%); /* IE 9 */
+  -webkit-transform: translate(-50%, -50%); /* Safari */
+  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transition: background-color 100ms linear;
+  -ms-transition: background-color 100ms linear;
+  transition: background-color 100ms linear;
 
-    &.faulty {
-      background-color: @color-highlight-blue;
-    }
-    &.unregistered {
-      background-color: @color-highlight-brown;
-    }
-    &.inuse {
-      background-color: @color-highlight-red;
-      animation: pip 0.5s ease-out infinite;
-      -webkit-animation: pip 0.5s ease-out infinite;
-    }
-    &.standby {
-      background-color: @color-highlight-yellow;
-    }
-
-    &:hover {
-      cursor: pointer;
-    }
-    &.selected {
-      animation: fade 0.5s ease-out;
-      animation-iteration-count: infinite;
-      -webkit-animation: fade 0.5s ease-out;
-      -webkit-animation-iteration-count: infinite;
-    }
+  &.faulty {
+    background-color: @color-highlight-blue;
+  }
+  &.unregistered {
+    background-color: @color-highlight-brown;
+  }
+  &.inuse {
+    background-color: @color-highlight-red;
+    animation: pip 0.5s ease-out infinite;
+    -webkit-animation: pip 0.5s ease-out infinite;
+  }
+  &.standby {
+    background-color: @color-highlight-yellow;
   }
 
-  .circle {
-    // unused :
-    background-color: @color-highlight-green;
-
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    position: absolute;
-    border-radius: 30px;
-
-    text-align: center;
-    vertical-align: middle;
-
-    color: #eee;
-    font-weight: bold;
-    user-select: none;
-
-    // -ms-transform: translate(-10px, -10px); /* IE 9 */
-    // -webkit-transform: translate(-10px, -10px); /* Safari */
-    // transform: translate(-10px, -10px);
-    // transform: translate(-10px, -10px);
-
-    -ms-transform: translate(-50%, -50%); /* IE 9 */
-    -webkit-transform: translate(-50%, -50%); /* Safari */
-    transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-
-
-    &.faulty {
-      background-color: @color-highlight-blue;
-    }
-    &.unregistered {
-      background-color: @color-highlight-brown;
-    }
-    &.inuse {
-      background-color: @color-highlight-red;
-      animation: pipbig 0.75s ease-out infinite;
-      -webkit-animation: pipbig 0.75s ease-out infinite;
-    }
-    &.standby {
-      background-color: @color-highlight-yellow;
-    }
-
-    &:hover {
-      cursor: pointer;
-    }
-    &.selected {
-      animation: fade 0.5s ease-out infinite;
-      -webkit-animation: fade 0.5s ease-out infinite;
-    }
+  &:hover {
+    cursor: pointer;
   }
+  &.selected {
+    animation: fade 0.5s ease-out;
+    animation-iteration-count: infinite;
+    -webkit-animation: fade 0.5s ease-out;
+    -webkit-animation-iteration-count: infinite;
+  }
+}
+.floorplan-container-thumbnail .point {
+  width: 10px;
+  height: 10px;
+}
+.circle {
+  // unused :
+  background-color: @color-highlight-green;
+
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  position: absolute;
+  border-radius: 30px;
+
+  text-align: center;
+  vertical-align: middle;
+
+  color: #eee;
+  font-weight: bold;
+  user-select: none;
+
+  // -ms-transform: translate(-10px, -10px); /* IE 9 */
+  // -webkit-transform: translate(-10px, -10px); /* Safari */
+  // transform: translate(-10px, -10px);
+  // transform: translate(-10px, -10px);
+
+  -ms-transform: translate(-50%, -50%); /* IE 9 */
+  -webkit-transform: translate(-50%, -50%); /* Safari */
+  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+
+  &.faulty {
+    background-color: @color-highlight-blue;
+  }
+  &.unregistered {
+    background-color: @color-highlight-brown;
+  }
+  &.inuse {
+    background-color: @color-highlight-red;
+    animation: pipbig 0.75s ease-out infinite;
+    -webkit-animation: pipbig 0.75s ease-out infinite;
+  }
+  &.standby {
+    background-color: @color-highlight-yellow;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+  &.selected {
+    animation: fade 0.5s ease-out infinite;
+    -webkit-animation: fade 0.5s ease-out infinite;
+  }
+}
 
 
 .content-right-floormap{

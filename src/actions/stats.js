@@ -24,15 +24,17 @@ export function resetOverviewStats() {
 export function fetchOccupancyOverview(params, node) {
     return {
         type: FETCH_OCCUPANCY_OVERVIEW,
-        params,
         node,
+        params,
     };
 }
 
-export function receiveOccupancyOverview(data) {
+export function receiveOccupancyOverview(node, params, data) {
     return {
         type: RECEIVE_OCCUPANCY_OVERVIEW,
-        data
+        node,
+        params, 
+        data,
     };
 }
 
@@ -104,10 +106,10 @@ function checkWeekdayMask(mask) {
 export function getParams(nextProps) {
     let params = {
         id: nextProps.currentNode.id,
-        from: nextProps.querySettings.startdate,
-        to: nextProps.querySettings.enddate,
+        startdate: nextProps.querySettings.startdate,
+        enddate: nextProps.querySettings.enddate,
         starthour: nextProps.querySettings.starthour,
-        endhour: nextProps.querySettings.endhour-1,
+        endhour: nextProps.querySettings.endhour,
         weekdaymask: nextProps.querySettings.weekdaymask,
         marks: nextProps.querySettings.marks,
         groupby: nextProps.querySettings.groupby
@@ -159,19 +161,11 @@ export function findEfficiencyTag(node) {
 export function getOccupancyOverview(params, node) {
     return dispatch => {
         dispatch(fetchOccupancyOverview(params, node));
-        axios.get(config.api.root + `/stats/overview/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}`)
+        axios.get(config.api.root + `/stats/overview/${params.id}/${params.tag}?startdate=${params.startdate}&enddate=${params.enddate}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}`)
             .then((response) => {
-                if (params.action == Comparison.RECEIVE_FIRST_LOCATION_OVERVIEW) {
-                    dispatch(Comparison.receiveFirstLocationOverview(node, response.data));
-                }
-                else if (params.action == Comparison.RECEIVE_SECOND_LOCATION_OVERVIEW) {
-                    dispatch(Comparison.receiveSecondLocationOverview(node, response.data));
-                }
-                else {
-                    dispatch(receiveOccupancyOverview({ data: response.data, node: node }));
-                }
-            })
-            .catch(function (response) {
+                dispatch(receiveOccupancyOverview(node, params, response.data));
+            }).catch(function (response) {
+                console.log(response)
                 dispatch(fetchFailed(response.data));
             })
     }
@@ -180,8 +174,9 @@ export function getOccupancyOverview(params, node) {
 export function getNodeSeriesStats(params) {
     return dispatch => {
         dispatch(fetchNodeStats());
-        axios.get(config.api.root + `/stats/series/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}&groupby=${params.groupby}`)
+        axios.get(config.api.root + `/stats/series/${params.id}/${params.tag}?startdate=${params.startdate}&enddate=${params.enddate}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}&groupby=${params.groupby}`)
             .then((response) => {
+                console.log(response.data)
                 if (params.action == Comparison.RECEIVE_FIRST_LOCATION_TOTAL) {
                     dispatch(Comparison.receiveFirstLocationTotal(response.data));
                 }
@@ -210,7 +205,7 @@ export function getNodeSeriesStats(params) {
 export function getStatsDaily(params) {
     return dispatch => {
         dispatch(fetchStatsDaily());
-        axios.get(config.api.root + `/stats/weekdayXhour/${params.id}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}`)
+        axios.get(config.api.root + `/stats/weekdayXhour/${params.id}/${params.tag}?startdate=${params.startdate}&enddate=${params.enddate}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}`)
             .then((response) => {
                 if (params.action == Comparison.RECEIVE_FIRST_LOCATION_DAILY) {
                     dispatch(Comparison.receiveFirstLocationDaily(response.data));
@@ -232,7 +227,7 @@ export function getStatsDaily(params) {
 export function getStatsBreakdown(params) {
     return dispatch => {
         dispatch(fetchStatsBreakdown());
-        axios.get(config.api.root + `/stats/overviewlist/${JSON.stringify(params.id)}/${params.tag}?startdate=${params.from}&enddate=${params.to}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}`)
+        axios.get(config.api.root + `/stats/overviewlist/${JSON.stringify(params.id)}/${params.tag}?startdate=${params.startdate}&enddate=${params.enddate}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}`)
             .then((response) => {
                 dispatch(receiveStatsBreakdown(response.data));
             })
@@ -240,4 +235,34 @@ export function getStatsBreakdown(params) {
                 dispatch(fetchFailed(response.data));
             })
     }
+}
+
+export function downloadCSV(node, querySettings) {
+    let params = Object.assign({}, {
+        currentNode: node,
+        querySettings: querySettings,
+    });
+    params = getParams(params);
+    console.log(params)
+
+    let url = config.api.root+`/csv/sensor/raw/${node.id}?startdate=${params.startdate}&enddate=${params.enddate}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}`;
+
+    let cf = {
+        onDownloadProgress: e => {
+            console.log(e)
+        }
+    }
+
+    axios.get(url, cf).then(response => {
+        console.log(response);
+        var file = new Blob([response.data], {type: 'text/plain'});
+        let objectUrl = window.URL.createObjectURL(file);
+
+        let anchor = document.createElement("a");
+        anchor.href = objectUrl;
+        anchor.download = 'sensor-records.csv';
+        anchor.click();
+
+        window.URL.revokeObjectURL(objectUrl);
+    });
 }

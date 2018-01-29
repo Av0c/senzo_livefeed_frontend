@@ -72,6 +72,7 @@ class Location extends React.Component {
     }
     render() {
         let icon = this.renderIcon();
+        let canBeParent = (this.props.node.type!="open_area" && this.props.node.type!="meeting_room" && this.props.node.type!="sensor");
         return (
             <li className="location-item-li">
                 <div className="location-wrapper clearfix">
@@ -80,9 +81,16 @@ class Location extends React.Component {
                         {this.props.node.info.name}
                         {this.props.node.info.useownfp && <i className="material-icons" style={{ marginLeft: "5px" }} title="Use its own floor plan. If this symbol is not showed, parent's floor plan is used instead.">picture_in_picture</i>}
                     </div>
-                    <div className="location-options pull-right"> <i title="Add location" onClick={() => this.props.openAddLocationForm(this.props.node)} className="location-button material-icons cursor-pointer pull-left" data-toggle="modal">add_location</i>
+                    <div className="location-options pull-right">
+                        {
+                            canBeParent && <i title="Add location" onClick={() => this.props.openAddLocationForm(this.props.node)} className="location-button material-icons cursor-pointer pull-left" data-toggle="modal">
+                                add_location
+                            </i>
+                        }
                         <div className="edit-btn pull-left">
-                            <i title="Edit" className="location-button material-icons cursor-pointer" id="dLabel" onClick={this.showEditDropdown.bind(this)}>edit</i>
+                            <i title="Edit" className="location-button material-icons cursor-pointer" id="dLabel" onClick={this.showEditDropdown.bind(this)}>
+                                edit
+                            </i>}
                             {this.state.isShowingEdit && <div aria-labelledby="dLabel">
                                 <div style={{ backgroundColor: 'transparent' }} className={"modal-overlay" + (this.state.isShowingEdit ? "" : " closed")} onClick={this.closeEditDropdown.bind(this)} ></div>
                                 <div className={" dropdown-menu settings-location-dropdown " + (this.state.isShowingEdit ? "" : " closed")}>

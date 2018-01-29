@@ -96,7 +96,8 @@ export class Sensor extends React.Component{
 							}}
 						>
 							<div>
-								{sensor.name}
+								{sensor.name}<br/>
+								{sensor.macaddress}
 							</div>
 						</ToolTip>
 					</div>
@@ -109,7 +110,8 @@ export class Sensor extends React.Component{
 							onMouseDown={this.onMouseDown.bind(this)}
 						/>
 						<ReactTooltip id={"sensor"+sensor.id} place="right" type="dark" effect="solid">
-						{sensor.name}
+						{sensor.name}<br/>
+						{sensor.macaddress}
 						</ReactTooltip>
 					</div>
 				);

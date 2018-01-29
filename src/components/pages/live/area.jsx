@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {selectSensor} from 'actions/floorplan'
 import ToolTip from 'react-portal-tooltip'
 import { Link } from 'react-router';
+import ReactTooltip from 'react-tooltip'
 
 import * as a from 'actions/node';
 import Floorplan from './floorplan';
@@ -60,6 +61,17 @@ class Area extends React.Component{
 		}
 	}
 
+	listSensors(root, res) {
+		var self = this;
+		if (root) {
+			if (root.type=="sensor") {
+				res.push(root);
+			} else {
+				root.children.map((x) => self.listSensors(x, res));
+			}
+		}
+	}
+
 	getStatus(node) {
 		var status = {
 			inuse: 0,
@@ -70,10 +82,12 @@ class Area extends React.Component{
 			displayValue: 0,
 			type: "free"
 		};
+		var sensors = [];
+		this.listSensors(node, sensors);
 		let sensorMap = this.props.sensorMap;
-		node.children.forEach((child) => {
-			if (child.type=="sensor" && sensorMap.get(child.id)) {
-				var ss = sensorMap.get(child.id);
+		sensors.forEach((sensor) => {
+			var ss = sensorMap.get(sensor.id);
+			if (ss) {
 				status.inuse += ss.inuse;
 				status.faulty += ss.faulty;
 				status.registered += ss.registered;
@@ -140,6 +154,10 @@ class Area extends React.Component{
 			);
 		} else {
 			if (!this.props.thumbnail) {
+				var tooltipPos = "top";
+				if (pos.y<50) {
+					tooltipPos = "bottom"
+				}
 				return(
 					<div>
 						<div id={"area"+node.id} className={className} style={style}
@@ -149,7 +167,7 @@ class Area extends React.Component{
 							onMouseDown={this.onMouseDown.bind(this)}>
 							{status.displayValue}
 						</div>
-						<ToolTip active={this.state.tooltipOpen} parent={"#area"+node.id} position="bottom" arrow="center" group={this.props.tooltipGroup}
+						<ToolTip active={this.state.tooltipOpen} parent={"#area"+node.id} position={tooltipPos} arrow="center" group={this.props.tooltipGroup}
 							style={{
 								style: {
 									background: "rgba(0,0,0,.8)",
@@ -196,14 +214,13 @@ class Area extends React.Component{
 					<div>
 						<div 
 							className={className} style={style}
-							data-tip data-for={"area"+sensor.id}
-							onClick={this.onClick.bind(this)}
+							data-tip data-for={"area"+node.id}
 							onMouseEnter={this.onMouseEnter.bind(this)}
 							onMouseLeave={this.onMouseLeave.bind(this)}
 							onMouseDown={this.onMouseDown.bind(this)}>
 							{status.displayValue}
 						</div>
-						<ReactTooltip id={"area"+sensor.id} place="top" type="dark" effect="solid">
+						<ReactTooltip id={"area"+node.id} place="top" type="dark" effect="solid">
 						{node.info.name}
 						</ReactTooltip>
 					</div>

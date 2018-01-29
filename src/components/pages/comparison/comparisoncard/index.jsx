@@ -10,9 +10,9 @@ export class ComparisonCard extends React.Component {
 
     chooseFirstLocation(node) {
         if (node.id) {
+            this.props.dispatch(Comparison.putNode(node, 0));
+
             let params = getParams({ currentNode: node, querySettings: this.props.querySettings });
-            params.action = Comparison.RECEIVE_FIRST_LOCATION_OVERVIEW;
-            this.props.dispatch(getOccupancyOverview(params, node));
             let params1 = Object.assign({}, params);
             params1.action = Comparison.RECEIVE_FIRST_LOCATION_TOTAL;
             this.props.dispatch(getNodeSeriesStats(params1));
@@ -28,9 +28,9 @@ export class ComparisonCard extends React.Component {
 
     chooseSecondLocation(node) {
         if (node.id) {
+            this.props.dispatch(Comparison.putNode(node, 1));
+
             let params = getParams({ currentNode: node, querySettings: this.props.querySettings });
-            params.action = Comparison.RECEIVE_SECOND_LOCATION_OVERVIEW;
-            this.props.dispatch(getOccupancyOverview(params, node));
             let params1 = Object.assign({}, params);
             params1.action = Comparison.RECEIVE_SECOND_LOCATION_TOTAL;
             this.props.dispatch(getNodeSeriesStats(params1));
@@ -53,13 +53,13 @@ export class ComparisonCard extends React.Component {
                         <div className="comparison-location-title-card card-shape">
                             <div className="row">
                                 <div className="comparison-first-location text-center">
-                                    <LocationSelector querySettings={this.props.querySettings} chooseLocation={this.chooseFirstLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
+                                    <LocationSelector index={0} querySettings={this.props.querySettings} chooseLocation={this.chooseFirstLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
                                 </div>
                                 <div className="toggle-wrapper text-center"> <a style={{ marginRight: '10px' }} className="toggle-button">
 
                                 </a></div>
                                 <div className="comparison-second-location text-center">
-                                    <LocationSelector querySettings={this.props.querySettings} chooseLocation={this.chooseSecondLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
+                                    <LocationSelector index={1} querySettings={this.props.querySettings} chooseLocation={this.chooseSecondLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
                                 </div>
                             </div>
                         </div>

@@ -17,9 +17,9 @@ export class Charts extends React.Component {
     render() {
         let first = {};
         let second = {};
-        if(this.props.comparisonStats.overview.length == 2 ){
-            first = this.props.comparisonStats.overview[0].node;
-            second = this.props.comparisonStats.overview[1].node;
+        if(this.props.comparisonStats.nodes[0] && this.props.comparisonStats.nodes[1]){
+            first = this.props.comparisonStats.nodes[0];
+            second = this.props.comparisonStats.nodes[1];
         }
         return (
             

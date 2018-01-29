@@ -4,8 +4,8 @@ import config from 'config';
 const initialState = {
   room: config.room.ALLAREA,
   tag: 'Occupancy',
-  enddate: moment().format('DD-MM-YYYY'),
   startdate: moment().subtract(1, "weeks").add(1, "days").format('DD-MM-YYYY'),
+  enddate: moment().format('DD-MM-YYYY'),
   id: -1,
   starthour: 8,
   endhour: 17,
@@ -30,8 +30,8 @@ export default (state = initialState, action) => {
 
     case SELECT_PERIOD: {
       return  Object.assign({}, state, {
-        startdate: action.period.from,
-        enddate: action.period.to,
+        startdate: action.period.startdate,
+        enddate: action.period.enddate,
         starthour: action.period.starthour,
         endhour: action.period.endhour,
         groupby: action.period.groupby,

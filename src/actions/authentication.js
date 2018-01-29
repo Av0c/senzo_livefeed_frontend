@@ -27,6 +27,7 @@ export function loginSuccessful(token) {
 }
 
 export function clearToken() {
+  appHistory.push('/login');
   return {
     type: CLEAR_TOKEN
   }
@@ -57,13 +58,5 @@ export function login(credentials) {
 export function redirectToLogin(){
   return dispatch => {
     appHistory.push('/login');
-  }
-}
-
-export function logout(){
-
-  appHistory.push('/login');
-  return {
-    type: CLEAR_TOKEN
   }
 }

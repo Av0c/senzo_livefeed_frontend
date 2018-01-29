@@ -155,7 +155,7 @@ export class SensorForm extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.authReducer.user,
+    user: state.myAccountReducer.user,
     selectedSensor: state.floorPlanSensorReducer.selectedSensor
   }
 }

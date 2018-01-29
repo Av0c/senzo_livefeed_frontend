@@ -152,7 +152,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		me: state.authReducer.user,
+		me: state.myAccountReducer.user,
 		nodeMap: state.overviewReducer.nodeMap
 	};
 }

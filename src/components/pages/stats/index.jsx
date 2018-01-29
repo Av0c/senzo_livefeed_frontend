@@ -54,7 +54,7 @@ export class Stats extends React.Component {
                         <div className="col-md-12 static-menu">
                             <LeftMenu overview='active' comparison='' />
                             <DateSelector />
-                            <StatsMenu name={this.state.currentNode.info.name} id={this.state.currentNode.id} node={this.state.currentNode} />
+                            <StatsMenu name={this.state.currentNode.info.name} id={this.state.currentNode.id} node={this.state.currentNode} querySettings={this.props.querySettings}/>
                         </div>
                         <div className="col-md-12">
                             <div className="col-sm-12">

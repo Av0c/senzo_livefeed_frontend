@@ -237,7 +237,7 @@ function mapStateToProps(state) {
 		tree: state.overviewReducer.customerOverview,
 		nodeMap: state.overviewReducer.nodeMap,
 		sensorMap: state.nodeReducer.map,
-		me: state.authReducer.user,
+		me: state.myAccountReducer.user,
 
 		selectedSensor: state.sensorSettingsReducer.selectedSensor,
 		nodeFilter: state.sensorSettingsReducer.nodeFilter,

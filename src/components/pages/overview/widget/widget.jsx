@@ -15,7 +15,6 @@ import { RECEIVE_FIRST_LOCATION_OVERVIEW, RECEIVE_SECOND_LOCATION_OVERVIEW } fro
 
 
 class Widget extends React.Component {
-
     render() {
         let style = null;
         if ((this.props.action == RECEIVE_SECOND_LOCATION_OVERVIEW) || (this.props.action == RECEIVE_FIRST_LOCATION_OVERVIEW)) {
@@ -56,10 +55,17 @@ class Widget extends React.Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        user: state.myAccountReducer.user,
+        nodeMap: state.overviewReducer.nodeMap,
+        overviewMap: state.statsReducer.overviewMap,
+    };
+}
 function mapDispatchToProps(dispatch) {
     return {
         dispatch
     };
 }
 
-export default connect(null, mapDispatchToProps)(Widget);
+export default connect(mapStateToProps, mapDispatchToProps)(Widget);

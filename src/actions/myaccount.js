@@ -3,16 +3,23 @@ import config from 'config';
 
 export const UPDATE_IN_PROGRESS = 'UPDATE_IN_PROGRESS';
 export const UPDATE_FAILED = 'UPDATE_FAILED';
-export const UPDATE_COMPLETED = 'UPDATE_COMPLETED';
+export const USER_UPDATE_COMPLETED = 'USER_UPDATE_COMPLETED';
 export const UPDATE_PASSWORD_IN_PROGRESS = 'UPDATE_PASSWORD_IN_PROGRESS';
 export const UPDATE_PASSWORD_FAILED = 'UPDATE_PASSWORD_FAILED';
 export const UPDATE_PASSWORD_COMPLETED = 'UPDATE_PASSWORD_COMPLETED';
 export const FETCH_USER = 'FETCH_USER';
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const FETCH_USER_FAILED = 'FECTH_USER_FAILED';
-export const DELETE_WIDGET = 'DELETE_WIDGET';
-export const EDIT_WIDGET = 'EDIT_WDIGET';
 
+export const SET_WIDGETS = "SET_WIDGETS"
+export function setWidgets(nodes) {
+    return {
+        type: SET_WIDGETS,
+        widgets,
+    }
+}
+
+export const DELETE_WIDGET = 'DELETE_WIDGET';
 export function deleteWidget(nodeId) {
   return {
     type: DELETE_WIDGET,
@@ -20,6 +27,7 @@ export function deleteWidget(nodeId) {
   }
 }
 
+export const EDIT_WIDGET = 'EDIT_WDIGET';
 export function editWidget(nodeId1, nodeId2) {
   return {
     type: EDIT_WIDGET,
@@ -42,7 +50,7 @@ export function updateFailed(data) {
 }
 export function updateCompleted(data) {
   return {
-    type: UPDATE_COMPLETED,
+    type: USER_UPDATE_COMPLETED,
     data
   }
 }

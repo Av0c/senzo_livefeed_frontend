@@ -341,19 +341,23 @@ input:focus {
     font-size: 16px;
 }
 .overview-block {
-    overflow: hidden;
+    overflow: visible;
 }
 .card-container {
     text-align:center;
     display:inline-block;
     width:100%;
 }
+.comparison-stats {
+    width: 500px;
+    text-align: left;
+}
 .the-card {
+    text-align: center;
     width: 350px;
     display: inline-block;
     position: relative;
     margin: 15px;
-
     padding: 30px 26px 42px;
     background: #fff;
     border-radius: 20px;
@@ -486,7 +490,7 @@ input:focus {
 }
 .comparison-stats-card {
     padding: 30px;
-    margin-top: 20px;
+    margin-top: 15px;
     font-weight: bold;
     font-size: 20px;
 }
@@ -497,7 +501,7 @@ input:focus {
     font-weight: normal;
 }
 .comparison-location-title-card {
-    margin: 0 15px 20px 15px;
+    margin: 0 15px 0px 15px;
 }
 .comparison-location-title-card h2 {
     font-size: 22px;

@@ -36,10 +36,10 @@ export class ComparisonStats extends React.Component {
             }
         }
     }
-    
+
     render() {
         return (
-            <div className="col-sm-4">
+            <div className="col-sm-4 comparison-stats">
                 <div className="comparison-title-card card-shape text-center">
                     <h2>Comparison</h2>
                 </div>

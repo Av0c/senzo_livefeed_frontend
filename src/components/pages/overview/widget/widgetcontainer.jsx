@@ -30,6 +30,10 @@ export class WidgetContainer extends React.Component {
 		})
 	}
 
+	componentWillMount() {
+		this.setState({data: this.getOverview(this.props)});
+	}
+
 	querySettingsChanged(node, querrySettings, rawParams) {
 		let params = getParams({ querySettings: querrySettings, currentNode: node });
 		params.tag = findOccupancyTag({type: this.state.area.code});

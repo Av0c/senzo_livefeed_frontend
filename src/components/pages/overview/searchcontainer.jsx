@@ -22,9 +22,10 @@ export class SearchContainer extends React.Component {
 
     addNodeWidget(node) {
         let user = Object.assign({}, this.props.user);
-        if (!user.details) {
-            user.details = {};
+        if (!user.details || !user.details.location) {
+            user.details = user.details || {};
             user.details.location = [node.id];
+            this.props.dispatch(updateUser(user.username, user));
         }
         else if(user.details.location.includes(node.id)){
             toastr.error("Already has a widget for this location.")

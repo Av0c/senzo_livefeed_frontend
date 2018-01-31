@@ -375,8 +375,9 @@ input:focus {
     margin: auto;
 }
 .card-location {
+    display: inline-block;
     text-overflow: ellipsis;
-    max-width: 400px;
+    max-width: 298px;
     white-space: nowrap;
     overflow: hidden;
     text-align: center;

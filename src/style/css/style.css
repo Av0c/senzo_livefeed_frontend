@@ -1,0 +1,1120 @@
+@import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import url("https://fonts.googleapis.com/css?family=Catamaran");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
+
+body {
+    background: rgba(245, 245, 245, 1);
+    font-family: 'Roboto';
+    color: #585858;
+    padding-bottom: 80px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Roboto';
+    margin: 0;
+    padding: 0;
+}
+
+h2.new{
+    font-family: 'Roboto';
+    margin: 0;
+    padding: 0
+}
+a:hover,
+a:focus,
+a:active {
+    text-decoration: none;
+    color: #585e66;
+}
+.button {
+    font-family: 'Catamaran';
+    font-size: 16px;
+    line-height: 26px;
+    color: #585e66;
+    border: 1px solid #979797;
+    border-radius: 7px;
+    padding: 4px 10px 2px 10px;
+    display: block;
+    float: left;
+    text-align: center;
+    transition: all 0.3s;
+}
+.button-sm {
+    font-family: 'Catamaran';
+    font-size: 16px;
+    line-height: 20px;
+    color: #585e66;
+    border: 1px solid #979797;
+    border-radius: 7px;
+    padding: 4px 10px 2px;
+    text-align: center;
+    transition: all 0.3s;
+    display: block;
+}
+.button-disabled {
+    font-family: 'Catamaran';
+    font-size: 16px;
+    line-height: 20px;
+    color: #BDBDBD;
+    border: 1px solid #BDBDBD;
+    border-radius: 7px;
+    padding: 4px 10px 2px;
+    text-align: center;
+    transition: all 0.3s;
+    display: block;
+}
+.button:hover,
+.button-sm:hover {
+    color: #7ec443;
+    border: 1px solid #7ec443;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.button.active {
+    background: #7ec443;
+    border: 1px solid #7ec443;
+    color: #fff;
+}
+.dropdown {
+    background: transparent;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}
+.dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+}
+.dropdown ul li {
+    margin-bottom: 3px;
+}
+.dropdown a {
+    color: #585858;
+}
+.all-areas a {
+    color: #959aa2;
+}
+.stats-area-dropdown {
+    top: 30px;
+}
+header {
+    height: 62px;
+    background: #fff;
+    box-shadow: 0px 2px 3px 0px rgba(210,210,210,0.5);
+}
+.header-logo {
+    width: 200px;
+    margin: auto;
+    margin-top: 12px;
+}
+.user-block {
+    margin-top: 18px;
+}
+.user-icon img,
+.location-icon img {
+    width: 30px;
+}
+.user-name {
+    font-family: 'Catamaran';
+    font-size: 16px;
+    line-height: 30px;
+    padding-right: 6px;
+    color: #585e66;
+}
+.main-menu {
+    margin-top: 16px;
+}
+.main-menu-left a:first-of-type {
+    margin-right: 10px;
+}
+.main-menu-time li {
+    display: block;
+    float: left;
+    margin-right: 10px;
+}
+.main-menu-time li:last-of-type {
+    margin-right: 0;
+}
+.datepicker-parent {
+    position: relative;
+}
+.datepicker {
+    position: absolute;
+    top: 44px;
+    right: 0;
+    background: #fff;
+    -webkit-box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+    -moz-box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+    box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+    border-radius: 16px;
+    padding: 15px;
+    margin-top: 10px;
+    margin-right: 15px;
+    z-index: 1008;
+}
+.datepicker-circle {
+    background: #fff;
+    height: 18px;
+    width: 18px;
+    border-radius: 8px;
+    position: absolute;
+    top: -6px;
+    right: 10px;
+    transform: rotate(90deg);
+    -webkit-box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+    -moz-box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+    box-shadow: 0px 4px 12px 0px rgba(142,142,142,0.5);
+    z-index: -1;
+}
+.start-date,
+.end-date {
+    color: #585858;
+    font-family: 'Roboto';
+    font-size: 14px;
+    width: 120px;
+    height: 30px;
+    padding-left: 6px;
+    background: url("/src/assets/images/calendar.svg") no-repeat;
+    background-position: 85px 6px;
+}
+
+.fieldGroup_95da125e {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.start-date-datepicker,
+.end-date-datepicker {
+    color: #585858;
+    font-family: 'Roboto';
+    font-size: 18px;
+    height: 30px;
+}
+.start-date,
+.end-date input {
+    line-height: normal !important;
+}
+.login-logo {
+    width: 200px;
+    height: 37px;
+    background-image: url(../../assets/images/header-logo.svg);
+}
+.start-date:focus,
+.end-date:focus {
+    outline-color: #7ec443;
+}
+.date-divider {
+    color: #585858;
+    margin: -4px 6px 0 6px;
+    font-size: 30px;
+}
+.timepicker {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.timepicker-icon {
+    margin-left: 8px;
+    margin-top: 4px;
+}
+.timepicker-body {
+    position: relative;
+    background: #d8d8d8;
+    height: 8px;
+    width: 100%;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.timepicker-range {
+    position: absolute;
+    background: #7ec443;
+    height: 8px;
+    border-radius: 20px;
+}
+.range-dot {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    bottom: -6px;
+    background: #fff;
+    border-radius: 80px;
+    box-shadow: 0px 0px 4px 0px #787878;
+    transform: translate(-50%, 0%);
+    -ms-transform: translate(-50%, 0%);
+    -webkit-transform: translate(-50%, 0%);
+    -moz-transform: translate(-50%, 0%);
+    cursor: pointer;
+}
+.range-value {
+    position: absolute;
+    top: 24px;
+    transform: translate(-25%, 0%);
+    -ms-transform: translate(-25%, 0%);
+    -webkit-transform: translate(-25%, 0%);
+    -moz-transform: translate(-25%, 0%);
+}
+.timepicker-mark {
+    position: absolute;
+    top: 6px;
+    height: 9px;
+    width: 2px;
+    background: #d8d8d8;
+}
+body.login-page {
+    padding: 0;
+}
+.login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.login-card {
+    padding: 27px 26px 22px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
+    width: 480px;
+    margin-top: -60px;
+}
+.welcome-message {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 33px;
+    margin-bottom: 10px;
+}
+.recover-message {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 20px;
+    margin-bottom: 4px;
+}
+.recover-message:last-of-type {
+    margin-bottom: 20px;
+}
+input[type="username"],
+input[type="email"],
+input[type="password"] {
+    width: 230px;
+    font-size: 16px;
+    height: 36px;
+    padding-left: 10px;
+    margin-bottom: 18px;
+    border: 1px solid #dfdfdf;
+    border-radius: 6px;
+    box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+}
+.login-wrapper input[type="button"] {
+    font-family: 'Catamaran';
+    font-size: 18px;
+    background: #fff;
+    border: 1px solid #585858;
+    border-radius: 7px;
+    padding: 4px 18px;
+    margin-top: 17px;
+}
+.login-wrapper input[type="button"]:hover {
+    border: 1px solid #7ec443;
+    color: #7ec443;
+}
+input[type="checkbox"] {
+    margin-right: 6px;
+    font-size: 16px;
+}
+.keep_me_logged_in span {
+    font-size: 16px;
+}
+input:focus {
+    outline-color: #7ec443;
+}
+.forgot-password {
+    margin-top: 20px;
+}
+.forgot-password a {
+    color: #577590;
+    font-size: 16px;
+}
+.overview-block {
+    overflow: visible;
+}
+.card-container {
+    text-align:center;
+    display:inline-block;
+    width:100%;
+}
+.comparison-stats {
+    width: 500px;
+    text-align: left;
+}
+.the-card {
+    text-align: center;
+    width: 350px;
+    display: inline-block;
+    position: relative;
+    margin: 15px;
+    padding: 30px 26px 42px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+}
+.card-buttons {
+    margin-top: 20px;
+}
+.card-shape {
+    background: #fff;
+    border-radius: 4px;
+    max-width: 1200px;
+    box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
+    margin: auto;
+}
+.card-location {
+    display: inline-block;
+    text-overflow: ellipsis;
+    max-width: 298px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+    font-size: 28px;
+}
+.card-inner-location {
+    font-size: 16px;
+    position: relative;
+}
+.card-nav {
+
+}
+.card-area-dropdown {
+
+}
+.nav-stats {
+    margin-right: 10px;
+}
+.total-desks-number,
+.total-rooms-number {
+    font-weight: bold;
+    font-size: 26px;
+}
+.total-desks-inuse,
+.total-rooms-inuse {
+    color: #a7a6a6;
+}
+.card-stats-numeric {
+    margin-top: 20px;
+}
+.card-bottom-menu {
+    margin-top: 0px;
+}
+.add-cart-zone {
+    cursor: pointer;
+    height: 683px;
+    margin-bottom: 30px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    margin-top: 18px;
+}
+.add-cart-zone::before {
+    z-index: -1;
+    position: absolute;
+    content: "";
+    margin-top: 7px;
+    max-width: 400px;
+    width: 350px;
+    height: 107%;
+    border-radius: 20px;
+    transition: box-shadow 0.4s;
+}
+.add-cart-zone:hover::before {
+    cursor: pointer;
+    box-shadow: 0px 0px 8px 1px rgba(126, 196, 67, 1) inset;
+}
+.add-card img {
+    width: 100px;
+}
+.add-card .add-card-descr {
+    color: #bfbfbf;
+    font-size: 20px;
+    font-family: 'Catamaran';
+    font-weight: normal;
+    margin-top: 10px;
+    width: 150px;
+    margin: 0px auto;
+}
+.card-settings {
+    position: relative;
+}
+.card-settings-sticker {
+    background: #ff6868;
+    border-radius: 100px;
+    display: block;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: -5px;
+    right: 36px;
+    line-height: 16px;
+}
+.maintenence-number {
+    color: #fff;
+    font-size: 12px;
+    line-height: 12px;
+}
+.card-gauge-block {
+    height: 240px;
+    background: #c9c9c9;
+    margin-top: 20px;
+}
+.card-marks-block {
+    margin-top: 14px;
+    height: 120px;
+    background: #c9c9c9;
+}
+.comparison-wrapper {
+    margin-top: 60px;
+}
+.comparison-title-card {
+    font-family: 'Catamaran';
+}
+.comparison-title-card h2 {
+    font-size: 22px;
+    line-height: 42px;
+    color: #585858;
+}
+.comparison-stats-card {
+    padding: 30px;
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.comparison-export {
+    margin-top: 20px;
+}
+.comparison-stats-card span {
+    font-weight: normal;
+}
+.comparison-location-title-card {
+    margin: 0 15px 0px 15px;
+}
+.comparison-location-title-card h2 {
+    font-size: 22px;
+    line-height: 42px;
+    display: inline-block;
+}
+.toggle-button img {
+    width: 32px;
+    padding-top: 6px;
+}
+.comparison-first-location,
+.comparison-second-location {
+    width: 45%;
+    float: left;
+}
+.toggle-wrapper {
+    width: 10%;
+    float: left;
+}
+.comparison-graph-card {
+    padding: 22px 10px;
+    margin-top: 40px;
+    min-height: 510px;
+}
+.stats-graph-card {
+    padding: 28px 10px 60px;
+    margin-top: 40px;
+    min-height: 400px;
+}
+.comparison-graph-card h2 {
+    font-size: 22px;
+    padding-left: 70px;
+}
+.stats-graph-card h2 {
+    font-size: 28px;
+    padding-left: 70px;
+    text-align: center;
+}
+.graph-options {
+    margin-right: 40px;
+}
+.graph-options div {
+    margin-right: 24px;
+}
+.graph-options div:last-of-type {
+    margin-right: 0;
+}
+.the-graph {
+    background: #d8d8d8;
+    height: 400px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 0px;
+}
+.the-graph-legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+.legend-location-box {
+    margin-right: 20px;
+}
+.legend-location-color {
+    height: 40px;
+    width: 40px;
+}
+.location-color-green {
+    background: #aad44c;
+}
+.location-color-blue {
+    background: #64adef;
+}
+.legend-location-name {
+    font-family: 'Catamaran';
+    font-size: 18px;
+    margin-left: 8px;
+    padding-top: 10px;
+}
+.stats-menu {
+    padding-top: 20px;
+}
+.stats-title h1 {
+    font-size: 24px;
+}
+.stats-select {
+    padding-top: 4px;
+    margin-left: 30px;
+    font-size: 16px;
+    position: relative;
+}
+.stats-export img {
+    width: 27px;
+}
+.stats-header-wrapper {
+    padding-bottom: 10px;
+    background: #fff;
+    box-shadow: 0px 2px 3px 0px rgba(210,210,210,0.5);
+}
+#sticky-header {
+    z-index: 999;
+    width: 100%;
+    transition: all 0.3s;
+}
+.stats-live-btn {
+    margin-left: 30px;
+}
+.stats-export {
+    margin-left: 30px;
+}
+
+h2.account-title {
+    margin-bottom: 18px;
+}
+.card {
+    padding: 12px 26px 20px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
+    margin-left:50px;
+    margin-bottom:50px;
+    width: 900px;
+}
+.btn-green {
+    color: #7ec443;
+    border: 1px solid #7ec443;
+}
+.btn-green:hover,
+.btn-green:active,
+.btn-green:visited {
+    color: #7ec443;
+    border: 1px solid #7ec443;
+}
+.add-loc-button {
+    margin-left: 36px;
+}
+.change-pwd-wrapper label,
+.add-account-wrapper label,
+.edit-sensor-wrapper label,
+.settings-add-location-wrapper label,
+.settings-edit-location-wrapper label {
+    display: block;
+    text-align: left;
+    font-family: 'Catamaran';
+    font-size: 16px;
+    font-weight: normal;
+}
+.add-account-wrapper select,
+.settings-add-location-wrapper select,
+.settings-edit-location-wrapper select {
+    width: 230px;
+    height: 36px;
+    padding-left: 10px;
+    margin-bottom: 18px;
+    border: 1px solid #dfdfdf;
+    border-radius: 6px;
+    box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+    background: #fff;
+}
+.add-account-wrapper select:disabled,
+.settings-add-location-wrapper select:disabled,
+.settings-edit-location-wrapper select:disabled{
+    color: #E0E0E0;
+}
+
+.location-list {
+    margin: 0;
+    padding: 0;
+    margin-top: 30px;
+}
+.location-list .location-name {
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    /*width: 200px;*/
+    cursor: pointer;
+}
+.location-list ul {
+    margin-left: 18px;
+    /* margin-right: 10px; */
+    padding: 0;
+}
+.location-list li ul li .location-name {
+    font-weight: normal;
+}
+
+.location-wrapper {
+    border-top: 1px solid rgba(100, 100, 100, 0.5);
+    padding: 10px 0px;
+}
+.location-wrapper:hover {
+    background-color: rgba(50, 50, 50, 0.07);
+}
+.location-name img {
+    float: left;
+}
+.edit-btn {
+    position: relative;
+}
+.settings-location-dropdown {
+    left: auto;
+    right: 0;
+    min-width: 130px;
+}
+.settings-location-dropdown a {
+    color: #585e66;
+    cursor: pointer;
+}
+.settings-location-dropdown a:hover {
+    color: #7ec443;
+}
+.settings-location-dropdown a:active,
+.settings-location-dropdown a:visited {
+    color: #585e66;
+}
+.location-block {
+    margin-top: 18px;
+}
+.location-name {
+    font-family: 'Catamaran';
+    font-size: 16px;
+    line-height: 33px;
+    padding-left: 6px;
+    color: #585e66;
+}
+.location-options {
+    padding-right: 6px;
+}
+.location-options .button,
+.location-options .bin {
+    margin-left: 20px;
+}
+.location-options .bin {
+    margin-top: 5px;
+}
+
+.settings-edit {
+    position: relative;
+}
+
+.edit-dropdown {
+    width: 200px;
+    text-align: left;
+    padding: 2px;
+}
+.change-pwd-wrapper label,
+.add-account-wrapper label,
+.edit-sensor-wrapper label,
+.settings-add-location-wrapper label,
+.settings-edit-location-wrapper label {
+    display: block;
+    text-align: left;
+    font-family: 'Catamaran';
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.active-user:before {
+    content: '';
+    float: left;
+    background: #7ec443;
+    height: 18px;
+    width: 18px;
+    border-radius: 20px;
+    margin-right: 4px;
+}
+.pending-user:before {
+    content: '';
+    float: left;
+    background: #964e16;
+    height: 18px;
+    width: 18px;
+    border-radius: 20px;
+    margin-right: 4px;
+}
+.bin, .pencil {
+    height: 22px;
+    display: block;
+    cursor: pointer;
+}
+.bin {
+    width: 18px;
+}
+.pencil {
+    width: 22px;
+}
+
+.bin-default-settings {
+    background: url("/src/assets/images/bin.svg");
+    height: 22px;
+    width: 18px;
+    display: block;
+    float: left;
+    margin-top: 7px;
+}
+.table-email {
+    color: #585e66;
+}
+.white {
+    background-color: #fff;
+}
+.tab-left {
+    padding-left: 10px;
+}
+.feedback-container label {
+    display: block;
+    width: 95px;
+    font-family: 'Catamaran';
+    font-size: 16px;
+    font-weight: normal;
+}
+.feedback-container .required {
+    color: #d0011b;
+}
+.feedback-container input[type="text"] {
+    width: 230px;
+    height: 36px;
+    padding-left: 10px;
+    margin-bottom: 18px;
+    border: 1px solid #dfdfdf;
+    border-radius: 6px;
+    box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+}
+.feedback-submit input[type="submit"] {
+    background: #7ec443;
+    color: #fff;
+    border: none;
+    width: 230px;
+    margin-top: 0;
+}
+.feedback-container textarea {
+    resize: none;
+    width: 230px;
+    padding-left: 10px;
+    margin-bottom: 18px;
+    border: 1px solid #dfdfdf;
+    border-radius: 6px;
+    box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+}
+.feedback {
+    margin-top: 20px;
+}
+.single-faq {
+    margin-top: 32px;
+}
+.single-faq h5 {
+    margin-bottom: 8px;
+}
+.live-feeds-table {
+    margin-top: 20px;
+}
+.live-feeds-table tr tr {
+    margin-left: 40px;
+}
+.senzo-api textarea {
+    width: 100%;
+    height: 200px;
+    padding-left: 10px;
+    border: 1px solid #dfdfdf;
+    border-radius: 6px;
+    box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+    resize: none;
+}
+.generate {
+    background: none;
+    margin-top: 10px;
+}
+.current-api-key {
+    margin-top: 28px;
+}
+.sensor-settings-table {
+    margin-top: 40px;
+}
+.sensor-settings-table>tbody>tr>td {
+    vertical-align: middle;
+}
+.all-locations-select,
+.maintenance-select {
+    line-height: 38px;
+    margin-left: 28px;
+}
+.location-picker {
+    position: relative;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+.location-picker a {
+    cursor: pointer;
+    line-height: 38px;
+    color: #585e66;
+}
+.location-picker label {
+    display: block;
+    font-family: 'Catamaran';
+    font-size: 16px;
+    font-weight: normal;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.location-picker-dropdown {
+    padding: 10px 20px;
+}
+.default-settings-bottom a {
+    margin-left: 24px;
+}
+.default-settings-card {
+    margin-top: 20px;
+}
+.days-picker input[type="checkbox"] {
+    display: none;
+}
+.custom-checkbox {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #979797;
+    border-radius: 8px;
+    display: inline-block;
+    cursor: pointer;
+}
+.chbx:checked + .custom-checkbox::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    bottom: 4px;
+    left: 4px;
+    background: #7ec344;
+    border-radius: 8px;
+}
+.working-days {
+    margin-top: 20px;
+}
+.working-hours {
+    margin-top: 20px;
+}
+.week-day {
+    display: block;
+    font-family: 'Roboto';
+    font-weight: normal;
+    font-size: 16px;
+}
+.days-picker {
+    margin-top: 14px;
+}
+.days-picker label {
+    width: 120px;
+}
+.zone-type input[type="radio"] {
+    margin-right: 6px;
+}
+.zone-type {
+    margin-bottom: 20px;
+}
+.api-location-list {
+    margin: 0;
+    padding: 0;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.api-location-list li {
+    padding-left: 0;
+}
+.feed-link {
+    margin-left: 40px;
+    margin-top: 7px;
+}
+.show-users {
+    margin-left: 40px;
+    cursor: pointer;
+}
+.apibin {
+    margin-top: 5px;
+}
+ul.users {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.api-username,
+.api-email,
+.userbin {
+    margin-top: 8px;
+}
+.api-email,
+.alw,
+.api-edit {
+    margin-left: 40px;
+}
+.allowed,
+.allowed:visited {
+    color: #7ec443;
+    border: 1px solid #7ec443;
+}
+.blocked,
+.blocked:hover,
+.blocked:visited {
+    color: #d53a4f;
+    border: 1px solid #d53a4f;
+}
+.api-single-user {
+    margin-bottom: 10px;
+}
+.add-feed {
+    position: relative;
+    font-family: 'Catamaran';
+    font-size: 16px;
+    line-height: 26px;
+    border-radius: 7px;
+    padding: 4px 10px 2px 10px;
+    display: block;
+    float: left;
+    text-align: left;
+    transition: all 0.3s;
+    color: #7ec443;
+    border: 1px solid #7ec443;
+    cursor: pointer;
+    margin-left: 20px;
+}
+.user-settings-toggle {
+    cursor: pointer;
+    position: relative;
+}
+.button-holder {
+    white-space: nowrap;
+    width: 1%;
+}
+.edit-sensor-wrapper input[type="text"] {
+    width: 230px;
+    height: 36px;
+    padding-left: 10px;
+    margin-bottom: 18px;
+    border: 1px solid #dfdfdf;
+    border-radius: 6px;
+    box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
+}
+.comparison-stats-card span {
+    float: right;
+    margin-right: 60px;
+}
+.disabled {
+    color: #BDBDBD;
+}
+.add-card {
+    width: 900px;
+    /* margin-left: 50px; */
+}
+.setting-divider {
+    border-top: 1px solid black;
+    opacity: 1;
+    margin: 15px 0;
+    display: block;
+    width: 100%;
+}
+textarea.has-error,
+input[type="text"].has-error,
+input[type="username"].has-error,
+input[type="email"].has-error,
+input[type="password"].has-error {
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)
+}
+.stats-body {
+    margin-top: 20px;
+}
+.location-icon {
+    margin-right: 10px;
+    height: 80%;
+    cursor: pointer;
+}
+.dash-dash {
+    padding-left: 33px;
+}
+.widget {
+}
+.modal-body option[disabled] {
+    color: #BDBDBD;
+}
+.material-icons {
+    vertical-align: middle;
+}
+.scroll-top-button {
+    display: block;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    outline: none;
+    background-color: #7ec443;
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 12px 0px rgba(50, 50, 50, 0.3);
+    z-index: -1000;
+    cursor: default;
+    opacity: 0;
+    transition: box-shadow 0.2s, opacity 0.4s;
+}
+.scroll-top-button.scroll-show {
+    opacity: 1;
+    cursor: pointer;
+    z-index: 2203;
+}
+.scroll-top-button:hover {
+    box-shadow: 0px 4px 12px 0px rgba(50, 50, 50, 0.5);
+}
+.scroll-top-button i {
+    font-size: 30px;
+}
+.location-button {
+    font-size: 30px;
+}

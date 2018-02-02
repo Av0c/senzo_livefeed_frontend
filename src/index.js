@@ -32,6 +32,7 @@ import Help from 'components/pages/help';
 import LiveFeedAPI from 'components/pages/livefeedapi';
 // --
 
+import CountriesAndTimezones from 'countries-and-timezones';
 import { initializeIcons } from '@uifabric/icons';
 import toastr from "toastr"
 
@@ -51,6 +52,18 @@ toastr.options = {
 	"hideEasing": "linear",
 	"showMethod": "fadeIn",
 	"hideMethod": "fadeOut"
+}
+
+CountriesAndTimezones.getAllCountries()["--"] = {
+    "id": "--",
+    "name": "--",
+    "timezones": ["UTC"],
+}
+CountriesAndTimezones.getAllTimezones()["UTC"] = {
+    "name": "UTC",
+    "utcOffset": 0,
+    "offsetStr": "00:00",
+    "countries": ["--"],
 }
 
 initializeIcons();

@@ -98,6 +98,12 @@ export class Sensor extends React.Component{
 							<div>
 								{sensor.name}<br/>
 								{sensor.macaddress}
+								{
+								// <i data-tooltip="Delete" className="material-icons cursor-pointer red-500 sensor-button pull-right" onClick={() => {}}>{"delete_forever"}</i>
+								// <i data-tooltip="Edit" className="material-icons cursor-pointer sensor-button pull-right" onClick={() => {}}>edit</i>
+								}
+							</div>
+							<div>
 							</div>
 						</ToolTip>
 					</div>

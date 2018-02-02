@@ -211,10 +211,8 @@ class Expired extends React.Component {
 					<div className="container-fluid">
 						<div className="row">
 							<div className="col-md-12">
-								<h2 className="account-title">What are you doing here ?</h2>
-								<p>
-								This invitation link is either invalid or has expired :(
-								</p>
+								<p style={{width: "50%", fontSize:"15px"}}>
+									It seems that this link has expired or invalid. Please contact your company´s SenzoLive administrator and ask for a new invitation.								</p>
 							</div>
 						</div>
 					</div>

@@ -57,7 +57,7 @@ class Password extends React.Component {
                                 <form className="account-form">
                                     <div className="account-email">
                                         <label>Old Password</label>
-                                        <input type="text" id="old" onChange={this.handleChange.bind(this)}/>
+                                        <input type="password" id="old" onChange={this.handleChange.bind(this)}/>
                                     </div>
                                     <div className="account-email">
                                         <label>New Password</label>

@@ -26,6 +26,9 @@ class RangeChartComparison extends React.Component {
         params.action = RECEIVE_FIRST_LOCATION_RANGE;
         let params1 = getParams({ querySettings: this.props.querySettings, currentNode: this.props.second });
         params1.action = RECEIVE_SECOND_LOCATION_RANGE;
+        params.groupby = "hour"
+        params1.groupby = "hour"
+
         if(tag=='Occupancy') {
             params.tag = findOccupancyTag(this.props.first);
             params1.tag = findOccupancyTag(this.props.second);

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from "config"
 import * as a from "actions/user"
+import toastr from "toastr"
 
 class Register extends React.Component {
 	constructor(props, context) {
@@ -45,35 +46,60 @@ class Register extends React.Component {
 	getRole() {
 		let role = this.props.invitation.role;
 		let res ="";
-		config.roles.forEach((r) => {
-			if (r.code == role) {
-				res = r.singular;
+		config.roles.forEach((r, idx) => {
+			if (idx == 0) {
+				if (role == "ADMIN" && this.props.invitation.rootnode.type=="customer") {
+					res = r.singular;
+				}
+			} else {
+				if (res=="" && r.code.substring(1) == role) {
+					res = r.singular;
+				}
 			}
 		})
 		return res;
 	}
 	getLocation() {
-		return this.props.invitation.rootnodeinfo.name;
+		return this.props.invitation.rootnode.info.name;
 	}
 	getEmail() {
 		return this.props.invitation.email;
 	}
 
-	submit(key) {
+	checkUser(user) {
+		var ok = true;
+		var badKeys = {};
+		Object.keys(user).map((key) => {
+			if (user[key] === "") {
+				badKeys[key] = true;
+				ok = false;
+			} else {
+				badKeys[key] = false;
+			}
+		});
+		this.setState(badKeys);
+		return ok;
+	}
+
+	submit(key, refs) {
 		var user = {}
-		user.username = this.refs["username"].value;
-		user.password = this.refs["password"].value;
-		user.email = this.refs["email"].value
-		user.title = this.refs["title"].value;
-		user.firstname = this.refs["firstname"].value;
-		user.lastname = this.refs["lastname"].value;
-		user.phone = this.refs["phone"].value;
-		user.position = this.refs["position"].value;
-		user.address = this.refs["address"].value;
+		user.username = refs["username"].value;
+		user.password = refs["password"].value;
+		user.email = refs["email"].value
+		user.title = refs["title"].value;
+		user.firstname = refs["firstname"].value;
+		user.lastname = refs["lastname"].value;
+		user.phone = refs["phone"].value;
+		user.position = refs["position"].value;
+		user.address = refs["address"].value;
 		user.rootnodeid = 0; // server won't use this value anyway.
 		user.companyid = 0; // server won't use this value anyway.
 		user.role = "ADMIN" // server won't use this value anyway.
-		this.props.dispatch(a.createUser(key, user))
+		if (this.checkUser(user)) {
+			this.props.dispatch(a.createUser(key, user))
+		} else {
+			toastr.error("Please provide all missing fields !")
+		}
 	}
 
 	render() {
@@ -87,10 +113,11 @@ class Register extends React.Component {
 						invitor={this.getInvitor()}
 						role={this.getRole()}
 						location={this.getLocation()}
-						submit={this.submit}
+						submit={this.submit.bind(this)}
 						email={this.getEmail()}
 						message={this.state.message}
 						messageClass={this.state.messageClass}
+						badKeys={this.state}
 					/>
 				);
 			case "created" :
@@ -121,6 +148,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Register);
 
 class Form extends React.Component {
 	render() {
+		var badKeys = this.props.badKeys;
 		return (
 			<div>
 				<div style={{ width: '100%', backgroundColor: 'white', paddingBottom: '15px' }} className="container-fluid">
@@ -135,21 +163,21 @@ class Form extends React.Component {
 							<div className="col-md-12">
 								<h2 className="account-title">Welcome to SenzoLive!</h2>
 								<p>
-									<b>{this.props.invitor}</b> has added you as {this.props.role} of <b>{this.props.location}</b>.<br/>
+									<b>{this.props.invitor}</b> has added you as <b>{this.props.role}</b> of <b>{this.props.location}</b>.<br/>
 									<span>Please fill in following information to finalize your account.</span>
 								</p>
 								<form className="account-form welcome-form">
 									<div className="account-email">
 										<label>Email Address</label>
-										<input type="email" value={this.props.email} disabled="disabled" ref="email"/>
+										<input type="email" value={this.props.email} disabled="disabled" ref="email" className={badKeys.email ? "border-red" : ""}/>
 									</div>
 									<div className="account-username">
 										<label>Username</label>
-										<input type="text" ref="username"/>
+										<input type="text" ref="username" className={badKeys.username ? "border-red" : ""}/>
 									</div>
 									<div className="account-password">
 										<label>Password</label>
-										<input type="password" ref="password"/>
+										<input type="password" ref="password" className={badKeys.password ? "border-red" : ""}/>
 									</div>
 									<div className="account-title">
 										<label>Title</label>
@@ -160,30 +188,30 @@ class Form extends React.Component {
 									</div>
 									<div className="account-firstname">
 										<label>First Name		</label>
-										<input type="text" ref="firstname"/>
+										<input type="text" ref="firstname" className={badKeys.firstname ? "border-red" : ""}/>
 									</div>
 									<div className="account-lastname">
 										<label>Last Name		</label>
-										<input type="text" ref="lastname"/>
+										<input type="text" ref="lastname" className={badKeys.lastname ? "border-red" : ""}/>
 									</div>
 									<div className="account-position">
 										<label>Position</label>
-										<input type="text" ref="position"/>
+										<input type="text" ref="position" className={badKeys.position ? "border-red" : ""}/>
 									</div>
 									<div className="account-phone">
 										<label>Phone		</label>
-										<input type="tel" ref="phone"/>
+										<input type="tel" ref="phone" className={badKeys.phone ? "border-red" : ""}/>
 									</div>
 									<div className="account-location">
 										<label>Address</label>
-										<input type="text" ref="address"/>
+										<input type="text" ref="address" className={badKeys.address ? "border-red" : ""}/>
 									</div>
 									<div className="register-message">
 										<label></label>
 										<span className={this.props.messageClass}> {this.props.message} </span>
 									</div>
 									<div className="account-submit">
-										<input type="button" value="Sign Up" onClick={this.props.submit.bind(this, this.props.inviteKey)}/>
+										<input type="button" value="Sign Up" onClick={() => this.props.submit(this.props.inviteKey, this.refs)}/>
 									</div>
 								</form>
 							</div>
@@ -194,8 +222,6 @@ class Form extends React.Component {
 		);
 	}
 }
-
-Form = connect(null, mapDispatchToProps)(Form)
 
 class Expired extends React.Component {
 	render() {

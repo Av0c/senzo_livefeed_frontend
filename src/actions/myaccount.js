@@ -90,7 +90,7 @@ export function updateUser(username, user) {
 export function updatePassword(user) {
   return dispatch => {
     dispatch(updatePasswordInProgress());
-    return axios.put(config.api.root + '/user/password/' + user.username, user)
+    return axios.put(config.api.root + '/user/password', user)
       .then((response) => {
         dispatch(updatePasswordCompleted(response.data));
       })

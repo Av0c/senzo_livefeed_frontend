@@ -477,7 +477,7 @@ export class FloorPlan extends React.Component {
 		var self = this;
 		if (root) {
 			var isArea = (root.type=="meeting_room" && !this.props.showDetails)
-			isArea |= (root.id != this.props.root.id && root.info.useownfp);
+			isArea |= (root.id != this.props.root.id && root.info.useownfp && root.type!="sensor");
 			if (isArea) {
 				areas.push(root);
 			} else {

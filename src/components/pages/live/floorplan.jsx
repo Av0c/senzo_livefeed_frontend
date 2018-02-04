@@ -26,6 +26,8 @@ export class FloorPlan extends React.Component {
 			mode: "done", // "move", "add", "editing"
 			lastMode: "done",
 
+			hasPermission: this.hasPermission(),
+
 			editedSensor: {},
 			deletedSensor: {},
 
@@ -51,6 +53,7 @@ export class FloorPlan extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		this.setState({hasPermission: this.hasPermission(nextProps)})
 		if (this.state.loading) {
 			var url = this.getImage(nextProps.images, nextProps.root)
 			if (url!=this.state.url) {
@@ -58,7 +61,6 @@ export class FloorPlan extends React.Component {
 			}
 		}
 	}
-
 	imageError() {
 		this.setState({
 			loading: true,
@@ -329,7 +331,7 @@ export class FloorPlan extends React.Component {
 					/>
 
 					{
-						!this.props.thumbnail && <div className="options">
+						!this.props.thumbnail && this.state.hasPermission && <div className="options">
 							<i className={"material-icons option-done " + (this.state.mode=="done" ? "ticked" : "")}
 								onClick={(e) => this.changeMode("done", e)}
 								data-tooltip="Done">
@@ -417,6 +419,7 @@ export class FloorPlan extends React.Component {
 								this.updateSensor(e, state)
 							}
 						}}
+						hasPermission={this.state.hasPermission}
 					/>
 					<Modal
 						ref={(elem) => {this.deleteModal = elem}}
@@ -456,6 +459,21 @@ export class FloorPlan extends React.Component {
 			this.sensorForm.reset();
 			this.sensorForm.open();
 		});
+	}
+
+	hasPermission(Props) {
+		var props = Props || this.props;
+		var node = props.root;
+		if (props.user.role != "ADMIN" && props.user.role != "SUPPORTUSER") {
+			return false;
+		}
+		while (node) {
+			if (node.id == props.user.rootnodeid) {
+				return true;
+			}
+			node = node.parent;
+		}
+		return false;
 	}
 
 	selectDeletedSensor(sensor) {

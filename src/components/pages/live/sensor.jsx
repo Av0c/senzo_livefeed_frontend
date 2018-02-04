@@ -105,10 +105,13 @@ export class Sensor extends React.Component{
 									<div>{sensor.name}</div>
 									<div>{sensor.macaddress}</div>
 									<div>{parentName}</div>
-								</td><td>
-									<i data-tooltip="Delete" className="material-icons cursor-pointer red-500 sensor-button pull-right" onClick={() => this.props.onDelete(sensor)}>delete_forever</i>
-									<i data-tooltip="Edit" className="material-icons cursor-pointer sensor-button pull-right" onClick={() => this.props.onEdit(sensor)}>edit</i>
 								</td>
+								{
+									this.props.hasPermission && <td>
+										<i data-tooltip="Delete" className="material-icons cursor-pointer red-500 sensor-button pull-right" onClick={() => this.props.onDelete(sensor)}>delete_forever</i>
+										<i data-tooltip="Edit" className="material-icons cursor-pointer sensor-button pull-right" onClick={() => this.props.onEdit(sensor)}>edit</i>
+									</td>
+								}
 							</tr></tbody></table>
 						</ToolTip>
 					</div>

@@ -10,7 +10,7 @@ export default class AddLocationForm extends React.Component {
         super(props, context);
         let node = this.props.node
         this.state = {
-            option: 'Country',
+            option: (node.type=="root" ? "Customer" :"Country"),
             name: "",
             location: 'sub',
             country: (node.type == "multicountry" ? "Multi" : CountriesAndTimezones.getCountriesForTimezone(node.info.location)[0].id),
@@ -69,6 +69,11 @@ export default class AddLocationForm extends React.Component {
         let noTop = (node.id == store.getState().myAccountReducer.user.rootnodeid);
         let timezones = this.generateTimeZoneOptions();
         let countries = this.generateCountryOptions();
+        var addCustomer = (this.props.node.type == "root");
+        if (addCustomer) {
+            noTop = true;
+            allowMulti = false;
+        }
         return (
             <div>
                 <div className={"modal-overlay" + (this.props.isAddingLocation ? "" : " closed")} onClick={this.props.closeAddLocationForm}></div>
@@ -84,7 +89,13 @@ export default class AddLocationForm extends React.Component {
                             </label>
                             }
                             {allowMulti && <label htmlFor="multi">
-                                <input className="zone-radio" onChange={this.changeHandler.bind(this)} id="option" value="Multi" type="radio" name="zone" checked={this.state.option == 'Multi'} /><span>Multi-Country Region  </span>
+                                <input className="zone-radio" onChange={this.changeHandler.bind(this)} id="option" value="Multi" type="radio" name="zone" checked={this.state.option == 'Multi'} />
+                                <span>Multi-Country Region</span>
+                            </label>
+                            }
+                            {addCustomer && <label htmlFor="customer">
+                                <input className="zone-radio" onChange={this.changeHandler.bind(this)} id="option" value="Customer" type="radio" name="zone" checked={this.state.option == 'Customer'} />
+                                <span>Customer</span>
                             </label>
                             }
                         </div>
@@ -102,18 +113,20 @@ export default class AddLocationForm extends React.Component {
                                 <option value='top'>Top location</option>
                             </select>
                         </div>}
-                        {this.state.option == 'Multi' || <div className="country">
-                            <label>Country</label>
-                            <select id="country" value={this.state.country} onChange={this.changeHandler.bind(this)}>
-                                {countries}
-                            </select>
-                        </div>}
 
-                        {this.state.option == 'Multi' || <div className="timezone" >
-                            <label>Timezone</label>
-                            <select value={this.state.timezone} id="timezone" onChange={this.changeHandler.bind(this)}>
-                                {timezones}
-                            </select>
+                        {this.state.option == 'Multi' || this.state.option == 'Customer' || <div>
+                            <div className="country">
+                                <label>Country</label>
+                                <select id="country" value={this.state.country} onChange={this.changeHandler.bind(this)}>
+                                    {countries}
+                                </select>
+                            </div>
+                            <div className="timezone" >
+                                <label>Timezone</label>
+                                <select value={this.state.timezone} id="timezone" onChange={this.changeHandler.bind(this)}>
+                                    {timezones}
+                                </select>
+                            </div>
                         </div>
                         }
                     </div> : <p className="add-location-form-notification"> Sorry, You cannot add sublocation of area/meeting room</p>}
@@ -121,7 +134,7 @@ export default class AddLocationForm extends React.Component {
                         <button className="btn btn-default" onClick={this.props.closeAddLocationForm} type="button" data-dismiss="modal">Cancel</button>
                         {isArea || <button className="btn btn-success" onClick={() => {
                             console.log(this)
-                            this.props.submit(node, this.state, timezones[0].props.value);
+                            this.props.submit(node, this.state);
                             this.props.closeAddLocationForm();
                         }} type="button">Confirm</button>}
                     </div>

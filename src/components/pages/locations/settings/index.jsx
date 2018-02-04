@@ -77,14 +77,26 @@ export class Settings extends React.Component {
         this.setState({ isConfirmingDeleteLocation: false });
     }
 
-    addLocation(parent, state, timezone) {
+    addLocation(parent, state) {
+        var type = "location";
+        switch (state.option) {
+            case "Multi":
+                type = "multicountry";
+                break;
+            case "Customer":
+                type = "customer";
+                break;
+            default:
+                type = "location";
+        }
+
         let newNode = {
             info: {
                 name: state.name,
                 details: {},
                 location: state.timezone,
             },
-            type: (this.state.option=="Multi" ? "multicountry" : "location")
+            type: type,
         }
         if (state.name.length == 0) {
             toastr.error("Name must not be empty.")
@@ -223,7 +235,7 @@ export class Settings extends React.Component {
                                 <h2 className="account-title">Location Settings</h2>
                                 <div className="popup-container" style={{width: "50%"}}>
                                     <div className="heading clearfix">
-                                        <h3 className="pull-left">{this.props.tree.info.name}</h3><a onClick={() => this.openAddLocationForm(this.props.tree)} className="button btn-green add-loc-button" data-toggle="modal">Add Location   </a>
+                                        <h3 className="pull-left">{this.props.tree.info.name}</h3><a onClick={() => this.openAddLocationForm(this.props.tree)} className="button btn-green add-loc-button" data-toggle="modal">Add {this.props.tree.type == "root" ? "Customer" : "Location"}   </a>
                                     </div>
                                     <Tree openAddLocationForm={this.openAddLocationForm.bind(this)} style="location-list clearfix"
                                         tree={this.props.tree}

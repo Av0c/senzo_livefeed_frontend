@@ -11,7 +11,6 @@ class API extends React.Component {
 		super(props, context);
 		this.state = {
 			password: "",
-			forcedClose: false,
 		};
 	}
 
@@ -21,13 +20,7 @@ class API extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.apikey != nextProps.apikey) {
-			this.setState({forcedClose: true});
-		}
-	}
-
-	onToggle(open) {
-		if (open) {
-			this.setState({forcedClose: false});
+			this.modal.close();
 		}
 	}
 
@@ -61,6 +54,7 @@ class API extends React.Component {
 							<p> If you think someone else has unauthorized access to your API key, it's best to generate a new one.
 							</p>
 							<Modal
+								ref={(modal) => {this.modal = modal}}
 								clickButton={this.generateAPIKey.bind(this)}
 								header="Generate New Key"
 								buttonText="Generate"
@@ -68,8 +62,6 @@ class API extends React.Component {
 								entry={
 									!this.props.generated && <div className="button settings-button generate pull-right">Generate New Key</div>
 								}
-								onToggle={this.onToggle.bind(this)}
-								forcedClose={this.state.forcedClose}
 							>
 								<p>Are you sure you want to generate a new API key ? <b>Every previous keys would become invalid.</b></p>
 								<label>Password :</label>

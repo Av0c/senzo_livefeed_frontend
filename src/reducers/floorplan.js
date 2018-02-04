@@ -32,6 +32,7 @@ export default (state = initialState, action ) => {
       )
     }
     case RECEIVE_IMAGE: {
+      console.log(action.data)
       return Object.assign({}, initialState, {images: action.data})
     }
 

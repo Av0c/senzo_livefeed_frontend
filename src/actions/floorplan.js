@@ -39,9 +39,9 @@ export function receiveImage(result) {
 // export const REMOVE_SENSOR_FAILED = 'REMOVE_SENSOR_FAILED';
 // export const REMOVE_SENSOR_FROM_LIST = 'REMOVE_SENSOR_FROM_LIST';
 // export const REMOVING_SENSOR_INPROGRESS = 'REMOVING_SENSOR_INPROGRESS';
-// export const SAVE_SENSOR = 'SAVE_SENSOR';
-// export const SAVE_SENSOR_COMPLETED = 'SAVE_SENSOR_COMPLETED';
-// export const SAVE_SENSOR_FAILED = 'SAVE_SENSOR_FAILED';
+export const SAVE_SENSOR = 'SAVE_SENSOR';
+export const SAVE_SENSOR_COMPLETED = 'SAVE_SENSOR_COMPLETED';
+export const SAVE_SENSOR_FAILED = 'SAVE_SENSOR_FAILED';
 // export const SAVING_SENSOR_INPROGRESS = 'SAVING_SENSOR_INPROGRESS';
 // export const UI_UPDATE_COMPLETED = 'UI_UPDATE_COMPLETED';
 export const UPDATE_SENSOR = 'UPDATE_SENSOR';
@@ -59,14 +59,14 @@ export function updateSensor(sensor) {
 				var ss = Object.assign({}, store.getState().nodeReducer.map.get(sensor.id), sensor);
 				store.getState().nodeReducer.map.set(sensor.id, ss);
 
-				// toastr.success(`Sensor ${ss.name} has been moved.`);
-
 				dispatch(nodeAction.fetchLiveData(store.getState().myAccountReducer.user.companyid));
 				dispatch(overviewAction.fetchCustomerOverview(store.getState().myAccountReducer.user.companyid));
+				return response;
 			})
 			.catch(function (response) {
-		toastr.error("Move sensor failed : ", response);
+				toastr.error("Move sensor failed : ", response);
 				dispatch(updateSensorFailed(response.data));
+				return response;
 			})
 	}
 }
@@ -119,19 +119,19 @@ export function updateSensorCompleted() {
 //   }
 // }
 
-// export function saveSensor(sensor) {
-//   return {
-//     type: SAVE_SENSOR,
-//     sensor
-//   }
-// }
+export function saveSensor(sensor) {
+  return {
+    type: SAVE_SENSOR,
+    sensor
+  }
+}
 
-// export function saveSensorCompleted(sensor) {
-//   return {
-//     type: SAVE_SENSOR_COMPLETED,
-//     sensor
-//   }
-// }
+export function saveSensorCompleted(sensor) {
+  return {
+    type: SAVE_SENSOR_COMPLETED,
+    sensor
+  }
+}
 
 
 // export function receiveSensors(result, areaId) {
@@ -142,11 +142,11 @@ export function updateSensorCompleted() {
 //   }
 // }
 
-// export function saveSensorFailed() {
-//   return {
-//     type: SAVE_SENSOR_FAILED
-//   }
-// }
+export function saveSensorFailed() {
+  return {
+    type: SAVE_SENSOR_FAILED
+  }
+}
 
 // export function removeSensorInProgress(sensor) {
 //   return {
@@ -208,18 +208,18 @@ export function updateSensorCompleted() {
 //   }
 // }
 
-// export function createSensor(id, sensor) {
-//   return dispatch => {
-//     dispatch(saveSensor(sensor));
-//     return axios.post(config.api.root + `/sensor/create/0/${id}`, sensor)
-//       .then((response) => {
-//         dispatch(saveSensorCompleted(response.data));
-//         return response;
-//       })
-//       .catch(function (response) {
-//         dispatch(saveSensorFailed());
-//         return response;
-//       })
-//   }
-// }
+export function createSensor(id, sensor) {
+  return dispatch => {
+    dispatch(saveSensor(sensor));
+    return axios.post(config.api.root + `/sensor/create/0/${id}`, sensor)
+      .then((response) => {
+        dispatch(saveSensorCompleted(response.data));
+        return response;
+      })
+      .catch(function (response) {
+        dispatch(saveSensorFailed());
+        return response;
+      })
+  }
+}
 

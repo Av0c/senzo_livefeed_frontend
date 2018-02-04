@@ -8,9 +8,11 @@ import Path from "components/common/path"
 import NodeDropdown from "components/common/nodedropdown"
 import ListDropdown from "components/common/listdropdown"
 
+import Modal from "components/common/modal"
 import ColorNote from "components/common/popupcolornote"
 import LiveSummary from "./summary"
 import FloorPlan from "./floorplan"
+import SensorForm from "./sensorform"
 import LeftMenu from 'components/common/leftmenu';
 
 import {
@@ -42,7 +44,6 @@ class Live extends React.Component {
 			showDetails: true,
 			I: {}
 		};
-		this.prepare(this.props);
 	}
 
 	fetchLive(id) {

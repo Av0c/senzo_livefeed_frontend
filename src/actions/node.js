@@ -42,7 +42,7 @@ export function setParentSuccessfully(data) {
 	}
 }
 
-export function setParentFailed(){
+export function setParentFailed(data){
 	return {
 		type: SET_PARENT_FAILED,
 		data
@@ -175,9 +175,11 @@ export function deleteNode(node) {
 		return axios.delete(config.api.root + `/node/delete/${node.id}`)
 			.then((response) => {
 				dispatch(deleteNodeSuccessfully(response.data));
+				return response;
 			})
 			.catch(function (response) {
 				dispatch(deleteFailed(response.data));
+				return response;
 			})
 	}
 }
@@ -242,9 +244,10 @@ export function setParent(id1, id2) {
 		dispatch(setParentInProgess());
 		return axios.put(config.api.root+`/node/setparent/${id1}/${id2}`).then((response) => {
 			dispatch(setParentSuccessfully(response.data));
-		})
-		.catch((response) => {
+			return response;
+		}).catch((response) => {
 			dispatch(setParentFailed(response.data));
+			return response;
 		});
 	}
 }

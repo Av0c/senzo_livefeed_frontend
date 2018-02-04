@@ -9,28 +9,36 @@ export default class Modal extends React.Component {
 		this.state = {
 			loaded: false,
 			open: false,
-			forcedClose: false,
 		};
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.forcedClose && !this.state.forcedClose) {
-			this.setState({
-				open: false,
-				forcedClose: true,
-			});
+	}
+
+	toggle(e) {
+		if (this.state.open) {
+			this.close(e);
+		} else {
+			this.open(e);
 		}
 	}
 
-	toggle() {
-		this.setState({
-			open: !this.state.open,
-			loaded: true,
-			forcedClose: false,
-		});
-		if (typeof this.props.onToggle == "function") {
-			this.props.onToggle(!this.state.open);
+	open(e) {
+		if (!this.state.open) {
+			if (typeof this.props.onOpen == "function") {
+				this.props.onOpen(e);
+			}
 		}
+		this.setState({ open: true, loaded: true, });
+	}
+
+	close(e) {
+		if (this.state.open) {
+			if (typeof this.props.onClose == "function") {
+				this.props.onClose(e);
+			}
+		}
+		this.setState({ open: false, loaded: true, });
 	}
 
 	render() {

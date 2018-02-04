@@ -33,7 +33,12 @@ export class Sensor extends React.Component{
 
 	render(){
 		let sensor = this.props.sensor;
-
+		let parentName = null;
+		if (sensor.id) {
+			if (this.props.nodeMap[sensor.id] && this.props.nodeMap[sensor.id].parent) {
+				parentName = this.props.nodeMap[sensor.id].parent.info.name;
+			}
+		}
 		let style ={left: sensor.xpercent + '%', top: sensor.ypercent + '%'};
 		if (this.props.dragged) {
 			style ={left: this.props.draggingX + '%', top: this.props.draggingY + '%'};
@@ -95,16 +100,16 @@ export class Sensor extends React.Component{
 								}
 							}}
 						>
-							<div>
-								{sensor.name}<br/>
-								{sensor.macaddress}
-								{
-								// <i data-tooltip="Delete" className="material-icons cursor-pointer red-500 sensor-button pull-right" onClick={() => {}}>{"delete_forever"}</i>
-								// <i data-tooltip="Edit" className="material-icons cursor-pointer sensor-button pull-right" onClick={() => {}}>edit</i>
-								}
-							</div>
-							<div>
-							</div>
+							<table><tbody><tr>
+								<td>
+									<div>{sensor.name}</div>
+									<div>{sensor.macaddress}</div>
+									<div>{parentName}</div>
+								</td><td>
+									<i data-tooltip="Delete" className="material-icons cursor-pointer red-500 sensor-button pull-right" onClick={() => this.props.onDelete(sensor)}>delete_forever</i>
+									<i data-tooltip="Edit" className="material-icons cursor-pointer sensor-button pull-right" onClick={() => this.props.onEdit(sensor)}>edit</i>
+								</td>
+							</tr></tbody></table>
 						</ToolTip>
 					</div>
 				);
@@ -125,11 +130,15 @@ export class Sensor extends React.Component{
 		}
 	}
 }
-
+function mapStateToProps(state) {
+	return {
+		nodeMap: state.overviewReducer.nodeMap,
+	}
+}
 function mapDispatchToProps(dispatch) {
 	return {
 		dispatch
 	}
 }
-export default connect(null, mapDispatchToProps)(Sensor);
+export default connect(mapStateToProps, mapDispatchToProps)(Sensor);
 

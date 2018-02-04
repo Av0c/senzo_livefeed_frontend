@@ -112,6 +112,9 @@ table.flat-table {
     border-radius: 4px;
     box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.4);
 }
+.popup-color-note:hover {
+    z-index: 9999;
+}
 .popup-color-note tr {
     padding: 0px 20px;
     width: 100%;

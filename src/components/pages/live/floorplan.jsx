@@ -15,6 +15,7 @@ import { createSensor, removeSensor, updateSensor, fetchImage } from 'actions/fl
 import * as a from 'actions/floorplan';
 import { fetchCustomerOverview } from 'actions/overview';
 import { deleteNode, fetchLiveData, setParent } from 'actions/node';
+import { selectViewFilter } from "actions/live/filter"
 
 export class FloorPlan extends React.Component {
 	constructor(props, context) {
@@ -180,6 +181,12 @@ export class FloorPlan extends React.Component {
 
 	changeMode(mode, e) {
 		this.setState({mode: mode, lastMode: this.state.mode});
+		if (mode=="add") {
+			if (this.props.viewFilter.code == "LIVE") {
+				console.log("BN")
+				this.props.dispatch(selectViewFilter(config.viewFilter[0]));
+			}
+		}
 		if (mode=="add") {
 			var moveFunc = (e) => this.onMouseMove(e);
 			var upFunc = (e) => this.onMouseUp(e);

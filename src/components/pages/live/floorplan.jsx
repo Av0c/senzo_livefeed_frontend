@@ -378,6 +378,7 @@ export class FloorPlan extends React.Component {
 								draggingY={this.state.dragging && this.state.mousePos.y}
 
 								thumbnail={this.props.thumbnail}
+								hasPermission={this.state.hasPermission}
 							/>
 						);
 					})}
@@ -419,7 +420,6 @@ export class FloorPlan extends React.Component {
 								this.updateSensor(e, state)
 							}
 						}}
-						hasPermission={this.state.hasPermission}
 					/>
 					<Modal
 						ref={(elem) => {this.deleteModal = elem}}

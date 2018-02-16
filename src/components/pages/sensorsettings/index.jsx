@@ -81,7 +81,7 @@ class SensorSettings extends React.Component {
 				break;
 			case "edited":
 				this.setState({
-					Erespond: "User edited.",
+					Erespond: "Sensor edited.",
 					ErespondClass: "text-green",
 				});
 				if (!nextProps.fetched) {
@@ -90,7 +90,7 @@ class SensorSettings extends React.Component {
 				break;
 			case "edit-failed":
 				this.setState({
-					Erespond: "Failed to edit this user !",
+					Erespond: "Failed to edit this sensor !",
 					ErespondClass: "text-red"
 				})
 				break;

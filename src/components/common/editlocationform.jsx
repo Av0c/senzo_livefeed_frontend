@@ -31,9 +31,8 @@ export default class EditLocationForm extends React.Component {
     generateCountryOptions() {
         let parent = this.props.node.parent
         let parentCountry = (parent.type == "multicountry" ? "Multi" : CountriesAndTimezones.getCountriesForTimezone(parent.info.location)[0].id);
-        console.log(parent, parentCountry)
+        let countries = CountriesAndTimezones.getAllCountries()
         if (parentCountry == 'Multi' || parent.type=="customer") {
-            let countries = CountriesAndTimezones.getAllCountries()
             let codes = Object.keys(countries);
             codes.sort((a, b) => countries[a].name.localeCompare(countries[b].name)); // sort country codes by full name.
             return codes.map((code, index) => {
@@ -41,7 +40,7 @@ export default class EditLocationForm extends React.Component {
             });
         }
         else {
-            return <option value={parentCountry}>{parentCountry}</option>
+            return <option value={parentCountry}>{countries[parentCountry].name}</option>
         }
     }
 

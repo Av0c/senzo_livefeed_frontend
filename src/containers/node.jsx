@@ -28,10 +28,11 @@ export default class Node extends React.Component {
     }
 
     render() {
+        var renderChild = (this.props.node.type == "location" || this.props.node.type == "customer" || this.props.node.type == "multicountry");
         return (
             <div className="dropdown-div">
                 <a onClick={() => {this.props.statistic(this.props.node)}}>{this.props.node.info.name}</a>
-                {(this.props.node.type == "location" && this.props.node.children.length > 0) && <i onClick={this.toggleChildren.bind(this)} className={this.state.className + " dropdown-button material-icons no-select no-drag cursor-pointer"}>{this.state.icon}</i>}
+                {(renderChild && this.props.node.children.length > 0) && <i onClick={this.toggleChildren.bind(this)} className={this.state.className + " dropdown-button material-icons no-select no-drag cursor-pointer"}>{this.state.icon}</i>}
                 {this.state.show && this.props.children}
             </div>
         );

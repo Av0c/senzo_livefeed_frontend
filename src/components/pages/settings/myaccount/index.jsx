@@ -32,7 +32,7 @@ class Index extends React.Component {
                 firstname: user.firstname,
                 lastname: user.lastname,
                 phone: user.phone,
-                position: user.postion,
+                position: user.position,
                 address: user.address
             });
         });
@@ -46,6 +46,7 @@ class Index extends React.Component {
 
     render() {
         let user = this.props.user;
+        console.log(user, this.state)
         return (
             <div className="settings-wrapper">
                 <div className="container-fluid">
@@ -66,7 +67,7 @@ class Index extends React.Component {
                                     </div>
                                     <div className="account-username">
                                         <label>Username</label>
-                                        <input type="text" id="username" value={this.state.username} onChange={this.changeHandler.bind(this)} />
+                                        <input type="text" id="username" placeholder={user.username} disabled="disabled" />
                                     </div>
                                     <div className="account-title">
                                         <label>Title</label>
@@ -92,7 +93,7 @@ class Index extends React.Component {
                                         <input type="text" id="position" value={this.state.position} onChange={this.changeHandler.bind(this)} />
                                     </div>
                                     <div className="account-location">
-                                        <label>Location</label>
+                                        <label>Address</label>
                                         <input type="text" id="address" value={this.state.address} onChange={this.changeHandler.bind(this)} />
                                     </div>
                                     <div className="account-change-password">

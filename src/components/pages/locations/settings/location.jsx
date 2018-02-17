@@ -61,7 +61,7 @@ class Location extends React.Component {
                 return <i className="material-icons" style={{ marginRight: "5px" }}>{type}</i>
 
             case "location":
-
+            case "multicountry":
             case "customer":
                 type = (this.state.isShowingChildren) ? "remove_circle_outline" : "add_circle_outline"
                 return <i className="material-icons" style={{ marginRight: "5px" }}>{type}</i>

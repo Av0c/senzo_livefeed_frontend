@@ -71,8 +71,8 @@
 }
 .search-container {
     padding: 12px 10px;
-    width: 250px;
-    border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+    /* width: 250px; */
+    /* border-bottom: 1px solid rgba(100, 100, 100, 0.1); */
 }
 .search-container .Select-control {
 }
@@ -81,7 +81,7 @@
 }
 .search-container .Select-menu-outer {
     position: relative;
-    width: 229px;
+    /* width: 229px; */
 }
 .search-container .Select-menu {
     max-height: 180px;

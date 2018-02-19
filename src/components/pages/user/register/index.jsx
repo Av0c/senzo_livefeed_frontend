@@ -195,7 +195,7 @@ class Form extends React.Component {
 										<input type="text" ref="lastname" className={badKeys.lastname ? "border-red" : ""}/>
 									</div>
 									<div className="account-position">
-										<label>Position</label>
+										<label>Job Title</label>
 										<input type="text" ref="position" className={badKeys.position ? "border-red" : ""}/>
 									</div>
 									<div className="account-phone">
@@ -203,7 +203,7 @@ class Form extends React.Component {
 										<input type="tel" ref="phone" className={badKeys.phone ? "border-red" : ""}/>
 									</div>
 									<div className="account-location">
-										<label>Address</label>
+										<label>Location</label>
 										<input type="text" ref="address" className={badKeys.address ? "border-red" : ""}/>
 									</div>
 									<div className="register-message">

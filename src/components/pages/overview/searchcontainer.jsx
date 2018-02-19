@@ -36,8 +36,6 @@ export class SearchContainer extends React.Component {
         }
     }
 
-// <SearchBar querySettings={this.props.querySettings} addNodeWidget={this.addNodeWidget} tree={this.props.tree} hideSearchBar={this.showSearchBar} />
-
     render() {
         return (
             <div className="text-center add-cart-zone">

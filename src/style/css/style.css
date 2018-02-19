@@ -343,26 +343,9 @@ input:focus {
 .overview-block {
     overflow: visible;
 }
-.card-container {
-    text-align:center;
-    display:inline-block;
-    width:100%;
-}
 .comparison-stats {
     width: 500px;
     text-align: left;
-}
-.the-card {
-    text-align: center;
-    width: 350px;
-    display: inline-block;
-    position: relative;
-    margin: 15px;
-    padding: 30px 26px 42px;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
 }
 .card-buttons {
     margin-top: 20px;
@@ -410,32 +393,6 @@ input:focus {
 }
 .card-bottom-menu {
     margin-top: 0px;
-}
-.add-cart-zone {
-    cursor: pointer;
-    height: 683px;
-    margin-bottom: 30px;
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    margin-top: 18px;
-}
-.add-cart-zone::before {
-    z-index: -1;
-    position: absolute;
-    content: "";
-    margin-top: 7px;
-    max-width: 400px;
-    width: 350px;
-    height: 107%;
-    border-radius: 20px;
-    transition: box-shadow 0.4s;
-}
-.add-cart-zone:hover::before {
-    cursor: pointer;
-    box-shadow: 0px 0px 8px 1px rgba(126, 196, 67, 1) inset;
 }
 .add-card img {
     width: 100px;

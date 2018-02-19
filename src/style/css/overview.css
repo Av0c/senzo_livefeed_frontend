@@ -1,0 +1,59 @@
+/* Grid layout for widget cards */
+
+.card-grid {
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; */
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
+}
+
+.the-card-center {
+    text-align: center;
+    /* margin: 15px; */
+}
+
+.the-card {
+    min-width: 350px;
+    max-width: 350px;
+    /* margin: 15px; */
+
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    padding: 30px 26px 42px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
+}
+
+.add-cart-zone {
+    min-width: 350px;
+    max-width: 350px;
+    cursor: pointer;
+    height: 683px;
+    margin-bottom: 30px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    margin-top: 18px;
+}
+.add-cart-zone::before {
+    z-index: -1;
+    position: absolute;
+    content: "";
+    margin-top: 7px;
+    max-width: 400px;
+    width: 350px;
+    height: 107%;
+    border-radius: 20px;
+    transition: box-shadow 0.4s;
+}
+.add-cart-zone:hover::before {
+    cursor: pointer;
+    box-shadow: 0px 0px 8px 1px rgba(126, 196, 67, 1) inset;
+}

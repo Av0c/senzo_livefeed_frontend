@@ -48,8 +48,7 @@ class SensorSettings extends React.Component {
 	}
 
 	fetchData() {
-		let node = this.props.me.rootnodeid;
-		this.props.dispatch(aNode.fetchLiveData(node))
+		this.props.dispatch(aNode.fetchLiveData())
 	}
 
 	componentDidMount() {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from 'config';
 import { Effects, loop } from 'redux-loop';
+import store from '../store';
 
 import * as a from 'actions/overview'
 
@@ -14,6 +15,9 @@ const initialState = {
 };
 
 function fetchCustomerOverview(id) {
+  if (!id) {
+    id = store.getState().myAccountReducer.user.companyid;
+  }
   return axios.get(config.api.root + `/node/structure/${id}`)
     .then((response) => {
       return a.receiveCustomerOverview(response);

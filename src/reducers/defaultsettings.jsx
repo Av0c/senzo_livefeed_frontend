@@ -37,11 +37,10 @@ function addCard(card) {
 		});
 }
 function addNodeToCard(node, card) {
-	var rootid = store.getState().overviewReducer.customerOverview.id
 	var newNode = {info: {cardid: card.id}}
 	return axios.put(config.api.root + `/node/update/${node.id}`, newNode)
 		.then((response) => {
-			return fetchCustomerOverview(rootid);
+			return fetchCustomerOverview();
 		}).catch((error) => {
 			console.log(error);
 			return a.addNodeToCardFail(error);
@@ -49,7 +48,7 @@ function addNodeToCard(node, card) {
 }
 
 export default (state = initialState, action) => {
-	console.log(action)
+	console.log(action);
 	switch (action.type) {
 		case a.FETCH_CARD: {
 			return loop(

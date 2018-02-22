@@ -27,7 +27,7 @@ export function loginSuccessful(token) {
 }
 
 export function clearToken() {
-  appHistory.push('/login');
+  // appHistory.push('/login');
   return {
     type: CLEAR_TOKEN
   }

@@ -126,9 +126,11 @@ export function fetchCurrentUser() {
     return axios.get(config.api.root + '/user/me')
       .then((response) => {
         dispatch(receiveUser(response.data));
+        return response;
       })
       .catch(function (response) {
         dispatch(fetchUserFailed(response.data));
+        return response;
       })
   }
 }

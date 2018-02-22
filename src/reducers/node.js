@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from 'config';
 import { Effects, loop } from 'redux-loop';
+import store from '../store';
 import * as Node from 'actions/node';
 
 const initialState = {
@@ -11,6 +12,9 @@ const initialState = {
 };
 
 function fetchLiveData(id) {
+  if (!id) {
+    id = store.getState().myAccountReducer.user.companyid;
+  }
   return axios.get(config.api.root + `/sensor/live/${id}`)
     .then(Node.receiveLiveData)
     .catch(Node.fetchFailed);

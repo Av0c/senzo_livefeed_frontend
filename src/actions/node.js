@@ -144,13 +144,15 @@ export function updateNode(node) {
 				});
 
 				toastr.success(`${node.info.name} has been updated`);
-				dispatch(fetchLiveData(store.getState().myAccountReducer.user.companyid));
-				dispatch(overviewAction.fetchCustomerOverview(store.getState().myAccountReducer.user.companyid))
+				dispatch(fetchLiveData());
+				dispatch(overviewAction.fetchCustomerOverview());
+				return response;
 			})
 			.catch(function (response) {
 				console.log(response);
 				toastr.error("Update node failed: ", response);
 				dispatch(updateFailed(response.data));
+				return response;
 			})
 	}
 }
@@ -203,8 +205,8 @@ export function uploadFloorplanView(node, image, type) {
 				return axios.post(config.api.root + `/node/image/upload/${node.id}`, formData, axiosConfig)
 						.then((response) => {
 							toastr.success("Edit floor plan successfully @@!");
-							dispatch(overviewAction.fetchCustomerOverview(store.getState().myAccountReducer.user.companyid))
-							dispatch(floorplanAction.fetchImage(store.getState().myAccountReducer.user.companyid))
+							dispatch(overviewAction.fetchCustomerOverview())
+							dispatch(floorplanAction.fetchImage())
 						}).catch((response) => {
 							toastr.error("Edit floor plan failed : " + response.data);
 						})
@@ -219,6 +221,7 @@ export function selectNodeStats(node) {
 }
 
 export function fetchLiveData(id) {
+	console.trace();
 	return {
 		type: FETCH_LIVE_DATA,
 		id

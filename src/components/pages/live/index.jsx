@@ -46,13 +46,13 @@ class Live extends React.Component {
 		};
 	}
 
-	fetchLive(id) {
-	    this.props.dispatch(fetchLiveData(this.props.user.companyid));
+	fetchLive() {
+	    this.props.dispatch(fetchLiveData());
 	}
 
 	componentDidMount() {
 		this.prepare(this.props);
-		var I = setInterval(this.fetchLive.bind(this, this.props.user.rootnodeid), 5000);
+		var I = setInterval(this.fetchLive.bind(this), 5000);
 		this.setState({ I: I });
 	}
 

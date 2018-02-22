@@ -20,7 +20,8 @@ class OverviewLeft extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(fetchLiveData(this.props.user.companyid));
+        console.log(this.props)
+        this.props.dispatch(fetchLiveData());
         this.props.dispatch(fetchCurrentUser());
     }
 
@@ -49,6 +50,7 @@ class OverviewLeft extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        loggedIn: state.authReducer.loggedIn,
         user: state.myAccountReducer.user,
         currentSensor: state.nodeReducer.map,
         currentNode: state.overviewReducer.currentNode,

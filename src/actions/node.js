@@ -221,7 +221,6 @@ export function selectNodeStats(node) {
 }
 
 export function fetchLiveData(id) {
-	console.trace();
 	return {
 		type: FETCH_LIVE_DATA,
 		id

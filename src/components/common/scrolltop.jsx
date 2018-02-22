@@ -14,6 +14,10 @@ export default class ScrollTop extends React.Component {
         window.addEventListener("scroll", this.checkScroll);
     }
 
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.checkScroll);
+    }
+
     checkScroll() {
         var show;
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -25,6 +29,8 @@ export default class ScrollTop extends React.Component {
             show: show,
         });
     }
+
+
 
     scrollToTop() {
         document.body.scrollTop = 0; // For Safari

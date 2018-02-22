@@ -25,9 +25,6 @@ export class WidgetContainer extends React.Component {
 			area: area,
 			data: {},
 		};
-		this.setState({
-			data: this.getOverview(this.props)
-		})
 	}
 
 	componentWillMount() {

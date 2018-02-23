@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { install, combineReducers } from 'redux-loop';
+import { CLEAR_TOKEN } from 'actions/authentication';
+
 import axios from 'axios';
 
 import authReducer from 'reducers/auth';
@@ -29,7 +31,7 @@ import livefeedAPIReducer from 'reducers/livefeedapi';
 import { clearToken } from 'actions/authentication';
 import appHistory from 'components/common/appHistory';
 
-const reducer = combineReducers({
+const appReducer = combineReducers({
   authReducer,
   overviewReducer,
   nodeReducer,
@@ -52,6 +54,13 @@ const reducer = combineReducers({
   defaultSettingsReducer,
   livefeedAPIReducer,
 });
+
+const reducer = (state, action) => {
+  if (action.type == CLEAR_TOKEN) {
+    state = undefined;
+  }
+  return appReducer(state, action);
+}
 
 const store = createStore(
   reducer,

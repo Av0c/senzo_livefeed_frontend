@@ -17,9 +17,11 @@ export class WidgetContainer extends React.Component {
 				break;
 			case "meeting_room":
 				area = config.room.MEETINGROOM;
+				break;
 			default:
 				area = config.room.ALLAREA;
 		}
+		console.log(this.props.node.info.name, this.props.node.type, area)
 
 		this.state = {
 			area: area,

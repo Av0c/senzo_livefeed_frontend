@@ -1,5 +1,6 @@
 import appHistory from 'components/common/appHistory';
 import jwtDecode from 'jwt-decode';
+import toastr from 'toastr';
 import {
   LOGIN_FAILED,
   LOGIN_IN_PROGRESS,
@@ -18,6 +19,7 @@ const initialState = {
 export default (state = initialState, action ) => {
   switch (action.type) {
     case LOGIN_FAILED: {
+      toastr.error(action.data)
       return Object.assign({}, state, initialState, {
         error: true,
         errorMessage: action.data,

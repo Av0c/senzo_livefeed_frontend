@@ -45,7 +45,7 @@ class Login extends React.Component {
                 <div className="user_submit">
                   <input type="button" name="user_submit" value="Log in" onClick={this.submit} />
                 </div>
-                <div className='error-message' >{this.props.auth.errorMessage}</div>
+                {/**<div className='red-500' >{this.props.auth.errorMessage}</div>**/}
                 <div className='forgot-password'>
                   <Link to='/forgot'> Forgot your password?</Link>
                 </div>

@@ -14,6 +14,14 @@ export default class PianoChart extends React.Component {
     render() {
         let values = this.generateSeries();
         var myConfig = {
+            gui:{
+                "behaviors":[
+                    {
+                        "id":"ViewSource",
+                        "enabled":"none"
+                    },
+                ],
+            },
             globals: {
                 fontFamily: "Roboto"
             },

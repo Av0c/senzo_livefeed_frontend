@@ -4,8 +4,15 @@ import { core as Core } from 'zingchart-react';
 export default class LineChart extends React.Component {
 
     render() {
-        var myConfig =
-            {
+        var myConfig = {
+                gui:{
+                    "behaviors":[
+                        {
+                            "id":"ViewSource",
+                            "enabled":"none"
+                        },
+                    ],
+                },
                 type: "line",
                 plotarea: {
                     marginTop: '10px',

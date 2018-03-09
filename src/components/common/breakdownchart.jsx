@@ -6,7 +6,14 @@ export default class BreakDownChart extends React.Component {
     render() {
         var myConfig =
             {
-                type: "bar",
+                gui:{
+                    "behaviors":[
+                        {
+                            "id":"ViewSource",
+                            "enabled":"none"
+                        },
+                    ],
+                },                type: "bar",
                 plotarea: {
                     marginTop: "10px",
                     marginRight: "50px",

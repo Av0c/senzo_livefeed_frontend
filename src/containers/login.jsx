@@ -20,7 +20,7 @@ class Login extends React.Component {
 
   handleKeyDown(e) {
     if (e.key === 'Enter') {
-      this.props.dispatch(login(this.state));
+      this.submit();
     }
   }
 
@@ -33,16 +33,13 @@ class Login extends React.Component {
           <div className="login-box-wrapper">
             <div className="login-box">
               <form action="#">
-                <div className="user_email">
+                <div>
                   <input type="username" id="username" placeholder="Username" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
                 </div>
-                <div className="user_password">
+                <div>
                   <input type="password" placeholder="Password" id="password" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
                 </div>
-                <div className="keep_me_logged_in">
-                  <input type="checkbox" name="keep_me_logged_in" /><span>Keep me logged in</span>
-                </div>
-                <div className="user_submit">
+                <div>
                   <input type="button" name="user_submit" value="Log in" onClick={this.submit} />
                 </div>
                 {/**<div className='red-500' >{this.props.auth.errorMessage}</div>**/}

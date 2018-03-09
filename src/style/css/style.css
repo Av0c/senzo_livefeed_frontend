@@ -305,7 +305,8 @@ input[type="password"] {
     font-size: 16px;
     height: 36px;
     padding-left: 10px;
-    margin-bottom: 18px;
+    margin-top: 9px;
+    margin-bottom: 9px;
     border: 1px solid #dfdfdf;
     border-radius: 6px;
     box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);

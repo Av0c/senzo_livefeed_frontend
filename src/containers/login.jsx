@@ -28,7 +28,9 @@ class Login extends React.Component {
     return (
       <div className="login-wrapper">
         <div className="login-card text-center">
-          <img className="login-logo" />
+          <Link to="/">
+            <img src="/src/assets/images/header-logo.svg" className="login-logo" />
+          </Link>
           <h2 className="welcome-message">Welcome to Senzo Live!</h2>
           <div className="login-box-wrapper">
             <div className="login-box">

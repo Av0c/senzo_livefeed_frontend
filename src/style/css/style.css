@@ -203,7 +203,6 @@ header {
 .login-logo {
     width: 200px;
     height: 37px;
-    background-image: url(../../assets/images/header-logo.svg);
 }
 .start-date:focus,
 .end-date:focus {

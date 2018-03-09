@@ -129,8 +129,8 @@ export function fetchCurrentUser() {
         return response;
       })
       .catch(function (response) {
-        dispatch(fetchUserFailed(response.data));
-        return response;
+        dispatch(fetchUserFailed(response.data || response.statusText));
+        throw response;
       })
   }
 }

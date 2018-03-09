@@ -2,6 +2,7 @@ import React from 'react';
 import { sendResetPW } from 'actions/authentication'
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import Recaptcha from "react-recaptcha"
 
 class ForgotForm extends React.Component {
 
@@ -9,7 +10,16 @@ class ForgotForm extends React.Component {
     super();
     this.submit = this.submit.bind(this);
     this.displayName = 'LoginPage'
-    this.state = { username: '' }
+    this.state = { username: '', response: null}
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Sending email failed
+    console.log(this.props, nextProps);
+    if (this.props.auth.sendResetPWInProgress && !nextProps.auth.sendResetPWInProgress && !nextProps.auth.sendResetPWDone) {
+      console.log("x");
+      this.recaptcha.reset();
+    }
   }
 
   handleChange(e) {
@@ -24,9 +34,14 @@ class ForgotForm extends React.Component {
     }
   }
 
+  verified(response) {
+    this.setState({response: response});
+  }
+
   render() {
-    console.log(this.props.auth.sendResetPWInProgress, this.props.auth.sendResetPWDone)
     var done = !this.props.auth.sendResetPWInProgress && this.props.auth.sendResetPWDone;
+    var waiting = this.props.auth.sendResetPWInProgress && !this.props.auth.sendResetPWDone;
+    console.log(this.state)
     return (
       <div className="login-wrapper">
         <div className="login-card text-center">
@@ -39,13 +54,22 @@ class ForgotForm extends React.Component {
                 !done ? 
                 <form>
                   <br/>
-                  <div className="user_email">
+                  <div>
                     <input type="username" id="username" placeholder="Username" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
                   </div>
-                  <div className="user_submit">
-                    <input type="button" name="user_submit" value="Reset Password" onClick={this.submit} />
+                  <div className="reset-pw-recaptcha">
+                    <Recaptcha
+                      ref={e => this.recaptcha = e}
+                      sitekey="6LefkksUAAAAALFa1vdNevTFeJF7Q_C8U0o_IKYj"
+                      verifyCallback={(response) => this.verified(response)}
+                    />
                   </div>
-                  <div className='forgot-password'>
+
+                  <div>
+                    <input type="button" name="user_submit" value={waiting ? "Please wait..." : "Reset Password"} onClick={this.submit} disabled={waiting}/>
+                  </div>
+
+                  <div className="forgot-password">
                     <Link to='/login'> Back to login page.</Link>
                   </div>
                 </form>

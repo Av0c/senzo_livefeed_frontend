@@ -54,7 +54,7 @@ export function login(credentials) {
         appHistory.push('/');
       })
     .catch((response) => {
-      dispatch(loginFailed(response.data))
+      dispatch(loginFailed(response.data || response.statusText))
     })
   }
 }
@@ -77,11 +77,11 @@ export function sendResetPW(data) {
     dispatch({type: SEND_RESET_PW, data: data});
     return axios.post(config.api.root + '/user/resetpassword/send', data)
       .then((response) => {
-        dispatch(sendResetPWOk(response.data));
+        dispatch(sendResetPWOk(response));
         return response
       })
       .catch((response) => {
-        dispatch(sendResetPWFailed(response.data))
+        dispatch(sendResetPWFailed(response.data || response.statusText.data))
         return response
       })
   }

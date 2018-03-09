@@ -10,7 +10,10 @@ class ResetPasswordForm extends React.Component {
     super();
     this.submit = this.submit.bind(this);
     this.displayName = 'LoginPage'
-    this.state = { new: '', new2: '' }
+    this.state = {
+      new: '',
+      new2: '',
+    }
   }
 
   componentDidMount() {
@@ -65,10 +68,10 @@ class ResetPasswordForm extends React.Component {
                     <input type="email" value={this.props.auth.resetPWUser.email} disabled />
                   </div>
                   <div>
-                    <input type="password" id="new" placeholder="New Password" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
+                    <input type="password" id="new" placeholder="New Password" className={this.state["newError"] ? "has-error" : ""} onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
                   </div>
                   <div>
-                    <input type="password" id="new2" placeholder="Retype Password" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
+                    <input type="password" id="new2" placeholder="Retype Password" className={this.state["new2Error"] ? "has-error" : ""} onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
                   </div>
                   <div>
                     <input type="button" name="user_submit" value="Reset Password" onClick={this.submit} />
@@ -107,7 +110,29 @@ class ResetPasswordForm extends React.Component {
     }
   }
 
+  checkForm(data) {
+    var ok = true;
+    var badKeys = {};
+    Object.keys(data).map((key) => {
+      if (data[key] === "") {
+        badKeys[key+"Error"] = true;
+        ok = false;
+      } else {
+        badKeys[key+"Error"] = false;
+      }
+    });
+    if (data.new != data.new2) {
+      console.log("!")
+      badKeys["new2" + "Error"] = true;
+    }
+    this.setState(badKeys);
+  }
+
   submit() {
+    this.checkForm({
+      new: this.state.new,
+      new2: this.state.new2
+    })
     if (this.state.new == "") {
       toastr.error("Please provide new password.");
     } else if (this.state.new != this.state.new2) {

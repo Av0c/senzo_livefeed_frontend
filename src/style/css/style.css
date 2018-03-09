@@ -1119,3 +1119,8 @@ input[type="password"].has-error {
 .location-button {
     font-size: 30px;
 }
+.reset-pw-recaptcha {
+    transform:scale(0.757);
+    -webkit-transform:scale(0.757);
+    display: inline-block;
+}

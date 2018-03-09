@@ -95,7 +95,7 @@ class Help extends React.Component {
 										></textarea>
 									</div>
 									<div className="feedback-submit">
-										<input type="button" value="Send Message" onClick={() => this.submit()}/>
+										<span className="button-sm" style={{width:"230px"}} onClick={() => this.submit()}>Send Message</span>
 									</div>
 								</form>
 							</div>

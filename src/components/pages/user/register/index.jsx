@@ -219,7 +219,10 @@ class Form extends React.Component {
 										<span className={this.props.messageClass}> {this.props.message} </span>
 									</div>
 									<div className="account-submit">
-										<input type="button" value="Sign Up" onClick={() => this.props.submit(this.props.inviteKey, this.refs)}/>
+										<label></label>
+										<span className="button-sm" style={{width:"230px", display:"inline-block"}} onClick={() => this.props.submit(this.props.inviteKey, this.refs)}>
+											Sign Up
+										</span>
 									</div>
 								</form>
 							</div>

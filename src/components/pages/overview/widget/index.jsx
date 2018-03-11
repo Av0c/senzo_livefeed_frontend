@@ -40,7 +40,7 @@ export class Widgets extends React.Component {
             ids = this.props.user.details.location;
         }
         return (
-            <div className="card-grid">
+            <React.Fragment>
                 {ids.map((id, index) => {
                     let node = this.props.nodeMap[id];
                     if (node) {
@@ -52,7 +52,7 @@ export class Widgets extends React.Component {
                     }
                     return null;
                 })}
-            </div>
+            </React.Fragment>
         );
     }
 }

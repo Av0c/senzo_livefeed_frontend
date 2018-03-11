@@ -15,10 +15,14 @@ export class SearchContainer extends React.Component {
             showSearch: false
         };
         this.showSearchBar = this.showSearchBar.bind(this);
+        this.hideSearchBar = this.hideSearchBar.bind(this);
         this.addNodeWidget = this.addNodeWidget.bind(this);
     }
     showSearchBar() {
-        this.setState({ showSearch: !this.state.showSearch });
+        this.setState({ showSearch: true });
+    }
+    hideSearchBar() {
+        this.setState({ showSearch: false });
     }
 
     addNodeWidget(node) {
@@ -38,22 +42,24 @@ export class SearchContainer extends React.Component {
 
     render() {
         return (
-            <div className="text-center add-cart-zone">
-                {this.state.showSearch ?
-                    <div className={"search-container"} style={{width: "250px"}}>
-                        <SearchBarDropDown
-                            onChange={(node) => {this.addNodeWidget(node)}}
-                            onFocus={() => {}}
-                            onClose={() => {this.showSearchBar()}}
-                            tree={this.props.tree}
-                        />
-                    </div>
-                    :
-                    <a className="add-card" onClick={this.showSearchBar}> <img src="src/assets/images/plus.svg" />
-                    <div className="add-card-descr">
-                        Add Location
-                    </div>
-                </a>}
+            <div className="grid-card-center">
+                <div className="the-card add-widget-card" onClick={this.showSearchBar}>
+                    {this.state.showSearch ?
+                        <div className={"search-container"} style={{}}>
+                            <SearchBarDropDown
+                                onChange={(node) => {this.addNodeWidget(node)}}
+                                onFocus={() => {}}
+                                onClose={() => {this.hideSearchBar()}}
+                                tree={this.props.tree}
+                                />
+                        </div>
+                        :
+                        <div className="add-widget-button"> <i className="material-icons">add</i>
+                        <div className="add-widget-button-desc">
+                            Add Location
+                        </div>
+                        </div>}
+                </div>
             </div>
         );
     }

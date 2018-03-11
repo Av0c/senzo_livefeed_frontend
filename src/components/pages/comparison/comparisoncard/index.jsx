@@ -46,25 +46,25 @@ export class ComparisonCard extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid">
-                <div style={{float:"left"}}>
-                    <div className="comparison-location-title-card card-shape">
-                        <div className="row">
+            <div>
+                <div className="comparison-container">
+                    <div className="comparison-grid">
+                        <div className="comparison-select card-shape text-center">
                             <div className="comparison-first-location text-center">
                                 <LocationSelector index={0} querySettings={this.props.querySettings} chooseLocation={this.chooseFirstLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
                             </div>
-                            <div className="toggle-wrapper text-center"> <a style={{ marginRight: '10px' }} className="toggle-button">
-
-                            </a></div>
+                            <div className="toggle-wrapper text-center">
+                                <a style={{ marginRight: '10px' }} className="toggle-button"></a>
+                            </div>
                             <div className="comparison-second-location text-center">
                                 <LocationSelector index={1} querySettings={this.props.querySettings} chooseLocation={this.chooseSecondLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
                             </div>
                         </div>
+                        <Widgets querySettings={this.props.querySettings} allSensors={this.props.allSensors} />
+                        <div className="grid-card-center">
+                            <ComparisonStats />
+                        </div>
                     </div>
-                    <Widgets querySettings={this.props.querySettings} allSensors={this.props.allSensors} />
-                </div>
-                <div style={{float:"right"}}>
-                    <ComparisonStats />
                 </div>
             </div>
         );

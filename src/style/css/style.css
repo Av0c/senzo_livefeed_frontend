@@ -343,10 +343,6 @@ input:focus {
 .overview-block {
     overflow: visible;
 }
-.comparison-stats {
-    width: 500px;
-    text-align: left;
-}
 .card-buttons {
     margin-top: 20px;
 }
@@ -370,12 +366,6 @@ input:focus {
     font-size: 16px;
     position: relative;
 }
-.card-nav {
-
-}
-.card-area-dropdown {
-
-}
 .nav-stats {
     margin-right: 10px;
 }
@@ -394,18 +384,7 @@ input:focus {
 .card-bottom-menu {
     margin-top: 0px;
 }
-.add-card img {
-    width: 100px;
-}
-.add-card .add-card-descr {
-    color: #bfbfbf;
-    font-size: 20px;
-    font-family: 'Catamaran';
-    font-weight: normal;
-    margin-top: 10px;
-    width: 150px;
-    margin: 0px auto;
-}
+
 .card-settings {
     position: relative;
 }
@@ -438,34 +417,11 @@ input:focus {
 .comparison-wrapper {
     margin-top: 60px;
 }
-.comparison-title-card {
-    font-family: 'Catamaran';
-}
-.comparison-title-card h2 {
-    font-size: 22px;
-    line-height: 42px;
-    color: #585858;
-}
-.comparison-stats-card {
-    padding: 30px;
-    margin-top: 15px;
-    font-weight: bold;
-    font-size: 20px;
-}
 .comparison-export {
     margin-top: 20px;
 }
-.comparison-stats-card span {
-    font-weight: normal;
-}
-.comparison-location-title-card {
-    margin: 0 15px 0px 15px;
-}
-.comparison-location-title-card h2 {
-    font-size: 22px;
-    line-height: 42px;
-    display: inline-block;
-}
+
+
 .toggle-button img {
     width: 32px;
     padding-top: 6px;
@@ -998,10 +954,6 @@ ul.users {
     border: 1px solid #dfdfdf;
     border-radius: 6px;
     box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
-}
-.comparison-stats-card span {
-    float: right;
-    margin-right: 60px;
 }
 .disabled {
     color: #BDBDBD;

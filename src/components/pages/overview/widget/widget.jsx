@@ -21,7 +21,7 @@ class Widget extends React.Component {
             style = "widget";
         }
         return (
-            <div className="the-card-center">
+            <div className="grid-card-center">
                 <div className="the-card clearfix">
                     <div data-tooltip={this.props.node.info.name}>
                         <h1 className="card-location">{this.props.node.info.name}</h1>

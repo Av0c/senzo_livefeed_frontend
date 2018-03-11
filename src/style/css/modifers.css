@@ -56,3 +56,9 @@
 .red-900 {
     color: #B71C1C;
 }
+.center-horizonal {
+    left: 50%;
+    -ms-transform: translateX(-50%); /* IE 9 */
+    -webkit-transform: translateX(-50%); /* Safari */
+    transform: translateX(-50%);
+}

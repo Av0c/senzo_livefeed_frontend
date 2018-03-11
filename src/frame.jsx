@@ -17,6 +17,16 @@ import Toolbar from 'containers/toolbar';
 import ScrollTop from 'components/common/scrolltop';
 
 export class Frame extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            cardLoaded: false,
+            treeLoaded: false,
+            liveLoaded: false,
+            imageLoaded: false,
+        }
+    }
+
 
     handleTreeClick(node) {
         if(this.props.location.pathname.includes("/statistic") || this.props.location.pathname=="/" ||
@@ -31,19 +41,24 @@ export class Frame extends React.Component {
 
     componentDidMount() {
         // Neccessary api init here.
-        this.props.dispatch(fetchCurrentUser()).then(() => {
-            this.props.dispatch(fetchCard());
-            this.props.dispatch(fetchCustomerOverview(this.props.user.companyid));
-            this.props.dispatch(fetchLiveData(this.props.user.companyid));
-            this.props.dispatch(fetchImage(this.props.user.companyid));
+        this.props.dispatch(fetchCurrentUser()).then((res) => {
+            console.log(this.props.user, res);
+            this.props.dispatch(fetchCard()).then(() => this.setState({cardLoaded: true}));
+            this.props.dispatch(fetchCustomerOverview()).then(() => this.setState({treeLoaded: true}));
+            this.props.dispatch(fetchLiveData()).then(() => this.setState({liveLoaded: true}));
+            this.props.dispatch(fetchImage()).then(() => this.setState({imageLoaded: true}));
         }).catch((err) => {
             console.log(err)
         });
     }
 
 
+
+
     render() {
-        return (this.props.user && this.props.tree && this.props.cards && this.props.sensorMap && this.props.images) ?
+        // return (!this.props.loading && this.props.user && this.props.tree && this.props.cards && this.props.sensorMap && this.props.images) ?
+        return (this.state.cardLoaded && this.state.treeLoaded && this.state.liveLoaded && this.state.imageLoaded &&
+                this.props.user && this.props.tree && this.props.cards && this.props.sensorMap && this.props.images) ?
         <div style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px', maxWidth: '100%' }} className="container">
             <Toolbar
                 actions={{ logout: this.props.logout }}

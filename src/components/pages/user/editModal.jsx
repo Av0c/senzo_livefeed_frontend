@@ -52,7 +52,14 @@ class EditModal extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		let hasCompany = (this.props.nodes.length && this.props.nodes[0].node.type == config.nodeType.customer.code);
+		let hasCompany = (nextProps.nodes.length > 0);
+		nextProps.nodes.map((x) => {
+			if (x.node.type == config.nodeType.customer.code) {
+				hasCompany = true;
+			}
+		});
+		this.setState({hasCompany: hasCompany});
+
 		if (this.props.open != nextProps.open) {
 			let role = this.findRole(nextProps.user);
 			this.setState({
@@ -67,7 +74,7 @@ class EditModal extends React.Component {
 	findCustomerNode(nodes) {
 		var res = {};
 		nodes.map((x) => {
-			if (x.node.type==config.nodeType.customer.code) {
+			if (x.node.type == config.nodeType.customer.code) {
 				res = x;
 			}
 		});
@@ -75,7 +82,7 @@ class EditModal extends React.Component {
 	}
 
 	findNotCustomerNode(nodes) {
-		var res = {};
+		var res = null;
 		for (var i = 0; i < nodes.length; i++) {
 			if (nodes[i].node.type!=config.nodeType.customer.code) {
 				return (nodes[i]);
@@ -123,7 +130,6 @@ class EditModal extends React.Component {
 		if (this.state.loaded) {
 			type = this.props.open ? "open" : "closed";
 		}
-		let hasCompany = (this.props.nodes.length && this.props.nodes[0].node.type == config.nodeType.customer.code);
 		return (
 			<div>
 				<div className={"modal-overlay "+type} onClick={this.props.closeModal}></div>
@@ -136,7 +142,7 @@ class EditModal extends React.Component {
 						<label>Change Role</label>
 						<select required ref="role" onChange={this.changeRole.bind(this)} value={this.state.role}>
 							{config.roles.map((role, i) => {
-								if (!hasCompany && i==0) {
+								if (!this.state.hasCompany && i==0) {
 									return null
 								}
 								return <option value={role.code} key={role.text}> {role.text} </option>

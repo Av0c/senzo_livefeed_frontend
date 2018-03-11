@@ -77,6 +77,9 @@ class Register extends React.Component {
 				badKeys[key] = false;
 			}
 		});
+		if (user.password != user.password2) {
+			badKeys["password2"] = true;
+		}
 		this.setState(badKeys);
 		return ok;
 	}
@@ -85,6 +88,7 @@ class Register extends React.Component {
 		var user = {}
 		user.username = refs["username"].value;
 		user.password = refs["password"].value;
+		user.password2 = refs["password2"].value;
 		user.email = refs["email"].value
 		user.title = refs["title"].value;
 		user.firstname = refs["firstname"].value;
@@ -179,6 +183,10 @@ class Form extends React.Component {
 										<label>Password</label>
 										<input type="password" ref="password" className={badKeys.password ? "border-red" : ""}/>
 									</div>
+									<div className="account-password">
+										<label>Password Again</label>
+										<input type="password" ref="password2" className={badKeys.password2 ? "border-red" : ""}/>
+									</div>
 									<div className="account-title">
 										<label>Title</label>
 										<select ref="title">
@@ -211,7 +219,10 @@ class Form extends React.Component {
 										<span className={this.props.messageClass}> {this.props.message} </span>
 									</div>
 									<div className="account-submit">
-										<input type="button" value="Sign Up" onClick={() => this.props.submit(this.props.inviteKey, this.refs)}/>
+										<label></label>
+										<span className="button-sm" style={{width:"230px", display:"inline-block"}} onClick={() => this.props.submit(this.props.inviteKey, this.refs)}>
+											Sign Up
+										</span>
 									</div>
 								</form>
 							</div>

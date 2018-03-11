@@ -76,11 +76,10 @@ export function addCardFail(result) {
 }
 
 export function deleteCard(card) {
-  var rootid = store.getState().overviewReducer.customerOverview.id
   return dispatch => {
     axios.delete(config.api.root + `/card/delete/${card.id}`)
     .then((response) => {
-      dispatch(fetchCustomerOverview(rootid));
+      dispatch(fetchCustomerOverview());
       dispatch(fetchCard());
     });
   }

@@ -12,6 +12,14 @@ export default class RangeChart extends React.Component {
         }
         var myConfig =
             {
+                gui:{
+                    "behaviors":[
+                        {
+                            "id":"ViewSource",
+                            "enabled":"none"
+                        },
+                    ],
+                },
                 type: "bar",
                 plotarea: {
                     marginTop: '10px',

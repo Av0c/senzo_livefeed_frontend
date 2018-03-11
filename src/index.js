@@ -5,10 +5,13 @@ import ReactDOM from 'react-dom';
 import favIcon from './favicon.ico';
 import Frame from './frame';
 import Store from './store';
-import login from './containers/login';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, Link, hashHistory, useRouterHistory } from 'react-router';
 import appHistory from 'components/common/appHistory';
+
+import LoginForm from './containers/login';
+import ForgotPWForm from './containers/forgot';
+import ResetPWForm from './containers/resetpassword';
 
 import { requireAuthentication } from 'components/common/authenticatedComponent';
 
@@ -90,7 +93,9 @@ ReactDOM.render((
 					<Route path="/settings/ownaccount/password" component={Password} />
 				</Route>
 			</Route>
-			<Route path="/login" component={login} />
+			<Route path="/login" component={LoginForm} />
+			<Route path="/forgot" component={ForgotPWForm} />
+			<Route path="/resetpassword" component={ResetPWForm} />
 			<Route path="/invitation" component={Register} />
 		</Router>
 	</Provider>

@@ -59,8 +59,8 @@ export function updateSensor(sensor) {
 				var ss = Object.assign({}, store.getState().nodeReducer.map.get(sensor.id), sensor);
 				store.getState().nodeReducer.map.set(sensor.id, ss);
 
-				dispatch(nodeAction.fetchLiveData(store.getState().myAccountReducer.user.companyid));
-				dispatch(overviewAction.fetchCustomerOverview(store.getState().myAccountReducer.user.companyid));
+				dispatch(nodeAction.fetchLiveData());
+				dispatch(overviewAction.fetchCustomerOverview());
 				return response;
 			})
 			.catch(function (response) {

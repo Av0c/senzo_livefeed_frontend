@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from 'config';
+import store from '../store';
 import { Effects, loop } from 'redux-loop';
 
 import {
@@ -17,6 +18,9 @@ const initialState = {
 };
 
 function _fetchImage(id) {
+  if (!id) {
+    id = store.getState().myAccountReducer.user.companyid;
+  }
   return axios.get(`${config.api.root}/node/image/${id}`)
     .then(receiveImage)
     .catch(fetchImage(id))
@@ -32,7 +36,6 @@ export default (state = initialState, action ) => {
       )
     }
     case RECEIVE_IMAGE: {
-      console.log(action.data)
       return Object.assign({}, initialState, {images: action.data})
     }
 

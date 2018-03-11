@@ -7,11 +7,21 @@ export default class ScrollTop extends React.Component {
             show: false,
         };
         this.checkScroll = this.checkScroll.bind(this);
-        this.scrollToTop = this.scrollToTop.bind(this);
+        this.scrollToTop = () => {
+            const c = document.documentElement.scrollTop || document.body.scrollTop;
+            if (c > 0) {
+                window.requestAnimationFrame(this.scrollToTop);
+                window.scrollTo(0, c - c / 8);
+            }
+        };
     }
 
     componentDidMount() {
         window.addEventListener("scroll", this.checkScroll);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.checkScroll);
     }
 
     checkScroll() {
@@ -24,11 +34,6 @@ export default class ScrollTop extends React.Component {
         this.setState({
             show: show,
         });
-    }
-
-    scrollToTop() {
-        document.body.scrollTop = 0; // For Safari
-        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }
 
     render() {

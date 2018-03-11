@@ -87,6 +87,7 @@ export class FloorPlan extends React.Component {
 
 	onMouseDown(e, sensor) {
 		if (this.state.mode == "move") {
+			console.log("??")
 			var upFunc = (e) => this.onMouseUp(e, sensor);
 			var moveFunc = (e) => this.onMouseMove(e, sensor);
 
@@ -231,8 +232,8 @@ export class FloorPlan extends React.Component {
 		} else if (sensor.name && sensor.macaddress) {
 			this.props.dispatch(createSensor(location, sensor)).then((response) => {
 				if (response.status == 201) {
-					this.props.dispatch(fetchCustomerOverview(this.props.user.companyid)).then(() => {
-						this.props.dispatch(fetchLiveData(this.props.user.companyid));
+					this.props.dispatch(fetchCustomerOverview()).then(() => {
+						this.props.dispatch(fetchLiveData());
 						toastr.success(`Add new sensor successfully`);
 						this.sensorForm.close(evt);
 					}).catch(error => {
@@ -294,8 +295,8 @@ export class FloorPlan extends React.Component {
 	deleteSensor(sensor) {
 		this.props.dispatch(deleteNode(sensor)).then((response) => {
 			if (response.status==200) {
-				this.props.dispatch(fetchCustomerOverview(this.props.user.companyid)).then((response) => {
-					this.props.dispatch(fetchLiveData(this.props.user.companyid));
+				this.props.dispatch(fetchCustomerOverview()).then((response) => {
+					this.props.dispatch(fetchLiveData());
 					toastr.success(`Delete sensor successfully`);
 					this.selectDeletedSensor({}); // also close delete modal.
 				}).catch(error => {

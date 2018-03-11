@@ -104,7 +104,7 @@ export class Settings extends React.Component {
 
         if (state.location == 'sub') {
             this.props.dispatch(createNode(parent.id, newNode)).then(() => {
-                this.props.dispatch(fetchCustomerOverview(this.props.user.companyid));
+                this.props.dispatch(fetchCustomerOverview());
                 toastr.success(`Add ${newNode.info.name} successfully`)
             }).catch(error => {
                 toastr.error(error);
@@ -117,7 +117,7 @@ export class Settings extends React.Component {
             newNode.type = 'location';
             this.props.dispatch(createNode(parent.parent.id, newNode)).then((response) => {
                 this.props.dispatch(setParent(parent.id, response.id)).then(() => {
-                    this.props.dispatch(fetchCustomerOverview(this.props.user.companyid));
+                    this.props.dispatch(fetchCustomerOverview());
                     toastr.success(`Add ${newNode.info.name} successfully`)
                 }).catch(error => {
                     toastr.error(error);
@@ -143,7 +143,7 @@ export class Settings extends React.Component {
     confirmDeleteLocation(node) {
         if (this.state.type == 'all' || node.children.length == 0) {
             this.props.dispatch(deleteNode(node)).then(() => {
-                this.props.dispatch(fetchCustomerOverview(this.props.user.companyid));
+                this.props.dispatch(fetchCustomerOverview());
                 toastr.error(`${node.info.name} has been deleted`);
             })
                 .catch(error => {
@@ -157,7 +157,7 @@ export class Settings extends React.Component {
                 this.props.dispatch(setParent(node.children[i].id, parent.id)).then(() => {
                     if (i == (length - 1)) {
                         this.props.dispatch(deleteNode(node)).then(() => {
-                            this.props.dispatch(fetchCustomerOverview(this.props.user.companyid));
+                            this.props.dispatch(fetchCustomerOverview());
                             toastr.error(`${node.info.name} has been deleted`);
                         })
                             .catch(error => {

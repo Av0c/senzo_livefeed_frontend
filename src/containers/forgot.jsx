@@ -78,7 +78,7 @@ class ForgotForm extends React.Component {
                 :
                 <div>
                   <br/>
-                  An email has been sent to your email address.<br/>
+                  An email has been sent to this account's email address.<br/>
                   Please follow the instruction in the email.
                 </div>
               }

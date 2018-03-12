@@ -19,3 +19,6 @@
 .modal-overlay {
     z-index: 999 !important;
 }
+.popup-color-note {
+	z-index: 998 !important;
+}

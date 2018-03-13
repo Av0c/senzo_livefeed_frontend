@@ -38,7 +38,7 @@ class OverviewLeft extends React.Component {
                             <DateSelector />
                         </div>
                     </div>
-                    <div style={{width: "100%"}}>
+                    <div className="overview-grid">
                         <Widgets tree={this.props.tree} querySettings={this.props.querySettings} allSensors={this.props.currentSensor} />
                         <SearchContainer tree={this.props.tree} querySettings={this.props.querySettings} />
                     </div>

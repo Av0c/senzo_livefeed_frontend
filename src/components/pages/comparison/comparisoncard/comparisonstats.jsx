@@ -39,16 +39,14 @@ export class ComparisonStats extends React.Component {
 
     render() {
         return (
-            <div className="col-sm-4 comparison-stats">
-                <div className="comparison-title-card card-shape text-center">
-                    <h2>Comparison</h2>
-                </div>
-                <div className="comparison-stats-card card-shape">
+            <div className="comparison-stats-container card-shape">
+                <h2 className="comparison-stats-title">Comparison</h2>
+                <div className="comparison-stats-body">
                     <p>Peak: <span className="peak-value"> {this.state.peak > 0 ? `+${this.state.peak}` : this.state.peak}%</span></p>
                     <p>Average: <span className="average-value">  {this.state.average > 0 ? `+${this.state.average}` : this.state.average}%  </span></p>
                     <p>Above High Mark: <span className="above-high-mark-value"> {this.state.aboveHighMark > 0 ? `+${this.state.aboveHighMark}` : this.state.aboveHighMark}%  </span></p>
                     <p>Below Low Mark: <span className="below-low-mark-value"> {this.state.belowHighMark > 0 ? `+${this.state.belowHighMark}` : this.state.belowHighMark}%  </span></p>
-                    <p className="comparison-export"><img src="src/assets/images/export.svg" /></p>
+                    <p className="comparison-export"><img src="src/assets/images/export.svg"/></p>
                 </div>
             </div>
         );

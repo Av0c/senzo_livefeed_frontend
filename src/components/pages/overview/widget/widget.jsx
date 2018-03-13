@@ -21,37 +21,39 @@ class Widget extends React.Component {
             style = "widget";
         }
         return (
-            <div className="the-card clearfix">
-                <div data-tooltip={this.props.node.info.name}>
-                    <h1 className="card-location">{this.props.node.info.name}</h1>
-                </div>
-                <div className="card-buttons clearfix">
-                    <div className="card-inner-location pull-left">
-                        <RoomTypeSelector roomType={this.props.node.type} type={this.props.type} chooseType={this.props.getOverview} />
+            <div className="grid-card-center">
+                <div className="the-card clearfix">
+                    <div data-tooltip={this.props.node.info.name}>
+                        <h1 className="card-location">{this.props.node.info.name}</h1>
                     </div>
-                    <div className="card-nav pull-right">
-                        {
-                            this.props.node.info.hasfloorplan ?
+                    <div className="card-buttons clearfix">
+                        <div className="card-inner-location pull-left">
+                            <RoomTypeSelector roomType={this.props.node.type} type={this.props.type} chooseType={this.props.getOverview} />
+                        </div>
+                        <div className="card-nav pull-right">
+                            {
+                                this.props.node.info.hasfloorplan ?
                                 <Link className='button-sm pull-right'
                                     to={'live/' + this.props.node.id}
                                     onClick={() => this.props.dispatch(selectViewFilter(config.viewFilter[1]))}
-                                > Live</Link>
-                            : <div className='button-disabled pull-right'> Live</div>
-                        }
-                        <Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.props.node.id}> Stats</Link>
+                                    > Live</Link>
+                                : <div className='button-disabled pull-right'> Live</div>
+                            }
+                            <Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.props.node.id}> Stats</Link>
+                        </div>
                     </div>
+                    <Gauge
+                        label="Occupancy"
+                        arcParams={[180, 125]}
+                        values={this.props.gauge}
+                        />
+                    <Bar values={this.props.bar} />
+                    <LocationStats stats={this.props.stats} />
+                    <LocationBottomMenu faulty={this.props.stats.faulties} node={this.props.node}
+                        redirectMaintenanceView={this.props.redirectMaintenanceView}
+                        deleteWidget={this.props.deleteWidget}
+                        tree={this.props.tree} editWidget={this.props.editWidget} />
                 </div>
-                <Gauge
-                    label="Occupancy"
-                    arcParams={[180, 125]}
-                    values={this.props.gauge}
-                />
-                <Bar values={this.props.bar} />
-                <LocationStats stats={this.props.stats} />
-                <LocationBottomMenu faulty={this.props.stats.faulties} node={this.props.node}
-                    redirectMaintenanceView={this.props.redirectMaintenanceView}
-                    deleteWidget={this.props.deleteWidget}
-                    tree={this.props.tree} editWidget={this.props.editWidget} />
             </div>
         );
     }

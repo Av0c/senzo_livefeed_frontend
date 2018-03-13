@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 
-//Searchbar used in add card 
+//Searchbar used in add card
 
 export default class SearchBar extends React.Component {
 

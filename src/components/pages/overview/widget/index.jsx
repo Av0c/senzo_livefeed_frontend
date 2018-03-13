@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { getOccupancyOverview, getParams, findOccupancyTag } from 'actions/stats';
@@ -37,10 +37,10 @@ export class Widgets extends React.Component {
     render() {
         var ids = [];
         if (this.props.user.details && this.props.user.details.location && this.props.user.details.location.constructor === Array) {
-            ids = this.props.user.details.location
+            ids = this.props.user.details.location;
         }
         return (
-            <div className="card-container">
+            <React.Fragment>
                 {ids.map((id, index) => {
                     let node = this.props.nodeMap[id];
                     if (node) {
@@ -52,7 +52,7 @@ export class Widgets extends React.Component {
                     }
                     return null;
                 })}
-            </div>
+            </React.Fragment>
         );
     }
 }

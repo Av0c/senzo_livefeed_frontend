@@ -11,7 +11,7 @@ export class Widgets extends React.Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 {this.props.nodes.map((node, index) => {
                     if (node) {
                         return <WidgetContainer id={index} key={index} node={node}
@@ -23,7 +23,7 @@ export class Widgets extends React.Component {
                         return null;
                     }
                 })}
-            </div>
+            </React.Fragment>
         );
     }
 

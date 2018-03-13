@@ -343,27 +343,6 @@ input:focus {
 .overview-block {
     overflow: visible;
 }
-.card-container {
-    text-align:center;
-    display:inline-block;
-    width:100%;
-}
-.comparison-stats {
-    width: 500px;
-    text-align: left;
-}
-.the-card {
-    text-align: center;
-    width: 350px;
-    display: inline-block;
-    position: relative;
-    margin: 15px;
-    padding: 30px 26px 42px;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
-}
 .card-buttons {
     margin-top: 20px;
 }
@@ -387,12 +366,6 @@ input:focus {
     font-size: 16px;
     position: relative;
 }
-.card-nav {
-
-}
-.card-area-dropdown {
-
-}
 .nav-stats {
     margin-right: 10px;
 }
@@ -411,44 +384,7 @@ input:focus {
 .card-bottom-menu {
     margin-top: 0px;
 }
-.add-cart-zone {
-    cursor: pointer;
-    height: 683px;
-    margin-bottom: 30px;
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    margin-top: 18px;
-}
-.add-cart-zone::before {
-    z-index: -1;
-    position: absolute;
-    content: "";
-    margin-top: 7px;
-    max-width: 400px;
-    width: 350px;
-    height: 107%;
-    border-radius: 20px;
-    transition: box-shadow 0.4s;
-}
-.add-cart-zone:hover::before {
-    cursor: pointer;
-    box-shadow: 0px 0px 8px 1px rgba(126, 196, 67, 1) inset;
-}
-.add-card img {
-    width: 100px;
-}
-.add-card .add-card-descr {
-    color: #bfbfbf;
-    font-size: 20px;
-    font-family: 'Catamaran';
-    font-weight: normal;
-    margin-top: 10px;
-    width: 150px;
-    margin: 0px auto;
-}
+
 .card-settings {
     position: relative;
 }
@@ -481,34 +417,11 @@ input:focus {
 .comparison-wrapper {
     margin-top: 60px;
 }
-.comparison-title-card {
-    font-family: 'Catamaran';
-}
-.comparison-title-card h2 {
-    font-size: 22px;
-    line-height: 42px;
-    color: #585858;
-}
-.comparison-stats-card {
-    padding: 30px;
-    margin-top: 15px;
-    font-weight: bold;
-    font-size: 20px;
-}
 .comparison-export {
     margin-top: 20px;
 }
-.comparison-stats-card span {
-    font-weight: normal;
-}
-.comparison-location-title-card {
-    margin: 0 15px 0px 15px;
-}
-.comparison-location-title-card h2 {
-    font-size: 22px;
-    line-height: 42px;
-    display: inline-block;
-}
+
+
 .toggle-button img {
     width: 32px;
     padding-top: 6px;
@@ -1041,10 +954,6 @@ ul.users {
     border: 1px solid #dfdfdf;
     border-radius: 6px;
     box-shadow: inset 3px 2px 5px rgba(151,151,151,0.5);
-}
-.comparison-stats-card span {
-    float: right;
-    margin-right: 60px;
 }
 .disabled {
     color: #BDBDBD;

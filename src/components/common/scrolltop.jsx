@@ -38,7 +38,7 @@ export default class ScrollTop extends React.Component {
 
     render() {
         return (
-            <div className={(this.state.show && "scroll-show") + " scroll-top-button"} onClick={( this.state.show && () => {this.scrollToTop()} )}>
+            <div className={(this.state.show ? "scroll-show" : "") + " scroll-top-button"} onClick={( this.state.show ? () => {this.scrollToTop()} : null)}>
                 <i className="material-icons">keyboard_arrow_up</i>
             </div>
         );

@@ -30,7 +30,7 @@ export default class SensorForm extends React.Component {
 		if (nodes.length > 0) {
 			location = nodes[0].id;
 		}
-		if (this.state.mode!="add") {
+		if (this.props.mode=="editing") {
 			if (this.props.sensor.id && this.props.nodeMap[this.props.sensor.id] && this.props.nodeMap[this.props.sensor.id].parent) {
 				var parent = this.props.nodeMap[this.props.sensor.id].parent;
 				if (parent.id && parent.type == "open_area" || parent.type == "meeting_room") {
@@ -94,11 +94,11 @@ export default class SensorForm extends React.Component {
 			>
 				<label>
 					<span>MAC address </span>
-					<input type="username" id="macaddress" placeholder="ab:cd:ef:12:34:56" value={this.state.macaddress} onChange={this.changeHandler.bind(this)} required />
+					<input type="username" id="macaddress" placeholder="AABBCC112233 / aa:bb:cc:11:22:33" value={this.state.macaddress} onChange={this.changeHandler.bind(this)} required />
 				</label>
 				<label>
 					<span>Name</span>
-					<input type="username" id="name" value={this.state.name} onChange={this.changeHandler.bind(this)} placeholder="Meeting Room 23" required />
+					<input type="username" id="name" value={this.state.name} onChange={this.changeHandler.bind(this)} placeholder="e.g. Meeting Room 23" required />
 				</label>
 				<div>
 					<label>Room / Area</label>

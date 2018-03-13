@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from 'config';
+import toastr from 'toastr';
 
 export const UPDATE_IN_PROGRESS = 'UPDATE_IN_PROGRESS';
 export const UPDATE_FAILED = 'UPDATE_FAILED';
@@ -92,10 +93,13 @@ export function updatePassword(user) {
     dispatch(updatePasswordInProgress());
     return axios.put(config.api.root + '/user/password', user)
       .then((response) => {
-        dispatch(updatePasswordCompleted(response.data));
+        toastr.success(`Update password successfully !`)
+        return response;
       })
       .catch(function (response) {
-        dispatch(updatePasswordFailed(response.data));
+        console.log(response);
+        toastr.error(response.data || response.statusText.data);
+        return response;
       })
   }
 }

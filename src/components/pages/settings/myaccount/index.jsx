@@ -5,12 +5,12 @@ import toastr from 'toastr';
 import { updateUser } from 'actions/myaccount';
 import { fetchCurrentUser } from 'actions/myaccount';
 import LeftMenu from 'components/common/leftmenu';
+import Password from './password';
 
 class Index extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-        }
+    constructor(props) {
+        super(props);
+        this.state = Object.assign({}, props.user);
     }
 
     submit() {
@@ -22,7 +22,7 @@ class Index extends React.Component {
         });;
     }
 
-    componentWillMount() {
+    componentDidMount() {
         let self = this;
         this.props.dispatch(fetchCurrentUser()).then(() => {
             let user = self.props.user;
@@ -63,11 +63,11 @@ class Index extends React.Component {
                                 <form className="account-form">
                                     <div className="account-email">
                                         <label>Email Address</label>
-                                        <input type="email" id="email" placeholder={user.email} disabled="disabled" />
+                                        <input type="email" id="email" value={user.email} disabled="disabled" />
                                     </div>
                                     <div className="account-username">
                                         <label>Username</label>
-                                        <input type="text" id="username" placeholder={user.username} disabled="disabled" />
+                                        <input type="text" id="username" value={user.username} disabled="disabled" />
                                     </div>
                                     <div className="account-title">
                                         <label>Title</label>
@@ -96,13 +96,14 @@ class Index extends React.Component {
                                         <label>Address</label>
                                         <input type="text" id="address" value={this.state.address} onChange={this.changeHandler.bind(this)} />
                                     </div>
-                                    <div className="account-change-password">
-                                        <label></label>
-                                        <Link to="/settings/ownaccount/password" className="chpwd flat-button">Change Password    </Link>
-                                    </div>
+
+                                    <Password/>
+
                                     <div className="account-submit">
                                         <label></label>
-                                        <input className="flat-button" type="button" onClick={this.submit.bind(this)} value="Save Changes" />
+                                        <div className="flat-button" type="button" onClick={this.submit.bind(this)}>
+                                            Save Changes
+                                        </div>
                                     </div>
                                 </form>
                             </div>

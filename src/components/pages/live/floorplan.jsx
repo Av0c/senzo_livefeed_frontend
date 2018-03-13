@@ -221,7 +221,7 @@ export class FloorPlan extends React.Component {
 	addSensor(e, state, mousePos) {
 		var sensor = {
 			name: state.name,
-			macaddress: state.macaddress,
+			macaddress: this.cleanMACAddress(state.macaddress),
 			xpercent: mousePos.x,
 			ypercent: mousePos.y,
 		}
@@ -254,7 +254,7 @@ export class FloorPlan extends React.Component {
 		var sensor = {
 			id: state.id,
 			name: state.name,
-			macaddress: state.macaddress,
+			macaddress: this.cleanMACAddress(state.macaddress),
 		}
 		var location = Number(state.location);
 		if (state.location == -1 || state.id==-1) {
@@ -266,6 +266,7 @@ export class FloorPlan extends React.Component {
 				this.props.dispatch(updateSensor(sensor)).then((response) => {
 					if (response.status == 200) {
 						toastr.success(`Update sensor successfully`);
+						this.sensorForm.reset();
 					} else {
 						toastr.error(response.data)
 					}
@@ -359,7 +360,6 @@ export class FloorPlan extends React.Component {
 						/>						
 					}
 
-					{false && this.state.sensorForm && <SensorForm node={this.props.root} sensorForm={this.state.sensorForm} closeSensorForm={this.closeSensorForm.bind(this)} mousePos={this.state.mousePos} />}
 					{sensors.map((sensor) => {
 						var ss = this.props.sensorMap.get(sensor.id);
 						return (ss &&
@@ -379,7 +379,7 @@ export class FloorPlan extends React.Component {
 								draggingY={this.state.dragging && this.state.mousePos.y}
 
 								thumbnail={this.props.thumbnail}
-								hasPermission={this.state.hasPermission}
+								hasPermission={this.state.hasPermission && this.state.mode != "add"}
 							/>
 						);
 					})}
@@ -450,6 +450,7 @@ export class FloorPlan extends React.Component {
 
 	selectEditedSensor(sensor) {
 		if (this.state.mode=="add") {
+			this.sensorForm.reset();
 			return;
 		}
 		this.setState({
@@ -510,6 +511,18 @@ export class FloorPlan extends React.Component {
 				}
 			}
 		}
+	}
+
+	cleanMACAddress(mac) {
+		// ABCDEF123456 -> ab:cd:ef:12:34:56
+		if (/^([0-9A-F]{2}){6}$/.test(mac.toUpperCase())) {
+			return (
+				mac.substring(0,2) + ":" + mac.substring(2,4) + ":" +
+				mac.substring(4,6) + ":" + mac.substring(6,8) + ":" +
+				mac.substring(8,10) + ":" + mac.substring(10,12)
+			).toLowerCase();
+		}
+		return mac;
 	}
 
 }

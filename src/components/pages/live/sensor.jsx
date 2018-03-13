@@ -103,7 +103,7 @@ export class Sensor extends React.Component{
 							<table><tbody><tr>
 								<td>
 									<div>{sensor.name}</div>
-									<div>{sensor.macaddress}</div>
+									<div>{sensor.macaddress.toUpperCase()}</div>
 									<div>{parentName}</div>
 								</td>
 								{
@@ -125,7 +125,7 @@ export class Sensor extends React.Component{
 						/>
 						<ReactTooltip id={"sensor"+sensor.id} place="right" type="dark" effect="solid">
 						{sensor.name}<br/>
-						{sensor.macaddress}
+						{sensor.macaddress.toUpperCase()}
 						</ReactTooltip>
 					</div>
 				);

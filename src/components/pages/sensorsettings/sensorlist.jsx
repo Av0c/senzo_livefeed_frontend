@@ -109,7 +109,7 @@ class SensorList extends React.Component {
 									ss.ypercent = 50;
 									var par = this.props.nodeMap[x.id].parent;
 									return (
-										<tr key={idx} className={this.props.selectedSensor.id == x.id && "bold"}>
+										<tr key={idx} className={this.props.selectedSensor.id == x.id ? "bold" : ""}>
 											<td className="sensor-color-note-td"><Sensor sensor={ss}/></td>
 											<td>{ss.macaddress}</td>
 											<td><Link to={"/live/"+par.id} target="_blank">{ss.name}</Link></td>

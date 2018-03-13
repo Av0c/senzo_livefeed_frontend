@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { updatePassword } from 'actions/myaccount';
 import appHistory from 'components/common/appHistory';
 import toastr from 'toastr';
+import Modal from "components/common/modal"
 
 class Password extends React.Component {
     constructor() {
@@ -11,33 +12,21 @@ class Password extends React.Component {
         this.state = {};
     }
 
-    save() {
-        if (this.state.new && this.state.confirm) {
+    changePassword() {
+        if (this.state.new != "") {
             if (this.state.new === this.state.confirm) {
                 let data = {
                     username: this.props.auth.username,
                     old: this.state.old,
                     new: this.state.new
                 }
-                this.props.dispatch(updatePassword(data)).then(() => {
-                    toastr.success(`Update Password Successfully`)
-                })
-                .catch(error => {
-                    toastr.error(error);
-                });;
-            }
-            else {
+                this.props.dispatch(updatePassword(data))
+            } else {
                 toastr.error("Password does not match! ");
             }
+        } else {
+            toastr.error("Please provide password !");
         }
-        else {
-            toastr.error("Password does not match! ");
-        }
-    }
-
-    cancel() {
-        appHistory.push('/settings/ownaccount');
-
     }
 
     handleChange(e) {
@@ -48,39 +37,32 @@ class Password extends React.Component {
 
     render() {
         return (
-            <div className="settings-wrapper">
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <h2 className="account-title">Change Password</h2>
-                            <div className="popup-container account-container">
-                                <form className="account-form">
-                                    <div className="account-email">
-                                        <label>Old Password</label>
-                                        <input type="password" id="old" onChange={this.handleChange.bind(this)}/>
-                                    </div>
-                                    <div className="account-email">
-                                        <label>New Password</label>
-                                        <input type="password" id="new" onChange={this.handleChange.bind(this)} />
-                                    </div>
-                                    <div className="account-username">
-                                        <label>Confirm Password</label>
-                                        <input type="password" id="confirm" onChange={this.handleChange.bind(this)} />
-                                    </div>
-                                    <div className="account-change-password">
-                                        <label></label>
-                                        <a onClick={this.save.bind(this)} className="chpwd flat-button">Change Password </a>
-                                    </div>
-                                    <div className="account-change-password">
-                                        <label></label>
-                                        <a onClick={this.cancel.bind(this)} className="cancel flat-button">Cancel </a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+            <Modal
+                ref={(elem) => {this.modal = elem}}
+                clickButton={(e) => { this.changePassword()}}
+                header={"Change Password"}
+                buttonText={"Change"}
+                buttonClass="btn-success"
+                entry={
+                    <div className="account-change-password">
+                        <label></label>
+                        <span className="chpwd flat-button">Change Password</span>
                     </div>
+                }
+            >   
+                <div>
+                    <label style={{textAlign:"left"}}>Old Password</label>
+                    <input type="password" id="old" onChange={this.handleChange.bind(this)}/>
                 </div>
-            </div>
+                <div>
+                    <label style={{textAlign:"left"}}>New Password</label>
+                    <input type="password" id="new" onChange={this.handleChange.bind(this)} />
+                </div>
+                <div>
+                    <label style={{textAlign:"left"}}>Confirm Password</label>
+                    <input type="password" id="confirm" onChange={this.handleChange.bind(this)} />
+                </div>
+            </Modal>
         )
     }
 }

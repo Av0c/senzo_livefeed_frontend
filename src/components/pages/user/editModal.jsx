@@ -156,12 +156,16 @@ class EditModal extends React.Component {
 							onChange={this.changeLocation.bind(this)}
 						>
 							{this.props.nodes.map((x, i) => {
-								return (
-									<option value={i} key={"o"+x.node.id} disabled={i==0}>
-										{x.padding}
-										{x.node.info.name}
-									</option>
-								);
+								if (x.node.type == "open_area" || x.node.type == "meeting_room") {
+									return (
+										<option value={i} key={"o"+x.node.id} disabled={i==0}>
+											{x.padding}
+											{x.node.info.name}
+										</option>
+									);
+								} else {
+									return null;
+								}
 							})}
 						</select>
 						<div><span className={this.props.respondClass}>{this.props.respond}</span></div>

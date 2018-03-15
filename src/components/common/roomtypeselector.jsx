@@ -12,8 +12,10 @@ export default class RoomTypeSelector extends React.Component {
 	}
 
 	render() {
-		let show = (this.props.roomType == 'open_area' || this.props.roomType == 'meeting_room') && (this.props.type == 'Meeting rooms' || this.props.type == 'Open areas');
-		return (!show ?
+		let singleMode = (this.props.roomType == 'open_area' || this.props.roomType == 'meeting_room') &&
+						(this.props.type == 'Meeting rooms' || this.props.type == 'Open areas');
+
+		return (!singleMode ?
 			<Dropdown header={this.props.type} toggleable>
 				<DropdownItem>
 					<div onClick={this.optionClicked.bind(this, config.room.MEETINGROOM)}>

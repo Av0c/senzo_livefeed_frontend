@@ -9,6 +9,14 @@ import config from 'config';
 import * as aStats from "actions/stats"
 
 export class StatsMenu extends React.Component {
+    constructor(props) {
+        super(props);
+        var cntTypes = this.countTypes(props.node);
+
+        this.state = {
+            typeCount : cntTypes,
+        }
+    }
 
     chooseTag(tag) {
         this.props.dispatch(selectTag(tag));
@@ -19,15 +27,17 @@ export class StatsMenu extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.node.type == 'open_area') {
+        var typeCount = this.countTypes(nextProps.node);
+        this.setState({typeCount: typeCount});
+
+        if (typeCount.cntOA > 0 && typeCount.cntMR == 0) { // only OA
             if (nextProps.room.code != 'open_area') {
                 nextProps.dispatch(selectRoomType(config.room.OPENAREA));
             }
             if (nextProps.tag == 'Efficiency') {
                 nextProps.dispatch(selectTag('Occupancy'));
             }
-        }
-        else if (nextProps.node.type == 'meeting_room') {
+        } else if (typeCount.cntOA == 0 && typeCount.cntMR > 0) { // only MR
             if (nextProps.room.code != 'meeting_room') {
                 nextProps.dispatch(selectRoomType(config.room.MEETINGROOM));
             }
@@ -35,7 +45,15 @@ export class StatsMenu extends React.Component {
     }
 
     render() {
-        console.log(this.props)
+        // for room type selector. If a location node has only MRs then only "Meeting rooms" is selected. So the same for OA.
+        var type = this.props.node.type;
+        if (this.state.typeCount.cntOA > 0 && this.state.typeCount.cntMR == 0) {
+            type = "open_area";
+        } else if (this.state.typeCount.cntMR > 0 && this.state.typeCount.cntOA == 0) {
+            type = "meeting_room";
+        }
+        console.log(type)
+
         return (
             <div className="container-fluid" style={{ paddingLeft: '0px' }}>
                 <div className="row">
@@ -44,7 +62,7 @@ export class StatsMenu extends React.Component {
                             <h1>{this.props.name}</h1>
                         </div>
                         <div className="stats-room-select stats-select pull-left" style={{ paddingTop: '0px' }}>
-                            <RoomTypeSelector roomType={this.props.node.type} chooseType={this.chooseType.bind(this)} type={this.props.room.type} />
+                            <RoomTypeSelector roomType={type} chooseType={this.chooseType.bind(this)} type={this.props.room.type} />
                         </div>
                         <div className="stats-occupancy-select stats-select pull-left" style={{ paddingTop: '0px' }}>
                             <TagSelector roomType={this.props.node.type} chooseTag={this.chooseTag.bind(this)} tag={this.props.tag} />
@@ -57,6 +75,24 @@ export class StatsMenu extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    countTypes(node) {
+        var self = this;
+        var res = {
+            cntMR : (node.type == "meeting_room" ? 1 : 0),
+            cntOA : (node.type == "open_area" ? 1 : 0),
+        }
+        if (node.children) {
+            node.children.map((child) => {
+                if (child.type != "sensor") {
+                    let resChild = self.countTypes(child);
+                    res.cntMR += resChild.cntMR;
+                    res.cntOA += resChild.cntOA;
+                }
+            });
+        }
+        return res
     }
 }
 

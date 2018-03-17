@@ -14,6 +14,9 @@ export function fetchCard() {
 function makeCardMap(data) {
   var map = {}
   data.map((x) => {
+    if (x.isdefault) {
+      map.default = x;
+    }
     map[x.id] = x;
   })
   return map

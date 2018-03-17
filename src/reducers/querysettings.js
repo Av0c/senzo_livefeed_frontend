@@ -7,8 +7,8 @@ const initialState = {
   startdate: moment().subtract(1, "weeks").add(1, "days").format('DD-MM-YYYY'),
   enddate: moment().format('DD-MM-YYYY'),
   id: -1,
-  starthour: 8,
-  endhour: 17,
+  starthour: null,
+  endhour: null,
   marks: [0.25, 0.65],
   groupby: 'day',
   active: 'This week'

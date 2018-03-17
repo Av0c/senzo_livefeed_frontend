@@ -4,6 +4,7 @@ import { Effects, loop } from 'redux-loop';
 import store from '../store';
 import * as a from 'actions/defaultsettings'
 import { fetchCustomerOverview } from 'actions/overview'
+import toastr from "toastr";
 
 const initialState = {
 	card: null,
@@ -21,6 +22,7 @@ function fetchCard() {
 function updateCard(card) {
 	return axios.put(config.api.root + `/card/update/${card.id}`, card)
 		.then((response) => {
+			toastr.success("Saved !")
 			return a.fetchCard();
 		}).catch((error) => {
 			console.log(error);

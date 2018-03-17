@@ -46,6 +46,10 @@ class DefaultSettings extends React.Component {
 							<div className="col-md-12"> 
 								{
 									Object.keys(this.props.cards).map((key) => {
+										if (key == "default") {
+											// Default card (company card) has 2 instances : cards[$id] and card["default"]
+											return null;
+										}
 										var card = this.props.cards[key];
 										return (
 											<Card

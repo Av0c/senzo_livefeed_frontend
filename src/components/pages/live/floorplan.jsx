@@ -26,7 +26,8 @@ export class FloorPlan extends React.Component {
 			mode: "done", // "move", "add", "editing"
 			lastMode: "done",
 
-			optionShow: false,
+			showOption: false,
+			showHeatmap: true,
 
 			hasPermission: this.hasPermission(),
 
@@ -302,12 +303,12 @@ export class FloorPlan extends React.Component {
 	}
 	showOptions() {
 		this.setState({
-		    optionShow: true,
+		    showOption: true,
 		});
 	}
 	hideOptions() {
 		this.setState({
-		    optionShow: false,
+		    showOption: false,
 		});
 	}
 	toggleMove() {
@@ -345,7 +346,7 @@ export class FloorPlan extends React.Component {
 
 					{
 						(!this.props.thumbnail && this.state.hasPermission) &&
-						<div className={this.state.optionShow ? "floorplan-options-container options-show":"floorplan-options-container options-hide"}>
+						<div className={this.state.showOption ? "floorplan-options-container options-show":"floorplan-options-container options-hide"}>
 							<div className="floorplan-options">
 								<i
 									className="material-icons options-buttons"
@@ -379,6 +380,8 @@ export class FloorPlan extends React.Component {
 				return (ss &&
 					<Sensor
 						key={sensor.id}
+
+						showHeatmap={this.state.showHeatmap}
 
 						sensor={ss}
 						viewFilter={this.props.viewFilter}

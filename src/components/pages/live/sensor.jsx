@@ -31,8 +31,29 @@ export class Sensor extends React.Component{
 		}
 	}
 
+	valueToColor(value) {
+		if (value < 0 || value > 1) {
+			return "#000";
+		}
+		var hue = 120-Math.round(120*value);
+
+		return "hsl(" + hue + ", 100%, 60%)";
+	}
+
 	render(){
 		let sensor = this.props.sensor;
+
+		// id:2248
+		// inuse:false
+		// lastocc:1521274659
+		// lastonl:1521306602
+		// macaddress:"f8:f0:05:e3:ff:c1"
+		// name:"Open desk - 155"
+		// registered:true
+		// standby:false
+		// xpercent:59.479958
+		// ypercent:25.33005
+
 		let parentName = null;
 		if (sensor.id) {
 			if (this.props.nodeMap[sensor.id] && this.props.nodeMap[sensor.id].parent) {
@@ -71,6 +92,17 @@ export class Sensor extends React.Component{
 			}
 		}
 
+		// Heatmap
+		var average = Math.max(Math.min(sensor.ypercent + (-5+Math.random()*10), 100), 0)/100; // 0-1
+		// var glowSize = 0 + Math.ceil(average/0.2) * 5;
+		var glowSize = 2;
+		var glowColor = this.valueToColor(average);
+
+		var heatStyle = Object.assign(style, {
+			backgroundColor: glowColor,
+			boxShadow: "0px 0px 12px " + glowSize + "px " + glowColor,
+		});
+
 		if (sensor.dummy || this.props.dragged) {
 			return (
 				<div className={className} style={style}/>
@@ -79,6 +111,7 @@ export class Sensor extends React.Component{
 			if (!this.props.thumbnail) {
 				return(
 					<div>
+						<div className="sensor-heatnode" data-tooltip={"Average: " + Math.round(average*1000)/10 + "%"} style={heatStyle}></div>
 						<div className={className} style={style}
 							id={"sensor"+sensor.id}
 							onMouseEnter={this.onMouseEnter.bind(this)}
@@ -88,11 +121,11 @@ export class Sensor extends React.Component{
 						<ToolTip active={this.state.tooltipOpen} parent={"#sensor"+sensor.id} position="right" arrow="center"
 							style={{
 								style: {
-									background: "rgba(0,0,0,.8)",
+									background: "rgba(0,0,0,.9)",
 									padding: 10,
 									color: "#EEE",
-									boxShadow: "5px 5px 3px rgba(0,0,0,.5)",
-									borderRadius: 8,
+									boxShadow: "0px 4px 6px rgba(0,0,0,.3)",
+									borderRadius: 4,
 								},
 								arrowStyle: {
 									color: 'rgba(0,0,0,.8)',
@@ -144,4 +177,3 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Sensor);
-

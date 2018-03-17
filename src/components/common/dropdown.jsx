@@ -26,7 +26,10 @@ class DropDown extends React.Component {
         return (
             <div className={`card-area-dropdown ${this.state.opened ? "dropdown open" : "dropdown"} ${this.props.customClass}`}>
                 <button className="dropdown-toggle" onClick={this.handleClick.bind(this)}>
-                    {this.props.header}<i className={this.state.opened ? "icon arrow-down" : "icon arrow-up"}></i>
+                    {this.props.header}
+                    <i className="material-icons">
+                        {this.state.opened ? "keyboard_arrow_down" : "keyboard_arrow_up"}
+                    </i>
                 </button>
                 <div className="dropdown-items">
                     <DropdownItems close={this.props.toggleable ? this.close.bind(this) : () => {}}>

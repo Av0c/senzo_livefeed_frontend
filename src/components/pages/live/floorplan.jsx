@@ -26,6 +26,8 @@ export class FloorPlan extends React.Component {
 			mode: "done", // "move", "add", "editing"
 			lastMode: "done",
 
+			optionShow: false,
+
 			hasPermission: this.hasPermission(),
 
 			editedSensor: {},
@@ -41,7 +43,6 @@ export class FloorPlan extends React.Component {
 			url: "",
 		};
 	}
-
 	getImage(urlList, node) {
 		while (node) {
 			if (node.info.useownfp) {
@@ -51,7 +52,6 @@ export class FloorPlan extends React.Component {
 		}
 		// return undefined
 	}
-
 	componentWillReceiveProps(nextProps) {
 		this.setState({hasPermission: this.hasPermission(nextProps)})
 		if (this.state.loading) {
@@ -67,7 +67,6 @@ export class FloorPlan extends React.Component {
 		})
 		this.props.dispatch(fetchImage(this.props.user.companyid))
 	}
-
 	getMousePos(evt) {
 		var imageElement = this.refs['floorplan-image'].getBoundingClientRect();
 		var mouseX = evt.clientX - imageElement.left;
@@ -84,10 +83,8 @@ export class FloorPlan extends React.Component {
 			y: ypercent,
 		}
 	}
-
 	onMouseDown(e, sensor) {
 		if (this.state.mode == "move") {
-			console.log("??")
 			var upFunc = (e) => this.onMouseUp(e, sensor);
 			var moveFunc = (e) => this.onMouseMove(e, sensor);
 
@@ -181,16 +178,14 @@ export class FloorPlan extends React.Component {
 			}
 		}
 	}
-
 	changeMode(mode, e) {
 		this.setState({mode: mode, lastMode: this.state.mode});
 		if (mode=="add") {
 			if (this.props.viewFilter.code == "LIVE") {
-				console.log("BN")
+				console.log("BN");
 				this.props.dispatch(selectViewFilter(config.viewFilter[0]));
 			}
-		}
-		if (mode=="add") {
+
 			var moveFunc = (e) => this.onMouseMove(e);
 			var upFunc = (e) => this.onMouseUp(e);
 			var cancelFunc = (e) => this.onCancel(e);
@@ -198,7 +193,6 @@ export class FloorPlan extends React.Component {
 			var mousePos = this.getMousePos(e);
 			this.setState({
 				mousePos: mousePos,
-
 				moveFunc: moveFunc,
 				upFunc: upFunc,
 				cancelFunc: cancelFunc,
@@ -208,7 +202,6 @@ export class FloorPlan extends React.Component {
 			window.addEventListener("contextmenu", cancelFunc);
 		}
 	}
-
 	moveSensor(ss, pos) {
 		var newSensor = {
 			id: ss.id,
@@ -217,7 +210,6 @@ export class FloorPlan extends React.Component {
 		}
 		return updateSensor(newSensor);
 	}
-
 	addSensor(e, state, mousePos) {
 		var sensor = {
 			name: state.name,
@@ -249,7 +241,6 @@ export class FloorPlan extends React.Component {
 			toastr.error("Name and MAC address must be filled");
 		}
 	}
-
 	updateSensor(e, state) {
 		var sensor = {
 			id: state.id,
@@ -292,7 +283,6 @@ export class FloorPlan extends React.Component {
 			toastr.error("Name and MAC address must be filled");
 		}
 	}
-
 	deleteSensor(sensor) {
 		this.props.dispatch(deleteNode(sensor)).then((response) => {
 			if (response.status==200) {
@@ -310,7 +300,27 @@ export class FloorPlan extends React.Component {
 			toastr.error(error.data);
 		});
 	}
-
+	showOptions() {
+		this.setState({
+		    optionShow: true,
+		});
+	}
+	hideOptions() {
+		this.setState({
+		    optionShow: false,
+		});
+	}
+	toggleMove() {
+		var mode;
+		if (this.state.mode == "move") {
+			mode = "done";
+		} else if (this.state.mode == "done") {
+			mode = "move";
+		}
+		this.setState({
+		    mode: mode,
+		});
+	}
 	render() {
 		if (!this.props.root) {
 			return null;
@@ -320,120 +330,125 @@ export class FloorPlan extends React.Component {
 		if (!this.state.loading && !this.props.root.info.empty) {
 			var url = this.getImage(this.props.images, this.props.root)
 			if (url && this.props.root.info.hasfloorplan) {
-				return <div className={!this.props.thumbnail ? "floorplan-container" : "floorplan-container-thumbnail"}>
-					<img
-						src={url}
-						alt="Floorplan"
-						className="floorplan-image"
-						ref="floorplan-image"
-						onError={this.imageError.bind(this)}
-						draggable="false"
-						// onClick={this.imageClick.bind(this)}
-						key="image"
-					/>
+				return (
+					<div className={!this.props.thumbnail ? "floorplan-container" : "floorplan-container-thumbnail"}>
+						<img
+							src={url}
+							alt="Floorplan"
+							className="floorplan-image"
+							ref="floorplan-image"
+							onError={this.imageError.bind(this)}
+							draggable="false"
+							// onClick={this.imageClick.bind(this)}
+							key="image"
+						/>
 
 					{
-						!this.props.thumbnail && this.state.hasPermission && <div className="options">
-							<i className={"material-icons option-done " + (this.state.mode=="done" ? "ticked" : "")}
-								onClick={(e) => this.changeMode("done", e)}
-								data-tooltip="Done">
-								done
-							</i>
-							<i className={"material-icons option-move " + (this.state.mode=="move" ? "ticked" : "")}
-								onClick={(e) => this.changeMode("move", e)}
-								data-tooltip="Move sensor">
-								pan_tool
-							</i>
-							<i className={"material-icons option-add " + (this.state.mode=="add" ? "ticked" : "")}
-								onClick={(e) => this.changeMode("add", e)}
-								data-tooltip="Add sensor">
-								add_circle_outline
-							</i>
+						(!this.props.thumbnail && this.state.hasPermission) &&
+						<div className={this.state.optionShow ? "floorplan-options-container options-show":"floorplan-options-container options-hide"}>
+							<div className="floorplan-options">
+								<i
+									className="material-icons options-buttons"
+									data-tooltip={(this.state.mode=="move") ? "Sensors can be moved" : "Sensors can not be moved"}
+									onClick={() => {this.toggleMove()}}
+								>
+									{(this.state.mode=="move") ? "location_searching" : "location_disabled"}
+								</i>
+								<i
+									className="material-icons options-buttons"
+									data-tooltip="Add sensor"
+									onClick={(e) => {this.changeMode("add", e)}}
+								>add_circle_outline</i>
+								<i className="material-icons options-buttons" data-tooltip="Toggle heatmap">blur_on</i>
+								<i className="material-icons options-open" onClick={() => {this.showOptions()}}>menu</i>
+								<i className="material-icons options-close" onClick={() => {this.hideOptions()}}>close</i>
+							</div>
 						</div>
 					}
-					{
-						(this.state.mode == "add") && <Sensor
-							sensor={{dummy: true}}
-							dragged={true}
-							draggingX={this.state.mousePos.x}
-							draggingY={this.state.mousePos.y}
-						/>						
-					}
-
-					{sensors.map((sensor) => {
-						var ss = this.props.sensorMap.get(sensor.id);
-						return (ss &&
-							<Sensor
-								key={sensor.id}
-
-								sensor={ss}
-								viewFilter={this.props.viewFilter}
-								selectedSensor={this.props.selectedSensor}
-
-								onEdit={this.selectEditedSensor.bind(this)}
-								onDelete={this.selectDeletedSensor.bind(this)}
-
-								onMouseDown={(e, ss) => this.onMouseDown(e, ss)}
-								dragged={this.state.dragging && this.state.draggedSensor.id == sensor.id}
-								draggingX={this.state.dragging && this.state.mousePos.x}
-								draggingY={this.state.dragging && this.state.mousePos.y}
-
-								thumbnail={this.props.thumbnail}
-								hasPermission={this.state.hasPermission && this.state.mode != "add"}
-							/>
-						);
-					})}
-					{areas.map((node) => {
-						return (
-							<Area
-								key={node.id}
-								node={node}
-								selectedArea={this.props.selectedSensor}
-								viewFilter={this.props.viewFilter}
-
-								onMouseDown={(e, ss) => this.onMouseDown(e, ss)}
-								dragged={this.state.dragging && this.state.draggedSensor.id == node.id}
-								draggingX={this.state.dragging && this.state.mousePos.x}
-								draggingY={this.state.dragging && this.state.mousePos.y}
-
-
-								thumbnail={this.props.thumbnail}
-							/>
-						);
-					})}
-					<SensorForm ref={(elem) => {this.sensorForm = elem}}
-						mode={this.state.mode}
-						node={this.props.root}
-						sensor={this.state.editedSensor}
-						nodeMap={this.props.nodeMap}
-						onClose={(e) => {
-							if (this.state.mode=="add") {
-								this.onCancel(e, () => this.changeMode("add", e));
-							} else if (this.state.mode=="editing") {
-								this.changeMode(this.state.lastMode);
-							}
-						}}
-						onSubmit={(e, state) => {
-							if (this.state.mode=="add") {
-								console.log(e, this.getMousePos(e));
-								this.addSensor(e, state, this.state.mousePos)
-							} else if (this.state.mode=="editing") {
-								this.updateSensor(e, state)
-							}
-						}}
+				{
+					(this.state.mode == "add") && <Sensor
+					sensor={{dummy: true}}
+					dragged={true}
+					draggingX={this.state.mousePos.x}
+					draggingY={this.state.mousePos.y}
 					/>
-					<Modal
-						ref={(elem) => {this.deleteModal = elem}}
-						clickButton={(e) => { this.deleteSensor(this.state.deletedSensor)}}
-						header="Delete Sensor"
-						buttonText="Delete Sensor"
-						buttonClass="btn-danger"
-						entry={ null }
-						onClose={this.props.onClose}
-					>
-						<p>Are you sure you want to delete sensor <b>{this.state.deletedSensor.name}</b> ({this.state.deletedSensor.macaddress}) ?</p>
-					</Modal>
-				</div>
+			}
+
+			{sensors.map((sensor) => {
+				var ss = this.props.sensorMap.get(sensor.id);
+				return (ss &&
+					<Sensor
+						key={sensor.id}
+
+						sensor={ss}
+						viewFilter={this.props.viewFilter}
+						selectedSensor={this.props.selectedSensor}
+
+						onEdit={this.selectEditedSensor.bind(this)}
+						onDelete={this.selectDeletedSensor.bind(this)}
+
+						onMouseDown={(e, ss) => this.onMouseDown(e, ss)}
+						dragged={this.state.dragging && this.state.draggedSensor.id == sensor.id}
+						draggingX={this.state.dragging && this.state.mousePos.x}
+						draggingY={this.state.dragging && this.state.mousePos.y}
+
+						thumbnail={this.props.thumbnail}
+						hasPermission={this.state.hasPermission && this.state.mode != "add"}
+						/>
+				);
+			})}
+			{areas.map((node) => {
+				return (
+					<Area
+						key={node.id}
+						node={node}
+						selectedArea={this.props.selectedSensor}
+						viewFilter={this.props.viewFilter}
+
+						onMouseDown={(e, ss) => this.onMouseDown(e, ss)}
+						dragged={this.state.dragging && this.state.draggedSensor.id == node.id}
+						draggingX={this.state.dragging && this.state.mousePos.x}
+						draggingY={this.state.dragging && this.state.mousePos.y}
+
+
+						thumbnail={this.props.thumbnail}
+						/>
+				);
+			})}
+			<SensorForm ref={(elem) => {this.sensorForm = elem}}
+				mode={this.state.mode}
+				node={this.props.root}
+				sensor={this.state.editedSensor}
+				nodeMap={this.props.nodeMap}
+				onClose={(e) => {
+					if (this.state.mode=="add") {
+						this.onCancel(e, () => this.changeMode("add", e));
+					} else if (this.state.mode=="editing") {
+						this.changeMode(this.state.lastMode);
+					}
+				}}
+				onSubmit={(e, state) => {
+					if (this.state.mode=="add") {
+						console.log(e, this.getMousePos(e));
+						this.addSensor(e, state, this.state.mousePos)
+					} else if (this.state.mode=="editing") {
+						this.updateSensor(e, state)
+					}
+				}}
+				/>
+			<Modal
+				ref={(elem) => {this.deleteModal = elem}}
+				clickButton={(e) => { this.deleteSensor(this.state.deletedSensor)}}
+				header="Delete Sensor"
+				buttonText="Delete Sensor"
+				buttonClass="btn-danger"
+				entry={ null }
+				onClose={this.props.onClose}
+				>
+				<p>Are you sure you want to delete sensor <b>{this.state.deletedSensor.name}</b> ({this.state.deletedSensor.macaddress}) ?</p>
+			</Modal>
+		</div>
+	);
 			} else {
 				return <div className="floorplan-error">
 					<br />

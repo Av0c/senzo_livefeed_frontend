@@ -360,8 +360,8 @@ export class FloorPlan extends React.Component {
 									onClick={(e) => {this.changeMode("add", e)}}
 								>add_circle_outline</i>
 								<i className="material-icons options-buttons" data-tooltip="Toggle heatmap">blur_on</i>
-								<i className="material-icons options-open" onClick={() => {this.showOptions()}}>menu</i>
-								<i className="material-icons options-close" onClick={() => {this.hideOptions()}}>close</i>
+								<i className="material-icons options-open" data-tooltip="Show options" onClick={() => {this.showOptions()}}>menu</i>
+								<i className="material-icons options-close" data-tooltip="Hide options" onClick={() => {this.hideOptions()}}>close</i>
 							</div>
 						</div>
 					}

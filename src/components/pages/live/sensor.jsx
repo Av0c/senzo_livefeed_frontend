@@ -43,17 +43,6 @@ export class Sensor extends React.Component{
 	render(){
 		let sensor = this.props.sensor;
 
-		// id:2248
-		// inuse:false
-		// lastocc:1521274659
-		// lastonl:1521306602
-		// macaddress:"f8:f0:05:e3:ff:c1"
-		// name:"Open desk - 155"
-		// registered:true
-		// standby:false
-		// xpercent:59.479958
-		// ypercent:25.33005
-
 		let parentName = null;
 		if (sensor.id) {
 			if (this.props.nodeMap[sensor.id] && this.props.nodeMap[sensor.id].parent) {
@@ -93,14 +82,14 @@ export class Sensor extends React.Component{
 		}
 
 		// Heatmap
-		var average = Math.max(Math.min(sensor.ypercent + (-5+Math.random()*10), 100), 0)/100; // 0-1
-		// var glowSize = 0 + Math.ceil(average/0.2) * 5;
-		var glowSize = 2;
+		var average = Math.max(Math.min(sensor.ypercent, 100), 0)/100; // 0-1
+		var glowSize = 5 + Math.ceil(average/0.2) * 0.5;
+		// var glowSize = 5;
 		var glowColor = this.valueToColor(average);
 
-		var heatStyle = Object.assign(style, {
+		var heatStyle = Object.assign({}, style, {
 			backgroundColor: glowColor,
-			boxShadow: "0px 0px 12px " + glowSize + "px " + glowColor,
+			boxShadow: "0px 0px 16px " + glowSize + "px " + glowColor,
 		});
 
 		if (sensor.dummy || this.props.dragged) {
@@ -111,7 +100,10 @@ export class Sensor extends React.Component{
 			if (!this.props.thumbnail) {
 				return(
 					<div>
-						<div className="sensor-heatnode" data-tooltip={"Average: " + Math.round(average*1000)/10 + "%"} style={heatStyle}></div>
+						<div
+							className={"sensor-heatnode" + (this.props.showHeatmap ? " heat-show" : " heat-hide")}
+							data-tooltip={"Average: " + Math.round(average*1000)/10 + "%"} style={heatStyle}>
+						</div>
 						<div className={className} style={style}
 							id={"sensor"+sensor.id}
 							onMouseEnter={this.onMouseEnter.bind(this)}

@@ -4,15 +4,20 @@
     left: 1%;
     opacity: 1;
     color: #fff;
-    background-color: lighten(@color-blue, 5%);
+    background-color: lighten(@color-green, 5%);
     padding: 6px;
     box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.2);
 
     i {
-        transition: font-size 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out, color 0.2s ease;
+        transition: font-size 0.3s ease-out,
+                    opacity 0.3s ease-out,
+                    margin 0.3s ease-out,
+                    color 0.2s ease-out,
+                    margin 0.3s ease-out;
         user-select: none;
         cursor: pointer;
         &:hover {
+            cursor: pointer;
             color: darken(#fff, 15%);
         }
     }
@@ -47,6 +52,10 @@
         .options-close {
             font-size: 30px;
             opacity: 1;
+
+            box-shadow: inset -1px 0px 0px 0px #fff;
+            padding-right: 6px;
+            margin-right: 6px;
         }
     }
 }
@@ -55,10 +64,28 @@
     position: absolute;
     display: block;
     border-radius: 50%;
-    width: 12px;
-    height: 12px;
     transform: translate(-50%, -50%);
     z-index: 1;
+    transition: opacity 0.4s ease,
+                width 0.4s ease,
+                height 0.4s ease;
+
+    &:hover {
+        z-index: 5;
+    }
+
+    &.heat-show {
+        pointer-events: auto;
+        opacity: 1;
+        width: 12px;
+        height: 12px;
+    }
+    &.heat-hide {
+        pointer-events: none;
+        opacity: 0;
+        width: 6px;
+        height: 6px;
+    }
 }
 
 .live-header-wrapper {

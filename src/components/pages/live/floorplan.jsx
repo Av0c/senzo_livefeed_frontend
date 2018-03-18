@@ -327,6 +327,11 @@ export class FloorPlan extends React.Component {
 		    mode: mode,
 		});
 	}
+	toggleHeatmap() {
+		this.setState({
+		    showHeatmap: !this.state.showHeatmap,
+		});
+	}
 	render() {
 		if (!this.props.root) {
 			return null;
@@ -354,7 +359,6 @@ export class FloorPlan extends React.Component {
 							<div className="floorplan-options">
 								<i className="material-icons options-open" data-tooltip="Show options" onClick={() => {this.showOptions()}}>menu</i>
 								<i className="material-icons options-close" data-tooltip="Hide options" onClick={() => {this.hideOptions()}}>close</i>
-								{this.state.optionShow ? " - " : ""}
 								<i
 									className="material-icons options-buttons"
 									data-tooltip={(this.state.mode=="move") ? "Sensors can be moved" : "Sensors can not be moved"}
@@ -367,7 +371,14 @@ export class FloorPlan extends React.Component {
 									data-tooltip="Add sensor"
 									onClick={(e) => {this.changeMode("add", e)}}
 								>add_circle_outline</i>
-								<i className="material-icons options-buttons" data-tooltip="Toggle heatmap">blur_on</i>
+								<i
+									className="material-icons options-buttons"
+									data-tooltip={this.state.showHeatmap ? "Heatmap is shown" : "Heatmap is hidden"}
+									onClick={() => {this.toggleHeatmap()}}
+								>
+									{this.state.showHeatmap ? "blur_on" : "blur_off"}
+								</i>
+
 							</div>
 						</div>
 					}

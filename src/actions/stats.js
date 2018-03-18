@@ -52,9 +52,10 @@ export function receiveOccupancyRange(data) {
     }
 }
 
-export function fetchNodeStats() {
+export function fetchNodeStats(params) {
     return {
-        type: FETCH_NODE_STATS
+        type: FETCH_NODE_STATS,
+        params,
     };
 }
 
@@ -65,9 +66,10 @@ export function receiveNodeStats(data) {
     };
 }
 
-export function fetchStatsDaily() {
+export function fetchStatsDaily(params) {
     return {
-        type: FETCH_STATS_DAILY
+        type: FETCH_STATS_DAILY,
+        params,
     };
 }
 
@@ -78,9 +80,10 @@ export function receiveStatsDaily(data) {
     };
 }
 
-export function fetchStatsBreakdown() {
+export function fetchStatsBreakdown(params) {
     return {
-        type: FETCH_STATS_BREAKDOWN
+        type: FETCH_STATS_BREAKDOWN,
+        params,
     };
 }
 
@@ -109,7 +112,7 @@ export function getParams(nextProps) {
         startdate: nextProps.querySettings.startdate,
         enddate: nextProps.querySettings.enddate,
         starthour: nextProps.querySettings.starthour,
-        endhour: nextProps.querySettings.endhour,
+        endhour: nextProps.querySettings.endhour, 
         weekdaymask: nextProps.querySettings.weekdaymask,
         marks: nextProps.querySettings.marks,
         groupby: nextProps.querySettings.groupby
@@ -118,16 +121,17 @@ export function getParams(nextProps) {
     var card = cards[nextProps.currentNode.info.cardid];
 
     if (card) {
-        if (!(0 <= params.starthour && params.starthour <= 23)) {
+        if (!(params.starthour != null && 0 <= params.starthour && params.starthour <= 23)) {
             params.starthour = card.starthour
         }
-        if (!(0 <= params.endhour && params.endhour <= 23)) {
-            params.endhour = card.endhour-1
+        if (!(params.endhour != null && 0 <= params.endhour && params.endhour <= 23)) {
+            params.endhour = card.endhour
         }
         if (!checkWeekdayMask(params.weekdaymask)) {
             params.weekdaymask = card.weekdaymask
         }
     }
+
 
     if (nextProps.querySettings.tag == 'Occupancy') {
         params.tag = nextProps.querySettings.room.occupancyTag;
@@ -173,7 +177,7 @@ export function getOccupancyOverview(params, node) {
 
 export function getNodeSeriesStats(params) {
     return dispatch => {
-        dispatch(fetchNodeStats());
+        dispatch(fetchNodeStats(params));
         axios.get(config.api.root + `/stats/series/${params.id}/${params.tag}?startdate=${params.startdate}&enddate=${params.enddate}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}&groupby=${params.groupby}`)
             .then((response) => {
                 console.log(response.data)
@@ -204,7 +208,7 @@ export function getNodeSeriesStats(params) {
 
 export function getStatsDaily(params) {
     return dispatch => {
-        dispatch(fetchStatsDaily());
+        dispatch(fetchStatsDaily(params));
         axios.get(config.api.root + `/stats/weekdayXhour/${params.id}/${params.tag}?startdate=${params.startdate}&enddate=${params.enddate}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}`)
             .then((response) => {
                 if (params.action == Comparison.RECEIVE_FIRST_LOCATION_DAILY) {
@@ -226,7 +230,7 @@ export function getStatsDaily(params) {
 
 export function getStatsBreakdown(params) {
     return dispatch => {
-        dispatch(fetchStatsBreakdown());
+        dispatch(fetchStatsBreakdown(params));
         axios.get(config.api.root + `/stats/overviewlist/${JSON.stringify(params.id)}/${params.tag}?startdate=${params.startdate}&enddate=${params.enddate}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}`)
             .then((response) => {
                 dispatch(receiveStatsBreakdown(response.data));

@@ -1032,3 +1032,6 @@ input[type="password"].has-error {
     -webkit-transform:scale(0.757);
     display: inline-block;
 }
+.live-stats-card td {
+    border-top: none;
+}

@@ -36,7 +36,7 @@ class Card extends React.Component {
 	changeHour(hours) {
 		var newCard = Object.assign({}, this.props.card);
 		newCard.starthour = hours[0];
-		newCard.endhour = hours[1];
+		newCard.endhour = hours[1]-1;
 		this.props.dispatch(a.updateCard(newCard));
 	}
 
@@ -124,7 +124,7 @@ class Card extends React.Component {
 						<TimePicker
 							disabled={!editable}
 							nSegments={24}
-							values={[this.props.card.starthour, this.props.card.endhour]}
+							values={[this.props.card.starthour, this.props.card.endhour+1]}
 							onChange={this.changeHour.bind(this)}
 						/>
 					</div>

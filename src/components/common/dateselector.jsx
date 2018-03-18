@@ -7,30 +7,46 @@ import { selectPeriod } from 'actions/querysettings';
 import PeriodButton from 'components/common/periodbutton';
 import Strings from 'components/common/strings';
 import TimePicker from 'components/common/timepicker'
+
 class DateSelector extends React.Component {
 
   constructor(props, context) {
     super(props, context);
     this.state = {
-      startdate: this.props.startdate,
-      enddate: this.props.enddate,
-      starthour: this.props.starthour,
-      endhour: this.props.endhour,
-      active: this.props.active,
-      groupby: this.props.groupby,
-      show: true,
+      startdate: this.props.query.startdate,
+      enddate: this.props.query.enddate,
+      starthour: this.props.card.default.starthour,
+      endhour: this.props.card.default.endhour,
+      active: this.props.query.active,
+      groupby: this.props.query.groupby,
+      show: false,
+      timePickerEnabled: false,
     }
     this.handleClick = this.handleClick.bind(this);
     this.dispatchPeriod = this.dispatchPeriod.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.startdate != this.state.startdate || nextProps.enddate != this.state.enddate) {
+      this.setState({
+        startdate: nextProps.query.startdate,
+        enddate: nextProps.query.enddate,
+        starthour: nextProps.query.starthour || this.state.starthour,
+        endhour: nextProps.query.endhour || this.state.endhour,
+        active: nextProps.query.active,
+        groupby: nextProps.query.groupby
+      });
+    }
+  }
+
   showDatePickers() {
-    this.setState({ active: "Custom" });
-    this.setState({ show: !this.state.show });
+    this.setState({
+      active: "Custom",
+      show: !this.state.show
+    });
   }
 
   handleClick(value) {
-    this.setState({ show: !this.setState.show });
     this.setState({ active: value });
     if (value == "Today") {
       this.setState({
@@ -43,8 +59,8 @@ class DateSelector extends React.Component {
 
     else if (value == "This week") {
       this.setState({
-        enddate: moment().format('DD-MM-YYYY'),
         startdate: moment().subtract(1, "weeks").add(1, "days").format('DD-MM-YYYY'),
+        enddate: moment().format('DD-MM-YYYY'),
         groupby: 'day'
       }, () =>
           this.dispatchPeriod());
@@ -52,8 +68,8 @@ class DateSelector extends React.Component {
 
     else if (value == "This month") {
       this.setState({
-        enddate: moment().format('DD-MM-YYYY'),
         startdate: moment().subtract(1, "months").add(1, "days").format('DD-MM-YYYY'),
+        enddate: moment().format('DD-MM-YYYY'),
         groupby: 'day'
       }, () =>
           this.dispatchPeriod());
@@ -61,8 +77,8 @@ class DateSelector extends React.Component {
 
     else if (value == "This year") {
       this.setState({
-        enddate: moment().format('DD-MM-YYYY'),
         startdate: moment().subtract(1, "years").add(1, "days").format('DD-MM-YYYY'),
+        enddate: moment().format('DD-MM-YYYY'),
         groupby: 'day'
       }, () =>
           this.dispatchPeriod());
@@ -74,38 +90,11 @@ class DateSelector extends React.Component {
     this.props.dispatch(selectPeriod({
       startdate: this.state.startdate,
       enddate: this.state.enddate,
-      starthour: this.state.starthour,
-      endhour: this.state.endhour,
+      starthour: this.state.timePickerEnabled ? this.state.starthour : null,
+      endhour: this.state.timePickerEnabled ? this.state.endhour : null,
       groupby: this.state.groupby,
       active: this.state.active
     }));
-  }
-
-  componentWillMount() {
-    let nextProps = this.props;
-    if (nextProps.startdate != this.state.startdate && nextProps.enddate != this.state.enddate) {
-      this.setState({
-        startdate: nextProps.startdate,
-        enddate: nextProps.enddate,
-        starthour: nextProps.starthour,
-        endhour: nextProps.endhour,
-        active: nextProps.active,
-        groupby: nextProps.groupby
-      });
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.startdate != this.state.startdate || nextProps.enddate != this.state.enddate) {
-      this.setState({
-        startdate: nextProps.startdate,
-        enddate: nextProps.enddate,
-        starthour: nextProps.starthour,
-        endhour: nextProps.endhour,
-        active: nextProps.active,
-        groupby: nextProps.groupby
-      });
-    }
   }
 
   onFormatDate(date) {
@@ -134,6 +123,13 @@ class DateSelector extends React.Component {
   render() {
     let from = this.onParseDateFromString(this.state.startdate);
     let to = this.onParseDateFromString(this.state.enddate);
+    let title = "";
+    if (this.state.timePickerEnabled) {
+      title = "ON : custom hour range.";
+    } else {
+      title = "OFF : each location uses its own hour range specified in default settings."
+    }
+
     return (
       <div className="main-menu-time pull-right">
         <i className='ms-DatePicker-nextMonth'></i>
@@ -146,7 +142,7 @@ class DateSelector extends React.Component {
             <a className={"button custom-time" + (this.state.active == "Custom" ? " active" : "")}>
               <span>Custom</span></a>
           </li>
-          {this.state.show || <div className="datepicker">
+          {this.state.show && <div className="datepicker">
             <div className="clearfix">
               <div className="pull-left">
                 <DatePicker className="start-date"
@@ -169,15 +165,27 @@ class DateSelector extends React.Component {
                 />
               </div>
             </div>
-            <TimePicker
-              nSegments={24}
-              values={[this.state.starthour, this.state.endhour]}
-              onChange={this.setRangehour.bind(this)}
-            />
+              <div style={{display:"flex"}}>
+                <div>
+                  <input type="checkbox" checked={this.state.timePickerEnabled} onChange={this.onToggleTimePicker.bind(this)} title={title}/>
+                </div>
+                <div style={{flex:1, opacity: (this.state.timePickerEnabled ? "1": "0.3")}}>
+                  <TimePicker
+                    nSegments={24}
+                    values={[this.state.starthour, this.state.endhour+1]}
+                    onChange={this.setRangehour.bind(this)}
+                    disabled={!this.state.timePickerEnabled}
+                  />
+                </div>
+              </div>
           </div>}
         </ul>
       </div>
     )
+  }
+
+  onToggleTimePicker(e) {
+    this.setState({ timePickerEnabled: !this.state.timePickerEnabled }, () => this.dispatchPeriod());
   }
 
   // Set state is asynchronous, apply update in callback where state is properly updated.
@@ -199,7 +207,7 @@ class DateSelector extends React.Component {
 
   setRangehour(values) {
     let self = this;
-    this.setState({ starthour: values[0], endhour: values[1] }, () =>
+    this.setState({ starthour: values[0], endhour: (values[1]==null) ? null : (values[1]-1) }, () =>
       self.dispatchPeriod()
     );
   }
@@ -207,7 +215,10 @@ class DateSelector extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return state.querySettingsReducer
+  return {
+    query: state.querySettingsReducer,
+    card: state.defaultSettingsReducer.card
+  }
 }
 
 function mapDispatchToProps(dispatch) {

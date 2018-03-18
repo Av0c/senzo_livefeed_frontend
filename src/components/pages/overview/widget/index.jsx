@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { getOccupancyOverview, getParams, findOccupancyTag } from 'actions/stats';
@@ -39,7 +39,6 @@ export class Widgets extends React.Component {
         if (this.props.user.details && this.props.user.details.location && this.props.user.details.location.constructor === Array) {
             ids = this.props.user.details.location;
         }
-        console.log(React.Fragment);
         return (
             <React.Fragment>
                 {ids.map((id, index) => {

@@ -16,6 +16,8 @@ import * as a from 'actions/floorplan';
 import { fetchCustomerOverview } from 'actions/overview';
 import { deleteNode, fetchLiveData, setParent } from 'actions/node';
 import { selectViewFilter } from "actions/live/filter"
+import enhanceWithClickOutside from "react-click-outside";
+
 
 export class FloorPlan extends React.Component {
 	constructor(props, context) {
@@ -311,6 +313,9 @@ export class FloorPlan extends React.Component {
 		    showOption: false,
 		});
 	}
+	handleClickOutside() {
+		this.hideOptions();
+	}
 	toggleMove() {
 		var mode;
 		if (this.state.mode == "move") {
@@ -340,7 +345,6 @@ export class FloorPlan extends React.Component {
 							ref="floorplan-image"
 							onError={this.imageError.bind(this)}
 							draggable="false"
-							// onClick={this.imageClick.bind(this)}
 							key="image"
 						/>
 
@@ -348,6 +352,9 @@ export class FloorPlan extends React.Component {
 						(!this.props.thumbnail && this.state.hasPermission) &&
 						<div className={this.state.showOption ? "floorplan-options-container options-show":"floorplan-options-container options-hide"}>
 							<div className="floorplan-options">
+								<i className="material-icons options-open" data-tooltip="Show options" onClick={() => {this.showOptions()}}>menu</i>
+								<i className="material-icons options-close" data-tooltip="Hide options" onClick={() => {this.hideOptions()}}>close</i>
+								{this.state.optionShow ? " - " : ""}
 								<i
 									className="material-icons options-buttons"
 									data-tooltip={(this.state.mode=="move") ? "Sensors can be moved" : "Sensors can not be moved"}
@@ -361,8 +368,6 @@ export class FloorPlan extends React.Component {
 									onClick={(e) => {this.changeMode("add", e)}}
 								>add_circle_outline</i>
 								<i className="material-icons options-buttons" data-tooltip="Toggle heatmap">blur_on</i>
-								<i className="material-icons options-open" data-tooltip="Show options" onClick={() => {this.showOptions()}}>menu</i>
-								<i className="material-icons options-close" data-tooltip="Hide options" onClick={() => {this.hideOptions()}}>close</i>
 							</div>
 						</div>
 					}
@@ -559,4 +564,4 @@ function mapDispatchToProps(dispatch) {
 		dispatch
 	};
 }
-export default connect(mapStateToProps, mapDispatchToProps)(FloorPlan);
+export default connect(mapStateToProps, mapDispatchToProps)(enhanceWithClickOutside(FloorPlan));

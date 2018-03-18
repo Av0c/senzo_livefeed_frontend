@@ -83,7 +83,7 @@ export class Sensor extends React.Component{
 
 		// Heatmap
 		var average = Math.max(Math.min(sensor.ypercent, 100), 0)/100; // 0-1
-		var glowSize = 5 + Math.ceil(average/0.2) * 0.5;
+		var glowSize = 4 + Math.ceil(average/0.2) * 0.5;
 		// var glowSize = 5;
 		var glowColor = this.valueToColor(average);
 

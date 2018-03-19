@@ -82,10 +82,10 @@ export class Sensor extends React.Component{
 		}
 
 		// Heatmap
-		var average = Math.max(Math.min(sensor.ypercent, 100), 0)/100; // 0-1
-		var glowSize = 4 + Math.ceil(average/0.2) * 0.5;
+		var normalizedAverage = this.props.average / this.props.normalizer;
+		var glowSize = 4 + Math.ceil(normalizedAverage/0.2) * 0.5;
 		// var glowSize = 5;
-		var glowColor = this.valueToColor(average);
+		var glowColor = this.valueToColor(normalizedAverage);
 
 		var heatStyle = Object.assign({}, style, {
 			backgroundColor: glowColor,
@@ -102,7 +102,7 @@ export class Sensor extends React.Component{
 					<div>
 						<div
 							className={"sensor-heatnode" + (this.props.showHeatmap ? " heat-show" : " heat-hide")}
-							data-tooltip={"Average: " + Math.round(average*1000)/10 + "%"} style={heatStyle}>
+							data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}>
 						</div>
 						<div className={className} style={style}
 							id={"sensor"+sensor.id}

@@ -1,8 +1,5 @@
 import * as Stats from 'actions/stats';
 import store from '../store';
-import {DELETE_WIDGET, EDIT_WIDGET} from 'actions/myaccount';
-import { RECEIVE_CUSTOMER_OVERVIEW } from 'actions/overview';
-import { USER_UPDATE_COMPLETED } from 'actions/overview';
 
 const initialState = {
     loading: false,
@@ -21,7 +18,11 @@ const initialState = {
         points: []
     },
     breakdown: [],
-    daily: {}
+    daily: {},
+    sensorAverage: {
+        values: {},
+        constraint: {}
+    },
 }
 
 export default (state = initialState, action) => {
@@ -72,6 +73,12 @@ export default (state = initialState, action) => {
         case Stats.RECEIVE_STATS_DAILY: {
             return Object.assign({}, state, {
                 daily: action.data
+            });
+        }
+
+        case Stats.RECEIVE_SENSOR_AVERAGE: {
+            return Object.assign({}, state, {
+                sensorAverage: action.data,
             });
         }
 

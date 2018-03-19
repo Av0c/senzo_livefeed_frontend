@@ -5,21 +5,22 @@ import store from '../store';
 
 export const FETCH_OCCUPANCY_OVERVIEW = 'FETCH_OCCUPANCY_OVERVIEW';
 export const RECEIVE_OCCUPANCY_OVERVIEW = 'RECEIVE_OCCUPANCY_OVERVIEW';
-export const FETCH_FAILED = 'FETCH_FAILED';
+
 export const FETCH_STATS_DAILY = 'FETCH_STATS_DAILY';
 export const RECEIVE_STATS_DAILY = 'RECEIVE_STATS_DAILY';
 export const RECEIVE_OCCUPANCY_RANGE = 'RECEIVE_OCCUPANCY_RANGE';
+
 export const FETCH_STATS_BREAKDOWN = 'FETCH_STATS_BREAKDOWN';
 export const RECEIVE_STATS_BREAKDOWN = 'RECEIVE_STATS_BREAKDOWN';
+
 export const FETCH_NODE_STATS = "FETCH_NODE_STATS";
 export const RECEIVE_NODE_STATS = "RECEIVE_NODE_STATS";
-export const RESET_OVERVIEW_STATS = "RESET_OVERVIEW_STATS";
 
-export function resetOverviewStats() {
-    return {
-        type: RESET_OVERVIEW_STATS
-    }
-}
+export const FETCH_SENSOR_AVERAGE = 'FETCH_SENSOR_AVERAGE';
+export const RECEIVE_SENSOR_AVERAGE = 'RECEIVE_SENSOR_AVERAGE';
+
+export const FETCH_FAILED = 'FETCH_FAILED';
+
 
 export function fetchOccupancyOverview(params, node) {
     return {
@@ -94,6 +95,25 @@ export function receiveStatsBreakdown(data) {
     };
 }
 
+export function fetchSensorAverage(params, node) {
+    return {
+        type: FETCH_SENSOR_AVERAGE,
+        node,
+        params,
+    };
+}
+
+export function receiveSensorAverage(node, params, data) {
+    return {
+        type: RECEIVE_SENSOR_AVERAGE,
+        node,
+        params, 
+        data,
+    };
+}
+
+
+
 function checkWeekdayMask(mask) {
     if (!mask || mask.length != 7) {
         return false;
@@ -141,6 +161,7 @@ export function getParams(nextProps) {
     }
     return params;
 }
+
 export function findOccupancyTag(node) {
     if (node.type == 'meeting_room') {
         return 'MRO';
@@ -269,4 +290,17 @@ export function downloadCSV(node, querySettings) {
 
         window.URL.revokeObjectURL(objectUrl);
     });
+}
+
+export function getSensorAverage(params, node) {
+    return dispatch => {
+        dispatch(fetchSensorAverage(params, node));
+        axios.get(config.api.root + `/stats/sensoraverage/${params.id}?startdate=${params.startdate}&enddate=${params.enddate}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}`)
+            .then((response) => {
+                dispatch(receiveSensorAverage(node, params, response.data));
+            }).catch(function (response) {
+                console.log(response)
+                dispatch(fetchFailed(response.data));
+            })
+    }
 }

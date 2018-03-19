@@ -14,6 +14,7 @@ import LiveSummary from "./summary"
 import FloorPlan from "./floorplan"
 import SensorForm from "./sensorform"
 import LeftMenu from 'components/common/leftmenu';
+import DateSelector from 'components/common/dateselector';
 
 import {
 	selectNodeFilter,
@@ -42,7 +43,8 @@ class Live extends React.Component {
 			},
 			path: [],
 			showDetails: true,
-			I: {}
+			showsHeatmap: true,
+			I: {},
 		};
 	}
 
@@ -66,6 +68,12 @@ class Live extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.prepare(nextProps);
+	}
+
+	onToggleHeatmap() {
+		this.setState({
+		    showHeatmap: !this.state.showHeatmap,
+		});
 	}
 
 	prepare(props) {
@@ -181,6 +189,11 @@ class Live extends React.Component {
 				<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "live/"+x.id} marginTop={true}/>
 				<ColorNote />
 				<div className="container-fluid">
+					{
+						this.state.showHeatmap && <div>
+							<DateSelector />
+						</div>
+					}
 					<div className="floorplan-margin">
 						<FloorPlan
 							root={this.props.nodeMap[this.props.nodeFilter.id]}
@@ -188,6 +201,8 @@ class Live extends React.Component {
 							showDetails={this.state.showDetails}
 							tooltipGroup="index"
 							thumbnail={false}
+							showHeatmap={this.state.showHeatmap}
+							onToggleHeatmap={this.onToggleHeatmap.bind(this)}
 						/>
 					</div>
 				</div>

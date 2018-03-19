@@ -14,6 +14,7 @@ import { updateNode } from 'actions/node';
 import { createSensor, removeSensor, updateSensor, fetchImage } from 'actions/floorplan';
 import * as a from 'actions/floorplan';
 import { fetchCustomerOverview } from 'actions/overview';
+import { getSensorAverage, getParams } from 'actions/stats';
 import { deleteNode, fetchLiveData, setParent } from 'actions/node';
 import { selectViewFilter } from "actions/live/filter"
 import enhanceWithClickOutside from "react-click-outside";
@@ -29,7 +30,6 @@ export class FloorPlan extends React.Component {
 			lastMode: "done",
 
 			showOption: false,
-			showHeatmap: true,
 
 			hasPermission: this.hasPermission(),
 
@@ -62,8 +62,31 @@ export class FloorPlan extends React.Component {
 			if (url!=this.state.url) {
 				this.setState({url: url, loading: false});
 			}
+		} else {
+			console.log(this.props, nextProps)
+			if ((!this.props.root && nextProps.root) || this.props.showHeatmap &&
+				(
+					this.querySettingsChanged(this.props.query, nextProps.query) ||
+					this.props.root.id != nextProps.root.id
+				)) {
+				var params = getParams({
+					querySettings: nextProps.query,
+					currentNode: nextProps.root,
+				})
+				this.props.dispatch(getSensorAverage(params, nextProps.root))
+			}
 		}
 	}
+	querySettingsChanged(q1, q2) {
+		return (
+			q1.startdate !== q2.startdate ||
+			q1.enddate !== q2.enddate ||
+			q1.starthour !== q2.starthour ||
+			q1.endhour !== q2.endhour ||
+			q1.weekdaymask !== q2.weekdaymask
+		);
+	}
+
 	imageError() {
 		this.setState({
 			loading: true,
@@ -328,16 +351,33 @@ export class FloorPlan extends React.Component {
 		});
 	}
 	toggleHeatmap() {
-		this.setState({
-		    showHeatmap: !this.state.showHeatmap,
-		});
+		if (typeof this.props.onToggleHeatmap == "function") {
+			this.props.onToggleHeatmap();
+		}
 	}
+	calculateNormalizer() {
+		var res = 0;
+		Object.keys(this.props.sensorAverage.values).map((mac) => {
+			res = Math.max(res, this.props.sensorAverage.values[mac]);
+		})
+		if (res == 0) {
+			res = 1;
+		}
+		return res;
+	}
+
 	render() {
 		if (!this.props.root) {
 			return null;
 		}
 		var areas = [], sensors = [];
 		this.listNodes(this.props.root, areas, sensors)
+
+		var normalizer = 1;
+		if (this.props.showHeatmap) {
+			normalizer = this.calculateNormalizer();
+		}
+
 		if (!this.state.loading && !this.props.root.info.empty) {
 			var url = this.getImage(this.props.images, this.props.root)
 			if (url && this.props.root.info.hasfloorplan) {
@@ -373,10 +413,10 @@ export class FloorPlan extends React.Component {
 								>add_circle_outline</i>
 								<i
 									className="material-icons options-buttons"
-									data-tooltip={this.state.showHeatmap ? "Heatmap is shown" : "Heatmap is hidden"}
+									data-tooltip={this.props.showHeatmap ? "Heatmap is shown" : "Heatmap is hidden"}
 									onClick={() => {this.toggleHeatmap()}}
 								>
-									{this.state.showHeatmap ? "blur_on" : "blur_off"}
+									{this.props.showHeatmap ? "blur_on" : "blur_off"}
 								</i>
 
 							</div>
@@ -397,7 +437,7 @@ export class FloorPlan extends React.Component {
 					<Sensor
 						key={sensor.id}
 
-						showHeatmap={this.state.showHeatmap}
+						showHeatmap={this.props.showHeatmap}
 
 						sensor={ss}
 						viewFilter={this.props.viewFilter}
@@ -413,7 +453,10 @@ export class FloorPlan extends React.Component {
 
 						thumbnail={this.props.thumbnail}
 						hasPermission={this.state.hasPermission && this.state.mode != "add"}
-						/>
+
+						average={this.props.sensorAverage.values[ss.macaddress]}
+						normalizer={normalizer}
+					/>
 				);
 			})}
 			{areas.map((node) => {
@@ -568,6 +611,8 @@ function mapStateToProps(state) {
 		images: state.floorPlanReducer.images,
 		user: state.myAccountReducer.user,
 		selectedSensor: state.floorPlanSensorReducer.selectedSensor,
+		query: state.querySettingsReducer,
+		sensorAverage: state.statsReducer.sensorAverage,
 	}
 }
 function mapDispatchToProps(dispatch) {

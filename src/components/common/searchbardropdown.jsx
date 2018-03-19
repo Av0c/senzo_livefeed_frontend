@@ -8,14 +8,6 @@ import Select from 'react-select';
 
 export default class SearchBarDropDown extends React.Component {
 
-    onChange(val) {
-        this.props.onChange(val.values);
-    }
-
-    onClose() {
-        this.props.onClose();
-    }
-
     constructOptions(tree, options) {
         var self = this;
         if (tree.type != 'customer') {
@@ -36,12 +28,15 @@ export default class SearchBarDropDown extends React.Component {
         this.constructOptions(this.props.tree, options);
         return (
             <Select
-                name="form-field-name"
                 options={options}
-                onChange={this.onChange.bind(this)}
+                onBlurResetsInput={true}
+				onSelectResetsInput={true}
+                onChange={(val) => {this.props.onChange(val.values)}}
+                onOpen={this.props.onOpen}
                 onFocus={this.props.onFocus}
-                onClose={this.onClose.bind(this)}
+                onClose={this.props.onClose}
                 placeholder="Search..."
+                value={this.props.value}
                 clearable={false}
                 openOnFocus={true}
                 openOnClick={true}

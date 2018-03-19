@@ -8,15 +8,32 @@ import Widgets from 'components/pages/comparison/comparisoncard/widgets';
 import ComparisonStats from 'components/pages/comparison/comparisoncard/comparisonstats';
 
 export class ComparisonCard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: [{label: undefined}, {label: undefined}],
+        }
+    }
 
     componentDidMount() {
-        this.chooseFirstLocation(1);
-        this.chooseSecondLocation(1);
+        // Default location
+        var nextProps = this.props;
+        if (nextProps.tree.id > 0) {
+            if (nextProps.tree.children) {
+                if (nextProps.tree.type == 'customer') {
+                    this.chooseFirstLocation(nextProps.tree.children[0]);
+                    this.chooseSecondLocation(nextProps.tree.children[0]);
+                } else {
+                    this.chooseFirstLocation(nextProps.tree);
+                    this.chooseSecondLocation(nextProps.tree);
+                }
+            }
+        }
     }
 
     chooseFirstLocation(node) {
-        console.log(node);
         if (node.id) {
+            this.updateInput(0, node);
             this.props.dispatch(Comparison.putNode(node, 0));
 
             let params = getParams({ currentNode: node, querySettings: this.props.querySettings });
@@ -35,6 +52,7 @@ export class ComparisonCard extends React.Component {
 
     chooseSecondLocation(node) {
         if (node.id) {
+            this.updateInput(1, node);
             this.props.dispatch(Comparison.putNode(node, 1));
 
             let params = getParams({ currentNode: node, querySettings: this.props.querySettings });
@@ -51,28 +69,49 @@ export class ComparisonCard extends React.Component {
         }
     }
 
+    updateInput(id, node) {
+        var value = this.state.value.slice();
+        value[id].label = node.info.name;
+        this.setState({
+            value: value,
+        });
+    }
+
+    resetInput(id) {
+        var value = this.state.value.slice();
+        value[id].label = undefined;
+        this.setState({
+            value: value,
+        });
+    }
+
     render() {
         return (
             <div>
                 <div className="comparison-container">
                     <div className="comparison-grid">
-                        <div className="comparison-select card-shape text-center">
-                            <div className="comparison-first-location text-center">
-                                <div className="comparison-search-container">
-                                    <SearchBarDropDown
-                                        onChange={(node) => {this.chooseFirstLocation(node)}}
-                                        onFocus={() => {}}
-                                        onClose={() => {}}
-                                        tree={this.props.tree}
-                                    />
-                                </div>
-                                <LocationSelector index={0} querySettings={this.props.querySettings} chooseLocation={this.chooseFirstLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
+                        <div className="comparison-first-location card-shape">
+                            <div className="comparison-search-container">
+                                <SearchBarDropDown
+                                    onChange={(node) => {this.chooseFirstLocation(node)}}
+                                    onFocus={() => {this.resetInput(0)}}
+                                    onOpen={() => {this.resetInput(0)}}
+                                    onClose={() => {}}
+                                    value={this.state.value[0]}
+                                    tree={this.props.tree}
+                                />
                             </div>
-                            <div className="toggle-wrapper text-center">
-                                <a style={{ marginRight: '10px' }} className="toggle-button"></a>
-                            </div>
-                            <div className="comparison-second-location text-center">
-                                <LocationSelector index={1} querySettings={this.props.querySettings} chooseLocation={this.chooseSecondLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
+                        </div>
+                        <div className="comparison-second-location card-shape">
+                            <div className="comparison-search-container">
+                                <SearchBarDropDown
+                                    onChange={(node) => {this.chooseSecondLocation(node)}}
+                                    onFocus={() => {this.resetInput(1)}}
+                                    onOpen={() => {this.resetInput(1)}}
+                                    onClose={() => {}}
+                                    value={this.state.value[1]}
+                                    tree={this.props.tree}
+                                />
                             </div>
                         </div>
                         <Widgets querySettings={this.props.querySettings} allSensors={this.props.allSensors} />

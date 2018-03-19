@@ -42,7 +42,6 @@ export class Frame extends React.Component {
     componentDidMount() {
         // Neccessary api init here.
         this.props.dispatch(fetchCurrentUser()).then((res) => {
-            console.log(this.props.user, res);
             this.props.dispatch(fetchCard()).then(() => this.setState({cardLoaded: true}));
             this.props.dispatch(fetchCustomerOverview()).then(() => this.setState({treeLoaded: true}));
             this.props.dispatch(fetchLiveData()).then(() => this.setState({liveLoaded: true}));

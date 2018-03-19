@@ -38,19 +38,19 @@ export class LocationSelector extends React.Component {
     }
 
     componentDidMount() {
-        let nextProps = this.props;
-        if (nextProps.tree.id > 0) {
-            if (nextProps.tree.children) {
-                if (nextProps.tree.type == 'customer') {
-                    this.setState({ node: nextProps.tree.children[0] });
-                    this.props.chooseLocation(nextProps.tree.children[0]);
-                }
-                else {
-                    this.setState({ node: nextProps.tree });
-                    this.props.chooseLocation(nextProps.tree);
-                }
-            }
-        }
+        // let nextProps = this.props;
+        // if (nextProps.tree.id > 0) {
+        //     if (nextProps.tree.children) {
+        //         if (nextProps.tree.type == 'customer') {
+        //             this.setState({ node: nextProps.tree.children[0] });
+        //             this.props.chooseLocation(nextProps.tree.children[0]);
+        //         }
+        //         else {
+        //             this.setState({ node: nextProps.tree });
+        //             this.props.chooseLocation(nextProps.tree);
+        //         }
+        //     }
+        // }
     }
 
     querySettingsChanged(params1, params2) {
@@ -66,7 +66,7 @@ export class LocationSelector extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // if (nextProps.tree.children && nextProps.overview.length < 2) {
+        // if (nextProps.tree.children && !nextProps.nodes[nextProps.index]) {
         //     if (nextProps.tree.type == 'customer') {
         //         this.setState({ node: nextProps.tree.children[0] });
         //         this.props.chooseLocation(nextProps.tree.children[0]);
@@ -75,22 +75,9 @@ export class LocationSelector extends React.Component {
         //         this.setState({ node: nextProps.tree });
         //         this.props.chooseLocation(nextProps.tree);
         //     }
-        // } else if (this.props.querySettings.active != nextProps.querySettings.active) {
+        // } else if (this.querySettingsChanged(this.props.querySettings, nextProps.querySettings)) {
         //     this.props.chooseLocation(this.state.node);
         // }
-        if (nextProps.tree.children && !nextProps.nodes[nextProps.index]) {
-            if (nextProps.tree.type == 'customer') {
-                this.setState({ node: nextProps.tree.children[0] });
-                this.props.chooseLocation(nextProps.tree.children[0]);
-            }
-            else {
-                this.setState({ node: nextProps.tree });
-                this.props.chooseLocation(nextProps.tree);
-            }
-        } else if (this.querySettingsChanged(this.props.querySettings, nextProps.querySettings)) {
-            this.props.chooseLocation(this.state.node);
-        }
-
     }
 
     render() {

@@ -2,31 +2,30 @@
     position: relative;
     padding: 12px 10px;
     z-index: 1001;
-    //
-    // .Select.is-focused .Select-control {
-    //     outline: none !important;
-    // }
-    // .Select-menu-outer {
-    //     position: absolute;
-    //     background-color: #000;
-    // }
-    // .Select-menu {
-    //     max-height: 180px;
-    //     margin-left: -1px;
-    // }
-    // .Select-option {
-    //     border-left: 1px solid #ccc;
-    //     transition: box-shadow 0.2s, font-weight 0.2s;
-    //     background-color: #fff;
-    //
-    //     &.is-focused {
-    //         color: #666;
-    //     }
-    //     &:hover {
-    //         font-weight: bold;
-    //         box-shadow: 2px 0px 0px 0px #7ec443 inset;
-    //     }
-    // }
+
+    .Select.is-focused .Select-control {
+        outline: none !important;
+    }
+    .Select-menu-outer {
+        position: absolute;
+    }
+    .Select-menu {
+        max-height: 360px;
+        margin-left: -1px;
+    }
+    .Select-option {
+        border-left: 1px solid #ccc;
+        transition: box-shadow 0.2s, font-weight 0.2s;
+        background-color: #fff;
+
+        &.is-focused {
+            color: #666;
+        }
+        &:hover {
+            font-weight: bold;
+            box-shadow: 2px 0px 0px 0px #7ec443 inset;
+        }
+    }
 }
 
 /* .comparison-first-location,
@@ -94,8 +93,14 @@
     grid-row-gap: 15px;
 }
 
-.comparison-select {
+.comparison-first-location {
     grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row: 1;
+    margin: 0;
+}
+.comparison-second-location {
+    grid-column-start: 2;
     grid-column-end: 3;
     grid-row: 1;
     margin: 0;

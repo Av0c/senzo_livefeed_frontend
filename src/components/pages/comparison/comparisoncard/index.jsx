@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import LocationSelector from 'components/common/locationselector';
+import SearchBarDropDown from 'components/common/searchbardropdown';
 import { getOccupancyOverview, getParams, findOccupancyTag, getNodeSeriesStats, getStatsDaily } from 'actions/stats';
 import * as Comparison from 'actions/comparison';
 import Widgets from 'components/pages/comparison/comparisoncard/widgets';
@@ -8,7 +9,13 @@ import ComparisonStats from 'components/pages/comparison/comparisoncard/comparis
 
 export class ComparisonCard extends React.Component {
 
+    componentDidMount() {
+        this.chooseFirstLocation(1);
+        this.chooseSecondLocation(1);
+    }
+
     chooseFirstLocation(node) {
+        console.log(node);
         if (node.id) {
             this.props.dispatch(Comparison.putNode(node, 0));
 
@@ -51,6 +58,14 @@ export class ComparisonCard extends React.Component {
                     <div className="comparison-grid">
                         <div className="comparison-select card-shape text-center">
                             <div className="comparison-first-location text-center">
+                                <div className="comparison-search-container">
+                                    <SearchBarDropDown
+                                        onChange={(node) => {this.chooseFirstLocation(node)}}
+                                        onFocus={() => {}}
+                                        onClose={() => {}}
+                                        tree={this.props.tree}
+                                    />
+                                </div>
                                 <LocationSelector index={0} querySettings={this.props.querySettings} chooseLocation={this.chooseFirstLocation.bind(this)} tree={this.props.tree} class="comparison-first-location text-center" />
                             </div>
                             <div className="toggle-wrapper text-center">

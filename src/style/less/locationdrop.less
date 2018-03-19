@@ -69,35 +69,33 @@
     outline: none;
     border: none;
 }
-.search-container {
+// This style is used in:
+// Location dropdown (src\containers\toolbar.jsx)
+// Add widget selection (src\components\pages\overview\searchcontainer.jsx)
+.overview-search-container {
     padding: 12px 10px;
-    /* width: 250px; */
-    /* border-bottom: 1px solid rgba(100, 100, 100, 0.1); */
-}
-.search-container .Select-control {
-}
-.search-container .Select.is-focused .Select-control {
-    outline: none !important;
-}
-.search-container .Select-menu-outer {
-    position: relative;
-    /* width: 229px; */
-}
-.search-container .Select-menu {
-    max-height: 180px;
-}
-.search-container .Select-option.is-focused {
-    background: none;
-    color: #666;
-}
-.search-container .Select-menu {
-    margin-left: -1px;
-}
-.search-container .Select-option {
-    border-left: 1px solid #ccc;
-    transition: box-shadow 0.2s, font-weight 0.2s;
-}
-.search-container .Select-option:hover {
-    font-weight: bold;
-    box-shadow: 2px 0px 0px 0px #7ec443 inset;
+
+    .Select.is-focused .Select-control {
+        outline: none !important;
+    }
+    .Select-menu-outer {
+        position: relative;
+    }
+    .Select-menu {
+        max-height: 180px;
+        margin-left: -1px;
+    }
+    .Select-option {
+        border-left: 1px solid #ccc;
+        transition: box-shadow 0.2s, font-weight 0.2s;
+
+        &.is-focused {
+            background: none;
+            color: #666;
+        }
+        &:hover {
+            font-weight: bold;
+            box-shadow: 2px 0px 0px 0px #7ec443 inset;
+        }
+    }
 }

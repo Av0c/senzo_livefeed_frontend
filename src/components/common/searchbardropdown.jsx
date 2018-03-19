@@ -4,6 +4,7 @@ import Select from 'react-select';
 //Searchbar used in:
 // Location dropdown (src\containers\toolbar.jsx)
 // Add widget selection (src\components\pages\overview\searchcontainer.jsx)
+// Comparison view (src\components\pages\comparison\comparisoncard\index.jsx)
 
 export default class SearchBarDropDown extends React.Component {
 
@@ -42,8 +43,8 @@ export default class SearchBarDropDown extends React.Component {
                 onClose={this.onClose.bind(this)}
                 placeholder="Search..."
                 clearable={false}
-                openOnFocus={false}
-                openOnClick={false}
+                openOnFocus={true}
+                openOnClick={true}
             />
         );
     }

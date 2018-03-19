@@ -67,7 +67,7 @@ export class Toolbar extends React.Component {
                                 </div>
                                 {this.state.showLocation && <div>
                                     <div className="location-dropdown-root">
-                                        <div className={"search-container"} style={{borderBottom: "1px solid rgba(100, 100, 100, 0.1)"}}>
+                                        <div className="overview-search-container" style={{borderBottom: "1px solid rgba(100, 100, 100, 0.1)"}}>
                                             <SearchBarDropDown
                                                 querySettings={this.props.querySettings}
                                                 onChange={(node) => {this.props.statistic(node); this.closeAll();}}

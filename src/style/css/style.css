@@ -426,11 +426,7 @@ input:focus {
     width: 32px;
     padding-top: 6px;
 }
-.comparison-first-location,
-.comparison-second-location {
-    width: 45%;
-    float: left;
-}
+
 .toggle-wrapper {
     width: 10%;
     float: left;

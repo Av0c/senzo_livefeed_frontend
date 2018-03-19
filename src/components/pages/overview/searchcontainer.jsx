@@ -45,13 +45,13 @@ export class SearchContainer extends React.Component {
             <div className="grid-card-center">
                 <div className="the-card add-widget-card" onClick={this.showSearchBar}>
                     {this.state.showSearch ?
-                        <div className={"search-container"} style={{}}>
+                        <div className={"overview-search-container"} style={{}}>
                             <SearchBarDropDown
                                 onChange={(node) => {this.addNodeWidget(node)}}
                                 onFocus={() => {}}
                                 onClose={() => {this.hideSearchBar()}}
                                 tree={this.props.tree}
-                                />
+                            />
                         </div>
                         :
                         <div className="add-widget-button"> <i className="material-icons">add</i>

@@ -525,15 +525,7 @@ input:focus {
 h2.account-title {
     margin-bottom: 18px;
 }
-.card {
-    padding: 12px 26px 20px;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
-    margin-left:50px;
-    margin-bottom:50px;
-    width: 900px;
-}
+
 .btn-green {
     color: #7ec443;
     border: 1px solid #7ec443;
@@ -1024,10 +1016,7 @@ input[type="password"].has-error {
     font-size: 30px;
 }
 .reset-pw-recaptcha {
-    transform:scale(0.757);
+    transform: scale(0.757);
     -webkit-transform:scale(0.757);
     display: inline-block;
-}
-.live-stats-card td {
-    border-top: none;
 }

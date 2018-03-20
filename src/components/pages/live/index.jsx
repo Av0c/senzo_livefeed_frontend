@@ -175,12 +175,6 @@ class Live extends React.Component {
 										/>
 										<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
 									</div>
-									{/*
-									<div className="toolbar">
-										<div className="toolbr-tools clearfix"><a className="toolbar-seat" href="#"></a><a className="toolbar-meeting-room" href="#"></a><a className="toolbar-mr" href="#"></a></div>
-										<div className="toolbar-close clearfix"><a className="toolbar-arrow-right" href="#"></a><a className="toolbar-arrow-left" href="#"></a></div>
-									</div>
-									*/}
 								</div>
 							</div>
 						</div>
@@ -188,24 +182,15 @@ class Live extends React.Component {
 				</div>
 				<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "live/"+x.id} marginTop={true}/>
 				<ColorNote />
-				<div className="container-fluid">
-					{
-						this.state.showHeatmap && <div>
-							<DateSelector />
-						</div>
-					}
-					<div className="floorplan-margin">
-						<FloorPlan
-							root={this.props.nodeMap[this.props.nodeFilter.id]}
-							viewFilter={this.props.viewFilter}
-							showDetails={this.state.showDetails}
-							tooltipGroup="index"
-							thumbnail={false}
-							showHeatmap={this.state.showHeatmap}
-							onToggleHeatmap={this.onToggleHeatmap.bind(this)}
-						/>
-					</div>
-				</div>
+				<FloorPlan
+					root={this.props.nodeMap[this.props.nodeFilter.id]}
+					viewFilter={this.props.viewFilter}
+					showDetails={this.state.showDetails}
+					tooltipGroup="index"
+					thumbnail={false}
+					showHeatmap={this.state.showHeatmap}
+					onToggleHeatmap={this.onToggleHeatmap.bind(this)}
+				/>
 				<LiveSummary
 					root={this.state.currentNode}
 					sensorMap={this.props.sensorMap}

@@ -18,6 +18,8 @@ import { getSensorAverage, getParams } from 'actions/stats';
 import { deleteNode, fetchLiveData, setParent } from 'actions/node';
 import { selectViewFilter } from "actions/live/filter"
 import enhanceWithClickOutside from "react-click-outside";
+import DateSelector from 'components/common/dateselector';
+
 
 
 export class FloorPlan extends React.Component {
@@ -383,6 +385,22 @@ export class FloorPlan extends React.Component {
 			if (url && this.props.root.info.hasfloorplan) {
 				return (
 					<div className={!this.props.thumbnail ? "floorplan-container" : "floorplan-container-thumbnail"}>
+						<div className="floorplan-sidebar">
+							<div className="floorplan-sidebar-tabs">
+								<i className="material-icons tabs-icon">blur_on</i>
+								<div className="tabs-title">Heatmap settings</div>
+							</div>
+							<div className="floorplan-sidebar-tabs">
+								<div className="fst-text">LALALALALALA2</div>
+							</div>
+							<div className="floorplan-sidebar-tabs">
+								<div className="fst-text">LALA3</div>
+							</div>
+							{
+								(this.props.showHeatmap) &&
+								<DateSelector />
+							}
+						</div>
 						<img
 							src={url}
 							alt="Floorplan"
@@ -391,126 +409,125 @@ export class FloorPlan extends React.Component {
 							onError={this.imageError.bind(this)}
 							draggable="false"
 							key="image"
-						/>
+							/>
+						{
+							(!this.props.thumbnail && this.state.hasPermission) &&
+							<div className={this.state.showOption ? "floorplan-options-container options-show":"floorplan-options-container options-hide"}>
+								<div className="floorplan-options">
+									<i className="material-icons options-open" data-tooltip="Show options" onClick={() => {this.showOptions()}}>menu</i>
+									<i className="material-icons options-close" data-tooltip="Hide options" onClick={() => {this.hideOptions()}}>close</i>
+									<i
+										className="material-icons options-buttons"
+										data-tooltip={(this.state.mode=="move") ? "Sensors can be moved" : "Sensors can not be moved"}
+										onClick={() => {this.toggleMove()}}
+										>
+										{(this.state.mode=="move") ? "location_searching" : "location_disabled"}
+									</i>
+									<i
+										className="material-icons options-buttons"
+										data-tooltip="Add sensor"
+										onClick={(e) => {this.changeMode("add", e)}}
+										>add_circle_outline</i>
+									<i
+										className="material-icons options-buttons"
+										data-tooltip={this.props.showHeatmap ? "Heatmap is shown" : "Heatmap is hidden"}
+										onClick={() => {this.toggleHeatmap()}}
+										>
+										{this.props.showHeatmap ? "blur_on" : "blur_off"}
+									</i>
 
-					{
-						(!this.props.thumbnail && this.state.hasPermission) &&
-						<div className={this.state.showOption ? "floorplan-options-container options-show":"floorplan-options-container options-hide"}>
-							<div className="floorplan-options">
-								<i className="material-icons options-open" data-tooltip="Show options" onClick={() => {this.showOptions()}}>menu</i>
-								<i className="material-icons options-close" data-tooltip="Hide options" onClick={() => {this.hideOptions()}}>close</i>
-								<i
-									className="material-icons options-buttons"
-									data-tooltip={(this.state.mode=="move") ? "Sensors can be moved" : "Sensors can not be moved"}
-									onClick={() => {this.toggleMove()}}
-								>
-									{(this.state.mode=="move") ? "location_searching" : "location_disabled"}
-								</i>
-								<i
-									className="material-icons options-buttons"
-									data-tooltip="Add sensor"
-									onClick={(e) => {this.changeMode("add", e)}}
-								>add_circle_outline</i>
-								<i
-									className="material-icons options-buttons"
-									data-tooltip={this.props.showHeatmap ? "Heatmap is shown" : "Heatmap is hidden"}
-									onClick={() => {this.toggleHeatmap()}}
-								>
-									{this.props.showHeatmap ? "blur_on" : "blur_off"}
-								</i>
-
+								</div>
 							</div>
-						</div>
+						}
+						{
+							(this.state.mode == "add") && <Sensor
+							sensor={{dummy: true}}
+							dragged={true}
+							draggingX={this.state.mousePos.x}
+							draggingY={this.state.mousePos.y}
+							/>
 					}
-				{
-					(this.state.mode == "add") && <Sensor
-					sensor={{dummy: true}}
-					dragged={true}
-					draggingX={this.state.mousePos.x}
-					draggingY={this.state.mousePos.y}
-					/>
-			}
 
-			{sensors.map((sensor) => {
-				var ss = this.props.sensorMap.get(sensor.id);
-				return (ss &&
-					<Sensor
-						key={sensor.id}
+					{sensors.map((sensor) => {
+						var ss = this.props.sensorMap.get(sensor.id);
+						return (ss &&
+							<Sensor
+								key={sensor.id}
 
-						showHeatmap={this.props.showHeatmap}
+								showHeatmap={this.props.showHeatmap}
 
-						sensor={ss}
-						viewFilter={this.props.viewFilter}
-						selectedSensor={this.props.selectedSensor}
+								sensor={ss}
+								viewFilter={this.props.viewFilter}
+								selectedSensor={this.props.selectedSensor}
 
-						onEdit={this.selectEditedSensor.bind(this)}
-						onDelete={this.selectDeletedSensor.bind(this)}
+								onEdit={this.selectEditedSensor.bind(this)}
+								onDelete={this.selectDeletedSensor.bind(this)}
 
-						onMouseDown={(e, ss) => this.onMouseDown(e, ss)}
-						dragged={this.state.dragging && this.state.draggedSensor.id == sensor.id}
-						draggingX={this.state.dragging && this.state.mousePos.x}
-						draggingY={this.state.dragging && this.state.mousePos.y}
+								onMouseDown={(e, ss) => this.onMouseDown(e, ss)}
+								dragged={this.state.dragging && this.state.draggedSensor.id == sensor.id}
+								draggingX={this.state.dragging && this.state.mousePos.x}
+								draggingY={this.state.dragging && this.state.mousePos.y}
 
-						thumbnail={this.props.thumbnail}
-						hasPermission={this.state.hasPermission && this.state.mode != "add"}
+								thumbnail={this.props.thumbnail}
+								hasPermission={this.state.hasPermission && this.state.mode != "add"}
 
-						average={this.props.sensorAverage.values[ss.macaddress]}
-						normalizer={normalizer}
-					/>
-				);
-			})}
-			{areas.map((node) => {
-				return (
-					<Area
-						key={node.id}
-						node={node}
-						selectedArea={this.props.selectedSensor}
-						viewFilter={this.props.viewFilter}
+								average={this.props.sensorAverage.values[ss.macaddress]}
+								normalizer={normalizer}
+								/>
+						);
+					})}
+					{areas.map((node) => {
+						return (
+							<Area
+								key={node.id}
+								node={node}
+								selectedArea={this.props.selectedSensor}
+								viewFilter={this.props.viewFilter}
 
-						onMouseDown={(e, ss) => this.onMouseDown(e, ss)}
-						dragged={this.state.dragging && this.state.draggedSensor.id == node.id}
-						draggingX={this.state.dragging && this.state.mousePos.x}
-						draggingY={this.state.dragging && this.state.mousePos.y}
+								onMouseDown={(e, ss) => this.onMouseDown(e, ss)}
+								dragged={this.state.dragging && this.state.draggedSensor.id == node.id}
+								draggingX={this.state.dragging && this.state.mousePos.x}
+								draggingY={this.state.dragging && this.state.mousePos.y}
 
 
-						thumbnail={this.props.thumbnail}
+								thumbnail={this.props.thumbnail}
+								/>
+						);
+					})}
+					<SensorForm ref={(elem) => {this.sensorForm = elem}}
+						mode={this.state.mode}
+						node={this.props.root}
+						sensor={this.state.editedSensor}
+						nodeMap={this.props.nodeMap}
+						onClose={(e) => {
+							if (this.state.mode=="add") {
+								this.onCancel(e, () => this.changeMode("add", e));
+							} else if (this.state.mode=="editing") {
+								this.changeMode(this.state.lastMode);
+							}
+						}}
+						onSubmit={(e, state) => {
+							if (this.state.mode=="add") {
+								console.log(e, this.getMousePos(e));
+								this.addSensor(e, state, this.state.mousePos)
+							} else if (this.state.mode=="editing") {
+								this.updateSensor(e, state)
+							}
+						}}
 						/>
-				);
-			})}
-			<SensorForm ref={(elem) => {this.sensorForm = elem}}
-				mode={this.state.mode}
-				node={this.props.root}
-				sensor={this.state.editedSensor}
-				nodeMap={this.props.nodeMap}
-				onClose={(e) => {
-					if (this.state.mode=="add") {
-						this.onCancel(e, () => this.changeMode("add", e));
-					} else if (this.state.mode=="editing") {
-						this.changeMode(this.state.lastMode);
-					}
-				}}
-				onSubmit={(e, state) => {
-					if (this.state.mode=="add") {
-						console.log(e, this.getMousePos(e));
-						this.addSensor(e, state, this.state.mousePos)
-					} else if (this.state.mode=="editing") {
-						this.updateSensor(e, state)
-					}
-				}}
-				/>
-			<Modal
-				ref={(elem) => {this.deleteModal = elem}}
-				clickButton={(e) => { this.deleteSensor(this.state.deletedSensor)}}
-				header="Delete Sensor"
-				buttonText="Delete Sensor"
-				buttonClass="btn-danger"
-				entry={ null }
-				onClose={this.props.onClose}
-				>
-				<p>Are you sure you want to delete sensor <b>{this.state.deletedSensor.name}</b> ({this.state.deletedSensor.macaddress}) ?</p>
-			</Modal>
-		</div>
-	);
+					<Modal
+						ref={(elem) => {this.deleteModal = elem}}
+						clickButton={(e) => { this.deleteSensor(this.state.deletedSensor)}}
+						header="Delete Sensor"
+						buttonText="Delete Sensor"
+						buttonClass="btn-danger"
+						entry={ null }
+						onClose={this.props.onClose}
+						>
+						<p>Are you sure you want to delete sensor <b>{this.state.deletedSensor.name}</b> ({this.state.deletedSensor.macaddress}) ?</p>
+					</Modal>
+				</div>
+			);
 			} else {
 				return <div className="floorplan-error">
 					<br />

@@ -9,7 +9,7 @@ import NodeDropdown from "components/common/nodedropdown"
 import ListDropdown from "components/common/listdropdown"
 
 import Modal from "components/common/modal"
-import ColorNote from "components/common/popupcolornote"
+import ColorNote from "components/common/colornote"
 import LiveSummary from "./summary"
 import FloorPlan from "./floorplan"
 import SensorForm from "./sensorform"
@@ -43,7 +43,7 @@ class Live extends React.Component {
 			},
 			path: [],
 			showDetails: true,
-			showsHeatmap: true,
+			heatmapMode: true,
 			I: {},
 		};
 	}
@@ -68,12 +68,6 @@ class Live extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.prepare(nextProps);
-	}
-
-	onToggleHeatmap() {
-		this.setState({
-		    showHeatmap: !this.state.showHeatmap,
-		});
 	}
 
 	prepare(props) {
@@ -181,20 +175,33 @@ class Live extends React.Component {
 					</div>
 				</div>
 				<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "live/"+x.id} marginTop={true}/>
-				<ColorNote />
-				<FloorPlan
-					root={this.props.nodeMap[this.props.nodeFilter.id]}
-					viewFilter={this.props.viewFilter}
-					showDetails={this.state.showDetails}
-					tooltipGroup="index"
-					thumbnail={false}
-					showHeatmap={this.state.showHeatmap}
-					onToggleHeatmap={this.onToggleHeatmap.bind(this)}
-				/>
-				<LiveSummary
-					root={this.state.currentNode}
-					sensorMap={this.props.sensorMap}
-				/>
+				{(1) ?
+					<div>
+						<ColorNote mode={"sensors"}/>
+						<FloorPlan
+							root={this.props.nodeMap[this.props.nodeFilter.id]}
+							viewFilter={this.props.viewFilter}
+							showDetails={this.state.showDetails}
+							tooltipGroup="index"
+							thumbnail={false}
+							/>
+						<LiveSummary
+							root={this.state.currentNode}
+							sensorMap={this.props.sensorMap}
+							/>
+					</div>
+				:
+					<div>
+						<ColorNote mode={"heatmap"}/>
+						<FloorPlan
+							root={this.props.nodeMap[this.props.nodeFilter.id]}
+							viewFilter={this.props.viewFilter}
+							showDetails={this.state.showDetails}
+							tooltipGroup="index"
+							thumbnail={false}
+						/>
+					</div>
+				}
 			</div>
 		);
 	}

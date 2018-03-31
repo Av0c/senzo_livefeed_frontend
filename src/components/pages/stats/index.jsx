@@ -2,12 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import DateSelector from 'components/common/dateselector';
 import StatsMenu from 'components/common/statsmenu';
-import TotalOccupancy from 'components/pages/stats/totaloccupancy';
 import { getNodeSeriesStats, getParams } from 'actions/stats';
-import OccupancyRange from 'components/pages/stats/occupancyrange';
-import DailyOccupancy from 'components/pages/stats/dailyoccupancy';
-import OccupancyBreakDown from 'components/pages/stats/occupancybreakdown';
 import LeftMenu from 'components/common/leftmenu';
+import Charts from 'components/pages/stats/charts';
+import FloorPlan from "components/pages/live/floorplan";
 
 export class Stats extends React.Component {
 
@@ -54,20 +52,17 @@ export class Stats extends React.Component {
                         <div className="col-md-12 static-menu">
                             <LeftMenu overview='active' comparison='' />
                             <DateSelector />
-                            <StatsMenu name={this.state.currentNode.info.name} id={this.state.currentNode.id} node={this.state.currentNode} querySettings={this.props.querySettings}/>
+                            <StatsMenu
+                                name={this.state.currentNode.info.name} id={this.state.currentNode.id}
+                                node={this.state.currentNode} querySettings={this.props.querySettings}
+                            />
                         </div>
-                        <div className="col-md-12">
-                            <div className="col-sm-12">
-                                <TotalOccupancy currentNode={this.state.currentNode} querySettings={this.props.querySettings} />
-                            </div>
-                            <div className="col-sm-12">
-                                <OccupancyRange querySettings={this.props.querySettings} currentNode={this.state.currentNode} />
-                            </div>
-                            <div className="col-sm-12">
-                                <OccupancyBreakDown querySettings={this.props.querySettings} currentNode={this.state.currentNode} />
-                            </div>
-                            <DailyOccupancy querySettings={this.props.querySettings} currentNode={this.state.currentNode} />
-                        </div>
+                        {
+                            <Charts
+                                currentNode={this.state.currentNode}
+                                querySettings={this.props.querySettings}
+                            />
+                        }
                     </div>
                 </div>
             </div>

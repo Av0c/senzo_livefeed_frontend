@@ -78,8 +78,9 @@ ReactDOM.render((
 
 				<Route path="/locations" component={Locations}/>
 
-				<Route path="/statistic/:id" component={Stats} />
+
 				<Route path="/comparison" component={Comparison} />
+				<Route path="/statistic/:id" component={Stats} />
 				<Route path="/live/:id" component={Live} />
 
 				<Route path="/user" component={User} />

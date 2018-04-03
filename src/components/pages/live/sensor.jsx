@@ -87,33 +87,32 @@ export class Sensor extends React.Component{
 			}
 		}
 
-		// Heatmap
-
-		var heatNode = null;
-		var normalizedAverage = this.gaussianCDF(this.props.average, this.props.normalizer[0], this.props.normalizer[1]);
-		if (normalizedAverage >= 0 && normalizedAverage <= 1) { // Only show valid heatnodes
-			var glowSize = 4 + Math.ceil(normalizedAverage/0.2) * 0.5;
-			// var glowSize = 5;
-
-			var glowColor = this.valueToColor(normalizedAverage);
-
-			var heatStyle = Object.assign({}, style, {
-				backgroundColor: glowColor,
-				boxShadow: "0px 0px 16px " + glowSize + "px " + glowColor,
-			});
-
-			heatNode =
-			<div
-				className={"sensor-heatnode" + (this.props.showHeatmap ? " heat-show" : " heat-hide")}
-				data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}>
-			</div>
-		}
-
 		if (sensor.dummy || this.props.dragged) {
+
 			return (
 				<div className={className} style={style}/>
 			);
 		} else {
+			// Heatmap
+			var heatNode = null;
+			var normalizedAverage = this.gaussianCDF(this.props.average, this.props.normalizer[0], this.props.normalizer[1]);
+			if (normalizedAverage >= 0 && normalizedAverage <= 1) { // Only show valid heatnodes
+				var glowSize = 4 + Math.ceil(normalizedAverage/0.2) * 0.5;
+				// var glowSize = 5;
+
+				var glowColor = this.valueToColor(normalizedAverage);
+
+				var heatStyle = Object.assign({}, style, {
+					backgroundColor: glowColor,
+					boxShadow: "0px 0px 16px " + glowSize + "px " + glowColor,
+				});
+
+				heatNode =
+				<div
+					className={"sensor-heatnode" + (this.props.showHeatmap ? " heat-show" : " heat-hide")}
+					data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}>
+				</div>
+			}
 			if (!this.props.thumbnail) {
 				return(
 					<div>

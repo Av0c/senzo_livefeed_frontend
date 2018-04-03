@@ -96,6 +96,7 @@ export class FloorPlan extends React.Component {
 		this.props.dispatch(fetchImage(this.props.user.companyid))
 	}
 	getMousePos(evt) {
+		console.trace();
 		var imageElement = this.refs['floorplan-image'].getBoundingClientRect();
 		var mouseX = evt.clientX - imageElement.left;
 		var mouseY = evt.clientY - imageElement.top;
@@ -369,7 +370,7 @@ export class FloorPlan extends React.Component {
 		var areas = [], sensors = [];
 		this.listNodes(this.props.root, areas, sensors)
 
-		var normalizer = 1;
+		var normalizer = [0.5, 1];
 		if (this.props.showHeatmap) {
 			normalizer = this.calculateNormalizer();
 		}
@@ -382,19 +383,45 @@ export class FloorPlan extends React.Component {
 						{
 							(!this.props.thumbnail && this.state.hasPermission) &&
 							((this.props.showHeatmap) ?
-								<FloorplanOptions
-									displayMode={"heatmap"}
-									optionsMode={this.state.mode}
-									toggleMove={() => {this.toggleMove()}}
-									changeMode={(mode, e) => {this.changeMode(mode, e)}}
-								/>
+								<div className="floorplan-options-container">
+				                    <div className="options-help">
+				                        <div className="help-icon hi-show">
+				                            <i className="material-icons">info_outline</i>
+				                        </div>
+				                        <div className="help-text ht-show">Hover over a sensor for more info.</div>
+				                    </div>
+				                    <div className="options-buttons">
+				                    </div>
+				                </div>
 							:
-								<FloorplanOptions
-									displayMode={"sensors"}
-									optionsMode={this.state.mode}
-									toggleMove={() => {this.toggleMove()}}
-									changeMode={(mode, e) => {this.changeMode(mode, e)}}
-								/>
+								<div className="floorplan-options-container">
+				                    <div className="options-help">
+				                        <div className="help-icon hi-show">
+				                            <i className="material-icons">info_outline</i>
+				                        </div>
+				                        <div className={(this.state.mode=="done") ? "help-text ht-show" : "help-text ht-hide"}>Hover over a sensor for more info.</div>
+				                        <div className={(this.state.mode=="move") ? "help-text ht-show" : "help-text ht-hide"}>Hold and drag a sensor to move it.</div>
+				                        <div className={(this.state.mode=="add") ? "help-text ht-show" : "help-text ht-hide"}>Left-click to place new sensor, right-click to cancel.</div>
+				                    </div>
+				                    <div className="options-buttons">
+				                        <i
+				                            className="material-icons"
+				                            data-tooltip={(this.state.mode=="move") ? "Sensors can be moved" : "Sensors can not be moved"}
+				                            onClick={() => this.toggleMove()}
+				                            >
+				                            {(this.state.mode=="move") ? "location_searching" : "location_disabled"}
+				                        </i>
+				                    </div>
+				                    <div className="options-buttons">
+				                        <i
+				                            className="material-icons"
+				                            data-tooltip="Add sensor"
+				                            onClick={(e) => {this.changeMode("add", e)}}
+				                        >
+											add_circle_outline
+										</i>
+				                    </div>
+				                </div>
 							)
 
 						}

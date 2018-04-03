@@ -200,7 +200,7 @@ export class FloorPlan extends React.Component {
 		});
 		if (this.state.mode == "add") {
 			if (pos.x==0 || pos.x==100 || pos.y==0 || pos.y==100) {
-				this.onCancel(e);
+				// this.onCancel(e); // ONLY CANCEL BY RIGHT-CLICK OR PRESSING "ESC"
 			}
 		}
 	}
@@ -327,7 +327,7 @@ export class FloorPlan extends React.Component {
 		});
 	}
 	handleClickOutside() {
-		this.hideOptions();
+		// this.hideOptions();
 	}
 	toggleMove() {
 		var mode;
@@ -376,10 +376,14 @@ export class FloorPlan extends React.Component {
 						{
 							(!this.props.thumbnail && this.state.hasPermission) &&
 							<div className="floorplan-options-container">
-								<div className="options-hint">
-									<span className="options-hint-text">Hello World !</span>
+								<div className="options-help">
+									<div className="help-icon hi-show">
+										<i className="material-icons">info_outline</i>
+									</div>
+									<div className={(this.state.mode=="done") ? "help-text ht-show" : "help-text ht-hide"}>Hover over a sensor for more info.</div>
+									<div className={(this.state.mode=="move") ? "help-text ht-show" : "help-text ht-hide"}>Hold and drag a sensor to move it.</div>
+									<div className={(this.state.mode=="add") ? "help-text ht-show" : "help-text ht-hide"}>Left-click to place new sensor, right-click to cancel.</div>
 								</div>
-								
 								<div className="options-buttons">
 									<i
 										className="material-icons"
@@ -423,7 +427,7 @@ export class FloorPlan extends React.Component {
 									<Sensor
 										key={sensor.id}
 
-										showHeatmap={this.props.showHeatmap}
+										showHeatmap={true}
 
 										sensor={ss}
 										viewFilter={this.props.viewFilter}
@@ -442,7 +446,7 @@ export class FloorPlan extends React.Component {
 
 										average={this.props.sensorAverage.values[ss.macaddress]}
 										normalizer={normalizer}
-										/>
+									/>
 								);
 							})}
 							{areas.map((node) => {

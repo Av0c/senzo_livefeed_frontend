@@ -11,19 +11,57 @@
         background-color: #fff;
         height: 50px;
 
-        .options-hint {
-            font-size: 22px;
+        .options-help {
+            height: 50px;
             line-height: 50px;
+            text-align: center;
             vertical-align: middle;
+            position: relative;
+            margin-left: 10px;
             display: inline-block;
 
-            &::before {
-                content: "ⓘ";
-                // padding-right: 6px;
+            .help-icon {
+                display: inline-block;
+                transition: opacity 0.3s ease-out;
+                height: 50px;
+                line-height: 50px;
                 margin-right: 6px;
-                // border-right: 1px solid;
+                font-size: 18px;
+
+                i {
+                    vertical-align: middle;
+                    user-select: none;
+                    font-size: 18px;
+                }
+
+                &.hi-hide {
+                    opacity: 1;
+                }
+
+                &.hi-hide {
+                    opacity: 0;
+                }
             }
+
+            .help-text {
+                display: inline-block;
+                vertical-align: middle;
+                transition: font-size 0.3s ease-out,
+                opacity 0.3s ease-out;
+
+                &.ht-show {
+                    font-size: 18px;
+                    opacity: 1;
+                }
+
+                &.ht-hide {
+                    font-size: 0px;
+                    opacity: 0;
+                }
+            }
+
         }
+
         .options-buttons {
             float: right;
             display: inline-block;

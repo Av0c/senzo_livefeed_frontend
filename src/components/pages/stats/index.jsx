@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import DateSelector from 'components/common/dateselector';
 import StatsMenu from 'components/common/statsmenu';
-import { getNodeSeriesStats, getParams } from 'actions/stats';
 import LeftMenu from 'components/common/leftmenu';
+import { getNodeSeriesStats, getParams } from 'actions/stats';
 import Charts from 'components/pages/stats/charts';
 import FloorPlan from "components/pages/live/floorplan";
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import toastr from "toastr"
+import math from "mathjs"
 
 import Sensor from './sensor';
 import Area from './area';
@@ -355,15 +356,19 @@ export class FloorPlan extends React.Component {
 			this.props.onToggleHeatmap();
 		}
 	}
-	calculateNormalizer() {
-		var res = 0;
-		Object.keys(this.props.sensorAverage.values).map((mac) => {
-			res = Math.max(res, this.props.sensorAverage.values[mac]);
-		})
-		if (res == 0) {
-			res = 1;
+	calculateNormalizer(props) {
+		// return mean and std
+		var values = [];
+		Object.keys(props.sensorAverage.values).map((mac) => {
+			var value = props.sensorAverage.values[mac];
+			if (0 <= value && value <= 1) {
+				values.push(value);
+			}
+		});
+		if (values.length == 0) {
+			return [0.5, 1];
 		}
-		return res;
+		return [math.mean(values), math.std(values)];
 	}
 
 	render() {

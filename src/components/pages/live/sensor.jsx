@@ -96,8 +96,8 @@ export class Sensor extends React.Component{
 			// Heatmap
 			var heatNode = null;
 			var normalizedAverage = this.gaussianCDF(this.props.average, this.props.normalizer[0], this.props.normalizer[1]);
-			if (normalizedAverage >= 0 && normalizedAverage <= 1) { // Only show valid heatnodes
-				var glowSize = 4 + Math.ceil(normalizedAverage/0.2) * 0.5;
+			if (this.props.average >= 0 && this.props.average <= 1) { // Only show valid heatnodes
+				var glowSize = 2 + Math.ceil(normalizedAverage/0.2) * 1;
 				// var glowSize = 5;
 
 				var glowColor = this.valueToColor(normalizedAverage);

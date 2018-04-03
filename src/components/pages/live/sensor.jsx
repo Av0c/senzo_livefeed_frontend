@@ -82,15 +82,26 @@ export class Sensor extends React.Component{
 		}
 
 		// Heatmap
-		var normalizedAverage = this.props.average / this.props.normalizer;
-		var glowSize = 4 + Math.ceil(normalizedAverage/0.2) * 0.5;
-		// var glowSize = 5;
-		var glowColor = this.valueToColor(normalizedAverage);
 
-		var heatStyle = Object.assign({}, style, {
-			backgroundColor: glowColor,
-			boxShadow: "0px 0px 16px " + glowSize + "px " + glowColor,
-		});
+		var heatNode = null;
+		var normalizedAverage = this.props.average / this.props.normalizer;
+		if (normalizedAverage >= 0 && normalizedAverage <= 1) { // Only show valid heatnodes
+			var glowSize = 4 + Math.ceil(normalizedAverage/0.2) * 0.5;
+			// var glowSize = 5;
+
+			var glowColor = this.valueToColor(normalizedAverage);
+
+			var heatStyle = Object.assign({}, style, {
+				backgroundColor: glowColor,
+				boxShadow: "0px 0px 16px " + glowSize + "px " + glowColor,
+			});
+
+			heatNode =
+			<div
+				className={"sensor-heatnode" + (this.props.showHeatmap ? " heat-show" : " heat-hide")}
+				data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}>
+			</div>
+		}
 
 		if (sensor.dummy || this.props.dragged) {
 			return (
@@ -100,45 +111,47 @@ export class Sensor extends React.Component{
 			if (!this.props.thumbnail) {
 				return(
 					<div>
-						<div
-							className={"sensor-heatnode" + (this.props.showHeatmap ? " heat-show" : " heat-hide")}
-							data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}>
-						</div>
-						<div className={className} style={style}
-							id={"sensor"+sensor.id}
-							onMouseEnter={this.onMouseEnter.bind(this)}
-							onMouseLeave={this.onMouseLeave.bind(this)}
-							onMouseDown={this.onMouseDown.bind(this)}
-						/>
-						<ToolTip active={this.state.tooltipOpen} parent={"#sensor"+sensor.id} position="right" arrow="center"
-							style={{
-								style: {
-									background: "rgba(0,0,0,.9)",
-									padding: 10,
-									color: "#EEE",
-									boxShadow: "0px 4px 6px rgba(0,0,0,.3)",
-									borderRadius: 4,
-								},
-								arrowStyle: {
-									color: 'rgba(0,0,0,.8)',
-									borderColor: false
-								}
-							}}
-						>
-							<table><tbody><tr>
-								<td>
-									<div>{sensor.name}</div>
-									<div>{sensor.macaddress.toUpperCase()}</div>
-									<div>{parentName}</div>
-								</td>
-								{
-									this.props.hasPermission && <td>
-										<i data-tooltip="Delete" className="material-icons cursor-pointer red-500 sensor-button pull-right" onClick={() => this.props.onDelete(sensor)}>delete_forever</i>
-										<i data-tooltip="Edit" className="material-icons cursor-pointer sensor-button pull-right" onClick={() => this.props.onEdit(sensor)}>edit</i>
-									</td>
-								}
-							</tr></tbody></table>
-						</ToolTip>
+						{(this.props.showHeatmap) ?
+							heatNode
+						:
+							<div>
+								<div className={className} style={style}
+									id={"sensor"+sensor.id}
+									onMouseEnter={this.onMouseEnter.bind(this)}
+									onMouseLeave={this.onMouseLeave.bind(this)}
+									onMouseDown={this.onMouseDown.bind(this)}
+									/>
+								<ToolTip active={this.state.tooltipOpen} parent={"#sensor"+sensor.id} position="right" arrow="center"
+									style={{
+										style: {
+											background: "rgba(0,0,0,.9)",
+											padding: 10,
+											color: "#EEE",
+											boxShadow: "0px 4px 6px rgba(0,0,0,.3)",
+											borderRadius: 4,
+										},
+										arrowStyle: {
+											color: 'rgba(0,0,0,.8)',
+											borderColor: false
+										}
+									}}
+									>
+									<table><tbody><tr>
+										<td>
+											<div>{sensor.name}</div>
+											<div>{sensor.macaddress.toUpperCase()}</div>
+											<div>{parentName}</div>
+										</td>
+										{
+											this.props.hasPermission && <td>
+											<i data-tooltip="Delete" className="material-icons cursor-pointer red-500 sensor-button pull-right" onClick={() => this.props.onDelete(sensor)}>delete_forever</i>
+											<i data-tooltip="Edit" className="material-icons cursor-pointer sensor-button pull-right" onClick={() => this.props.onEdit(sensor)}>edit</i>
+										</td>
+									}
+								</tr></tbody></table>
+							</ToolTip>
+							</div>
+						}
 					</div>
 				);
 			} else {

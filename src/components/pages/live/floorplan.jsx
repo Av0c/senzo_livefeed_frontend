@@ -411,7 +411,7 @@ export class FloorPlan extends React.Component {
 								onError={this.imageError.bind(this)}
 								draggable="false"
 								key="image"
-								/>
+							/>
 							{
 								(this.state.mode == "add") &&
 								<Sensor
@@ -419,7 +419,7 @@ export class FloorPlan extends React.Component {
 									dragged={true}
 									draggingX={this.state.mousePos.x}
 									draggingY={this.state.mousePos.y}
-									/>
+								/>
 							}
 							{sensors.map((sensor) => {
 								var ss = this.props.sensorMap.get(sensor.id);
@@ -427,7 +427,7 @@ export class FloorPlan extends React.Component {
 									<Sensor
 										key={sensor.id}
 
-										showHeatmap={true}
+										showHeatmap={this.props.showHeatmap}
 
 										sensor={ss}
 										viewFilter={this.props.viewFilter}

@@ -200,7 +200,7 @@ class Live extends React.Component {
 							root={this.props.nodeMap[this.props.nodeFilter.id]}
 							viewFilter={this.props.viewFilter}
 							showDetails={this.state.showDetails}
-							heatmapMode={true}
+							showHeatmap={true}
 							tooltipGroup="index"
 							thumbnail={false}
 						/>
@@ -212,7 +212,7 @@ class Live extends React.Component {
 							root={this.props.nodeMap[this.props.nodeFilter.id]}
 							viewFilter={this.props.viewFilter}
 							showDetails={this.state.showDetails}
-							heatmapMode={false}
+							showHeatmap={false}
 							tooltipGroup="index"
 							thumbnail={false}
 						/>

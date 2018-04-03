@@ -1,9 +1,10 @@
 import React from 'react';
 import config from 'config';
 import { connect } from 'react-redux';
-import {selectSensor} from 'actions/floorplan'
-import ToolTip from 'react-portal-tooltip'
-import ReactTooltip from 'react-tooltip'
+import {selectSensor} from 'actions/floorplan';
+import ToolTip from 'react-portal-tooltip';
+import ReactTooltip from 'react-tooltip';
+import math from "mathjs";
 
 export class Sensor extends React.Component{
 	constructor(props) {
@@ -38,6 +39,11 @@ export class Sensor extends React.Component{
 		var hue = 120-Math.round(120*value);
 
 		return "hsl(" + hue + ", 100%, 60%)";
+	}
+
+	gaussianCDF(x, mean, std) {
+		// cummulative distribution function of Gaussian distribution
+		return (1+math.erf((x-mean)/(std*math.sqrt(2))))/2;
 	}
 
 	render(){
@@ -84,7 +90,7 @@ export class Sensor extends React.Component{
 		// Heatmap
 
 		var heatNode = null;
-		var normalizedAverage = this.props.average / this.props.normalizer;
+		var normalizedAverage = this.gaussianCDF(this.props.average, this.props.normalizer[0], this.props.normalizer[1]);
 		if (normalizedAverage >= 0 && normalizedAverage <= 1) { // Only show valid heatnodes
 			var glowSize = 4 + Math.ceil(normalizedAverage/0.2) * 0.5;
 			// var glowSize = 5;

@@ -356,11 +356,11 @@ export class FloorPlan extends React.Component {
 			this.props.onToggleHeatmap();
 		}
 	}
-	calculateNormalizer(props) {
+	calculateNormalizer() {
 		// return mean and std
 		var values = [];
-		Object.keys(props.sensorAverage.values).map((mac) => {
-			var value = props.sensorAverage.values[mac];
+		Object.keys(this.props.sensorAverage.values).map((mac) => {
+			var value = this.props.sensorAverage.values[mac];
 			if (0 <= value && value <= 1) {
 				values.push(value);
 			}

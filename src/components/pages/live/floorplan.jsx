@@ -8,6 +8,7 @@ import config from 'config';
 import { Link } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import SensorForm from './sensorform';
+import FloorplanOptions from './floorplanoptions';
 import Modal from "components/common/modal"
 
 import { updateNode } from 'actions/node';
@@ -375,32 +376,22 @@ export class FloorPlan extends React.Component {
 					<div className="floorplan-outer-container">
 						{
 							(!this.props.thumbnail && this.state.hasPermission) &&
-							<div className="floorplan-options-container">
-								<div className="options-help">
-									<div className="help-icon hi-show">
-										<i className="material-icons">info_outline</i>
-									</div>
-									<div className={(this.state.mode=="done") ? "help-text ht-show" : "help-text ht-hide"}>Hover over a sensor for more info.</div>
-									<div className={(this.state.mode=="move") ? "help-text ht-show" : "help-text ht-hide"}>Hold and drag a sensor to move it.</div>
-									<div className={(this.state.mode=="add") ? "help-text ht-show" : "help-text ht-hide"}>Left-click to place new sensor, right-click to cancel.</div>
-								</div>
-								<div className="options-buttons">
-									<i
-										className="material-icons"
-										data-tooltip={(this.state.mode=="move") ? "Sensors can be moved" : "Sensors can not be moved"}
-										onClick={() => {this.toggleMove()}}
-										>
-										{(this.state.mode=="move") ? "location_searching" : "location_disabled"}
-									</i>
-								</div>
-								<div className="options-buttons">
-									<i
-										className="material-icons"
-										data-tooltip="Add sensor"
-										onClick={(e) => {this.changeMode("add", e)}}
-										>add_circle_outline</i>
-								</div>
-							</div>
+							((this.props.showHeatmap) ?
+								<FloorplanOptions
+									displayMode={"heatmap"}
+									optionsMode={this.state.mode}
+									toggleMove={() => {this.toggleMove()}}
+									changeMode={(mode, e) => {this.changeMode(mode, e)}}
+								/>
+							:
+								<FloorplanOptions
+									displayMode={"sensors"}
+									optionsMode={this.state.mode}
+									toggleMove={() => {this.toggleMove()}}
+									changeMode={(mode, e) => {this.changeMode(mode, e)}}
+								/>
+							)
+
 						}
 						<div className={!this.props.thumbnail ? "floorplan-container" : "floorplan-container-thumbnail"}>
 							<img

@@ -182,6 +182,7 @@ class Live extends React.Component {
 														click={(view) => { this.props.dispatch(selectViewFilter(view)) }}
 														/>
 													<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
+													<Link className='button-sm pull-right nav-stats' to={'/live/' + this.state.currentNode.id + "/heatmap"}> Heatmap</Link>
 												</div>
 											</div>
 										</div>

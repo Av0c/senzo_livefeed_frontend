@@ -9,7 +9,6 @@ import config from 'config';
 import { Link } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import SensorForm from './sensorform';
-import FloorplanOptions from './floorplanoptions';
 import Modal from "components/common/modal";
 import ListDropdown from "components/common/listdropdown";
 

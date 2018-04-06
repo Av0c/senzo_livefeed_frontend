@@ -173,7 +173,7 @@ class Live extends React.Component {
 														list={this.listNodeFilter.bind(this)}
 														header="All areas"
 														/>
-
+													
 													<ListDropdown
 														outsideClass="live-select pull-left"
 														items={config.viewFilter}

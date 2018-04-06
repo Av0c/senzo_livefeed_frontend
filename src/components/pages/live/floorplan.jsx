@@ -10,7 +10,8 @@ import { Link } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import SensorForm from './sensorform';
 import FloorplanOptions from './floorplanoptions';
-import Modal from "components/common/modal"
+import Modal from "components/common/modal";
+import ListDropdown from "components/common/listdropdown";
 
 import { updateNode } from 'actions/node';
 import { createSensor, removeSensor, updateSensor, fetchImage } from 'actions/floorplan';
@@ -18,7 +19,7 @@ import * as a from 'actions/floorplan';
 import { fetchCustomerOverview } from 'actions/overview';
 import { getSensorAverage, getParams } from 'actions/stats';
 import { deleteNode, fetchLiveData, setParent } from 'actions/node';
-import { selectViewFilter } from "actions/live/filter"
+import { selectViewFilter } from "actions/live/filter";
 import enhanceWithClickOutside from "react-click-outside";
 import DateSelector from 'components/common/dateselector';
 
@@ -32,6 +33,7 @@ export class FloorPlan extends React.Component {
 
 			mode: "done", // "move", "add", "editing"
 			lastMode: "done",
+			heatmapFilter: "ALL", // Show all
 
 			hasPermission: this.hasPermission(),
 
@@ -88,7 +90,6 @@ export class FloorPlan extends React.Component {
 			q1.weekdaymask !== q2.weekdaymask
 		);
 	}
-
 	imageError() {
 		this.setState({
 			loading: true,
@@ -358,11 +359,45 @@ export class FloorPlan extends React.Component {
 			}
 		});
 		if (values.length == 0) {
-			return [0.5, 1];
+			return [0.5, 1, 1];
 		}
-		return [math.mean(values), math.std(values)];
-	}
 
+		// Lowest 5% value
+		var count =  Math.round(values.length * 5/100);
+		var sorted = math.sort(values);
+
+		return [math.mean(values), math.std(values), sorted[count]];
+	}
+	chooseHeatmapFilter(f) {
+		this.setState({
+		    heatmapFilter: f,
+		});
+	}
+	getHeatmapFilterText(f) {
+		var text;
+		switch (f) {
+			case "ALL":
+				text = "Show all";
+			break;
+
+			case "ABOVE":
+				text = "Above average";
+			break;
+
+			case "BELOW":
+				text = "Below average";
+			break;
+
+			case "LOWEST":
+				text = "Lowest 5%";
+			break;
+
+			default:
+				text = "";
+		}
+
+		return text;
+	}
 	render() {
 		if (!this.props.root) {
 			return null;
@@ -370,7 +405,7 @@ export class FloorPlan extends React.Component {
 		var areas = [], sensors = [];
 		this.listNodes(this.props.root, areas, sensors)
 
-		var normalizer = [0.5, 1];
+		var normalizer = [0.5, 1, 1];
 		if (this.props.showHeatmap) {
 			normalizer = this.calculateNormalizer();
 		}
@@ -381,17 +416,22 @@ export class FloorPlan extends React.Component {
 				return (
 					<div className="floorplan-outer-container">
 						{
-							(!this.props.thumbnail && this.state.hasPermission) &&
+							(!this.props.thumbnail) &&
 							((this.props.showHeatmap) ?
 								<div className="floorplan-options-container">
 				                    <div className="options-help">
 				                        <div className="help-icon hi-show">
 				                            <i className="material-icons">info_outline</i>
 				                        </div>
-				                        <div className="help-text ht-show">Hover over a sensor for more info.</div>
+				                        <div className="help-text ht-show">Hover over a node for more info.</div>
 				                    </div>
-				                    <div className="options-buttons">
-				                    </div>
+									<ListDropdown
+										outsideClass="heatmap-filter"
+										items={["ALL", "ABOVE", "BELOW", "LOWEST"]}
+										getText={(f) => this.getHeatmapFilterText(f)}
+										selected={this.state.heatmapFilter}
+										click={(f) => this.chooseHeatmapFilter(f)}
+									/>
 				                </div>
 							:
 								<div className="floorplan-options-container">
@@ -403,24 +443,29 @@ export class FloorPlan extends React.Component {
 				                        <div className={(this.state.mode=="move") ? "help-text ht-show" : "help-text ht-hide"}>Hold and drag a sensor to move it.</div>
 				                        <div className={(this.state.mode=="add") ? "help-text ht-show" : "help-text ht-hide"}>Left-click to place new sensor, right-click to cancel.</div>
 				                    </div>
-				                    <div className="options-buttons">
-				                        <i
-				                            className="material-icons"
-				                            data-tooltip={(this.state.mode=="move") ? "Sensors can be moved" : "Sensors can not be moved"}
-				                            onClick={() => this.toggleMove()}
-				                            >
-				                            {(this.state.mode=="move") ? "location_searching" : "location_disabled"}
-				                        </i>
-				                    </div>
-				                    <div className="options-buttons">
-				                        <i
-				                            className="material-icons"
-				                            data-tooltip="Add sensor"
-				                            onClick={(e) => {this.changeMode("add", e)}}
-				                        >
-											add_circle_outline
-										</i>
-				                    </div>
+									{
+										(this.state.hasPermission) &&
+										<React.Fragment>
+											<div className="options-buttons">
+												<i
+													className="material-icons"
+													data-tooltip={(this.state.mode=="move") ? "Sensors can be moved" : "Sensors can not be moved"}
+													onClick={() => this.toggleMove()}
+													>
+													{(this.state.mode=="move") ? "location_searching" : "location_disabled"}
+												</i>
+											</div>
+											<div className="options-buttons">
+												<i
+													className="material-icons"
+													data-tooltip="Add sensor"
+													onClick={(e) => {this.changeMode("add", e)}}
+													>
+													add_circle_outline
+												</i>
+											</div>
+										</React.Fragment>
+									}
 				                </div>
 							)
 
@@ -451,6 +496,7 @@ export class FloorPlan extends React.Component {
 										key={sensor.id}
 
 										showHeatmap={this.props.showHeatmap}
+										heatmapFilter={this.state.heatmapFilter}
 
 										sensor={ss}
 										viewFilter={this.props.viewFilter}

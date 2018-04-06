@@ -42,10 +42,37 @@ export class Sensor extends React.Component{
 	}
 
 	gaussianCDF(x, mean, std) {
-		// cummulative distribution function of Gaussian distribution
+		// Cumulative distribution function of Gaussian distribution
 		return (1+math.erf((x-mean)/(std*math.sqrt(2))))/2;
 	}
+	checkFilter(filter, value) {
+		var globalAvg = this.props.normalizer[0];
 
+		switch (filter) {
+			case "ALL":
+				return true;
+			break;
+
+			case "ABOVE":
+				if (value > globalAvg) return true;
+			break;
+
+			case "BELOW":
+				if (value < globalAvg) return true;
+			break;
+
+			case "LOWEST":
+				var low = this.props.normalizer[2];
+				if (value < low) return true;
+			break;
+
+			default:
+				return true;
+		}
+
+		return false;
+	}
+	break;
 	render(){
 		let sensor = this.props.sensor;
 
@@ -95,23 +122,25 @@ export class Sensor extends React.Component{
 		} else {
 			// Heatmap
 			var heatNode = null;
-			var normalizedAverage = this.gaussianCDF(this.props.average, this.props.normalizer[0], this.props.normalizer[1]);
 			if (this.props.average >= 0 && this.props.average <= 1) { // Only show valid heatnodes
-				var glowSize = 2 + Math.ceil(normalizedAverage/0.2) * 1;
-				// var glowSize = 5;
+				if (this.checkFilter(this.props.heatmapFilter, this.props.average) == true) {
+					var normalizedAverage = this.gaussianCDF(this.props.average, this.props.normalizer[0], this.props.normalizer[1]);
+					var glowSize = 2 + Math.ceil(normalizedAverage/0.2) * 1;
+					// var glowSize = 5;
 
-				var glowColor = this.valueToColor(normalizedAverage);
+					var glowColor = this.valueToColor(normalizedAverage);
 
-				var heatStyle = Object.assign({}, style, {
-					backgroundColor: glowColor,
-					boxShadow: "0px 0px 16px " + glowSize + "px " + glowColor,
-				});
+					var heatStyle = Object.assign({}, style, {
+						backgroundColor: glowColor,
+						boxShadow: "0px 0px 16px " + glowSize + "px " + glowColor,
+					});
 
-				heatNode =
-				<div
-					className={"sensor-heatnode" + (this.props.showHeatmap ? " heat-show" : " heat-hide")}
-					data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}>
-				</div>
+					heatNode =
+					<div
+						className={"sensor-heatnode" + (this.props.showHeatmap ? " heat-show" : " heat-hide")}
+						data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}>
+					</div>
+				}
 			}
 			if (!this.props.thumbnail) {
 				return(

@@ -9,7 +9,7 @@ export default class ColorNote extends React.Component {
                 break;
 
             case "heatmap":
-                descs = ["Above avg.", "Average", "Below avg."];
+                descs = ["Above average", "Average", "Below average"];
                 break;
 
             default:

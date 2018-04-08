@@ -75,11 +75,11 @@ export default class BreakDownChart extends React.Component {
             },
             plot: {
                 barWidth: "75%",
-                animation: {
-                    effect: 1,
-                    sequence: 2,
-                    speed: 100
-                }
+                // animation: {
+                //     effect: 1,
+                //     sequence: 2,
+                //     speed: 100
+                // }
             },
             series: [
                 {

@@ -41,18 +41,22 @@ export class Stats extends React.Component {
     }
 
     getPNG(DOMnode, resultHolder, callbacks) {
-        return domtoimage.toPng(ReactDOM.findDOMNode(DOMnode)).then((imgdata) => {
-            // let imgContent = imgdata.split(",")[1];
-            // Jimp.read(imgContent, (img) => {
-            //     let jimpImg = img.autocrop([10, true]);  
-            //     jimpImg.getBase64("png", (imgdata) => {
-            //         resultHolder.push(imgdata);
-            //         callbacks();
-            //     })
-            // })
-            resultHolder.push(imgdata);
+        if (!DOMnode) {
             callbacks();
-        });
+        } else {
+            return domtoimage.toPng(ReactDOM.findDOMNode(DOMnode)).then((imgdata) => {
+                // let imgContent = imgdata.split(",")[1];
+                // Jimp.read(imgContent, (img) => {
+                //     let jimpImg = img.autocrop([10, true]);  
+                //     jimpImg.getBase64("png", (imgdata) => {
+                //         resultHolder.push(imgdata);
+                //         callbacks();
+                //     })
+                // })
+                resultHolder.push(imgdata);
+                callbacks();
+            });
+        }
     }
 
     getPngDimensions(base64) {

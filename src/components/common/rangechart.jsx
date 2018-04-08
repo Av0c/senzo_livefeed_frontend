@@ -44,11 +44,11 @@ export default class RangeChart extends React.Component {
                             backgroundColor: "#afd3f7"
                         }
                     ],
-                    animation: {
-                        effect: 1,
-                        sequence: 2,
-                        speed: 100
-                    }
+                    // animation: {
+                    //     effect: 1,
+                    //     sequence: 2,
+                    //     speed: 100
+                    // }
                 },
                 series: values
         });

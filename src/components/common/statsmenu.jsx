@@ -52,7 +52,6 @@ export class StatsMenu extends React.Component {
         } else if (this.state.typeCount.cntMR > 0 && this.state.typeCount.cntOA == 0) {
             type = "meeting_room";
         }
-
         return (
             <div className="container-fluid" style={{ paddingLeft: '0px' }}>
                 <div className="row">
@@ -66,10 +65,17 @@ export class StatsMenu extends React.Component {
                         <div className="stats-occupancy-select stats-select pull-left" style={{ paddingTop: '0px' }}>
                             <TagSelector roomType={this.props.node.type} chooseTag={this.chooseTag.bind(this)} tag={this.props.tag} />
                         </div>
+
                         <Link className="stats-live-btn button-sm pull-left" to={this.props.node.info.hasfloorplan ? `live/${this.props.id}` : null} >LIVE</Link>
+                        <Link className="stats-live-btn button-sm pull-left" to={this.props.node.info.hasfloorplan ? `live/${this.props.id}/heatmap` : null} >HEATMAP</Link>
+
+                        <Link className="stats-export cursor-pointer pull-left" onClick={() => aStats.downloadCSV(this.props.node, this.props.querySettings)}>
+                            <img src="src/assets/images/export.svg" />
+                        </Link>
                         <Link className="stats-export cursor-pointer pull-left" onClick={() => this.props.downloadStatsPictures()}>
                             <img src="src/assets/images/export.svg" />
                         </Link>
+
                     </div>
                 </div>
             </div>

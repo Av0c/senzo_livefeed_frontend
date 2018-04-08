@@ -8,11 +8,14 @@ import Path from "components/common/path"
 import NodeDropdown from "components/common/nodedropdown"
 import ListDropdown from "components/common/listdropdown"
 
+
 import Modal from "components/common/modal"
-import ColorNote from "components/common/popupcolornote"
+import ColorNote from "components/common/colornote"
 import LiveSummary from "./summary"
 import FloorPlan from "./floorplan"
 import SensorForm from "./sensorform"
+
+import StatsMenu from 'components/common/statsmenu';
 import LeftMenu from 'components/common/leftmenu';
 import DateSelector from 'components/common/dateselector';
 
@@ -43,7 +46,7 @@ class Live extends React.Component {
 			},
 			path: [],
 			showDetails: true,
-			showsHeatmap: true,
+			heatmapMode: true,
 			I: {},
 		};
 	}
@@ -68,12 +71,6 @@ class Live extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.prepare(nextProps);
-	}
-
-	onToggleHeatmap() {
-		this.setState({
-		    showHeatmap: !this.state.showHeatmap,
-		});
 	}
 
 	prepare(props) {
@@ -145,71 +142,87 @@ class Live extends React.Component {
 						<div className="container-fluid">
 							<div className="row">
 								<div className="col-sm-12">
-									<LeftMenu overview='active' comparison='' />
-									<div className="live-title pull-left">
-										<h1>{this.state.currentNode.info.name}</h1>
-									</div>
-
-									<div className="live-top-menu pull-right">
-										<div className="button-sm pull-left nav-stats show-hide-details" onClick={this.changeMRMode.bind(this)}>
-											{(this.state.showDetails) ? "Hide details" : "Show details"}
+									{(this.props.location.pathname.includes("/heatmap")) ?
+										<div>
+											<LeftMenu overview='active' comparison='' />
+											<DateSelector />
+											<StatsMenu
+												name={this.state.currentNode.info.name} id={this.state.currentNode.id}
+												node={this.state.currentNode} querySettings={this.props.querySettings}
+											/>
 										</div>
+									:
+										<div>
+											<LeftMenu overview='active' comparison='' />
+											<div className="live-title pull-left">
+												<h1>{this.state.currentNode.info.name}</h1>
+											</div>
+											<div className="live-top-menu pull-right">
+												<div>
+													<div className="button-sm pull-left nav-stats show-hide-details" onClick={this.changeMRMode.bind(this)}>
+														{(this.state.showDetails) ? "Hide details" : "Show details"}
+													</div>
 
-										<NodeDropdown
-											outsideClass="live-select pull-left"
-											root={this.state.currentNode}
-											nodeFilter={this.props.nodeFilter}
-											click={
-												(node) => { this.props.dispatch(selectNodeFilter(node)) }
-											}
-											list={this.listNodeFilter.bind(this)}
-											header="All areas"
-										/>
-
-										<ListDropdown
-											outsideClass="live-select pull-left"
-											items={config.viewFilter}
-											getText={(x) => x.text}
-											selected={this.props.viewFilter}
-											click={(view) => { this.props.dispatch(selectViewFilter(view)) }}
-										/>
-										<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
-									</div>
-									{/*
-									<div className="toolbar">
-										<div className="toolbr-tools clearfix"><a className="toolbar-seat" href="#"></a><a className="toolbar-meeting-room" href="#"></a><a className="toolbar-mr" href="#"></a></div>
-										<div className="toolbar-close clearfix"><a className="toolbar-arrow-right" href="#"></a><a className="toolbar-arrow-left" href="#"></a></div>
-									</div>
-									*/}
+													<NodeDropdown
+														outsideClass="live-select pull-left"
+														root={this.state.currentNode}
+														nodeFilter={this.props.nodeFilter}
+														click={
+															(node) => { this.props.dispatch(selectNodeFilter(node)) }
+														}
+														list={this.listNodeFilter.bind(this)}
+														header="All areas"
+														/>
+													
+													<ListDropdown
+														outsideClass="live-select pull-left"
+														items={config.viewFilter}
+														getText={(x) => x.text}
+														selected={this.props.viewFilter}
+														click={(view) => { this.props.dispatch(selectViewFilter(view)) }}
+														/>
+													<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
+													<Link className='button-sm pull-right nav-stats' to={'/live/' + this.state.currentNode.id + "/heatmap"}> Heatmap</Link>
+												</div>
+											</div>
+										</div>
+									}
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "live/"+x.id} marginTop={true}/>
-				<ColorNote />
-				<div className="container-fluid">
-					{
-						this.state.showHeatmap && <div>
-							<DateSelector />
-						</div>
-					}
-					<div className="floorplan-margin">
+				{(!this.props.location.pathname.includes("/heatmap")) &&
+				<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "live/"+x.id} marginTop={true}/>}
+				{(this.props.location.pathname.includes("/heatmap")) ?
+					<div>
+						<ColorNote mode={"heatmap"}/>
 						<FloorPlan
 							root={this.props.nodeMap[this.props.nodeFilter.id]}
 							viewFilter={this.props.viewFilter}
 							showDetails={this.state.showDetails}
+							showHeatmap={true}
 							tooltipGroup="index"
 							thumbnail={false}
-							showHeatmap={this.state.showHeatmap}
-							onToggleHeatmap={this.onToggleHeatmap.bind(this)}
 						/>
 					</div>
-				</div>
-				<LiveSummary
-					root={this.state.currentNode}
-					sensorMap={this.props.sensorMap}
-				/>
+				:
+					<div>
+						<ColorNote mode={"sensors"}/>
+						<FloorPlan
+							root={this.props.nodeMap[this.props.nodeFilter.id]}
+							viewFilter={this.props.viewFilter}
+							showDetails={this.state.showDetails}
+							showHeatmap={false}
+							tooltipGroup="index"
+							thumbnail={false}
+						/>
+						<LiveSummary
+							root={this.state.currentNode}
+							sensorMap={this.props.sensorMap}
+						/>
+					</div>
+				}
 			</div>
 		);
 	}

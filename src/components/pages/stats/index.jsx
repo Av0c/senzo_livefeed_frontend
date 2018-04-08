@@ -3,16 +3,15 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import DateSelector from 'components/common/dateselector';
 import StatsMenu from 'components/common/statsmenu';
-import TotalOccupancy from 'components/pages/stats/totaloccupancy';
-import { getNodeSeriesStats, getParams } from 'actions/stats';
-import OccupancyRange from 'components/pages/stats/occupancyrange';
-import DailyOccupancy from 'components/pages/stats/dailyoccupancy';
-import OccupancyBreakDown from 'components/pages/stats/occupancybreakdown';
 import LeftMenu from 'components/common/leftmenu';
 import Zingchart from 'zingchart';
 import jsPDF from "jspdf";
 import domtoimage from "dom-to-image";
 import Jimp from "jimp/browser/lib/jimp";
+
+import { getNodeSeriesStats, getParams } from 'actions/stats';
+import Charts from 'components/pages/stats/charts';
+import FloorPlan from "components/pages/live/floorplan";
 
 export class Stats extends React.Component {
 
@@ -127,12 +126,12 @@ export class Stats extends React.Component {
                                 downloadStatsPictures={() => this.downloadStatsPictures()}
                             />
                         </div>
-                        <div className="col-md-12">
-                            <TotalOccupancy ref={e => {this.totalOccupancy = e}} currentNode={this.state.currentNode} querySettings={this.props.querySettings} />
-                            <OccupancyRange ref={e => {this.occupancyRange = e}} querySettings={this.props.querySettings} currentNode={this.state.currentNode} />
-                            <OccupancyBreakDown ref={e => {this.occupancyBreakDown = e}} querySettings={this.props.querySettings} currentNode={this.state.currentNode} />
-                            <DailyOccupancy ref={e => {this.dailyOccupancy = e}} querySettings={this.props.querySettings} currentNode={this.state.currentNode} />
-                        </div>
+                        {
+                            <Charts
+                                currentNode={this.state.currentNode}
+                                querySettings={this.props.querySettings}
+                            />
+                        }
                     </div>
                 </div>
             </div>

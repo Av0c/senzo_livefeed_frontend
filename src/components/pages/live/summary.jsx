@@ -51,18 +51,15 @@ export default class LiveSummary extends React.Component {
 		this.listAreas(this.props.root, config.room.MEETINGROOM, MRs);
 
 		return (
-			<div className="container-fluid">
-			  <div className="row">
-				<div className="col-md-6">
-				  <div className="live-stats-card card" style={{width: "925px"}}>
-					<table className="table text-center"><tbody>
-					  <tr>
+			<div className="live-stats-card">
+				<table className="table text-center"><tbody>
+					<tr>
 						<td></td>
 						<td className="live-stats-heading">Capacity:</td>
 						<td className="live-stats-heading" colSpan="3">Current Usage:</td>
-					  </tr>
-					  {
-					  	(OAs.length > 0) ? ([
+					</tr>
+					{
+						(OAs.length > 0) ? ([
 							<tr className="objects-list" key="OAs">
 								<td className="live-stats-heading">Open Areas </td>
 								<td> </td>
@@ -70,7 +67,7 @@ export default class LiveSummary extends React.Component {
 								<td>Unused</td>
 								<td>Occupancy</td>
 							</tr>,
-						  	OAs.map((x) => {
+							OAs.map((x) => {
 								var smr = this.summary(x);
 								return (
 									<tr className="objects-list" key={x.id}>
@@ -81,11 +78,11 @@ export default class LiveSummary extends React.Component {
 										<td>{(smr.total>0) ? Math.round(100*smr.inUse/smr.total) : 0}%</td>
 									</tr>
 								);
-						  	})
+							})
 						]) : ([])
-					  }
-					  {
-					  	(MRs.length > 0) ? ([
+					}
+					{
+						(MRs.length > 0) ? ([
 							<tr className="objects-list" key="MRs">
 								<td className="live-stats-heading">Meeting Rooms</td>
 								<td> </td>
@@ -93,7 +90,7 @@ export default class LiveSummary extends React.Component {
 								<td>Users</td>
 								<td>Efficiency</td>
 							</tr>,
-						  	MRs.map((x) => {
+							MRs.map((x) => {
 								var smr = this.summary(x);
 								return (
 									<tr className="objects-list" key={x.id}>
@@ -104,15 +101,12 @@ export default class LiveSummary extends React.Component {
 										<td>{(smr.inUse>0) ? Math.round(100*smr.inUse/smr.total)+"%" : "--"}</td>
 									</tr>
 								);
-						  	})
+							})
 						]) : ([])
-					  }
-					</tbody></table>
-				  </div>
-				</div>
-			  </div>
+					}
+				</tbody></table>
 			</div>
-		)
+		);
 	}
 }
 

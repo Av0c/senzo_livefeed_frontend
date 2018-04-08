@@ -1,7 +1,7 @@
 import React from 'react';
 import Dropdown from 'components/common/dropdown';
 import DropdownItem from 'components/common/dropdownitem';
-import config from 'config';
+// import config from 'config';
 
 import { connect } from 'react-redux';
 

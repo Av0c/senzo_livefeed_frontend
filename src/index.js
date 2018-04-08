@@ -37,7 +37,7 @@ import LiveFeedAPI from 'components/pages/livefeedapi';
 
 import CountriesAndTimezones from 'countries-and-timezones';
 import { initializeIcons } from '@uifabric/icons';
-import toastr from "toastr"
+import toastr from "toastr";
 
 toastr.options = {
 	"closeButton": true,

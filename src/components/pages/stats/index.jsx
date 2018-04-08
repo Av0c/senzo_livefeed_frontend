@@ -5,7 +5,7 @@ import DateSelector from 'components/common/dateselector';
 import StatsMenu from 'components/common/statsmenu';
 import LeftMenu from 'components/common/leftmenu';
 import Zingchart from 'zingchart';
-import jsPDF from "jspdf";
+import jsPDF from "./jspdf";
 import domtoimage from "./dom-to-image-modified";
 
 import { getNodeSeriesStats, getParams } from 'actions/stats';

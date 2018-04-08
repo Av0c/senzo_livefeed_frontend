@@ -2,6 +2,8 @@ import React from 'react';
 import { core as Core } from 'zingchart-react';
 import { connect } from 'react-redux';
 
+import commonChartConfig from "components/common/commonchartconfig"
+
 export default class RangeChart extends React.Component {
 
     render() {
@@ -10,37 +12,9 @@ export default class RangeChart extends React.Component {
         if(this.props.values1) {
             values.push({values:this.props.values1, backgroundColor: "#66aee9"})
         }
-        var myConfig =
-            {
-                gui:{
-                    "behaviors":[
-                        {
-                            "id":"ViewSource",
-                            "enabled":"none"
-                        },
-                        {
-                            "id":"Reload",
-                            "enabled":"none"
-                        },
-                        {
-                            "id":"Print",
-                            "enabled":"none"
-                        },
-                        {
-                            "id":"DownloadSVG",
-                            "enabled":"none"
-                        },
-                        {
-                          id: "SaveAsImage",
-                          enabled:"all"
-                        },
-                    ],
-                },
+        var myConfig = Object.assign({}, commonChartConfig, {
                 type: "bar",
                 plotarea: {
-                    marginTop: '10px',
-                    marginRight: '50px',
-                    marginLeft: '40',
                     backgroundColor: "#f6f7fa"
                 },
                 scaleX: {
@@ -77,7 +51,7 @@ export default class RangeChart extends React.Component {
                     }
                 },
                 series: values
-            };
+        });
         return (
             <div>
                 <Core id={this.props.id} data={myConfig} height="450px" width="100%" />

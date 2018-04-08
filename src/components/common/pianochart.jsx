@@ -16,10 +16,26 @@ export default class PianoChart extends React.Component {
         var myConfig = {
             gui:{
                 "behaviors":[
-                    {
-                        "id":"ViewSource",
-                        "enabled":"none"
-                    },
+                        {
+                            "id":"ViewSource",
+                            "enabled":"none"
+                        },
+                        {
+                            "id":"Reload",
+                            "enabled":"none"
+                        },
+                        {
+                            "id":"Print",
+                            "enabled":"none"
+                        },
+                        {
+                            "id":"DownloadSVG",
+                            "enabled":"none"
+                        },
+                        {
+                          id: "SaveAsImage",
+                          enabled:"all"
+                        },
                 ],
             },
             globals: {

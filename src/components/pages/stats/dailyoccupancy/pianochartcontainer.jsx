@@ -148,36 +148,40 @@ export class PianoChartContainer extends React.Component {
         return (
             <div className="row">
                 <div className="col-sm-12">
-                    <div className="stats-graph-card card-shape clearfix" style={{ minHeight: '650px' }}>
-                        <div className="row">
-                            <div className="col-sm-offset-3 col-sm-6 col-xs-12 graph-header clearfix">
-                                <h2>Daily {this.props.tag}: All Weekdays</h2>
+                    <div className="stats-graph-card">
+                        <div className="stats-card-shape clearfix" ref={(e) => {document.charts.dailyOccupancy1 = e}} style={{ minHeight: '650px' }}>
+                            <div className="row">
+                                <div className="col-sm-offset-3 col-sm-6 col-xs-12 graph-header clearfix">
+                                    <h2>Daily {this.props.tag}: All Weekdays</h2>
+                                </div>
+                                <div style={{marginRight: '30px'}} className="pull-right">
+                                    <ModeSelector mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} />
+                                </div>
                             </div>
-                            <div style={{marginRight: '30px'}} className="pull-right">
-                                <ModeSelector mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} />
-                            </div>
-                        </div>
-                        <div className="the-graph clearfix">
-                            <PianoChart data={this.state.pianoChart} />
-                            <div style={{ marginLeft: '50px' }}>
-                                <img src="src/assets/images/degree.png" />
-                                <h5 style={{ marginLeft: '0px', marginTop: '5px' }}>0 - 20% &emsp; &emsp; &emsp;20 - 40% &emsp; &emsp;&emsp;40 - 60%&emsp; &emsp; &emsp;60  -80%&emsp; &emsp; &emsp;80 - 100% </h5>
+                            <div className="the-graph clearfix">
+                                <PianoChart data={this.state.pianoChart} />
+                                <div style={{ marginLeft: '50px' }}>
+                                    <img src="src/assets/images/degree.png" />
+                                    <h5 style={{ marginLeft: '0px', marginTop: '5px' }}>0 - 20% &emsp; &emsp; &emsp;20 - 40% &emsp; &emsp;&emsp;40 - 60%&emsp; &emsp; &emsp;60  -80%&emsp; &emsp; &emsp;80 - 100% </h5>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="col-sm-12">
-                    <div className="stats-graph-card card-shape clearfix">
-                        <div className="row">
-                            <div className="col-sm-offset-3 col-sm-6 graph-header clearfix">
-                                <h2>Daily {this.props.tag}</h2>
+                    <div className="stats-graph-card">
+                        <div className="stats-card-shape clearfix" ref={(e) => {document.charts.dailyOccupancy2 = e}}>
+                            <div className="row">
+                                <div className="col-sm-offset-3 col-sm-6 graph-header clearfix">
+                                    <h2>Daily {this.props.tag}</h2>
+                                </div>
+                                <div style={{marginRight: '30px'}} className="pull-right">
+                                    <DaySelector day={this.state.day} chooseDay={this.chooseDay.bind(this)} items={this.state.pianoChart.labelsY} />
+                                </div>
                             </div>
-                            <div style={{marginRight: '30px'}} className="pull-right">
-                                <DaySelector day={this.state.day} chooseDay={this.chooseDay.bind(this)} items={this.state.pianoChart.labelsY} />
+                            <div className="the-graph clearfix">
+                                <LineChart id="dailylinechart" stats={this.state.lineChart} />
                             </div>
-                        </div>
-                        <div className="the-graph clearfix">
-                            <LineChart id="dailylinechart" stats={this.state.lineChart} />
                         </div>
                     </div>
                 </div>

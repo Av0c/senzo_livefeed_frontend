@@ -6,8 +6,7 @@ import StatsMenu from 'components/common/statsmenu';
 import LeftMenu from 'components/common/leftmenu';
 import Zingchart from 'zingchart';
 import jsPDF from "jspdf";
-import domtoimage from "dom-to-image";
-import Jimp from "jimp/browser/lib/jimp";
+import domtoimage from "./dom-to-image-modified";
 
 import { getNodeSeriesStats, getParams } from 'actions/stats';
 import Charts from 'components/pages/stats/charts';
@@ -22,7 +21,8 @@ export class Stats extends React.Component {
                 info: {
                     name: ""
                 }
-            }
+            },
+            PDFloading: false,
         }; 
     }
 
@@ -41,15 +41,17 @@ export class Stats extends React.Component {
     }
 
     getPNG(DOMnode, resultHolder, callbacks) {
-        return domtoimage.toSvg(ReactDOM.findDOMNode(DOMnode)).then((imgdata) => {
-            let imgContent = imgdata.split(",")[1];
-            Jimp.read(imgContent, (img) => {
-                let jimpImg = img.autocrop([10, true]);  
-                jimpImg.getBase64("png", (imgdata) => {
-                    resultHolder.push(imgdata);
-                    callbacks();
-                })
-            })
+        return domtoimage.toPng(ReactDOM.findDOMNode(DOMnode)).then((imgdata) => {
+            // let imgContent = imgdata.split(",")[1];
+            // Jimp.read(imgContent, (img) => {
+            //     let jimpImg = img.autocrop([10, true]);  
+            //     jimpImg.getBase64("png", (imgdata) => {
+            //         resultHolder.push(imgdata);
+            //         callbacks();
+            //     })
+            // })
+            resultHolder.push(imgdata);
+            callbacks();
         });
     }
 
@@ -66,37 +68,39 @@ export class Stats extends React.Component {
     }
 
     downloadStatsPictures() {
-        var images = [];
-        var html = (x) => ReactDOM.findDOMNode(x);
-        this.getPNG(this.totalOccupancy, images, () =>
-        this.getPNG(this.occupancyRange, images, () =>
-        this.getPNG(this.occupancyBreakDown, images, () =>
-        this.getPNG(this.dailyOccupancy, images, () => {
-            var doc = new jsPDF();
-            var docSize = doc.internal.pageSize;
+        this.setState({PDFloading: true}, () => {
+            var images = [];
+            var html = (x) => ReactDOM.findDOMNode(x);
+            this.getPNG(document.charts.totalOccupancy, images, () =>
+            this.getPNG(document.charts.occupancyRange, images, () =>
+            this.getPNG(document.charts.occupancyBreakDown, images, () =>
+            this.getPNG(document.charts.dailyOccupancy1, images, () =>
+            this.getPNG(document.charts.dailyOccupancy2, images, () => {
+                this.setState({PDFloading: false});
+                var doc = new jsPDF();
+                var docSize = doc.internal.pageSize;
 
-            var padding = 15, distance = 7;
-            var width = docSize.width - padding*2;
-            var row = padding;
+                var padding = 15, distance = 7;
+                var width = docSize.width - padding*2;
+                var row = padding;
 
-            for(let i in images) {
-                console.log(images[i]);
+                for(let i in images) {
+                    let imgContent = images[i].split(",")[1];
+                    let imgSize = this.getPngDimensions(imgContent);
+                    let imgNewHeight = width*imgSize.height/imgSize.width
 
-                let imgSize = this.getPngDimensions(imgContent);
+                    if (row + imgNewHeight + padding > docSize.height) { // new page
+                        row = padding;
+                        doc.addPage();
+                    }
 
-                let imgNewHeight = width*imgSize.height/imgSize.width
-
-                if (row + imgNewHeight + padding > docSize.height) { // new page
-                    row = padding;
-                    doc.addPage();
+                    doc.addImage(images[i], padding, row, width, imgNewHeight);
+                    row+= imgNewHeight + distance;
                 }
 
-                doc.addImage(images[i], padding, row, width, imgNewHeight);
-                row+= imgNewHeight + distance;
-            }
-
-            this.saveDoc(doc);
-        }))));
+                this.saveDoc(doc);
+            })))));
+        });
     }
 
     saveDoc(doc) {
@@ -124,14 +128,13 @@ export class Stats extends React.Component {
                                 node={this.state.currentNode}
                                 querySettings={this.props.querySettings}
                                 downloadStatsPictures={() => this.downloadStatsPictures()}
+                                PDFloading={this.state.PDFloading}
                             />
                         </div>
-                        {
-                            <Charts
-                                currentNode={this.state.currentNode}
-                                querySettings={this.props.querySettings}
-                            />
-                        }
+                        <Charts
+                            currentNode={this.state.currentNode}
+                            querySettings={this.props.querySettings}
+                        />
                     </div>
                 </div>
             </div>

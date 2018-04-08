@@ -11,6 +11,22 @@ export default class LineChart extends React.Component {
                             "id":"ViewSource",
                             "enabled":"none"
                         },
+                        {
+                            "id":"Reload",
+                            "enabled":"none"
+                        },
+                        {
+                            "id":"Print",
+                            "enabled":"none"
+                        },
+                        {
+                            "id":"DownloadSVG",
+                            "enabled":"none"
+                        },
+                        {
+                          id: "SaveAsImage",
+                          enabled:"all"
+                        },
                     ],
                 },
                 type: "line",

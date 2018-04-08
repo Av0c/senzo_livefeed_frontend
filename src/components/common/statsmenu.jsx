@@ -71,9 +71,15 @@ export class StatsMenu extends React.Component {
 
                         <Link className="stats-export cursor-pointer pull-left" onClick={() => aStats.downloadCSV(this.props.node, this.props.querySettings)}>
                             <img src="src/assets/images/export.svg" />
+                            <span>CSV</span>
                         </Link>
                         <Link className="stats-export cursor-pointer pull-left" onClick={() => this.props.downloadStatsPictures()}>
-                            <img src="src/assets/images/export.svg" />
+                            {
+                                this.props.PDFloading ?
+                                <img src="src/assets/images/loading.gif" />
+                                : <img src="src/assets/images/export.svg" />
+                            }
+                            <span>PDF</span>
                         </Link>
 
                     </div>

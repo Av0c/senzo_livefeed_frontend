@@ -21,7 +21,6 @@ export class WidgetContainer extends React.Component {
 			default:
 				area = config.room.ALLAREA;
 		}
-		console.log(this.props.node.info.name, this.props.node.type, area)
 
 		this.state = {
 			area: area,

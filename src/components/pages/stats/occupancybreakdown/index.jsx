@@ -64,7 +64,6 @@ export class OccupancyBreakDown extends React.Component {
                         </div>
                     </div>
                     <div className="the-graph clearfix">
-                        {console.log(this.state.areas)}
                         <BreakDownChartContainer mode={this.state.mode} areas={this.state.areas} />
                     </div>
                 </div>

@@ -10,92 +10,139 @@ export class PianoChartContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
+            mode: 'Average',
+            day: 'Mondays',
+            pianoChart: this.getDataForPianoChart(this.props, "Average"),
+            lineChart: this.getLineChartData(this.props, "Mondays"),
         };
-    }
-
-    componentWillMount() {
-        this.setState({
-            pianoChart: this.getDataForPianoChart(this.props),
-            lineChart: this.getLineChartData(this.props),
-        })
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            pianoChart: this.getDataForPianoChart(nextProps),
-            lineChart: this.getLineChartData(nextProps),
+            pianoChart: this.getDataForPianoChart(nextProps, this.state.mode),
+            lineChart: this.getLineChartData(nextProps, this.state.day),
         })
     }
 
-    getDataForPianoChart(props) {
+    chooseMode(mode) {
+        this.setState({ mode: mode }, () => {
+            this.setState({
+                pianoChart: this.getDataForPianoChart(this.props, this.state.mode),
+            });
+        });
+    }
+
+    chooseDay(day) {
+        this.setState({ day: day }, () => {
+            this.setState({
+                lineChart: this.getLineChartData(this.props, this.state.day),
+            });
+        });
+    }
+
+    // Piano chart functions
+
+    getDataForPianoChart(props, mode) {
         let data = {
             labelsY: [],
             labelsX: [],
             values: []
         }
-        this.getStatsDayInWeek(props,data);
-        this.getStatsAllDay(data);
+        this.getStatsDayInWeek(props,data, mode);
+        this.getStatsAllDay(data, mode);
         if (props.stats.constraint) {
             for (var i = parseInt(props.stats.constraint.starthour); i <= parseInt(props.stats.constraint.endhour); i++) {
                 data.labelsX.push(i);
             }
         }
+        for (let i in data.values) {
+            for (let j in data.values[i]) {
+                data.values[i][j] = Math.round(data.values[i][j]);
+            }
+        }
         return data;
     }
 
-    getStatsAllDay(data) {
-        for (var i = 0; i < data.values[0].length; i++) {
-            let avg = 0;
-            let count = 0;
-            for (var j = 0; j < data.values.length - 1; j++) {
-                if (data.values[j][i] >= 0) {
-                    avg += data.values[j][i];
-                }
-                else {
-                    count++;
-                }
-            }
-            data.values[data.values.length - 1].push(Math.round(avg / (data.values.length - 1 - count)));
-        }
-        data.labelsY.push("All days");
-    }
-
-    getStatsDayInWeek(props,data) {
+    getStatsDayInWeek(props, data, mode) {
         let count = 0;
         for (let name in props.stats.values) {
             data.values[count] = [];
             for (let hour in props.stats.values[parseInt(name)]) {
-                if (props.mode == 'Average') {
-                    data.values[count].push(Math.round(props.stats.values[name][hour].avg * 100));
+                if (mode == 'Average') {
+                    data.values[count].push(props.stats.values[name][hour].avg * 100);
                 }
                 else {
-                    data.values[count].push(Math.round(props.stats.values[name][hour].pk * 100));
+                    data.values[count].push(props.stats.values[name][hour].pk * 100);
                 }
             }
             count++;
             data.labelsY.push(config.day[parseInt(name)]);
         }
-        data.values[count] = [];
     }
 
-    getLineChartData(props) {
+    getStatsAllDay(data, mode) {
+        var res = [];
+        if (data.values.length == 0) return;
+        for (var hour = 0; hour < data.values[0].length; hour++) { // all hours (column)
+            let avg = 0;
+            let count = 0;
+            let pk = 0;
+            for (var weekday = 0; weekday < data.values.length; weekday++) { // all weekdays (rows, except last rows which is for all days)
+                if (data.values[weekday][hour] >= 0) {
+                    avg += data.values[weekday][hour];
+                    pk = Math.max(pk, data.values[weekday][hour]);
+                    count++;
+                }
+            }
+            if (mode == "Average") {
+                res.push(avg / count);
+            } else {
+                res.push(pk);
+            }
+        }
+        data.values.push(res);
+        data.labelsY.push("All days");
+    }
+
+    // Line chart functions
+
+    getLineChartData(props, day) {
         let data = {
             labels: [],
             peaks: [],
             avgs: []
         }
-        if (props.stats.values) {
-            let arrays = props.stats.values[config.day.indexOf(props.day)];
-            for (let hour in arrays) {
-                if (arrays[hour].pk >= 0 && arrays[hour].avg >= 0) {
-                    data.labels.push(hour);
-                    data.peaks.push(Math.round(arrays[hour].pk * 100));
-                    data.avgs.push(Math.round(arrays[hour].avg * 100));
+        if (props.stats.constraint && props.stats.values) {
+            let values = props.stats.values;
+            let starthour = props.stats.constraint.starthour;
+            let endhour = props.stats.constraint.endhour;
+
+            for (let hour = starthour; hour <= endhour; hour++) {
+                var sumAvg = 0, cntAvg = 0, peak = 0;
+                for (let weekday in values) {
+                    if (day == "All days" || config.day.indexOf(day)==parseInt(weekday)) {
+                        if (values[weekday][hour].avg >= 0 && values[weekday][hour].pk >= 0) {
+                            sumAvg += values[weekday][hour].avg;
+                            cntAvg ++;
+                            peak = Math.max(peak, values[weekday][hour].pk)
+                        }
+                    }
+                }
+                var avg = sumAvg / cntAvg;
+                data.labels.push(hour);
+                if (avg >= 0 && peak >= 0) {
+                    data.avgs.push(Math.round(avg * 100));
+                    data.peaks.push(Math.round(peak * 100));
+                } else {
+                    data.peaks.push(null);
+                    data.avgs.push(null);
                 }
             }
         }
         return data;
     }
+
+    // ---
 
     render() {
         return (
@@ -107,7 +154,7 @@ export class PianoChartContainer extends React.Component {
                                 <h2>Daily {this.props.tag}: All Weekdays</h2>
                             </div>
                             <div style={{marginRight: '30px'}} className="pull-right">
-                                <ModeSelector mode={this.props.mode} chooseMode={this.props.chooseMode} />
+                                <ModeSelector mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} />
                             </div>
                         </div>
                         <div className="the-graph clearfix">
@@ -126,7 +173,7 @@ export class PianoChartContainer extends React.Component {
                                 <h2>Daily {this.props.tag}</h2>
                             </div>
                             <div style={{marginRight: '30px'}} className="pull-right">
-                                <DaySelector day={this.props.day} chooseDay={this.props.chooseDay} items={this.state.pianoChart.labelsY} />
+                                <DaySelector day={this.state.day} chooseDay={this.chooseDay.bind(this)} items={this.state.pianoChart.labelsY} />
                             </div>
                         </div>
                         <div className="the-graph clearfix">

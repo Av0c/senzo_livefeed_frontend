@@ -991,6 +991,7 @@ input[type="password"].has-error {
     color: #BDBDBD;
 }
 .material-icons {
+    font-variant-ligatures: none;
     vertical-align: middle;
 }
 .scroll-top-button {

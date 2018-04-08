@@ -24,7 +24,7 @@ export default class BreakDownChart extends React.Component {
                     minorTicks: "0",
                     maxTicks: "0",
                     labels: this.props.data.labels,
-                    maxLabels: "7",
+                    maxLabels: "999",
                     item: {
                         maxWidth: "180px",
                         wrapText: "true",
@@ -57,7 +57,6 @@ export default class BreakDownChart extends React.Component {
                             lineColor: "#e39199",
                             lineWidth: 2,
                             label: {  //define label within marker
-                                text: "High Mark",
                                 fontColor: "#9e9e9e",
                                 alpha: 0.7,
                                 textAlpha: 1,
@@ -72,7 +71,6 @@ export default class BreakDownChart extends React.Component {
                             lineColor: "#faf8f9",
                             lineWidth: 2,
                             label: {  //define label within marker
-                                text: "Low Mark",
                                 fontColor: "#9e9e9e",
                                 alpha: 0.7,
                                 textAlpha: 1,
@@ -85,7 +83,7 @@ export default class BreakDownChart extends React.Component {
                     thousandsSeparator: ","
                 },
                 plot: {
-                    barWidth: "50px",
+                    barWidth: "75%",
                     animation: {
                         effect: 1,
                         sequence: 2,

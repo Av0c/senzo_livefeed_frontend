@@ -11,6 +11,7 @@ var PATHS = {
 var config = {
   entry: './src/index.js',
   devtool: 'source-map',
+  node: { fs: "empty" },
   output: {
     path: PATHS.output,
     filename: 'bundle.min.js'

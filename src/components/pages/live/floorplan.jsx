@@ -64,7 +64,6 @@ export class FloorPlan extends React.Component {
 				this.setState({url: url, loading: false});
 			}
 		} else {
-			console.log(this.props, nextProps)
 			if ((!this.props.root && nextProps.root) || this.props.showHeatmap &&
 				(
 					this.querySettingsChanged(this.props.query, nextProps.query) ||
@@ -273,6 +272,7 @@ export class FloorPlan extends React.Component {
 			id: state.id,
 			name: state.name,
 			macaddress: this.cleanMACAddress(state.macaddress),
+			hidden: state.hidden,
 		}
 		var location = Number(state.location);
 		if (state.location == -1 || state.id==-1) {
@@ -315,10 +315,10 @@ export class FloorPlan extends React.Component {
 		var currentHidden = ss.hidden;
 		var hidden;
 
-		if (currentHidden == true) {
+		if (currentHidden === true) {
 			// console.log("Not visible!");
 			hidden = false;
-		} else if (currentHidden == false) {
+		} else if (currentHidden === false) {
 			// console.log("Visible!");
 			hidden = true;
 		} else {
@@ -326,13 +326,21 @@ export class FloorPlan extends React.Component {
 			hidden = false;
 		}
 
-		var updateState = {
+		var sensor = {
 			id: id,
-			name: ss.name, // No change
-			macaddress: ss.macaddress, // No change
 			hidden: hidden,
 		}
-		this.updateSensor(e, updateState);
+		console.log(hidden);
+		this.props.dispatch(updateSensor(sensor)).then((response) => {
+			if (response.status == 200) {
+				toastr.success(`Update sensor successfully`);
+				this.sensorForm.reset();
+			} else {
+				toastr.error(response.data)
+			}
+		}).catch(error => {
+			toastr.error(error.data);
+		});
 	}
 	onHoverHeatNode(e, id) {
 		// DEBUG ONLY

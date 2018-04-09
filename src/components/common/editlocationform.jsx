@@ -15,7 +15,6 @@ export default class EditLocationForm extends React.Component {
     }
 
     changeHandler(e) {
-        console.log("change!");
         let key = e.target.id;
         let value = e.target.value;
         this.setState({ [key]: value });
@@ -23,7 +22,6 @@ export default class EditLocationForm extends React.Component {
             if(value != this.state.country) {
                 let locations = this.getTimeZonesOfCountry(value);
                 this.setState({timezone: locations[0]});
-                console.log(locations[0])
             }
         }
     }
@@ -51,7 +49,6 @@ export default class EditLocationForm extends React.Component {
     }
 
     generateTimeZoneOptions() {
-        console.log(this.state.country)
         let options = this.getTimeZonesOfCountry(this.state.country);
         return options.map((element, index) => {
             return <option key={index} value={element}>{element}</option>

@@ -34,7 +34,6 @@ export default (state = initialState, action) => {
                     loading: true,
                 }
             }
-            // console.log(map)
             return Object.assign({}, state, {
                 overviewMap: map
             });
@@ -48,7 +47,6 @@ export default (state = initialState, action) => {
                     loading: false,
                 }
             }
-            // console.log(map)
             return Object.assign({}, state, {
                 overviewMap: map,
             });

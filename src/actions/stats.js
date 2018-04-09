@@ -267,7 +267,6 @@ export function downloadCSV(node, querySettings) {
         querySettings: querySettings,
     });
     params = getParams(params);
-    console.log(params)
 
     let url = config.api.root+`/csv/sensor/raw/${node.id}?startdate=${params.startdate}&enddate=${params.enddate}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}`;
 

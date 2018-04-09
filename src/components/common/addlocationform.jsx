@@ -26,7 +26,6 @@ export default class AddLocationForm extends React.Component {
             if(value != this.state.country) {
                 let locations = this.getTimeZonesOfCountry(value);
                 this.setState({timezone: locations[0]});
-                console.log(locations[0])
             }
         }
     }
@@ -43,7 +42,6 @@ export default class AddLocationForm extends React.Component {
             });
         }
         else {
-            console.log(parentCode)
             return <option value={parentCode}>{countries[parentCode].name}</option>
         }
     }
@@ -55,7 +53,6 @@ export default class AddLocationForm extends React.Component {
     }
 
     generateTimeZoneOptions() {
-        console.log(this.state.country)
         let options = this.getTimeZonesOfCountry(this.state.country);
         return options.map((element, index) => {
             return <option key={index} value={element}>{element}</option>
@@ -133,7 +130,6 @@ export default class AddLocationForm extends React.Component {
                     <div className="modal-footer">
                         <button className="btn btn-default" onClick={this.props.closeAddLocationForm} type="button" data-dismiss="modal">Cancel</button>
                         {isArea || <button className="btn btn-success" onClick={() => {
-                            console.log(this)
                             this.props.submit(node, this.state);
                             this.props.closeAddLocationForm();
                         }} type="button">Confirm</button>}

@@ -33,7 +33,6 @@ export default (state = initialState, action ) => {
     //}
 
     case USER_UPDATE_COMPLETED: {
-      console.log(action.data);
       return Object.assign({}, state, {
         loading: false,
         user: action.data

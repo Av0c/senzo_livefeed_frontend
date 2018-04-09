@@ -66,7 +66,6 @@ export class FloorPlan extends React.Component {
 				this.setState({url: url, loading: false});
 			}
 		} else {
-			console.log(this.props, nextProps)
 			if ((!this.props.root && nextProps.root) || this.props.showHeatmap &&
 				(
 					this.querySettingsChanged(this.props.query, nextProps.query) ||
@@ -96,7 +95,6 @@ export class FloorPlan extends React.Component {
 		this.props.dispatch(fetchImage(this.props.user.companyid))
 	}
 	getMousePos(evt) {
-		console.trace();
 		var imageElement = this.refs['floorplan-image'].getBoundingClientRect();
 		var mouseX = evt.clientX - imageElement.left;
 		var mouseY = evt.clientY - imageElement.top;
@@ -168,10 +166,12 @@ export class FloorPlan extends React.Component {
 			window.removeEventListener("mousemove", this.state.moveFunc);
 			window.removeEventListener("mouseup", this.state.upFunc);
 			window.removeEventListener("contextmenu", this.state.cancelFunc);
+			window.removeEventListener("keydown", this.state.escCancelFunc);
 			this.setState({
 				moveFunc: {},
 				upFunc: {},
 				cancelFunc: {},
+				escCancelFunc: {},
 			});
 			this.sensorForm.reset();
 			this.sensorForm.open(e);
@@ -183,15 +183,17 @@ export class FloorPlan extends React.Component {
 				e.stopPropagation();
 				e.preventDefault();
 			}
-			window.removeEventListener("contextmenu", this.state.cancelFunc);
 			window.removeEventListener("mousemove", this.state.moveFunc);
 			window.removeEventListener("mouseup", this.state.upFunc);
+			window.removeEventListener("contextmenu", this.state.cancelFunc);
+			window.removeEventListener("keydown", this.state.escCancelFunc);
 			this.setState({
 				mode: "done",
 				mousePos: {},
 				moveFunc: {},
 				upFunc: {},
 				cancelFunc: {},
+				escCancelFunc: {},
 			}, callback);
 		}
 		return false;
@@ -211,13 +213,19 @@ export class FloorPlan extends React.Component {
 		this.setState({mode: mode, lastMode: this.state.mode});
 		if (mode=="add") {
 			if (this.props.viewFilter.code == "LIVE") {
-				console.log("BN");
+				// Select mode SHOW ALL
 				this.props.dispatch(selectViewFilter(config.viewFilter[0]));
 			}
 
 			var moveFunc = (e) => this.onMouseMove(e);
 			var upFunc = (e) => this.onMouseUp(e);
 			var cancelFunc = (e) => this.onCancel(e);
+			var escCancelFunc = (e) => {
+				if (e.keyCode === 27) {
+					// ESC is pressed.
+					cancelFunc(e);
+				}
+			}
 
 			var mousePos = this.getMousePos(e);
 			this.setState({
@@ -225,10 +233,12 @@ export class FloorPlan extends React.Component {
 				moveFunc: moveFunc,
 				upFunc: upFunc,
 				cancelFunc: cancelFunc,
+				escCancelFunc: escCancelFunc,
 			})
 			window.addEventListener("mousemove", moveFunc);
 			window.addEventListener("mouseup", upFunc);
 			window.addEventListener("contextmenu", cancelFunc);
+			window.addEventListener("keydown", escCancelFunc);
 		}
 	}
 	moveSensor(ss, pos) {
@@ -549,7 +559,6 @@ export class FloorPlan extends React.Component {
 								}}
 								onSubmit={(e, state) => {
 									if (this.state.mode=="add") {
-										console.log(e, this.getMousePos(e));
 										this.addSensor(e, state, this.state.mousePos)
 									} else if (this.state.mode=="editing") {
 										this.updateSensor(e, state)

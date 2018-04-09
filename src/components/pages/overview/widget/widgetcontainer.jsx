@@ -86,7 +86,6 @@ export class WidgetContainer extends React.Component {
 	}
 
 	selectAreaFilter(area) {
-		console.log(area)
 		this.setState({ area: area }, () => this.setState({data: this.getOverview(this.props)}));
 	}
 

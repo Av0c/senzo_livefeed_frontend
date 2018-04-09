@@ -129,7 +129,6 @@ export function uploadImageSuccessful() {
 }
 
 export function updateNode(node) {
-	console.log(node)
 	return dispatch => {
 		dispatch(updateNodeInProgress());
 		return axios.put(config.api.root + `/node/update/${node.id}`, node)

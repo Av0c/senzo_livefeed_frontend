@@ -18,7 +18,6 @@ export default (state = initialState, action ) => {
     case a.MOVE_SENSOR: {
       action.sensor.xpercent = action.x;
       action.sensor.ypercent = action.y;
-      console.log(action)
       return Object.assign({}, state, {
           selectedSensor: {}
         });

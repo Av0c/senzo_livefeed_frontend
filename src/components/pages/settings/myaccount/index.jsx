@@ -46,7 +46,6 @@ class Index extends React.Component {
 
     render() {
         let user = this.props.user;
-        console.log(user, this.state)
         return (
             <div className="settings-wrapper">
                 <div className="container-fluid">

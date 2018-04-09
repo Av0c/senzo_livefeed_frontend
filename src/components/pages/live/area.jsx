@@ -230,7 +230,6 @@ class Area extends React.Component{
 	}
 
 	setOwnFloorPlan(node, useownfp) {
-		console.log(this.props, node, useownfp);
 		var newNode = {id: node.id, info: {useownfp: useownfp}}
 		this.props.dispatch(a.updateNode(newNode));
 	}

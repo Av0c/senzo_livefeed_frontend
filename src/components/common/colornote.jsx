@@ -33,20 +33,19 @@ export default class ColorNote extends React.Component {
                             <span className="popup-color-note-td green">{descs[2]}</span>
                         </td>
                     </tr>
-                    {(this.props.mode == "sensors") &&
-                    <tbody>
-                        <tr><td></td></tr>
-                        <tr>
+                    {(this.props.mode == "sensors") && [
+                        <tr key="0"><td></td></tr>,
+                        <tr key="1">
                             <td>
                                 <span className="popup-color-note-td blue">{descs[3]}</span>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr>,
+                        <tr key="2">
                             <td>
                                 <span className="popup-color-note-td brown">{descs[4]}</span>
                             </td>
-                        </tr>
-                    </tbody>}
+                        </tr>,
+                    ]}
             </tbody></table>
         );
     }

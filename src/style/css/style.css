@@ -852,10 +852,7 @@ h2.account-title {
     background: #7ec344;
     border-radius: 8px;
 }
-.working-days {
-    margin-top: 20px;
-}
-.working-hours {
+.working-days, .working-hours, .box-settings {
     margin-top: 20px;
 }
 .week-day {

@@ -95,7 +95,6 @@ export function resetPWGetUserOk(data) {
   }
 }
 export function resetPWGetUserFailed(data) {
-  console.trace();
   return {
     type: RESET_PW_GET_USER_FAILED,
     data

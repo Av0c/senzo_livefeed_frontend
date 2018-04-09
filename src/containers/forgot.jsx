@@ -15,9 +15,7 @@ class ForgotForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // Sending email failed
-    console.log(this.props, nextProps);
     if (this.props.auth.sendResetPWInProgress && !nextProps.auth.sendResetPWInProgress && !nextProps.auth.sendResetPWDone) {
-      console.log("x");
       this.recaptcha.reset();
     }
   }
@@ -41,7 +39,6 @@ class ForgotForm extends React.Component {
   render() {
     var done = !this.props.auth.sendResetPWInProgress && this.props.auth.sendResetPWDone;
     var waiting = this.props.auth.sendResetPWInProgress && !this.props.auth.sendResetPWDone;
-    console.log(this.state)
     return (
       <div className="login-wrapper">
         <div className="login-card text-center">

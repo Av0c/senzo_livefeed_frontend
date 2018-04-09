@@ -116,34 +116,43 @@ export class Sensor extends React.Component{
 		}
 
 		if (sensor.dummy || this.props.dragged) {
-
 			return (
 				<div className={className} style={style}/>
 			);
 		} else {
 			// Heatmap
 			var heatNode = null;
-			if (this.props.average >= 0 && this.props.average <= 1) { // Only show valid heatnodes
-				if (this.checkFilter(this.props.heatmapFilter, this.props.average) == true) {
-					var normalizedAverage = this.gaussianCDF(this.props.average, this.props.normalizer[0], this.props.normalizer[1]);
-					var glowSize = 2 + Math.ceil(normalizedAverage/0.2) * 1;
-					// var glowSize = 5;
+			var isHidden = false;
 
-					var glowColor = this.valueToColor(normalizedAverage);
+			// var isHidden = sensor.hidden;
+			if (!(sensor.id % 5)) {
+				var isHidden = true;
+			}
 
-					var heatStyle = Object.assign({}, style, {
-						backgroundColor: glowColor,
-						boxShadow: "0px 0px 16px " + glowSize + "px " + glowColor,
-					});
+			var cond =
+			(this.props.average >= 0 && this.props.average <= 1) && // Valid heatnodes
+			(this.checkFilter(this.props.heatmapFilter, this.props.average)) && // Filtered
+			(this.props.showHiddenHeatNodes || (!isHidden)); // Show hidden if editing, else no
 
-					heatNode =
-					<div
-						className={"sensor-heatnode" + (this.props.showHeatmap ? " heat-show" : " heat-hide")}
-						data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}
-						onClick={(e) => {this.props.onClickHeatNode(e, sensor.id)}}
-					>
-					</div>
-				}
+			if (cond) {
+				var normalizedAverage = this.gaussianCDF(this.props.average, this.props.normalizer[0], this.props.normalizer[1]);
+				var glowSize = 2 + Math.ceil(normalizedAverage/0.2) * 1;
+
+				var glowColor = this.valueToColor(normalizedAverage);
+
+				var heatStyle = Object.assign({}, style, {
+					backgroundColor: glowColor,
+					boxShadow: "0px 0px 16px " + glowSize + "px " + glowColor,
+				});
+
+				heatNode =
+				<div
+					className={"sensor-heatnode" + ((isHidden) ? " heat-show-hidden" : "")}
+					data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}
+					onClick={(e) => {this.props.onClickHeatNode(e, sensor.id)}}
+					onMouseEnter={(e) => {this.props.onHoverHeatNode(e, sensor.id)}}
+				>
+				</div>
 			}
 			if (!this.props.thumbnail) {
 				return(

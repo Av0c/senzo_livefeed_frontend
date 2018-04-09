@@ -34,7 +34,7 @@ export default class ColorNote extends React.Component {
                         </td>
                     </tr>
                     {(this.props.mode == "sensors") &&
-                    <tbody>
+                    <React.Fragment>
                         <tr><td></td></tr>
                         <tr>
                             <td>
@@ -46,7 +46,7 @@ export default class ColorNote extends React.Component {
                                 <span className="popup-color-note-td brown">{descs[4]}</span>
                             </td>
                         </tr>
-                    </tbody>}
+                    </React.Fragment>}
             </tbody></table>
         );
     }

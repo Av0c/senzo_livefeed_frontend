@@ -311,42 +311,43 @@ export class FloorPlan extends React.Component {
 		}
 	}
 	onClickHeatNode(e, id) {
-		var ss = this.props.sensorMap.get(id);
-		var currentHidden = ss.hidden;
-		var hidden;
+		if (this.state.mode == "hide") {
+			var ss = this.props.sensorMap.get(id);
+			var currentHidden = ss.hidden;
+			var hidden;
 
-		if (currentHidden === true) {
-			// console.log("Not visible!");
-			hidden = false;
-		} else if (currentHidden === false) {
-			// console.log("Visible!");
-			hidden = true;
-		} else {
-			console.log("UNSET !!!");
-			hidden = false;
-		}
-
-		var sensor = {
-			id: id,
-			hidden: hidden,
-		}
-		console.log(hidden);
-		this.props.dispatch(updateSensor(sensor)).then((response) => {
-			if (response.status == 200) {
-				toastr.success(`Update sensor successfully`);
-				this.sensorForm.reset();
+			if (currentHidden === true) {
+				// console.log("Not visible!");
+				hidden = false;
+			} else if (currentHidden === false) {
+				// console.log("Visible!");
+				hidden = true;
 			} else {
-				toastr.error(response.data)
+				console.log("UNSET !!!");
+				hidden = true;
 			}
-		}).catch(error => {
-			toastr.error(error.data);
-		});
+
+			var sensor = {
+				id: id,
+				hidden: hidden,
+			}
+			this.props.dispatch(updateSensor(sensor)).then((response) => {
+				if (response.status == 200) {
+					toastr.success(`Update heat node successfully.`);
+					this.sensorForm.reset();
+				} else {
+					toastr.error(response.data)
+				}
+			}).catch(error => {
+				toastr.error(error.data);
+			});
+		}
 	}
 	onHoverHeatNode(e, id) {
-		// DEBUG ONLY
-		var ss = this.props.sensorMap.get(id);
-		var currentHidden = ss.hidden;
-		console.log("hidden: "+currentHidden);
+		// // DEBUG ONLY
+		// var ss = this.props.sensorMap.get(id);
+		// var currentHidden = ss.hidden;
+		// console.log("hidden: "+currentHidden);
 	}
 	deleteSensor(sensor) {
 		this.props.dispatch(deleteNode(sensor)).then((response) => {

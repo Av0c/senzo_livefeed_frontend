@@ -124,10 +124,10 @@ export class Sensor extends React.Component{
 			var heatNode = null;
 			var isHidden = false;
 
-			// var isHidden = sensor.hidden;
-			if (!(sensor.id % 5)) {
-				var isHidden = true;
-			}
+			var isHidden = sensor.hidden;
+			// if (!(sensor.id % 5)) {
+			// 	var isHidden = true;
+			// }
 
 			var cond =
 			(this.props.average >= 0 && this.props.average <= 1) && // Valid heatnodes
@@ -148,7 +148,7 @@ export class Sensor extends React.Component{
 				heatNode =
 				<div
 					className={"sensor-heatnode" + ((isHidden) ? " heat-show-hidden" : "")}
-					data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}
+					data-tooltip={(this.props.showHiddenHeatNodes) ? ((isHidden) ? "Hidden" : "Visible") : ("Average: " + Math.round(this.props.average*1000)/10 + "%")} style={heatStyle}
 					onClick={(e) => {this.props.onClickHeatNode(e, sensor.id)}}
 					onMouseEnter={(e) => {this.props.onHoverHeatNode(e, sensor.id)}}
 				>

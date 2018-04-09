@@ -138,7 +138,9 @@ export class Sensor extends React.Component{
 					heatNode =
 					<div
 						className={"sensor-heatnode" + (this.props.showHeatmap ? " heat-show" : " heat-hide")}
-						data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}>
+						data-tooltip={"Average: " + Math.round(this.props.average*1000)/10 + "%"} style={heatStyle}
+						onClick={(e) => {this.props.onClickHeatNode(e, sensor.id)}}
+					>
 					</div>
 				}
 			}

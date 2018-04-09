@@ -22,8 +22,6 @@ import { selectViewFilter } from "actions/live/filter";
 import enhanceWithClickOutside from "react-click-outside";
 import DateSelector from 'components/common/dateselector';
 
-
-
 export class FloorPlan extends React.Component {
 	constructor(props, context) {
 		super(props, context);
@@ -312,6 +310,24 @@ export class FloorPlan extends React.Component {
 			toastr.error("Name and MAC address must be filled");
 		}
 	}
+	onClickHeatNode(e, id) {
+		var currentHeatmapVisible = this.props.sensorMap.get(id).heatmapVisible;
+		if (currentHeatmapVisible == true) {
+			console.log("Visible");
+			heatmapVisible = false;
+		} else if (currentHeatmapVisible == false) {
+			console.log("Not visible");
+			heatmapVisible = true;
+		} else {
+			console.log("UNSET !!!");
+			heatmapVisible = false;
+		}
+		var updateState = {
+			id: id,
+			heatmapVisible: heatmapVisible,
+		}
+		// this.updateSensor(e, {});
+	}
 	deleteSensor(sensor) {
 		this.props.dispatch(deleteNode(sensor)).then((response) => {
 			if (response.status==200) {
@@ -343,10 +359,16 @@ export class FloorPlan extends React.Component {
 		    mode: mode,
 		});
 	}
-	toggleHeatmap() {
-		if (typeof this.props.onToggleHeatmap == "function") {
-			this.props.onToggleHeatmap();
+	toggleHide() {
+		var mode;
+		if (this.state.mode == "hide") {
+			mode = "done";
+		} else if (this.state.mode == "done") {
+			mode = "hide";
 		}
+		this.setState({
+		    mode: mode,
+		});
 	}
 	calculateNormalizer() {
 		// return mean and std
@@ -422,15 +444,28 @@ export class FloorPlan extends React.Component {
 				                        <div className="help-icon hi-show">
 				                            <i className="material-icons">info_outline</i>
 				                        </div>
-				                        <div className="help-text ht-show">Hover over a node for more info.</div>
+				                        <div className={(this.state.mode=="done") ? "help-text ht-show" : "help-text ht-hide"}>Hover over a heat node for more info.</div>
+				                        <div className={(this.state.mode=="hide") ? "help-text ht-show" : "help-text ht-hide"}>Click on a heat-node to hide/unhide it.</div>
 				                    </div>
+									{(this.state.hasPermission) &&
+									<React.Fragment>
+										<div className="options-buttons">
+											<i
+												className="material-icons"
+												data-tooltip={(this.state.mode=="hide") ? "Show hidden heat-nodes" : "Don't show hidden heat-nodes"}
+												onClick={() => this.toggleHide()}
+												>
+												{(this.state.mode=="hide") ? "visibility" : "visibility_off"}
+											</i>
+										</div>
+									</React.Fragment>}
 									<ListDropdown
 										outsideClass="heatmap-filter"
 										items={["ALL", "ABOVE", "BELOW", "LOWEST"]}
 										getText={(f) => this.getHeatmapFilterText(f)}
 										selected={this.state.heatmapFilter}
 										click={(f) => this.chooseHeatmapFilter(f)}
-									/>
+										/>
 				                </div>
 							:
 								<div className="floorplan-options-container">
@@ -496,6 +531,7 @@ export class FloorPlan extends React.Component {
 
 										showHeatmap={this.props.showHeatmap}
 										heatmapFilter={this.state.heatmapFilter}
+										onClickHeatNode={(e, id) => {this.onClickHeatNode(e, id)}}
 
 										sensor={ss}
 										viewFilter={this.props.viewFilter}

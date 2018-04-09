@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import { DatePicker, DayOfWeek } from 'office-ui-fabric-react';
-import { initializeIcons } from '@uifabric/icons';
 import { connect } from 'react-redux';
 import { selectPeriod } from 'actions/querysettings';
 import PeriodButton from 'components/common/periodbutton';

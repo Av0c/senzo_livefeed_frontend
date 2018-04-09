@@ -45,6 +45,7 @@ export class Sensor extends React.Component{
 		// Cumulative distribution function of Gaussian distribution
 		return (1+math.erf((x-mean)/(std*math.sqrt(2))))/2;
 	}
+
 	checkFilter(filter, value) {
 		var globalAvg = this.props.normalizer[0];
 
@@ -72,7 +73,7 @@ export class Sensor extends React.Component{
 
 		return false;
 	}
-	break;
+
 	render(){
 		let sensor = this.props.sensor;
 

@@ -354,6 +354,15 @@ input:focus {
     box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
     margin: auto;
 }
+.card {
+    padding: 12px 26px 20px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 2px 14px 0 rgba(0,0,0,.2);
+    margin-left: 50px;
+    margin-bottom: 50px;
+    width: 900px;
+}
 .card-location {
     display: inline-block;
     text-overflow: ellipsis;
@@ -438,9 +447,17 @@ input:focus {
     min-height: 510px;
 }
 .stats-graph-card {
-    padding: 28px 10px 60px;
     margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
     min-height: 400px;
+    max-width: 1200px;
+}
+.stats-card-shape {
+    padding: 28px 10px 0px 0px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.2);
 }
 .comparison-graph-card h2 {
     font-size: 22px;
@@ -461,11 +478,7 @@ input:focus {
     margin-right: 0;
 }
 .the-graph {
-    background: #d8d8d8;
-    height: 400px;
-    margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 0px;
+    margin: 10px 0px 40px 20px;
 }
 .the-graph-legend {
     display: flex;
@@ -984,6 +997,7 @@ input[type="password"].has-error {
     color: #BDBDBD;
 }
 .material-icons {
+    font-variant-ligatures: none;
     vertical-align: middle;
 }
 .scroll-top-button {

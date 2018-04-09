@@ -15,13 +15,15 @@ export class OccupancyRange extends React.Component {
     }
     render() {
         return (
-            <div className="stats-graph-card card-shape clearfix">
-                <div className="graph-header clearfix">
-                    <h2>{this.props.querySettings.tag} Range</h2>
+            <div className="stats-graph-card">
+                <div className="stats-card-shape clearfix" ref={(e) => {document.charts.occupancyRange = e}}>
+                    <div className="graph-header clearfix">
+                        <h2>{this.props.querySettings.tag} Range</h2>
 
-                </div>
-                <div className="the-graph clearfix">
-                    <RangeChartContainer />
+                    </div>
+                    <div className="the-graph clearfix">
+                        <RangeChartContainer />
+                    </div>
                 </div>
             </div>
 

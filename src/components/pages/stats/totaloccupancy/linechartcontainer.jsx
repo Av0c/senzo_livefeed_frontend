@@ -41,12 +41,14 @@ export class LineChartContainer extends React.Component {
         data.avgs = this.getAverage();
         data.peaks = this.getPeak();
         return (
-            <div className="stats-graph-card card-shape clearfix">
-                <div className="graph-header clearfix">
-                    <h2>Total {this.props.tag}</h2>
-                </div>
-                <div className="the-graph clearfix">
-                    <LineChart id="totalOccupancy" stats={data} />
+            <div className="stats-graph-card">
+                <div className="stats-card-shape clearfix" ref={(e) => {document.charts.totalOccupancy = e}}>
+                    <div className="graph-header clearfix">
+                        <h2>Total {this.props.tag}</h2>
+                    </div>
+                    <div className="the-graph clearfix">
+                        <LineChart id="totalOccupancy" stats={data} />
+                    </div>
                 </div>
             </div>
 

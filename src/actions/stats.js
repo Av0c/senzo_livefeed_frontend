@@ -201,7 +201,6 @@ export function getNodeSeriesStats(params) {
         dispatch(fetchNodeStats(params));
         axios.get(config.api.root + `/stats/series/${params.id}/${params.tag}?startdate=${params.startdate}&enddate=${params.enddate}&starthour=${params.starthour}&endhour=${params.endhour}&weekdaymask=${params.weekdaymask}&marks=${JSON.stringify(params.marks)}&groupby=${params.groupby}`)
             .then((response) => {
-                console.log(response.data)
                 if (params.action == Comparison.RECEIVE_FIRST_LOCATION_TOTAL) {
                     dispatch(Comparison.receiveFirstLocationTotal(response.data));
                 }
@@ -279,7 +278,6 @@ export function downloadCSV(node, querySettings) {
     }
 
     axios.get(url, cf).then(response => {
-        console.log(response);
         var file = new Blob([response.data], {type: 'text/plain'});
         let objectUrl = window.URL.createObjectURL(file);
 

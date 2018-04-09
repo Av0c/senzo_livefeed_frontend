@@ -20,7 +20,6 @@ class OverviewLeft extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
         this.props.dispatch(fetchLiveData());
         this.props.dispatch(fetchCurrentUser());
     }

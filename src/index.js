@@ -68,6 +68,7 @@ CountriesAndTimezones.getAllTimezones()["UTC"] = {
     "offsetStr": "00:00",
     "countries": ["--"],
 }
+document.charts = {};
 
 initializeIcons();
 ReactDOM.render((

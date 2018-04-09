@@ -36,7 +36,7 @@ class InputData extends Component {
 				open: false,
 			});
 			if (typeof this.props.onSave == "function" && this.props.value != this.state.value) {
-				this.props.onSave(this.props.idkey, this.state.value);
+				this.props.onSave(this.props.idKey, this.state.value);
 			}
 		}
 	}

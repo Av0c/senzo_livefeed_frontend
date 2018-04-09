@@ -104,7 +104,6 @@ class Card extends React.Component {
 	}
 
     onSave(idKey, value) {
-    	console.log(idKey, value);
     	if (idKey == "standbytime") {
 			var newCard = {
 				id: this.props.card.id,

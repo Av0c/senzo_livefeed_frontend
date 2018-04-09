@@ -173,7 +173,6 @@ export class Settings extends React.Component {
     }
 
     updateLocation(node, state) {
-        console.log(state)
         if (!state.name && !state.timezone && !state.country) {
             toastr.info("Nothing changed");
         }
@@ -198,7 +197,6 @@ export class Settings extends React.Component {
             return [false, "This location doesn't have any floorplan yet. Please upload a new one !"]
         }
         if (image) {
-            console.log("upload", state.type)
             this.props.dispatch(uploadFloorplanView(node, image, state.type));
             return [true, ""];
         } else {
@@ -213,7 +211,6 @@ export class Settings extends React.Component {
                 },
                 type: state.type
             }
-            console.log("update", newNode)
             this.props.dispatch(updateNode(newNode));
             return [true, ""];
         }

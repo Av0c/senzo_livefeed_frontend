@@ -12,7 +12,6 @@ const initialState = {
 };
 
 function generateAPIKey(auth) {
-	console.log(auth);
 	return axios.post(config.api.root + `/user/apikey`, auth)
 		.then((response) => {
 			return a.generateAPIKeyOk(response);

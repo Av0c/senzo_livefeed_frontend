@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from "config"
 import TimePicker from 'components/common/timepicker'
+import AutoSaveInput from 'components/common/autosaveinput'
 import Modal from 'components/common/modal'
 import enhanceWithClickOutside from "react-click-outside";
 import * as a from 'actions/defaultsettings'
@@ -34,9 +35,11 @@ class Card extends React.Component {
 	}
 
 	changeHour(hours) {
-		var newCard = Object.assign({}, this.props.card);
-		newCard.starthour = hours[0];
-		newCard.endhour = hours[1]-1;
+		var newCard = {
+			id: this.props.card.id,
+			starthour: hours[0],
+			endhour: hours[1]-1,
+		};
 		this.props.dispatch(a.updateCard(newCard));
 	}
 
@@ -45,8 +48,10 @@ class Card extends React.Component {
 	}
 
 	changeWeekday(pos) {
-		var newCard = Object.assign({}, this.props.card);
-		newCard.weekdaymask = this.replaceAt(newCard.weekdaymask, pos, (newCard.weekdaymask[pos]=="0") ? "1" : "0");
+		var newCard = {
+			id: this.props.card.id,
+			weekdaymask: this.replaceAt(newCard.weekdaymask, pos, (newCard.weekdaymask[pos]=="0") ? "1" : "0"),
+		};
 		this.props.dispatch(a.updateCard(newCard));
 	}
 
@@ -95,9 +100,18 @@ class Card extends React.Component {
 
 	isCompanyAdmin(user) {
 		var node = this.props.nodeMap[this.props.me.rootnodeid];
-		console.log(node);
 		return (user.role == "ADMIN") && node && (node.type == "customer");
 	}
+
+    onSave(idKey, value) {
+    	if (idKey == "standbytime") {
+			var newCard = {
+				id: this.props.card.id,
+				standbytime: value*60,
+			};
+			this.props.dispatch(a.updateCard(newCard));
+    	}
+    }
 
 	render() {
 		var nodes = [];
@@ -162,6 +176,23 @@ class Card extends React.Component {
 						</label>
 					</div>
 				</div>
+
+				<div className="box-settings">
+					<div>
+						<label>Stand By Time</label>
+						<div>
+						<AutoSaveInput
+							type="number"
+							idKey="standbytime"
+							value={Math.round(this.props.card.standbytime/60)}
+							style={{width:"60px"}}
+							editable={editable}
+							onSave={this.onSave.bind(this)}
+						/> minutes
+						</div>
+					</div>
+				</div>
+
 				<div className="default-settings-bottom">
 					<div className="pull-right">
 						{ deletable && 

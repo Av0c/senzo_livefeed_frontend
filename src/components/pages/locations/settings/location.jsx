@@ -24,9 +24,6 @@ class Location extends React.Component {
             isShowingEdit: false,
             qnode: qnode,
         }
-        if (open) {
-            console.log(this.props.node)
-        }
     }
 
     componentDidMount() {

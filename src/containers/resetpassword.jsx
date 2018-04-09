@@ -34,7 +34,6 @@ class ResetPasswordForm extends React.Component {
   }
 
   render() {
-    console.log(this.props.auth)
     var invalidKey = this.props.auth.resetPWBadKey;
     var validKey = !invalidKey && this.props.auth.resetPWUser;
     if (validKey) {
@@ -124,7 +123,6 @@ class ResetPasswordForm extends React.Component {
       }
     });
     if (data.new != data.new2) {
-      console.log("!")
       badKeys["new2" + "Error"] = true;
     }
     this.setState(badKeys);

@@ -49,7 +49,6 @@ export default class AddFloorPlanFrom extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         let node = this.props.node;
         return (
             <div>

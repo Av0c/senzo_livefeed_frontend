@@ -50,7 +50,6 @@ function addNodeToCard(node, card) {
 }
 
 export default (state = initialState, action) => {
-	console.log(action);
 	switch (action.type) {
 		case a.FETCH_CARD: {
 			return loop(

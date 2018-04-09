@@ -24,7 +24,6 @@ export class StatsMenu extends React.Component {
 
     chooseType(type) {
         this.props.dispatch(selectRoomType(type));
-        console.log(type);
         if (type.code == "open_area" || type.code == "all_areas") {
             this.chooseTag(config.tag.OCCUPANCY.type);
         }

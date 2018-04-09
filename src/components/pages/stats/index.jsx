@@ -5,7 +5,7 @@ import DateSelector from 'components/common/dateselector';
 import StatsMenu from 'components/common/statsmenu';
 import LeftMenu from 'components/common/leftmenu';
 import Zingchart from 'zingchart';
-import jsPDF from "jspdf";
+import jsPDF from "./jspdf";
 import domtoimage from "./dom-to-image-modified";
 
 import { getNodeSeriesStats, getParams } from 'actions/stats';
@@ -41,18 +41,22 @@ export class Stats extends React.Component {
     }
 
     getPNG(DOMnode, resultHolder, callbacks) {
-        return domtoimage.toPng(ReactDOM.findDOMNode(DOMnode)).then((imgdata) => {
-            // let imgContent = imgdata.split(",")[1];
-            // Jimp.read(imgContent, (img) => {
-            //     let jimpImg = img.autocrop([10, true]);  
-            //     jimpImg.getBase64("png", (imgdata) => {
-            //         resultHolder.push(imgdata);
-            //         callbacks();
-            //     })
-            // })
-            resultHolder.push(imgdata);
+        if (!DOMnode) {
             callbacks();
-        });
+        } else {
+            return domtoimage.toPng(ReactDOM.findDOMNode(DOMnode)).then((imgdata) => {
+                // let imgContent = imgdata.split(",")[1];
+                // Jimp.read(imgContent, (img) => {
+                //     let jimpImg = img.autocrop([10, true]);  
+                //     jimpImg.getBase64("png", (imgdata) => {
+                //         resultHolder.push(imgdata);
+                //         callbacks();
+                //     })
+                // })
+                resultHolder.push(imgdata);
+                callbacks();
+            });
+        }
     }
 
     getPngDimensions(base64) {

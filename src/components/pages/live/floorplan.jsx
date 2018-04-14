@@ -472,13 +472,6 @@ export class FloorPlan extends React.Component {
 							(!this.props.thumbnail) &&
 							((this.props.showHeatmap) ?
 								<div className="floorplan-options-container">
-				                    <div className="options-help">
-				                        <div className="help-icon hi-show">
-				                            <i className="material-icons">info_outline</i>
-				                        </div>
-				                        <div className={(this.state.mode=="done") ? "help-text ht-show" : "help-text ht-hide"}>Hover over a heat node for more info.</div>
-				                        <div className={(this.state.mode=="hide") ? "help-text ht-show" : "help-text ht-hide"}>Click on a heat node to hide/unhide it.</div>
-				                    </div>
 									{(this.state.hasPermission) &&
 									<React.Fragment>
 										<div className="options-buttons">
@@ -497,11 +490,62 @@ export class FloorPlan extends React.Component {
 										getText={(f) => this.getHeatmapFilterText(f)}
 										selected={this.state.heatmapFilter}
 										click={(f) => this.chooseHeatmapFilter(f)}
-										/>
+									/>
+									{this.props.children}
+									<div className="live-nav-button">
+										<Link className='button-sm' to={'/statistic/' + this.props.currentNode.id}>STATS</Link>
+									</div>
+									<div className="live-nav-button">
+										<Link className='button-sm' to={'/live/' + this.props.currentNode.id}>LIVE</Link>
+									</div>
+									<div className="options-help">
+				                        <div className="help-icon hi-show">
+				                            <i className="material-icons">info_outline</i>
+				                        </div>
+				                        <div className={(this.state.mode=="done") ? "help-text ht-show" : "help-text ht-hide"}>Hover over a heat node for more info.</div>
+				                        <div className={(this.state.mode=="hide") ? "help-text ht-show" : "help-text ht-hide"}>Click on a heat node to hide/unhide it.</div>
+				                    </div>
 				                </div>
 							:
 								<div className="floorplan-options-container">
-				                    <div className="options-help">
+									{(this.state.hasPermission) &&
+									<React.Fragment>
+										<div className="options-buttons">
+											<i
+												className="material-icons"
+												data-tooltip={(this.state.mode=="move") ? "Sensors can be moved" : "Sensors can not be moved"}
+												onClick={() => this.toggleMove()}
+												>
+												{(this.state.mode=="move") ? "location_searching" : "location_disabled"}
+											</i>
+										</div>
+										<div className="options-buttons">
+											<i
+												className="material-icons"
+												data-tooltip="Add sensor"
+												onClick={(e) => {this.changeMode("add", e)}}
+												>
+												add_circle_outline
+											</i>
+										</div>
+									</React.Fragment>}
+									<div className="options-buttons">
+										<i
+											className="material-icons"
+											data-tooltip={(this.props.showDetails) ? "Showing details" : "Hiding details"}
+											onClick={() => this.props.changeMRMode()}
+											>
+											{(this.props.showDetails) ? "settings_ethernet" : "code"}
+										</i>
+									</div>
+									{this.props.children}
+									<div className="live-nav-button">
+										<Link className='button-sm' to={'/statistic/' + this.props.currentNode.id}>STATS</Link>
+									</div>
+									<div className="live-nav-button">
+										<Link className='button-sm' to={'/heatmap/' + this.props.currentNode.id}>HEATMAP</Link>
+									</div>
+									<div className="options-help">
 				                        <div className="help-icon hi-show">
 				                            <i className="material-icons">info_outline</i>
 				                        </div>
@@ -509,29 +553,6 @@ export class FloorPlan extends React.Component {
 				                        <div className={(this.state.mode=="move") ? "help-text ht-show" : "help-text ht-hide"}>Hold and drag a sensor to move it.</div>
 				                        <div className={(this.state.mode=="add") ? "help-text ht-show" : "help-text ht-hide"}>Left-click to place new sensor, right-click to cancel.</div>
 				                    </div>
-									{
-										(this.state.hasPermission) &&
-										<React.Fragment>
-											<div className="options-buttons">
-												<i
-													className="material-icons"
-													data-tooltip={(this.state.mode=="move") ? "Sensors can be moved" : "Sensors can not be moved"}
-													onClick={() => this.toggleMove()}
-													>
-													{(this.state.mode=="move") ? "location_searching" : "location_disabled"}
-												</i>
-											</div>
-											<div className="options-buttons">
-												<i
-													className="material-icons"
-													data-tooltip="Add sensor"
-													onClick={(e) => {this.changeMode("add", e)}}
-													>
-													add_circle_outline
-												</i>
-											</div>
-										</React.Fragment>
-									}
 				                </div>
 							)
 

@@ -1,19 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import config from "config"
-import ReactTooltip from 'react-tooltip'
-import Path from "components/common/path"
+import config from "config";
+import ReactTooltip from 'react-tooltip';
+import Path from "components/common/path";
 
-import NodeDropdown from "components/common/nodedropdown"
-import ListDropdown from "components/common/listdropdown"
+import NodeDropdown from "components/common/nodedropdown";
+import ListDropdown from "components/common/listdropdown";
 
-
-import Modal from "components/common/modal"
-import ColorNote from "components/common/colornote"
-import LiveSummary from "./summary"
-import FloorPlan from "./floorplan"
-import SensorForm from "./sensorform"
+import Modal from "components/common/modal";
+import ColorNote from "components/common/colornote";
+import LiveSummary from "./summary";
+import FloorPlan from "./floorplan";
+import SensorForm from "./sensorform";
 
 import StatsMenu from 'components/common/statsmenu';
 import LeftMenu from 'components/common/leftmenu';
@@ -145,45 +144,16 @@ class Live extends React.Component {
 									{(this.props.location.pathname.includes("/heatmap")) ?
 										<div>
 											<LeftMenu overview='active' comparison='' />
+											<div className="live-title pull-left">
+												<h1>{this.state.currentNode.info.name}</h1>
+											</div>
 											<DateSelector />
-											<StatsMenu
-												name={this.state.currentNode.info.name} id={this.state.currentNode.id}
-												node={this.state.currentNode} querySettings={this.props.querySettings}
-											/>
 										</div>
 									:
 										<div>
 											<LeftMenu overview='active' comparison='' />
 											<div className="live-title pull-left">
 												<h1>{this.state.currentNode.info.name}</h1>
-											</div>
-											<div className="live-top-menu pull-right">
-												<div>
-													<div className="button-sm pull-left nav-stats show-hide-details" onClick={this.changeMRMode.bind(this)}>
-														{(this.state.showDetails) ? "Hide details" : "Show details"}
-													</div>
-
-													<NodeDropdown
-														outsideClass="live-select pull-left"
-														root={this.state.currentNode}
-														nodeFilter={this.props.nodeFilter}
-														click={
-															(node) => { this.props.dispatch(selectNodeFilter(node)) }
-														}
-														list={this.listNodeFilter.bind(this)}
-														header="All areas"
-														/>
-													
-													<ListDropdown
-														outsideClass="live-select pull-left"
-														items={config.viewFilter}
-														getText={(x) => x.text}
-														selected={this.props.viewFilter}
-														click={(view) => { this.props.dispatch(selectViewFilter(view)) }}
-														/>
-													<Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.state.currentNode.id}> Stats</Link>
-													<Link className='button-sm pull-right nav-stats' to={'/live/' + this.state.currentNode.id + "/heatmap"}> Heatmap</Link>
-												</div>
 											</div>
 										</div>
 									}
@@ -192,8 +162,15 @@ class Live extends React.Component {
 						</div>
 					</div>
 				</div>
-				{(!this.props.location.pathname.includes("/heatmap")) &&
-				<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "live/"+x.id} marginTop={true}/>}
+				{(this.props.location.pathname.includes("/heatmap")) ?
+				<React.Fragment>
+					<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "heatmap/"+x.id} marginTop={false}/>
+				</React.Fragment>
+				:
+				<React.Fragment>
+					<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "live/"+x.id} marginTop={false}/>
+				</React.Fragment>
+				}
 				{(this.props.location.pathname.includes("/heatmap")) ?
 					<div>
 						<ColorNote mode={"heatmap"}/>
@@ -204,19 +181,41 @@ class Live extends React.Component {
 							showHeatmap={true}
 							tooltipGroup="index"
 							thumbnail={false}
-						/>
+							currentNode={this.state.currentNode}
+						>
+						</FloorPlan>
 					</div>
 				:
 					<div>
 						<ColorNote mode={"sensors"}/>
 						<FloorPlan
+							changeMRMode={() => {this.changeMRMode()}}
 							root={this.props.nodeMap[this.props.nodeFilter.id]}
 							viewFilter={this.props.viewFilter}
 							showDetails={this.state.showDetails}
 							showHeatmap={false}
 							tooltipGroup="index"
 							thumbnail={false}
-						/>
+							currentNode={this.state.currentNode}
+						>
+							<NodeDropdown
+								outsideClass="view-filter"
+								root={this.state.currentNode}
+								nodeFilter={this.props.nodeFilter}
+								click={
+									(node) => { this.props.dispatch(selectNodeFilter(node)) }
+								}
+								list={this.listNodeFilter.bind(this)}
+								header="All areas"
+							/>
+							<ListDropdown
+								outsideClass="view-filter"
+								items={config.viewFilter}
+								getText={(x) => x.text}
+								selected={this.props.viewFilter}
+								click={(view) => { this.props.dispatch(selectViewFilter(view)) }}
+							/>
+						</FloorPlan>
 						<LiveSummary
 							root={this.state.currentNode}
 							sensorMap={this.props.sensorMap}

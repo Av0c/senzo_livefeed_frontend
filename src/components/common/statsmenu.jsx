@@ -70,7 +70,7 @@ export class StatsMenu extends React.Component {
                         </div>
 
                         <Link className="stats-live-btn button-sm pull-left" to={this.props.node.info.hasfloorplan ? `live/${this.props.id}` : null} >LIVE</Link>
-                        <Link className="stats-live-btn button-sm pull-left" to={this.props.node.info.hasfloorplan ? `live/${this.props.id}/heatmap` : null} >HEATMAP</Link>
+                        <Link className="stats-live-btn button-sm pull-left" to={this.props.node.info.hasfloorplan ? `heatmap/${this.props.id}` : null} >HEATMAP</Link>
 
                         <Link className="stats-export cursor-pointer pull-left" onClick={() => aStats.downloadCSV(this.props.node, this.props.querySettings)}>
                             <img src="src/assets/images/export.svg" />

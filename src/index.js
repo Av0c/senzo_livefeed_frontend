@@ -82,7 +82,7 @@ ReactDOM.render((
 				<Route path="/comparison" component={Comparison} />
 				<Route path="/statistic/:id" component={Stats} />
 				<Route path="/live/:id" component={Live} />
-				<Route path="/live/:id/heatmap" component={Live} />
+				<Route path="/heatmap/:id" component={Live} />
 
 				<Route path="/user" component={User} />
 				<Route path="/help" component={Help} />

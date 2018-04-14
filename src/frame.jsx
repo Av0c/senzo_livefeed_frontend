@@ -34,6 +34,8 @@ export class Frame extends React.Component {
             appHistory.push(`/statistic/${node.id}`);
         } else if (this.props.location.pathname.includes("/live")) {
             appHistory.push(`/live/${node.id}`);
+        } else if (this.props.location.pathname.includes("/heatmap")) {
+            appHistory.push(`/heatmap/${node.id}`);
         } else {
             this.props.dispatch(setCurrentNode(node));
         }

@@ -9,29 +9,35 @@
 
     .floorplan-options-container {
         background-color: #fff;
-        height: 50px;
+        height: 85px;
 
         .options-help {
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
+            @help-height: 30px;
+            @help-font-size: 16px;
+
+            border-top: 1px solid rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid #fff;
+            margin: 0 10px;
+            clear: both;
+            height: @help-height;
+            line-height: @help-height;
+            text-align: left;
             vertical-align: middle;
             position: relative;
-            margin-left: 10px;
-            display: inline-block;
+            display: block;
 
             .help-icon {
                 display: inline-block;
                 transition: opacity 0.3s ease-out;
-                height: 50px;
-                line-height: 50px;
+                height: @help-height;
+                line-height: @help-height;
                 margin-right: 6px;
-                font-size: 18px;
+                font-size: @help-font-size;
 
                 i {
                     vertical-align: middle;
                     user-select: none;
-                    font-size: 18px;
+                    font-size: @help-font-size;
                 }
 
                 &.hi-hide {
@@ -50,7 +56,7 @@
                 opacity 0.3s ease-out;
 
                 &.ht-show {
-                    font-size: 18px;
+                    font-size: @help-font-size;
                     opacity: 1;
                 }
 
@@ -62,7 +68,7 @@
 
         }
 
-        .heatmap-filter {
+        .heatmap-filter, .view-filter {
             float: right;
             display: inline-block;
             font-size: 18px;
@@ -75,6 +81,19 @@
                 &.open {
                     z-index: 1000;
                 }
+            }
+        }
+
+        .live-nav-button {
+            float: left;
+            line-height: 50px;
+            height: 50px;
+            vertical-align: middle;
+            margin: 0 10px;
+
+            .button-sm {
+                float: none;
+                display: inline-block;
             }
         }
 

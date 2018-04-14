@@ -40,8 +40,8 @@ export default class ColorNote extends React.Component {
                             <td>
                                 <span className="popup-color-note-td blue">{descs[3]}</span>
                             </td>
-                        </tr>,
-                        <tr key="2">
+                        </tr>
+                        <tr>
                             <td>
                                 <span className="popup-color-note-td brown">{descs[4]}</span>
                             </td>

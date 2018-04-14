@@ -206,6 +206,52 @@
         }
     }
 
+    .circle {
+        z-index: 3;
+        background-color: @color-highlight-green;
+
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        position: absolute;
+        border-radius: 30px;
+
+        text-align: center;
+        vertical-align: middle;
+
+        color: #eee;
+        font-weight: bold;
+        user-select: none;
+
+        -ms-transform: translate(-50%, -50%); /* IE 9 */
+        -webkit-transform: translate(-50%, -50%); /* Safari */
+        transform: translate(-50%, -50%);
+
+
+        &.faulty {
+            background-color: @color-highlight-blue;
+        }
+        &.unregistered {
+            background-color: @color-highlight-brown;
+        }
+        &.inuse {
+            background-color: @color-highlight-red;
+            animation: pipbig 0.75s ease-out infinite;
+            -webkit-animation: pipbig 0.75s ease-out infinite;
+        }
+        &.standby {
+            background-color: @color-highlight-yellow;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+        &.selected {
+            animation: fade 0.5s ease-out infinite;
+            -webkit-animation: fade 0.5s ease-out infinite;
+        }
+    }
+
 }
 
 

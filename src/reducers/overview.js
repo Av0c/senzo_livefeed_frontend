@@ -39,7 +39,6 @@ function fetchCard() {
 }
 
 export default (state = initialState, action) => {
-  console.log(action)
   switch (action.type) {
     case a.FETCH_CUSTOMER_OVERVIEW: {
       return loop(

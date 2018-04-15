@@ -10,6 +10,7 @@ const initialState = {
   currentNode: null,
   customerOverview: null,
   nodeMap: {},
+  MACMap: {},
   widgets: [],
   card: {},
 };
@@ -38,6 +39,7 @@ function fetchCard() {
 }
 
 export default (state = initialState, action) => {
+  console.log(action)
   switch (action.type) {
     case a.FETCH_CUSTOMER_OVERVIEW: {
       return loop(
@@ -52,7 +54,8 @@ export default (state = initialState, action) => {
         customerOverview: action.data,
         widgets: [...state.widgets, action.data],
         currentNode: action.data,
-        nodeMap: action.map
+        nodeMap: action.nodeMap,
+        MACMap: action.MACMap,
       })
     }
 

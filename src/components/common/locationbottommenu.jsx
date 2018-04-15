@@ -7,6 +7,7 @@ import axios from "axios"
 import toastr from 'toastr';
 import DeleteLocationForm from 'components/common/deletelocationform';
 import DeleteWidget from 'components/common/deletewidget';
+import WidgetExport from 'components/common/dataexport/widgetexport';
 
 import * as a from "actions/sensorsettings"
 import * as aStats from "actions/stats"
@@ -127,7 +128,7 @@ class LocationBottomMenu extends React.Component {
 
     render() {
         return (
-            <div className="card-bottom-menu" ref="container" onScroll={this.onscroll}>
+            <div className="card-bottom-menu" ref="container" onScroll={this.onscroll} ref={(e) => {this.widget = e}}>
                 <div className="row">
                     <div className="col-xs-4 text-center card-bottom-menu-icon">
                         <a onClick={this.openSettingDropdown.bind(this)} className="card-settings" >
@@ -157,9 +158,7 @@ class LocationBottomMenu extends React.Component {
                             tree={this.props.tree} nodeId={this.props.node.id} editWidget={this.props.editWidget} />}
                     </div>
                     <div className="col-xs-4 text-center card-bottom-menu-icon">
-                        <Link className="card-export cursor-pointer" onClick={() => aStats.downloadCSV(this.props.node, this.props.querySettings)}>
-                            <img src="src/assets/images/export.svg" />
-                        </Link>
+                        <WidgetExport node={this.props.node} widget={this.props.widget} downloadCSV={() => aStats.downloadCSV(this.props.node, this.props.querySettings)}/>
                     </div>
                     <div className="col-xs-4 text-center card-bottom-menu-icon">
                         <Link

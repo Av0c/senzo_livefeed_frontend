@@ -520,8 +520,12 @@ input:focus {
     display: inline-block;
     margin-left: 30px;
 }
-.stats-export img {
+.stats-export img,
+.heatmap-export img {
     width: 27px;
+}
+.widget-export img {
+    width: 33px;
 }
 .stats-header-wrapper {
     padding-bottom: 10px;

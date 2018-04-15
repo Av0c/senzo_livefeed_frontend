@@ -11,6 +11,7 @@ import ReactTooltip from 'react-tooltip'
 import SensorForm from './sensorform';
 import Modal from "components/common/modal";
 import ListDropdown from "components/common/listdropdown";
+import HeatmapExport from 'components/common/dataexport/heatmapexport';
 
 import { updateNode } from 'actions/node';
 import { createSensor, removeSensor, updateSensor, fetchImage } from 'actions/floorplan';
@@ -20,7 +21,6 @@ import { getSensorAverage, getParams } from 'actions/stats';
 import { deleteNode, fetchLiveData, setParent } from 'actions/node';
 import { selectViewFilter } from "actions/live/filter";
 import enhanceWithClickOutside from "react-click-outside";
-import DateSelector from 'components/common/dateselector';
 
 export class FloorPlan extends React.Component {
 	constructor(props, context) {
@@ -64,16 +64,20 @@ export class FloorPlan extends React.Component {
 				this.setState({url: url, loading: false});
 			}
 		} else {
-			if ((!this.props.root && nextProps.root) || this.props.showHeatmap &&
-				(
-					this.querySettingsChanged(this.props.query, nextProps.query) ||
-					this.props.root.id != nextProps.root.id
-				)) {
-				var params = getParams({
-					querySettings: nextProps.query,
-					currentNode: nextProps.root,
-				})
-				this.props.dispatch(getSensorAverage(params, nextProps.root))
+			if (nextProps.showHeatmap) {
+				// Check if fetching sensors' average is needed
+				var fetchNeeded = false;
+				fetchNeeded = fetchNeeded || (!this.props.root && nextProps.root); // first time receive props.root
+				fetchNeeded = fetchNeeded || this.querySettingsChanged(this.props.query, nextProps.query);
+				fetchNeeded = fetchNeeded || (this.props.root.id != nextProps.root.id);
+				fetchNeeded = fetchNeeded || (!this.props.showHeatmap); // Heatmap just have been toggled.
+				if (fetchNeeded) {
+					var params = getParams({
+						querySettings: nextProps.query,
+						currentNode: nextProps.root,
+					})
+					this.props.dispatch(getSensorAverage(params, nextProps.root))
+				}
 			}
 		}
 	}
@@ -407,8 +411,10 @@ export class FloorPlan extends React.Component {
 		var values = [];
 		Object.keys(this.props.sensorAverage.values).map((mac) => {
 			var value = this.props.sensorAverage.values[mac];
-			if (0 <= value && value <= 1) {
-				values.push(value);
+			if (this.props.MACMap[mac] && this.props.MACMap[mac].info.details && !this.props.MACMap[mac].info.details.hidden) {
+				if (0 <= value && value <= 1) {
+					values.push(value);
+				}
 			}
 		});
 		if (values.length == 0) {
@@ -472,6 +478,11 @@ export class FloorPlan extends React.Component {
 							(!this.props.thumbnail) &&
 							((this.props.showHeatmap) ?
 								<div className="floorplan-options-container">
+
+									<div className="options-buttons">
+										<HeatmapExport node={this.props.root} heatmap={this.floorplan}/>
+									</div>
+
 									{(this.state.hasPermission) &&
 									<React.Fragment>
 										<div className="options-buttons">
@@ -484,6 +495,8 @@ export class FloorPlan extends React.Component {
 											</i>
 										</div>
 									</React.Fragment>}
+
+
 									<ListDropdown
 										outsideClass="heatmap-filter"
 										items={["ALL", "ABOVE", "BELOW", "LOWEST"]}
@@ -557,7 +570,7 @@ export class FloorPlan extends React.Component {
 							)
 
 						}
-						<div className={!this.props.thumbnail ? "floorplan-container" : "floorplan-container-thumbnail"}>
+						<div ref={(e) => {this.floorplan = e}} className={!this.props.thumbnail ? "floorplan-container" : "floorplan-container-thumbnail"}>
 							<img
 								src={url}
 								alt="Floorplan"
@@ -626,38 +639,38 @@ export class FloorPlan extends React.Component {
 										/>
 								);
 							})}
-							<SensorForm ref={(elem) => {this.sensorForm = elem}}
-								mode={this.state.mode}
-								node={this.props.root}
-								sensor={this.state.editedSensor}
-								nodeMap={this.props.nodeMap}
-								onClose={(e) => {
-									if (this.state.mode=="add") {
-										this.onCancel(e, () => this.changeMode("add", e));
-									} else if (this.state.mode=="editing") {
-										this.changeMode(this.state.lastMode);
-									}
-								}}
-								onSubmit={(e, state) => {
-									if (this.state.mode=="add") {
-										this.addSensor(e, state, this.state.mousePos)
-									} else if (this.state.mode=="editing") {
-										this.updateSensor(e, state)
-									}
-								}}
-								/>
-							<Modal
-								ref={(elem) => {this.deleteModal = elem}}
-								clickButton={(e) => { this.deleteSensor(this.state.deletedSensor)}}
-								header="Delete Sensor"
-								buttonText="Delete Sensor"
-								buttonClass="btn-danger"
-								entry={ null }
-								onClose={this.props.onClose}
-								>
-								<p>Are you sure you want to delete sensor <b>{this.state.deletedSensor.name}</b> ({this.state.deletedSensor.macaddress}) ?</p>
-							</Modal>
 						</div>
+						<SensorForm ref={(elem) => {this.sensorForm = elem}}
+							mode={this.state.mode}
+							node={this.props.root}
+							sensor={this.state.editedSensor}
+							nodeMap={this.props.nodeMap}
+							onClose={(e) => {
+								if (this.state.mode=="add") {
+									this.onCancel(e, () => this.changeMode("add", e));
+								} else if (this.state.mode=="editing") {
+									this.changeMode(this.state.lastMode);
+								}
+							}}
+							onSubmit={(e, state) => {
+								if (this.state.mode=="add") {
+									this.addSensor(e, state, this.state.mousePos)
+								} else if (this.state.mode=="editing") {
+									this.updateSensor(e, state)
+								}
+							}}
+							/>
+						<Modal
+							ref={(elem) => {this.deleteModal = elem}}
+							clickButton={(e) => { this.deleteSensor(this.state.deletedSensor)}}
+							header="Delete Sensor"
+							buttonText="Delete Sensor"
+							buttonClass="btn-danger"
+							entry={ null }
+							onClose={this.props.onClose}
+							>
+							<p>Are you sure you want to delete sensor <b>{this.state.deletedSensor.name}</b> ({this.state.deletedSensor.macaddress}) ?</p>
+						</Modal>
 					</div>
 				);
 			} else {
@@ -757,6 +770,7 @@ function mapStateToProps(state) {
 	return {
 		sensorMap: state.nodeReducer.map,
 		nodeMap: state.overviewReducer.nodeMap,
+		MACMap: state.overviewReducer.MACMap,
 		images: state.floorPlanReducer.images,
 		user: state.myAccountReducer.user,
 		selectedSensor: state.floorPlanSensorReducer.selectedSensor,

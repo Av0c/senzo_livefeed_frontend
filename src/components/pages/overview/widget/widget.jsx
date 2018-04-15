@@ -22,7 +22,7 @@ class Widget extends React.Component {
         }
         return (
             <div className="grid-card-center">
-                <div className="the-card clearfix">
+                <div className="the-card clearfix" ref={(e) => {this.widget = e}}>
                     <div data-tooltip={this.props.node.info.name}>
                         <h1 className="card-location">{this.props.node.info.name}</h1>
                     </div>
@@ -52,7 +52,9 @@ class Widget extends React.Component {
                     <LocationBottomMenu faulty={this.props.stats.faulties} node={this.props.node}
                         redirectMaintenanceView={this.props.redirectMaintenanceView}
                         deleteWidget={this.props.deleteWidget}
-                        tree={this.props.tree} editWidget={this.props.editWidget} />
+                        tree={this.props.tree} editWidget={this.props.editWidget}
+                        widget={this.widget}
+                    />
                 </div>
             </div>
         );

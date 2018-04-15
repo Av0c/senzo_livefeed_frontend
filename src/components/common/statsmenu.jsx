@@ -4,13 +4,11 @@ import { Link } from 'react-router';
 
 import RoomTypeSelector from 'components/common/roomtypeselector';
 import TagSelector from 'components/common/tagselector';
-import Dropdown from 'components/common/dropdown';
-import DropdownItem from 'components/common/dropdownitem';
+import StatsExport from 'components/common/dataexport/statsexport';
 
 import { selectTag } from 'actions/querysettings';
 import { selectRoomType } from 'actions/querysettings';
 import config from 'config';
-import * as aStats from "actions/stats"
 
 export class StatsMenu extends React.Component {
     constructor(props) {
@@ -76,28 +74,8 @@ export class StatsMenu extends React.Component {
                         <Link className="stats-live-btn button-sm pull-left" to={this.props.node.info.hasfloorplan ? `live/${this.props.id}` : null} >LIVE</Link>
                         <Link className="stats-live-btn button-sm pull-left" to={this.props.node.info.hasfloorplan ? `heatmap/${this.props.id}` : null} >HEATMAP</Link>
 
-                        <div className="stats-export-container">
-                            <Dropdown header={
-                                <div className={"stats-export " + (this.props.PDFloading ? "loading" : "")}>
-                                    {
-                                        this.props.PDFloading ?
-                                        <img src="src/assets/images/loading.gif" />
-                                        : <img src="src/assets/images/export.svg" />
-                                    }
-                                </div>
-                            } toggleable={!this.props.PDFloading} customClass="stats-export" noArrow>
-                                <DropdownItem>
-                                    <div onClick={() => aStats.downloadCSV(this.props.node, this.props.querySettings)}>
-                                        CSV
-                                    </div>
-                                </DropdownItem>
-                                <DropdownItem>
-                                    <div onClick={() => this.props.downloadStatsPictures()}>
-                                        PDF
-                                    </div>
-                                </DropdownItem>
-                            </Dropdown>
-                        </div>
+                        <StatsExport node={this.props.node} />
+
                     </div>
                 </div>
             </div>

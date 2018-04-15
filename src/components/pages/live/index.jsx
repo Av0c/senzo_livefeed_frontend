@@ -45,7 +45,6 @@ class Live extends React.Component {
 			},
 			path: [],
 			showDetails: true,
-			heatmapMode: true,
 			I: {},
 		};
 	}
@@ -134,6 +133,7 @@ class Live extends React.Component {
 	}
 
 	render() {
+		var showHeatmap = this.props.location.pathname.includes("heatmap/");
 		return (
 			<div>
 				<div className="live-header-wrapper">
@@ -141,7 +141,7 @@ class Live extends React.Component {
 						<div className="container-fluid">
 							<div className="row">
 								<div className="col-sm-12">
-									{(this.props.location.pathname.includes("/heatmap")) ?
+									{showHeatmap ?
 										<div>
 											<LeftMenu overview='active' comparison='' />
 											<div className="live-title pull-left">
@@ -162,7 +162,7 @@ class Live extends React.Component {
 						</div>
 					</div>
 				</div>
-				{(this.props.location.pathname.includes("/heatmap")) ?
+				{showHeatmap ?
 				<React.Fragment>
 					<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "heatmap/"+x.id} marginTop={false}/>
 				</React.Fragment>
@@ -171,7 +171,7 @@ class Live extends React.Component {
 					<Path path={this.state.path} linkOn={(x) => x.info.hasfloorplan} link={(x) => "live/"+x.id} marginTop={false}/>
 				</React.Fragment>
 				}
-				{(this.props.location.pathname.includes("/heatmap")) ?
+				{showHeatmap ?
 					<div>
 						<ColorNote mode={"heatmap"}/>
 						<FloorPlan

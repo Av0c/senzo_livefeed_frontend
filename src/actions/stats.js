@@ -261,7 +261,7 @@ export function getStatsBreakdown(params) {
     }
 }
 
-export function downloadCSV(node, querySettings) {
+export function downloadCSV(node, querySettings, callbacks) {
     let params = Object.assign({}, {
         currentNode: node,
         querySettings: querySettings,
@@ -286,6 +286,9 @@ export function downloadCSV(node, querySettings) {
         anchor.click();
 
         window.URL.revokeObjectURL(objectUrl);
+        callbacks();
+    }).catch((error) => {
+        callbacks();
     });
 }
 

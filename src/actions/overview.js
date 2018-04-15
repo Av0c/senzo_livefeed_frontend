@@ -32,22 +32,32 @@ function addParent(root) {
   });
 }
 
-function makeMap(root, map) {
+function makeNodeMap(root, map) {
   map[root.id] = root;
   root.children.map((x)=> {
-    makeMap(x, map);
+    makeNodeMap(x, map);
+  });
+}
+function makeMACMap(root, map) {
+  if (root.type == "sensor") {
+    map[root.info.details.macaddress] = root;
+  }
+  root.children.map((x)=> {
+    makeMACMap(x, map);
   });
 }
 
 export const RECEIVE_CUSTOMER_OVERVIEW = 'RECEIVE_CUSTOMER_OVERVIEW';
 export function receiveCustomerOverview(result) {
   addParent(result.data);
-  var map = {};
-  makeMap(result.data, map);
+  var nodeMap = {}, MACMap = {};
+  makeNodeMap(result.data, nodeMap);
+  makeMACMap(result.data, MACMap);
   return {
     type: RECEIVE_CUSTOMER_OVERVIEW,
     data: result.data,
-    map: map
+    nodeMap: nodeMap,
+    MACMap: MACMap,
   }
 }
 

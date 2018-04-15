@@ -45,14 +45,6 @@ export class Stats extends React.Component {
             callbacks();
         } else {
             return domtoimage.toPng(ReactDOM.findDOMNode(DOMnode)).then((imgdata) => {
-                // let imgContent = imgdata.split(",")[1];
-                // Jimp.read(imgContent, (img) => {
-                //     let jimpImg = img.autocrop([10, true]);  
-                //     jimpImg.getBase64("png", (imgdata) => {
-                //         resultHolder.push(imgdata);
-                //         callbacks();
-                //     })
-                // })
                 resultHolder.push(imgdata);
                 callbacks();
             });
@@ -82,24 +74,21 @@ export class Stats extends React.Component {
             this.getPNG(document.charts.dailyOccupancy2, images, () => {
                 this.setState({PDFloading: false});
                 var doc = new jsPDF();
-                var docSize = doc.internal.pageSize;
+                doc.deletePage(1);
+                // var docSize = doc.internal.pageSize;
 
-                var padding = 15, distance = 7;
-                var width = docSize.width - padding*2;
-                var row = padding;
+                // var padding = 15, distance = 7;
+                // var width = docSize.width - padding*2;
+                // var row = padding;
 
                 for(let i in images) {
                     let imgContent = images[i].split(",")[1];
                     let imgSize = this.getPngDimensions(imgContent);
-                    let imgNewHeight = width*imgSize.height/imgSize.width
+                    // let imgNewHeight = width*imgSize.height/imgSize.width
 
-                    if (row + imgNewHeight + padding > docSize.height) { // new page
-                        row = padding;
-                        doc.addPage();
-                    }
-
-                    doc.addImage(images[i], padding, row, width, imgNewHeight);
-                    row+= imgNewHeight + distance;
+                    doc.addPage(imgSize.width, imgSize.height);
+                    doc.addImage(images[i], 0, 0, imgSize.width, imgSize.height);
+                    // row+= imgNewHeight + distance;
                 }
 
                 this.saveDoc(doc);

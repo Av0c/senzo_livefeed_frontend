@@ -516,6 +516,10 @@ input:focus {
     font-size: 16px;
     position: relative;
 }
+.stats-export-container {
+    display: inline-block;
+    margin-left: 30px;
+}
 .stats-export img {
     width: 27px;
 }
@@ -530,9 +534,6 @@ input:focus {
     transition: all 0.3s;
 }
 .stats-live-btn {
-    margin-left: 30px;
-}
-.stats-export {
     margin-left: 30px;
 }
 

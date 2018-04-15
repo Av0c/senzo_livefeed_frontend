@@ -9,7 +9,9 @@ class DropDown extends React.Component {
     }
 
     handleClick() {
-        this.setState({opened: !this.state.opened });
+        if (this.props.toggleable) {
+            this.setState({opened: !this.state.opened });
+        }
     }
 
     close() {
@@ -24,10 +26,12 @@ class DropDown extends React.Component {
 
     render() {
         return (
-            <div className={`card-area-dropdown ${this.state.opened ? "dropdown open" : "dropdown"} ${this.props.customClass}`}>
+            <div className={`${this.state.opened ? "dropdown open" : "dropdown"} ${this.props.customClass}`}>
                 <div className="dropdown-toggle" onClick={this.handleClick.bind(this)}>
                     {this.props.header}
-                    <img src={"src/assets/images/" + (this.state.opened ? "arrow-down.svg" : "arrow-up.svg")} />
+                    {
+                        !this.props.noArrow ? <img src={"src/assets/images/" + (this.state.opened ? "arrow-down.svg" : "arrow-up.svg")} /> : null
+                    }
                 </div>
                 <div className="dropdown-items">
                     <DropdownItems close={this.props.toggleable ? this.close.bind(this) : () => {}}>

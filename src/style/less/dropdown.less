@@ -17,6 +17,10 @@
         text-align: left;
         cursor: pointer;
 
+        .loading {
+            cursor: progress;
+        }
+
         &:focus {
             outline: none;
         }
@@ -33,7 +37,6 @@
         position: absolute;
         left: 0;
         top: 100%;
-        min-width: 100%;
         max-height: 400px;
         overflow-y: auto;
         background-color: white;

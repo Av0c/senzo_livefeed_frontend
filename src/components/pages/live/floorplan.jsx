@@ -473,7 +473,7 @@ export class FloorPlan extends React.Component {
 			var url = this.getImage(this.props.images, this.props.root)
 			if (url && this.props.root.info.hasfloorplan) {
 				return (
-					<div className="floorplan-outer-container">
+					<div className={"floorplan-outer-container " + (!this.props.thumbnail ? "not-thumbnail" : "")}>
 						{
 							(!this.props.thumbnail) &&
 							((this.props.showHeatmap) ?

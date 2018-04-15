@@ -31,8 +31,9 @@ export function dumpAllToPDF(images, name) {
     for(let i in images) {
         let imgContent = images[i].split(",")[1];
         let imgSize = getPngDimensions(imgContent);
+        let magic = 31; // this should be 0. But there're some bug that jsPDF add extra padding to the right of the page. I have no idea why...
 
-        doc.addPage(imgSize.width, imgSize.height);
+        doc.addPage(imgSize.width-magic, imgSize.height);
         doc.addImage(images[i], 0, 0, imgSize.width, imgSize.height);
         doc.save(name);
     }

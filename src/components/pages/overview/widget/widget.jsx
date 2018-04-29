@@ -33,13 +33,22 @@ class Widget extends React.Component {
                         <div className="card-nav pull-right">
                             {
                                 this.props.node.info.hasfloorplan ?
-                                <Link className='button-sm pull-right'
+                                <Link
+                                    className='widget-button pull-right'
+                                    data-tooltip="Live"
                                     to={'live/' + this.props.node.id}
                                     onClick={() => this.props.dispatch(selectViewFilter(config.viewFilter[1]))}
-                                    > Live</Link>
-                                : <div className='button-disabled pull-right'> Live</div>
+                                >
+                                    <i className="material-icons">&#xE1E2;</i>
+                                </Link>
+                                : <div className='widget-button-disabled pull-right' data-tooltip="Live not available"><i className="material-icons">&#xE0CE;</i></div>
                             }
-                            <Link className='button-sm pull-right nav-stats' to={'/statistic/' + this.props.node.id}> Stats</Link>
+                            <Link className='widget-button pull-right' data-tooltip="Heatmap"
+                                 to={'/heatmap/' + this.props.node.id}><i className="material-icons">&#xE3A5;</i>
+                            </Link>
+                            <Link className='widget-button pull-right' data-tooltip="Stats"
+                                 to={'/statistic/' + this.props.node.id}><i className="material-icons">&#xE801;</i>
+                            </Link>
                         </div>
                     </div>
                     <Gauge

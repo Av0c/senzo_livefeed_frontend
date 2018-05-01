@@ -108,7 +108,7 @@ export class OccupancyBreakDown extends React.Component {
                     <div className="stats-card-shape clearfix" ref={(e) => {document.charts.occupancyBreakDown = e}}>
                         <div className="graph-header clearfix">
                             <div className="row">
-                                <div className="col-sm-12 col-xs-12" style={{marginBottom: "20px"}}>
+                                <div className="col-sm-offset-4 col-sm-4 col-xs-12">
                                     <h2>{this.props.querySettings.tag} Breakdown</h2>
                                 </div>
                                 <div style={{marginRight: "30px"}} className="pull-right breakdown-chart-select">

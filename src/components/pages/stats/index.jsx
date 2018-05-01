@@ -19,13 +19,19 @@ export class Stats extends React.Component {
                     name: ""
                 }
             },
-        }; 
+            menuClass: "col-md-12 static-menu",
+        };
+        this.checkSticky = this.checkSticky.bind(this);
     }
 
     componentDidMount() {
         this.findNode(this.props);
+        window.addEventListener("scroll", this.checkSticky);
     }
 
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.checkSticky);
+    }
     componentWillReceiveProps(nextProps) {
         this.findNode(nextProps);
     }
@@ -36,12 +42,25 @@ export class Stats extends React.Component {
         });
     }
 
+    checkSticky() {
+        var headerHeight = 65;
+        var menuClass;
+
+        var scrollTop = (document.body.scrollTop || document.documentElement.scrollTop);
+
+        var menuTop = Math.max(65 - scrollTop, 0);
+
+        this.setState({
+            menuTop: menuTop,
+        });
+    }
+
     render() {
         return (
             <div className="stats-body" id="stats-body">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-12 static-menu">
+                        <div className={this.state.menuClass} style={{top: this.state.menuTop}}>
                             <LeftMenu overview='active' comparison='' />
                             <DateSelector />
                             <StatsMenu

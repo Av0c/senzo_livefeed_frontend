@@ -26,9 +26,6 @@ export class BreakdownChartContainer extends React.Component {
         }
         var id1 = 478;
         var statIndex1 = this.props.stats.findIndex((a) => {return a.id == id1})
-        console.log("STATS: ");
-        console.log(this.props.stats);
-        console.log(this.props.stats[statIndex1]);
         return data;
     }
 

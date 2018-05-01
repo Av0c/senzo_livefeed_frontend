@@ -52,9 +52,6 @@ export class OccupancyBreakDown extends React.Component {
                 self.getAreaChildren(node, ids, areas, areaOptions);
             }
         });
-        console.log("######################");
-        // console.log(areas);
-        console.log("######################");
     }
 
     handleSelectChange(value) {
@@ -134,8 +131,6 @@ export class OccupancyBreakDown extends React.Component {
                             </div>
                         </div>
                         <div className="the-graph clearfix">
-                            {console.log("AREAS: ")}
-                            {console.log(this.state.areas)}
                             <BreakDownChartContainer mode={this.state.mode} areas={this.state.areas} />
                         </div>
                     </div>

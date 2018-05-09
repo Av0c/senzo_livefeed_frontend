@@ -53,9 +53,6 @@ export class Frame extends React.Component {
         });
     }
 
-
-
-
     render() {
         // return (!this.props.loading && this.props.user && this.props.tree && this.props.cards && this.props.sensorMap && this.props.images) ?
         return (this.state.cardLoaded && this.state.treeLoaded && this.state.liveLoaded && this.state.imageLoaded &&

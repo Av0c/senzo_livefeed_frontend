@@ -376,9 +376,6 @@ input:focus {
     font-size: 16px;
     position: relative;
 }
-.nav-stats {
-    margin-right: 10px;
-}
 .total-desks-number,
 .total-rooms-number {
     font-weight: bold;
@@ -999,6 +996,7 @@ input[type="password"].has-error {
     color: #BDBDBD;
 }
 .material-icons {
+    user-select: none;
     font-variant-ligatures: none;
     vertical-align: middle;
 }

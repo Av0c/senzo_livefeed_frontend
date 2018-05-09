@@ -1,0 +1,45 @@
+.breakdown-chart-select {
+    white-space: nowrap;
+
+    .multi-select-input {
+        display: inline-block;
+    }
+    .multi-select-clear {
+        cursor: pointer;
+        color: @color-red;
+        margin-left: 2px;
+        margin-bottom: 28px;
+        font-size: 20px;
+    }
+
+    .Select {
+        width: 240px;
+        display: inline-block;
+        &.is-focused {
+            z-index: 10000;
+        }
+
+        .Select-option {
+            .multi-option-container {
+                .multi-label-selected, .multi-label {
+                    display: inline-block;
+                    max-width: 200px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                .multi-label-selected {
+                    font-weight: bold;
+                }
+
+                .multi-indicator, .multi-indicator-selected {
+                    display: inline-block;
+                    float: right;
+                    width: 20px;
+                    color: @color-green;
+                }
+            }
+        }
+    }
+}

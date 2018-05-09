@@ -14,7 +14,6 @@
     box-shadow: none;
 }
 .static-menu {
-    /* z-index: 7090; */
     top: 65px;
     padding: 18px 16px;
     box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.3);

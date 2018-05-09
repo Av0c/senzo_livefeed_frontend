@@ -9,23 +9,29 @@ export class BreakdownChartContainer extends React.Component {
             labels: [],
             stats: []
         };
-        if (this.props.areas.get) {
-            for (let i = 0; i < Math.min(this.props.stats.length, 77); i++) {
+        if (this.props.areas) {
+            for (let i = 0; i < this.props.areas.length; i++) {
+                var id = this.props.areas[i].id;
+                var label = this.props.areas[i].label;
+                var statIndex = this.props.stats.findIndex((a) => {return a.id == id})
                 if (this.props.mode == 'Average') {
-                    data.stats.push(Math.round(this.props.stats[i].average * 100));
+                    data.stats.push(Math.round(this.props.stats[statIndex].average * 100));
                 }
                 else {
-                    data.stats.push(Math.round(this.props.stats[i].peak * 100));
+                    data.stats.push(Math.round(this.props.stats[statIndex].peak * 100));
                 }
 
-                data.labels.push(this.props.areas.get(this.props.stats[i].id));
+                data.labels.push(label);
             }
         }
+        var id1 = 478;
+        var statIndex1 = this.props.stats.findIndex((a) => {return a.id == id1})
         return data;
     }
 
     render() {
         let data = this.getData();
+
         return (
             <BreakDownChart data={data} />
         );

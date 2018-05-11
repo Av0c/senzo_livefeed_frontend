@@ -12,7 +12,7 @@ export class OccupancyBreakDown extends React.Component {
         this.state = {
             isArea: false,
             mode: 'Average',
-            areas: new Map(),
+            areas: [],
         };
     }
 

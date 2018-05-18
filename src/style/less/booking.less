@@ -1,0 +1,88 @@
+.booking-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+
+    .booking-left {
+        // float: left;
+        margin: 0 20px;
+
+        .booking-calendar {
+            padding: 12px 28px;
+            background-color: #fff;
+            box-shadow: 0px 2px 6px 0px rgba(50, 50, 50, 0.4);
+            border-radius: 2px;
+        }
+    }
+
+    .booking-right {
+        flex-grow: 1;
+        margin: 0 20px;
+        margin-left: 0;
+
+        .booking-timetable {
+            padding: 12px 28px;
+            background-color: #fff;
+            box-shadow: 0px 2px 6px 0px rgba(50, 50, 50, 0.4);
+            border-radius: 2px;
+
+            @border-color-dark: #666;
+            table {
+                border-collapse: collapse;
+
+                td {
+                    width: 150px;
+                }
+
+                td.booking-hour {
+                    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+                    border-right: 1px solid @border-color-dark;
+
+                    &.is-booked {
+                        color: #F2F2F2;
+                        border: 1px solid @border-color-dark;
+                        background-color: @color-green;
+                    }
+
+                    &.is-allowed:hover {
+                        box-shadow: inset 0px 0px 0px 1px @color-green;
+                        cursor: pointer;
+                        // border: 3px solid @color-green;
+                    }
+
+                    &.not-allowed {
+                        background-color: rgba(100, 100, 100, 0.15);
+                    }
+                }
+
+                td.booking-hour-header {
+                    border-bottom: 1px solid @border-color-dark;
+                    border-right: 1px solid @border-color-dark;
+                }
+
+                tr.name-row {
+                    color: #f2f2f2;
+                    background-color: #393939;
+
+                    td {
+                        border-bottom: 1px solid @border-color-dark;
+                        border-right: 1px solid white;
+                    }
+
+                    td:nth-child(1) {
+                        border-right: hidden;
+                        border-bottom: 1px solid @border-color-dark;
+                        background-color: white;
+                    }
+                }
+
+                tr.hour-row:nth-child(4n+1) {
+                    td {
+                        border-bottom: 1px solid @border-color-dark;
+                    }
+                }
+            }
+        }
+    }
+}

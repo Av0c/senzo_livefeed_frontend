@@ -17,6 +17,7 @@ import { requireAuthentication } from 'components/common/authenticatedComponent'
 
 // Pages
 import Overview from 'components/pages/overview';
+import Booking from 'components/pages/booking';
 import Comparison from 'components/pages/comparison';
 import Stats from 'components/pages/stats';
 import Live from 'components/pages/live';
@@ -77,6 +78,7 @@ ReactDOM.render((
 			<Route path="/" component={requireAuthentication(Frame)}>
 				<IndexRoute component={Overview} />
 
+				<Route path="/booking" component={Booking}/>
 				<Route path="/locations" component={Locations}/>
 
 				<Route path="/comparison" component={Comparison} />

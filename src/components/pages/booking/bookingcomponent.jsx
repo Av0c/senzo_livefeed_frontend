@@ -4,6 +4,7 @@ import { fetchCustomerOverview, getNodeStatistic } from 'actions/overview';
 import { fetchLiveData } from 'actions/node';
 import { fetchCurrentUser } from 'actions/myaccount';
 import { selectNodeStats, updateNode } from 'actions/node';
+import { fetchBookings, createBooking } from 'actions/booking';
 import { getOccupancyOverview, getParams, findOccupancyTag } from 'actions/stats';
 
 import LeftMenu from 'components/common/leftmenu';
@@ -12,6 +13,7 @@ import BookingForm from './bookingform';
 // For DatePicker
 import { DatePicker, Calendar, DayOfWeek } from 'office-ui-fabric-react';
 import moment from 'moment';
+import momentTZ from 'moment-timezone';
 import Strings from 'components/common/strings';
 
 
@@ -21,62 +23,7 @@ class BookingComponent extends React.Component {
         this.state = {
             selectedDate: null,
             specialCells: null,
-            tree: [
-                {
-                    name: "ROOM 1",
-                    minHour: 6,
-                    maxHour: 20,
-                    bookings: [
-                        {
-                            booker: "Kool McAid",
-                            purpose: "New KoolAid flavor discussion",
-                            date: "18-05-2018",
-                            roomId: 0,
-                            startTime: 6,
-                            startSlot: 0,
-                            endTime: 15,
-                            endSlot: 2,
-
-                        },
-                    ]
-                },
-                {
-                    name: "ROOM 2",
-                    minHour: 6,
-                    maxHour: 20,
-                    bookings: [],
-                },
-                {
-                    name: "ROOM 3",
-                    minHour: 4,
-                    maxHour: 20,
-                    bookings: [],
-                },
-                {
-                    name: "ROOM 4",
-                    minHour: 6,
-                    maxHour: 20,
-                    bookings: [],
-                },
-                {
-                    name: "ROOM 5",
-                    minHour: 6,
-                    maxHour: 22,
-                    bookings: [],
-                },
-                {
-                    name: "ROOM 6",
-                    minHour: 6,
-                    maxHour: 16,
-                    bookings: [],
-                },
-                {
-                    name: "ROOM 7",
-                    minHour: 2,
-                    maxHour: 22,
-                    bookings: [],
-                },
-            ],
+            tree: [],
         };
     }
 
@@ -86,11 +33,16 @@ class BookingComponent extends React.Component {
             selectedDate: today,
         });
 
-        this.calculateRowSpan(this.state.tree);
+        this.props.dispatch(fetchBookings(null, moment().format('DD-MM-YYYY')));
+
     }
 
     componentWillReceiveProps(nextProps) {
-        this.calculateRowSpan(this.state.tree);
+        if (nextProps.bookings) {
+            this.setState({tree: nextProps.bookings}, () => {
+                this.calculateRowSpan(nextProps.bookings);
+            });
+        }
     }
 
     onFormatDate(date) {
@@ -116,8 +68,8 @@ class BookingComponent extends React.Component {
     }
 
     handleSelectDate(selectedDate) {
-        this.setState({
-            selectedDate: selectedDate,
+        this.props.dispatch(fetchBookings(null, moment(selectedDate).format("DD-MM-YYYY"))).then(() => {
+            this.setState({ selectedDate: selectedDate });
         });
     }
 
@@ -249,7 +201,7 @@ class BookingComponent extends React.Component {
                         var rowSpan = 1;
                         var className = "booking-hour is-allowed";
                         var innerHtml = [];
-                        var onClick = this.makeHandler(ii, i, n);
+                        var onClick = this.makeHandler(tree[ii].id, i, n);
 
                         var specialCells = this.state.specialCells;
 
@@ -311,10 +263,26 @@ class BookingComponent extends React.Component {
     }
 
     onSubmit(e, states) {
-        console.log(states);
+        var timezone = this.props.nodeMap[states.roomId].info.location;
+
+        var startStr = this.props.selectedDate + " " + states.startTime + ":00";
+        var start = momentTZ.tz(startStr, "DD-MM-YYYY hh:mm:ss", timezone).unix();
+
+        var endStr = this.props.selectedDate + " " + states.endTime + ":00";
+        var end = momentTZ.tz(endStr, "DD-MM-YYYY hh:mm:ss", timezone).unix() - 1; // ending at 11:00:00 == ending at 10:59:59
+
+        var booking = {
+            starttime: start,
+            edntime: end,
+            booker: states.booker,
+            subject: states.purpose,
+        }
+
+        this.props.dispatch(createBooking(states.roomId, booking));
     }
 
     render() {
+        console.log(this.props)
         var displayDate;
         if (this.state.selectedDate) {
             displayDate = moment(this.state.selectedDate).format("dddd, MMMM Do YYYY");
@@ -384,13 +352,14 @@ class BookingComponent extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        loggedIn: state.authReducer.loggedIn,
         user: state.myAccountReducer.user,
-        currentSensor: state.nodeReducer.map,
-        currentNode: state.overviewReducer.currentNode,
-        querySettings: state.querySettingsReducer,
-        tree: state.overviewReducer.customerOverview,
+
         nodeMap: state.overviewReducer.nodeMap,
+        cards: state.defaultSettingsReducer.card,
+
+        bookings: state.bookingReducer.bookings,
+        bookingLoading: state.bookingReducer.loading,
+        selectedDate: state.bookingReducer.date,
     };
 }
 

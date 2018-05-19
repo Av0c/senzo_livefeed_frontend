@@ -64,6 +64,7 @@ export default class BookingForm extends React.Component {
 		let key = e.target.id;
 		let value = e.target.value;
 		this.setState({ [key]: value });
+		console.log(key, value);
 	}
 
 	render() {

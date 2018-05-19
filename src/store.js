@@ -11,6 +11,7 @@ import overviewReducer from 'reducers/overview';
 import nodeReducer from 'reducers/node';
 
 import comparisonReducer from 'reducers/comparison';
+import bookingReducer from 'reducers/booking';
 import statsReducer from 'reducers/stats';
 import querySettingsReducer from 'reducers/querysettings';
 import liveReducer from 'reducers/live';
@@ -37,6 +38,7 @@ const appReducer = combineReducers({
   nodeReducer,
 
   comparisonReducer,
+  bookingReducer,
   statsReducer,
   querySettingsReducer,
   liveReducer,

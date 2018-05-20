@@ -20,7 +20,6 @@ function fetchBookings(id, date) {
       id = store.getState().myAccountReducer.user.companyid;
     }
   }
-  console.log(id, date)
   return axios.get(config.api.root + `/booking/webapp/${id}?date=${date}`)
     .then((response) => {
       return a.receiveBookings(response);
@@ -34,7 +33,6 @@ export default (state = initialState, action) => {
   console.log(action)
   switch (action.type) {
     case a.FETCH_BOOKINGS: {
-      console.log("XASD")
       return loop(
         Object.assign({}, state, { loading: true, date: action.date }),
         Effects.promise(fetchBookings, action.id, action.date)

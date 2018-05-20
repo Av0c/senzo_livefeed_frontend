@@ -38,7 +38,7 @@ export function fetchingFailed() {
 export const CREATE_BOOKING = 'CREATE_BOOKING';
 export function createBooking(id, data) {
 	return dispatch => {
-		dispatch({ type: RECEIVE_BOOKINGS, id, data });
+		dispatch({ type: CREATE_BOOKING, id, data });
 		return axios.post(config.api.root + `/booking/create/${id}`, data)
 			.then((response) => {
 				toastr.success("Booked successfully !")

@@ -38,6 +38,7 @@ class BookingComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps.bookings);
         if (nextProps.bookings) {
             this.setState({tree: nextProps.bookings}, () => {
                 this.calculateRowSpan(nextProps.bookings);
@@ -91,6 +92,8 @@ class BookingComponent extends React.Component {
             }
         }
 
+        console.log(allBookings);
+
         var specialCells = [];
         for (var i = 0; i < allBookings.length; i++) {
             var roomId = allBookings[i].roomId;
@@ -124,7 +127,7 @@ class BookingComponent extends React.Component {
 
             var cellsToRemove = rowSpan - 1;
 
-            for (var i = 0; i < cellsToRemove; i++) {
+            for (var ii = 0; ii < cellsToRemove; ii++) {
                 if (startSlot < 3) {
                     startSlot++;
                 } else {
@@ -146,6 +149,7 @@ class BookingComponent extends React.Component {
         this.setState({
             specialCells: specialCells,
         });
+        console.log(specialCells);
     }
 
     generateTableContent() {
@@ -273,10 +277,12 @@ class BookingComponent extends React.Component {
 
         var booking = {
             starttime: start,
-            edntime: end,
+            endtime: end,
             booker: states.booker,
             subject: states.purpose,
         }
+
+        console.log(booking)
 
         this.props.dispatch(createBooking(states.roomId, booking));
     }

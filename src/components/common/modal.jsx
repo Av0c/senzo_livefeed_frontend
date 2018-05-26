@@ -16,6 +16,10 @@ export default class Modal extends React.Component {
 	}
 
 	toggle(e) {
+		if (e) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
 		if (this.state.open) {
 			this.close(e);
 		} else {

@@ -24,23 +24,17 @@ export default class BookingForm extends React.Component {
 
     }
 
-	open(roomId, hour, slot) {
-        console.log(roomId, hour, slot);
+	open(roomId, s0, s1, e0, e1, id=-1, booker = "", purpose = "") { // s0, s1 : start time, slot;  e0, e1 : end time, slot 
+        var startTime = window.custom.lpad(s0+"", 2) + ":" + window.custom.lpad(s1*15+"", 2);
+        var endTime = window.custom.lpad(e0+"", 2) + ":" + window.custom.lpad(e1*15+"", 2);
 
-        if (hour < 10) {
-            hour = "0"+hour;
-        }
-        if (slot == 0) {
-            slot = "00";
-        } else {
-            slot = slot*15;
-        }
-        var startTime = hour + ":" + slot;
-        var endTime = hour + ":" + slot;
         this.setState({
             roomId: roomId,
             startTime: startTime,
             endTime: endTime,
+            id,
+            booker,
+            purpose,
         });
 		this.modal.open();
 	}
@@ -64,16 +58,21 @@ export default class BookingForm extends React.Component {
 		let key = e.target.id;
 		let value = e.target.value;
 		this.setState({ [key]: value });
-		console.log(key, value);
 	}
 
 	render() {
+		var header = "Book new reservation";
+		var button = "Book"
+		if (this.props.mode == "edit") {
+			header = "Edit reservation"
+			button = "Edit"
+		}
 		return (
 			<Modal
 				ref={(elem) => {this.modal = elem}}
-				clickButton={(e) => {this.props.onSubmit(e, this.state)}}
-				header={"Create new booking"}
-				buttonText={"Book"}
+				clickButton={(e) => {this.props.onSubmit(e, this.state, (e) => this.close(e))}}
+				header={header}
+				buttonText={button}
 				buttonClass="btn-success"
 				entry={ null }
 				onClose={this.props.onClose}

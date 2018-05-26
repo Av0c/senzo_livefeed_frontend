@@ -4,10 +4,11 @@ import { fetchCustomerOverview, getNodeStatistic } from 'actions/overview';
 import { fetchLiveData } from 'actions/node';
 import { fetchCurrentUser } from 'actions/myaccount';
 import { selectNodeStats, updateNode } from 'actions/node';
-import { fetchBookings, createBooking } from 'actions/booking';
+import { fetchBookings, createBooking, deleteBooking, updateBooking } from 'actions/booking';
 import { getOccupancyOverview, getParams, findOccupancyTag } from 'actions/stats';
 
 import LeftMenu from 'components/common/leftmenu';
+import Modal from "components/common/modal";
 import BookingForm from './bookingform';
 
 // For DatePicker
@@ -24,21 +25,29 @@ class BookingComponent extends React.Component {
             selectedDate: null,
             specialCells: null,
             tree: [],
+            deletedBooking: {},
         };
     }
 
     componentDidMount() {
         var today = this.onParseDateFromString(moment().format('DD-MM-YYYY'));
+
+        this.props.dispatch(fetchBookings(this.props.currentNode.id, moment().format('DD-MM-YYYY')));
+        var I = setInterval(() => {
+            this.props.dispatch(fetchBookings(this.props.currentNode.id, moment().format('DD-MM-YYYY')));
+        }, 10000)
+
         this.setState({
             selectedDate: today,
+            I,
         });
+    }
 
-        this.props.dispatch(fetchBookings(null, moment().format('DD-MM-YYYY')));
-
+    componentWillUnmount() {
+        clearInterval(this.state.I)
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.bookings);
         if (nextProps.bookings) {
             this.setState({tree: nextProps.bookings}, () => {
                 this.calculateRowSpan(nextProps.bookings);
@@ -75,9 +84,46 @@ class BookingComponent extends React.Component {
     }
 
     makeHandler(id, hour, slot) {
-        return () => {
-            this.bookingForm.open(id, hour, slot);
+        // 8:00 -> (8:00, 8:15)
+        let endHour = hour, endSlot = slot;
+        endSlot+= 1;
+        if (endSlot>3) {
+            endHour+= 1;
+            endSlot%= 4;
         }
+        return () => {
+            this.bookingForm.open(id, hour, slot, endHour, endSlot);
+        }
+    }
+
+    openDelete(booking) {
+        this.setState({
+            deletedBooking: booking,
+        }, () => {
+            this.deleteModal.open();
+        })
+    }
+
+    delete(booking) {
+        this.props.dispatch(deleteBooking(booking.id)).then(() => {
+            this.deleteModal.close();
+        });
+    }
+
+    openUpdate(booking, roomId) {
+        this.updateForm.open(
+            roomId,
+
+            booking.startTime,
+            booking.startSlot,
+
+            booking.endTime,
+            booking.endSlot,
+
+            booking.id,
+            booking.booker,
+            booking.purpose
+        );
     }
 
     calculateRowSpan(tree) {
@@ -92,8 +138,6 @@ class BookingComponent extends React.Component {
             }
         }
 
-        console.log(allBookings);
-
         var specialCells = [];
         for (var i = 0; i < allBookings.length; i++) {
             var roomId = allBookings[i].roomId;
@@ -103,6 +147,10 @@ class BookingComponent extends React.Component {
             var startSlot = allBookings[i].startSlot;
             var endTime = allBookings[i].endTime;
             var endSlot = allBookings[i].endSlot;
+            var ownerUsername = allBookings[i].ownerUsername;
+
+            // Mine of not mine ?
+            var mine = (ownerUsername == this.props.user.username);
 
             // First cell
             var idCheck = "hour-td-" + roomId + "-" + startTime + "-" + startSlot;
@@ -116,13 +164,24 @@ class BookingComponent extends React.Component {
             var innerHtml = [
                 <h4 key={"time-"+idCheck}><b>{timeString}</b></h4>,
                 <p key={"booker-"+idCheck}>by <b>{booker}</b></p>,
-                <p key={"purpose-"+idCheck}>"{purpose}"</p>
+                <p key={"purpose-"+idCheck}>"{purpose}"</p>,
             ];
+            if (mine || this.props.user.role == "ADMIN") {
+                let booking = allBookings[i];
+                innerHtml.push(<div key={"delete-"+idCheck} className="delete-button" onClick={
+                    (e) => {
+                        e.stopPropagation();
+                        this.openDelete(booking)
+                    }
+                }>x</div>)
+            }
 
             specialCells.push({
                 idCheck: idCheck,
                 innerHtml: innerHtml,
                 rowSpan: rowSpan,
+                mine: mine,
+                booking: allBookings[i],
             });
 
             var cellsToRemove = rowSpan - 1;
@@ -149,7 +208,6 @@ class BookingComponent extends React.Component {
         this.setState({
             specialCells: specialCells,
         });
-        console.log(specialCells);
     }
 
     generateTableContent() {
@@ -191,30 +249,48 @@ class BookingComponent extends React.Component {
         globalMin = Math.max(0, globalMin);
         globalMax = Math.min(24, globalMax);
 
-        for (var i = globalMin; i < globalMax; i++) {
+        for (var i = globalMin; i <= globalMax; i++) {
             var hourContent = [];
 
             for (var n = 0; n < 4; n++) {
                 var rowContent = [];
                 for (var ii = 0; ii < tree.length; ii++) {
                     var className = "booking-hour";
+
+                    // Get Unix timestamp of the start of this slot, in this location
+                    var timezone = this.props.nodeMap[tree[ii].id].info.location;
+                    var timeStr = this.props.selectedDate + " " + window.custom.lpad(i, 2) + ":" + window.custom.lpad(n*15, 2) + ":00";
+                    var timestamp = momentTZ.tz(timeStr, "DD-MM-YYYY hh:mm:ss", timezone).add(15, "minutes").unix();
+
                     // If current hour is allowed
-                    if (i >= tree[ii].minHour && i < tree[ii].maxHour) {
+                    if (tree[ii].minHour <= i && i <= tree[ii].maxHour) {
 
                         var id = "hour-td-"+ii+"-"+i+"-"+n;
                         var rowSpan = 1;
                         var className = "booking-hour is-allowed";
                         var innerHtml = [];
                         var onClick = this.makeHandler(tree[ii].id, i, n);
+                        if (moment().unix() >= timestamp) { // this is the past
+                            className = "booking-hour not-allowed";
+                            onClick = () => {};
+                        }
 
                         var specialCells = this.state.specialCells;
 
                         for (var s = 0; s < specialCells.length; s++) {
                             if (id == specialCells[s].idCheck) {
                                 rowSpan = specialCells[s].rowSpan;
-                                className = "booking-hour is-booked";
+                                className = "booking-hour is-booked" + (specialCells[s].mine ? " mine" : "");
                                 innerHtml = specialCells[s].innerHtml;
-                                onClick = () => {};
+
+                                let booking = specialCells[s].booking;
+                                if (booking && specialCells[s].mine) {
+                                    let roomId = tree[ii].id;
+                                    onClick = () => this.openUpdate(booking, roomId);
+                                } else {
+                                    onClick = () => {};
+                                }
+                                break;
                             }
                         }
 
@@ -266,7 +342,7 @@ class BookingComponent extends React.Component {
         return tableContent;
     }
 
-    onSubmit(e, states) {
+    onCreate(e, states, fClose) {
         var timezone = this.props.nodeMap[states.roomId].info.location;
 
         var startStr = this.props.selectedDate + " " + states.startTime + ":00";
@@ -282,13 +358,29 @@ class BookingComponent extends React.Component {
             subject: states.purpose,
         }
 
-        console.log(booking)
+        this.props.dispatch(createBooking(states.roomId, booking)).then(fClose);
+    }
 
-        this.props.dispatch(createBooking(states.roomId, booking));
+    onUpdate(e, states, fClose) {
+        var timezone = this.props.nodeMap[states.roomId].info.location;
+
+        var startStr = this.props.selectedDate + " " + states.startTime + ":00";
+        var start = momentTZ.tz(startStr, "DD-MM-YYYY hh:mm:ss", timezone).unix();
+
+        var endStr = this.props.selectedDate + " " + states.endTime + ":00";
+        var end = momentTZ.tz(endStr, "DD-MM-YYYY hh:mm:ss", timezone).unix() - 1; // ending at 11:00:00 == ending at 10:59:59
+
+        var booking = {
+            starttime: start,
+            endtime: end,
+            booker: states.booker,
+            subject: states.purpose,
+        }
+
+        this.props.dispatch(updateBooking(states.id, booking)).then(fClose);
     }
 
     render() {
-        console.log(this.props)
         var displayDate;
         if (this.state.selectedDate) {
             displayDate = moment(this.state.selectedDate).format("dddd, MMMM Do YYYY");
@@ -335,6 +427,7 @@ class BookingComponent extends React.Component {
                             <div className="booking-right">
                                 <div className="booking-timetable">
                                     <div>{displayDate}</div>
+                                    <h3>{this.props.currentNode.info.name}</h3>
                                     <div className="booking-table-container">
                                         <table>
                                             <tbody>
@@ -348,9 +441,25 @@ class BookingComponent extends React.Component {
                     </div>
                 </div>
                 <BookingForm
+                    mode="create"
                     ref={(elem) => {this.bookingForm = elem}}
-                    onSubmit={(e, states) => {this.onSubmit(e, states)}}
+                    onSubmit={(e, states, fClose) => {this.onCreate(e, states, fClose)}}
                 />
+                <BookingForm
+                    mode="edit"
+                    ref={(elem) => {this.updateForm = elem}}
+                    onSubmit={(e, states, fClose) => {this.onUpdate(e, states, fClose)}}
+                />
+                <Modal
+                    ref={(elem) => {this.deleteModal = elem}}
+                    clickButton={(e) => { this.delete(this.state.deletedBooking)}}
+                    header="Delete Reservation"
+                    buttonText="Delete"
+                    buttonClass="btn-danger"
+                    entry={ null }
+                    >
+                    <p>Are you sure you want to delete the reservation of <b>{this.state.deletedBooking.booker}</b> ({this.state.deletedBooking.purpose}) ?</p>
+                </Modal>
             </div>
         )
     }
@@ -361,6 +470,7 @@ function mapStateToProps(state) {
         user: state.myAccountReducer.user,
 
         nodeMap: state.overviewReducer.nodeMap,
+        currentNode: state.overviewReducer.currentNode,
         cards: state.defaultSettingsReducer.card,
 
         bookings: state.bookingReducer.bookings,

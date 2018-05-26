@@ -22,6 +22,7 @@ export function fetchBookings(id, date) {
 
 export const RECEIVE_BOOKINGS = 'RECEIVE_BOOKINGS';
 export function receiveBookings(result) {
+	result.data = result.data.slice(0, 10);
 	return {
 		type: RECEIVE_BOOKINGS,
 		data: result.data,
@@ -42,7 +43,44 @@ export function createBooking(id, data) {
 		return axios.post(config.api.root + `/booking/create/${id}`, data)
 			.then((response) => {
 				toastr.success("Booked successfully !")
-				dispatch(fetchBookings(null, store.getState().bookingReducer.date));
+				let rootId = store.getState().overviewReducer.currentNode.id;
+				dispatch(fetchBookings(rootId, store.getState().bookingReducer.date));
+				return response;
+			}).catch((error) => {
+				console.log(error);
+				toastr.error(error.statusText.data);
+				return error;
+			});
+	}
+}
+
+export const DELETE_BOOKING = 'DELETE_BOOKING';
+export function deleteBooking(id) {
+	return dispatch => {
+		dispatch({ type: DELETE_BOOKING, id });
+		return axios.delete(config.api.root + `/booking/delete/${id}`)
+			.then((response) => {
+				toastr.success("Reservation deleted !")
+				let rootId = store.getState().overviewReducer.currentNode.id;
+				dispatch(fetchBookings(rootId, store.getState().bookingReducer.date));
+				return response;
+			}).catch((error) => {
+				console.log(error);
+				toastr.error(error.statusText.data);
+				return error;
+			});
+	}
+}
+
+export const UPDATE_BOOKING = 'UPDATE_BOOKING';
+export function updateBooking(id, data) {
+	return dispatch => {
+		dispatch({ type: UPDATE_BOOKING, id, data });
+		return axios.put(config.api.root + `/booking/update/${id}`, data)
+			.then((response) => {
+				toastr.success("Reservation edited !")
+				let rootId = store.getState().overviewReducer.currentNode.id;
+				dispatch(fetchBookings(rootId, store.getState().bookingReducer.date));
 				return response;
 			}).catch((error) => {
 				console.log(error);

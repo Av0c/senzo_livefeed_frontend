@@ -34,7 +34,7 @@ class BookingComponent extends React.Component {
 
         this.props.dispatch(fetchBookings(this.props.currentNode.id, moment().format('DD-MM-YYYY')));
         var I = setInterval(() => {
-            this.props.dispatch(fetchBookings(this.props.currentNode.id, moment().format('DD-MM-YYYY')));
+            this.props.dispatch(fetchBookings(this.props.currentNode.id, moment(this.state.selectedDate).format("DD-MM-YYYY")));
         }, 10000)
 
         this.setState({

@@ -33,7 +33,7 @@ export class Toolbar extends React.Component {
 
     checkStatic() {
         // Check if header-bar should be static
-        if (this.props.location.pathname.includes("/iasjdailsdj") || this.props.location.pathname == "/") {
+        if (this.props.location.pathname.includes("/booking") || this.props.location.pathname == "/") {
             var header = this.state.headerClass;
             header += " static-header";
             var spacing = this.state.spacingClass;

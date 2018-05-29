@@ -17,6 +17,7 @@ import { requireAuthentication } from 'components/common/authenticatedComponent'
 
 // Pages
 import Overview from 'components/pages/overview';
+import Booking from 'components/pages/booking';
 import Comparison from 'components/pages/comparison';
 import Stats from 'components/pages/stats';
 import Live from 'components/pages/live';
@@ -68,6 +69,14 @@ CountriesAndTimezones.getAllTimezones()["UTC"] = {
     "offsetStr": "00:00",
     "countries": ["--"],
 }
+
+window.custom = {}
+window.custom.lpad = function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
 document.charts = {};
 
 initializeIcons();
@@ -77,6 +86,7 @@ ReactDOM.render((
 			<Route path="/" component={requireAuthentication(Frame)}>
 				<IndexRoute component={Overview} />
 
+				<Route path="/booking" component={Booking}/>
 				<Route path="/locations" component={Locations}/>
 
 				<Route path="/comparison" component={Comparison} />

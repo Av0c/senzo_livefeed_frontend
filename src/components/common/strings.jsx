@@ -44,13 +44,13 @@ let Strings = {
         'Saturday'
     ],
     shortDays: [
-        'S',
-        'M',
-        'T',
-        'W',
-        'T',
-        'F',
-        'S'
+        'Sun',
+        'Mon',
+        'Tue',
+        'Wed',
+        'Thu',
+        'Fri',
+        'Sat'
     ],
 
     /**

@@ -131,8 +131,11 @@ header {
 .main-menu {
     margin-top: 16px;
 }
-.main-menu-left a:first-of-type {
+.main-menu-left a {
     margin-right: 10px;
+}
+.main-menu-left a:last-of-type {
+    margin-right: 0px;
 }
 .main-menu-time li {
     display: block;

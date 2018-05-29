@@ -100,7 +100,7 @@ class Location extends React.Component {
                                             this.props.openAddFloorplanForm(this.props.node);
                                         }}> <a>Edit Floor Plan</a></li>
 
-                                        <li><Link to={'live/' + this.props.node.id}>Add Sensor</Link></li>
+                                        <li><Link to={'live/' + this.props.node.id}>Go to Live View</Link></li>
                                     </ul>
                                 </div>
                             </div>

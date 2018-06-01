@@ -24,10 +24,9 @@ export default class BookingForm extends React.Component {
 
     }
 
-	open(roomId, s0, s1, e0, e1, id=-1, booker = "", purpose = "") { // s0, s1 : start time, slot;  e0, e1 : end time, slot 
+	open(roomId, s0, s1, e0, e1, id=-1, booker = "", purpose = "") { // s0, s1 : start time, slot;  e0, e1 : end time, slot
         var startTime = window.custom.lpad(s0+"", 2) + ":" + window.custom.lpad(s1*15+"", 2);
         var endTime = window.custom.lpad(e0+"", 2) + ":" + window.custom.lpad(e1*15+"", 2);
-
         this.setState({
             roomId: roomId,
             startTime: startTime,

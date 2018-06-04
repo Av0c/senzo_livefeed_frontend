@@ -49,9 +49,20 @@ class BookingComponent extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.bookings) {
-            this.setState({tree: nextProps.bookings}, () => {
-                this.calculateRowSpan(nextProps.bookings);
-            });
+            var tree = [];
+            for (var i = 0; i < nextProps.bookings.length; i++) {
+                console.log();
+                if (i != -2) {
+                    tree.push(nextProps.bookings[i]);
+                }
+            }
+
+            console.log(tree);
+
+            this.setState(
+                {tree: tree},
+                () => {this.calculateRowSpan(nextProps.bookings);}
+            );
         }
     }
 
@@ -78,21 +89,22 @@ class BookingComponent extends React.Component {
     }
 
     handleSelectDate(selectedDate) {
+        this.setState({ selectedDate: selectedDate }); // Increase responsiveness when selecting dates
         this.props.dispatch(fetchBookings(null, moment(selectedDate).format("DD-MM-YYYY"))).then(() => {
             this.setState({ selectedDate: selectedDate });
         });
     }
 
-    makeHandler(id, hour, slot) {
+    makeHandler(roomId, startHour, startSlot) {
         // 8:00 -> (8:00, 8:15)
-        let endHour = hour, endSlot = slot;
+        let endHour = startHour, endSlot = startSlot;
         endSlot+= 1;
         if (endSlot>3) {
             endHour+= 1;
             endSlot%= 4;
         }
         return () => {
-            this.bookingForm.open(id, hour, slot, endHour, endSlot);
+            this.bookingForm.open(roomId, startHour, startSlot, endHour, endSlot);
         }
     }
 
@@ -103,13 +115,11 @@ class BookingComponent extends React.Component {
             this.deleteModal.open();
         })
     }
-
     delete(booking) {
         this.props.dispatch(deleteBooking(booking.id)).then(() => {
             this.deleteModal.close();
         });
     }
-
     openUpdate(booking, roomId) {
         this.updateForm.open(
             roomId,
@@ -125,7 +135,6 @@ class BookingComponent extends React.Component {
             booking.purpose
         );
     }
-
     calculateRowSpan(tree) {
         var allBookings = [];
 
@@ -149,7 +158,7 @@ class BookingComponent extends React.Component {
             var endSlot = allBookings[i].endSlot;
             var ownerUsername = allBookings[i].ownerUsername;
 
-            // Mine of not mine ?
+            // Mine or not mine ?
             var mine = (ownerUsername == this.props.user.username);
 
             // First cell
@@ -209,7 +218,6 @@ class BookingComponent extends React.Component {
             specialCells: specialCells,
         });
     }
-
     generateTableContent() {
         var { tree } = this.state;
         var tableContent = [];
@@ -249,10 +257,10 @@ class BookingComponent extends React.Component {
         globalMin = Math.max(0, globalMin);
         globalMax = Math.min(24, globalMax);
 
-        for (var i = globalMin; i <= globalMax; i++) {
+        for (var i = globalMin; i <= globalMax; i++) { // Hour
             var hourContent = [];
 
-            for (var n = 0; n < 4; n++) {
+            for (var n = 0; n < 4; n++) { // Slot
                 var rowContent = [];
                 for (var ii = 0; ii < tree.length; ii++) {
                     var className = "booking-hour";
@@ -266,9 +274,13 @@ class BookingComponent extends React.Component {
                     if (tree[ii].minHour <= i && i <= tree[ii].maxHour) {
 
                         var id = "hour-td-"+ii+"-"+i+"-"+n;
+
                         var rowSpan = 1;
                         var className = "booking-hour is-allowed";
-                        var innerHtml = [];
+                        var innerHtml =
+                        [<p className="hour-guide">
+                            { ((i <= 9) ? "0"+i : i) + ":" + ((n*15 <= 9) ? "0"+n*15 : n*15)}
+                        </p>];
                         var onClick = this.makeHandler(tree[ii].id, i, n);
                         if (moment().unix() >= timestamp) { // this is the past
                             className = "booking-hour not-allowed";
@@ -300,7 +312,8 @@ class BookingComponent extends React.Component {
                                     rowSpan={rowSpan}
                                     onClick={onClick}
                                     id={"hour-td-"+ii+"-"+i+"-"+n} key={"key-hour-td-"+ii+"-"+i+"-"+n}
-                                    className={className}>
+                                    className={className}
+                                >
                                     {innerHtml}
                                 </td>
                             );
@@ -322,7 +335,7 @@ class BookingComponent extends React.Component {
 
             hourContent[0].props.children.splice(0, 0,
                 <td className="booking-hour-header" rowSpan="4" key={"key-hour-td-"+i+"-title"}>
-                    {(i <= 12) ? i + " AM" : (i-12) + " PM"}
+                    {(i <= 12) ? i + " am" : (i-12) + " pm"}
                 </td>
             );
 
@@ -357,7 +370,6 @@ class BookingComponent extends React.Component {
             booker: states.booker,
             subject: states.purpose,
         }
-
         this.props.dispatch(createBooking(states.roomId, booking)).then(fClose);
     }
 

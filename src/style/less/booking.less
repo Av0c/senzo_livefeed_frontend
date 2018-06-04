@@ -27,13 +27,28 @@
             box-shadow: 0px 2px 6px 0px rgba(50, 50, 50, 0.4);
             border-radius: 2px;
 
-            @border-color-dark: #666;
+            @border-color-dark: #444;
             table {
                 border-collapse: collapse;
 
                 td {
+                    padding: 6px;
                     width: 150px;
+                    vertical-align: middle;
+                    text-align: center;
+
+                    p.hour-guide {
+                        font-size: 12px;
+                        margin: 0;
+                        visibility: hidden;
+                    }
+                    &:hover {
+                        p.hour-guide {
+                            visibility: visible;
+                        }
+                    }
                 }
+
 
                 td.booking-hour {
                     position: relative;
@@ -41,6 +56,7 @@
                     border-right: 1px solid @border-color-dark;
 
                     &.is-booked {
+                        margin: 10px;
                         color: #F2F2F2;
                         border: 1px solid @border-color-dark;
                         background-color: rgba(100, 100, 100, 0.65);
@@ -51,9 +67,9 @@
                     }
 
                     &.is-allowed:hover {
-                        box-shadow: inset 0px 0px 0px 1px @color-green;
+                        // box-shadow: inset 0px 0px 0px 1px @color-green;
+                        background-color: #bdbdbd;
                         cursor: pointer;
-                        // border: 3px solid @color-green;
                     }
 
                     &.not-allowed {
@@ -61,8 +77,8 @@
                     }
 
                     .delete-button {
-                        font-family: "Comic Sans MS", cursive, sans-serif;
-                        position:absolute;
+                        font-family: sans-serif;
+                        position: absolute;
                         top: -2px;
                         right: 2px;
                         font-size: 10px;
@@ -75,13 +91,17 @@
                 }
 
                 td.booking-hour-header {
-                    border-bottom: 1px solid @border-color-dark;
                     border-right: 1px solid @border-color-dark;
+                    border-top: 1px solid @border-color-dark;
+                    border-bottom: 1px solid @border-color-dark;
+                    text-align: center;
+                    background-color: white;
+                    color: @border-color-dark;
                 }
 
                 tr.name-row {
                     color: #f2f2f2;
-                    background-color: #393939;
+                    background-color: @border-color-dark;
 
                     td {
                         border-bottom: 1px solid @border-color-dark;
@@ -89,9 +109,13 @@
                     }
 
                     td:nth-child(1) {
-                        border-right: hidden;
+                        border-right: 1px solid @border-color-dark;
                         border-bottom: 1px solid @border-color-dark;
                         background-color: white;
+                    }
+
+                    td:last-child {
+                        border-right: 1px solid @border-color-dark;
                     }
                 }
 

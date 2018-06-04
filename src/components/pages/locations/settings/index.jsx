@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import toastr from 'toastr';
 import AddLocationForm from 'components/common/addlocationform';
 import AddFloorplanForm from 'components/common/addfloorplanform';
+import MoveLocationForm from 'components/common/movelocationform';
 import Tree from 'components/pages/locations/settings/tree';
 import EditLocationForm from 'components/common/editlocationform';
 import DeleteLocationForm from 'components/common/deletelocationform';
@@ -59,6 +60,17 @@ export class Settings extends React.Component {
 
     closeAddLocationForm() {
         this.setState({ isAddingLocation: false });
+    }
+
+    openMoveLocationForm(node) {
+        this.setState({ isMovingLocation: true, currentNode: node }, () => {
+            console.log(this.moveLocationForm)
+            this.moveLocationForm.open();
+        });
+    }
+
+    closeMoveLocationForm() {
+        this.setState({ isMovingLocation: false });
     }
 
     openEditDropdown() {
@@ -128,6 +140,18 @@ export class Settings extends React.Component {
         }
     }
 
+    moveLocation(node, newParentId, onSuccess) {
+        console.log(node.type)
+        this.props.dispatch(setParent(node.id, newParentId)).then(() => {
+            this.props.dispatch(fetchCustomerOverview());
+            toastr.success(`Moved ${node.info.name} successfully`);
+            if (typeof onSuccess == "function") {
+                onSuccess();
+            }
+        }).catch(error => {
+            toastr.error(error);
+        });
+    }
 
     deleteLocation(node, type) {
         if (type == 'all') {
@@ -242,6 +266,7 @@ export class Settings extends React.Component {
                                         closeEditLocationForm={this.closeEditLocationForm.bind(this)}
                                         openDeleteLocationForm={this.openDeleteLocationForm.bind(this)}
                                         closeDeleteLocationForm={this.closeDeleteLocationForm.bind(this)}
+                                        openMoveLocationForm={this.openMoveLocationForm.bind(this)}
                                         location={this.props.location}
                                     />
                                     {this.state.isAddingLocation && <AddLocationForm submit={this.addLocation.bind(this)} node={this.state.currentNode} tree={this.props.tree} isAddingLocation={this.state.isAddingLocation} closeAddLocationForm={this.closeAddLocationForm.bind(this)} />}
@@ -249,6 +274,7 @@ export class Settings extends React.Component {
                                     {this.state.isEditingLocation && <EditLocationForm submit={this.updateLocation.bind(this)} node={this.state.currentNode} isEditingLocation={this.state.isEditingLocation} closeEditLocationForm={this.closeEditLocationForm.bind(this)} />}
                                     {this.state.isDeletingLocation && <DeleteLocationForm submit={this.deleteLocation.bind(this)} node={this.state.currentNode} isDeletingLocation={this.state.isDeletingLocation} closeDeleteLocationForm={this.closeDeleteLocationForm.bind(this)} />}
                                     {this.state.isConfirmingDeleteLocation && <ConfirmDeleteLocationForm submit={this.confirmDeleteLocation.bind(this)} type={this.state.type == 'all'} node={this.state.currentNode} isConfirmingDeleteLocation={this.state.isConfirmingDeleteLocation} closeConfirmDeleteLocationForm={this.closeConfirmDeleteLocationForm.bind(this)} />}
+                                    <MoveLocationForm ref={(e) => this.moveLocationForm = e} submit={this.moveLocation.bind(this)} node={this.state.currentNode} tree={this.props.tree} nodeMap={this.props.nodeMap} me={this.props.me}/>
                                 </div>
                             </div>
                         </div>
@@ -263,9 +289,12 @@ function mapStateToProps(state) {
     return {
         user: state.myAccountReducer.user,
         currentSensor: state.nodeReducer.map,
-        tree: state.overviewReducer.customerOverview
+        tree: state.overviewReducer.customerOverview,
+        nodeMap: state.overviewReducer.nodeMap,
+        me: state.myAccountReducer.user,
     };
 }
+
 function mapDispatchToProps(dispatch) {
     return {
         dispatch

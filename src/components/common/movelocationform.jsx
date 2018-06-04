@@ -20,9 +20,10 @@ export default class MoveLocationForm extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         console.log(nextProps)
-        if (nextProps.node && nextProps.node.parent && nextProps.node.id) {
-            this.setState({ parentId: nextProps.node.parent.id });
-        }
+        try {
+            var parentId = nextProps.node.parent.id;
+            this.setState({ parentId: parentId });
+        } catch (err) {};
     }
 
     canBeChild(x, y) {
@@ -67,10 +68,10 @@ export default class MoveLocationForm extends React.Component {
     render() {
         var options = this.generateOptionList();
         var name = "this location";
-        if (this.props.node && this.props.node.info && this.props.node.info.name) {
+        try {
             name = this.props.node.info.name;
-        }
-        console.log(name)
+        } catch (err) {};
+
         return (
                 <Modal
                     ref={(elem) => {this.modal = elem}}

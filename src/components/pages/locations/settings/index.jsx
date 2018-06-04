@@ -168,7 +168,7 @@ export class Settings extends React.Component {
         if (this.state.type == 'all' || node.children.length == 0) {
             this.props.dispatch(deleteNode(node)).then(() => {
                 this.props.dispatch(fetchCustomerOverview());
-                toastr.error(`${node.info.name} has been deleted`);
+                toastr.success(`${node.info.name} has been deleted`);
             })
                 .catch(error => {
                     toastr.error(error);
@@ -182,7 +182,7 @@ export class Settings extends React.Component {
                     if (i == (length - 1)) {
                         this.props.dispatch(deleteNode(node)).then(() => {
                             this.props.dispatch(fetchCustomerOverview());
-                            toastr.error(`${node.info.name} has been deleted`);
+                            toastr.success(`${node.info.name} has been deleted`);
                         })
                             .catch(error => {
                                 toastr.error(error);

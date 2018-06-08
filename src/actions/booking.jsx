@@ -22,7 +22,6 @@ export function fetchBookings(id, date) {
 
 export const RECEIVE_BOOKINGS = 'RECEIVE_BOOKINGS';
 export function receiveBookings(result) {
-	result.data = result.data.slice(0, 10);
 	return {
 		type: RECEIVE_BOOKINGS,
 		data: result.data,

@@ -50,7 +50,7 @@ class Card extends React.Component {
 	changeWeekday(pos) {
 		var newCard = {
 			id: this.props.card.id,
-			weekdaymask: this.replaceAt(newCard.weekdaymask, pos, (newCard.weekdaymask[pos]=="0") ? "1" : "0"),
+			weekdaymask: this.replaceAt(this.props.card.weekdaymask, pos, (this.props.card.weekdaymask[pos]=="0") ? "1" : "0"),
 		};
 		this.props.dispatch(a.updateCard(newCard));
 	}

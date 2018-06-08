@@ -162,6 +162,7 @@ export default class PianoChart extends React.Component {
                         rule: "%node-value < 0",
                         backgroundColor: "white",
                         fontColor: "#05636c",
+                        visible: "false",
                         legendMarker: {
                             backgroundColor: "white"
                         }

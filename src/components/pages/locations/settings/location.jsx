@@ -97,6 +97,12 @@ class Location extends React.Component {
 
                                         <li onClick={() => {
                                             this.closeEditDropdown();
+                                            console.log(this.props)
+                                            this.props.openMoveLocationForm(this.props.node);
+                                        }}><a>Move Location</a></li>
+
+                                        <li onClick={() => {
+                                            this.closeEditDropdown();
                                             this.props.openAddFloorplanForm(this.props.node);
                                         }}> <a>Edit Floor Plan</a></li>
 

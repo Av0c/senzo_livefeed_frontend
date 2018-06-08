@@ -17,6 +17,7 @@ export default class Tree extends React.Component {
                     closeEditLocationForm={self.props.closeEditLocationForm}
                     closeDeleteLocationForm={self.props.closeDeleteLocationForm}
                     openDeleteLocationForm={self.props.openDeleteLocationForm} key={index} node={node}
+                    openMoveLocationForm={self.props.openMoveLocationForm}
                     location={self.props.location}
                     >
 
@@ -27,6 +28,7 @@ export default class Tree extends React.Component {
                     closeEditLocationForm={self.props.closeEditLocationForm}
                     closeDeleteLocationForm={self.props.closeDeleteLocationForm}
                     openDeleteLocationForm={self.props.openDeleteLocationForm}
+                    openMoveLocationForm={self.props.openMoveLocationForm}
                     location={self.props.location}
                     />
                 </Location>);

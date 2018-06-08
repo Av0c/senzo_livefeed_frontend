@@ -625,6 +625,7 @@ h2.account-title {
     left: auto;
     right: 0;
     min-width: 130px;
+    z-index: 7093;
 }
 .settings-location-dropdown a {
     color: #585e66;

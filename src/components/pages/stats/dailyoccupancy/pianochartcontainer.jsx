@@ -95,7 +95,7 @@ export class PianoChartContainer extends React.Component {
                 }
             }
             if (mode == "Average") {
-                res.push(avg / count);
+                res.push((count != 0) ? avg / count : -100);
             } else {
                 res.push(pk);
             }

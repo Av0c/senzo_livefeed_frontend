@@ -59,7 +59,7 @@ export class Stats extends React.Component {
         return (
             <div className="stats-body" id="stats-body">
                 <div className="container-fluid">
-                    <div className="row">
+                    <div className="row" style={{marginTop: "120px"}}>
                         <div className={this.state.menuClass} style={{top: this.state.menuTop}}>
                             <LeftMenu overview='active' comparison='' />
                             <DateSelector />

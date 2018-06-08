@@ -123,7 +123,7 @@ export class OccupancyBreakDown extends React.Component {
                                             value={this.state.value}
                                             />
                                     </div>
-                                <i className="material-icons multi-select-clear" onClick={() => {this.clearSelect()}} data-tooltip="Clear all">clear</i>
+                                    <i className="material-icons multi-select-clear" onClick={() => {this.clearSelect()}} data-tooltip="Clear all">clear</i>
                                 </div>
                                 <div style={{marginRight: "20px"}} className="pull-right">
                                     <ModeSelector mode={this.state.mode} chooseMode={this.chooseMode.bind(this)} />

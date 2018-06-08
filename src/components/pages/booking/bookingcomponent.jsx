@@ -11,12 +11,14 @@ import LeftMenu from 'components/common/leftmenu';
 import Modal from "components/common/modal";
 import BookingForm from './bookingform';
 
-// For DatePicker
+// For Calendar
 import { DatePicker, Calendar, DayOfWeek } from 'office-ui-fabric-react';
 import moment from 'moment';
 import momentTZ from 'moment-timezone';
 import Strings from 'components/common/strings';
 
+// For Room
+import MultiSelect from './multiselect';
 
 class BookingComponent extends React.Component {
     constructor(props, context) {
@@ -26,9 +28,9 @@ class BookingComponent extends React.Component {
             specialCells: null,
             tree: [],
             deletedBooking: {},
+            roomOptions: [],
         };
     }
-
     componentDidMount() {
         var today = this.onParseDateFromString(moment().format('DD-MM-YYYY'));
 
@@ -41,12 +43,13 @@ class BookingComponent extends React.Component {
             selectedDate: today,
             I,
         });
-    }
 
+    }
+    componentDidUpdate(prevProps, prevState) {
+    }
     componentWillUnmount() {
         clearInterval(this.state.I)
     }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.bookings) {
             var tree = [];
@@ -56,22 +59,21 @@ class BookingComponent extends React.Component {
                 }
             }
 
-            console.log(tree);
-
+            this.generateSelectOptions(tree);
             this.setState(
-                {tree: tree},
+                {
+                    tree: tree,
+                },
                 () => {this.calculateRowSpan(nextProps.bookings);}
             );
         }
     }
-
     onFormatDate(date) {
         let day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
         let month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
         let d = day + '-' + month + '-' + date.getFullYear();
         return d;
     }
-
     onParseDateFromString(value) {
         if (typeof value == 'string') {
             let values = (value || '').split('-');
@@ -86,14 +88,12 @@ class BookingComponent extends React.Component {
             return value;
         }
     }
-
     handleSelectDate(selectedDate) {
         this.setState({ selectedDate: selectedDate }); // Increase responsiveness when selecting dates
         this.props.dispatch(fetchBookings(null, moment(selectedDate).format("DD-MM-YYYY"))).then(() => {
             this.setState({ selectedDate: selectedDate });
         });
     }
-
     makeHandler(roomId, startHour, startSlot) {
         // 8:00 -> (8:00, 8:15)
         let endHour = startHour, endSlot = startSlot;
@@ -106,7 +106,6 @@ class BookingComponent extends React.Component {
             this.bookingForm.open(roomId, startHour, startSlot, endHour, endSlot);
         }
     }
-
     openDelete(booking) {
         this.setState({
             deletedBooking: booking,
@@ -239,7 +238,7 @@ class BookingComponent extends React.Component {
         });
     }
     generateTableContent() {
-        var { tree } = this.state;
+        var tree = this.state.selectedTree;
         var tableContent = [];
 
         var names = [<td key="empty"></td>]; // Top left cell of table
@@ -318,7 +317,7 @@ class BookingComponent extends React.Component {
 
                                 let booking = specialCells[s].booking;
                                 if (booking) {
-                                    if (specialCells[s].mine) {
+                                    if (specialCells[s].mine || this.props.user.role == "ADMIN") {
                                         onClick = () => this.openUpdate(booking, roomId);
                                     } else {
                                         onClick = () => this.openView(booking, roomId);
@@ -377,7 +376,6 @@ class BookingComponent extends React.Component {
 
         return tableContent;
     }
-
     onCreate(e, states, fClose) {
         var timezone = this.props.nodeMap[states.roomId].info.location;
 
@@ -395,7 +393,6 @@ class BookingComponent extends React.Component {
         }
         this.props.dispatch(createBooking(states.roomId, booking)).then(fClose);
     }
-
     onUpdate(e, states, fClose) {
         var timezone = this.props.nodeMap[states.roomId].info.location;
 
@@ -415,6 +412,67 @@ class BookingComponent extends React.Component {
         this.props.dispatch(updateBooking(states.id, booking)).then(fClose);
     }
 
+    generateSelectOptions(tree) {
+        var { roomOptions } = this.state;
+        if (!roomOptions.length) {
+            for (var i = 0; i < tree.length; i++) {
+                roomOptions.push({index: i, value: tree[i].id, label: tree[i].name, selected: false});
+            }
+            this.setState({
+                roomOptions: roomOptions,
+            });
+        }
+
+    }
+
+    handleSelectRoom(value) {
+        var roomOptions = this.state.roomOptions.slice();
+        var index = roomOptions.indexOf(value);
+
+        roomOptions[index].selected = !roomOptions[index].selected;
+
+        var selectedTree = []; // New tree after selection
+        var count = 0;
+        for (var i = 0; i < roomOptions.length; i++) {
+            if (roomOptions[i].selected) {
+                count++;
+                var { tree } = this.state;
+                selectedTree.push(tree[roomOptions[i].index]); // Get from old tree using index and add to new tree
+            }
+        }
+        var displayValue;
+        switch (count) {
+            case 0:
+                displayValue = "No room selected.";
+            break;
+            case 1:
+                displayValue = "1 room selected.";
+            break;
+            default:
+                displayValue = count + " rooms selected.";
+        }
+		this.setState({
+            selectedTree: selectedTree,
+            value: value,
+            roomOptions: roomOptions,
+            displayValue: displayValue,
+        });
+    }
+
+    clearSelect() {
+        var roomOptions = this.state.roomOptions.slice()
+        for (var i = 0; i < roomOptions.length; i++) {
+            roomOptions[i].selected = false;
+        }
+
+        this.setState({
+            selectedTree: [],
+            roomOptions: roomOptions,
+            value: 0,
+            displayValue: "No room selected.",
+        });
+    }
+
     render() {
         var displayDate;
         if (this.state.selectedDate) {
@@ -423,9 +481,11 @@ class BookingComponent extends React.Component {
             displayDate = "";
         }
 
-        var tableContent = [];
-        if (this.state.specialCells) {
-            tableContent = this.generateTableContent();
+        var tableContent = (<div style={{fontSize: "0.8em", fontStyle: "italic"}}>Please select a room to view the booking timetable</div>);
+        if (this.state.specialCells && this.state.selectedTree) {
+            if (this.state.selectedTree.length > 0) {
+                tableContent = (<table><tbody>{this.generateTableContent()}</tbody></table>);
+            }
         }
 
         return (
@@ -439,6 +499,20 @@ class BookingComponent extends React.Component {
                     <div className="row">
                         <div className="booking-container">
                             <div className="booking-left">
+                                <div className="booking-room-select">
+                                    <div className="multi-select-input"  data-tooltip="Open for more details">
+                                        <MultiSelect
+                                            onChange={(value) => {this.handleSelectRoom(value)}}
+                                            onFocus={() => {}}
+                                            onClose={() => {}}
+
+                                            options={this.state.roomOptions}
+                                            displayValue={this.state.displayValue}
+                                            value={this.state.value}
+                                            />
+                                    </div>
+                                    <i className="material-icons multi-select-clear" onClick={() => {this.clearSelect()}} data-tooltip="Clear all">clear</i>
+                                </div>
                                 <div className="booking-calendar">
                                     <Calendar
                                         onSelectDate={(selectedDate) => {this.handleSelectDate(selectedDate)}}
@@ -458,17 +532,14 @@ class BookingComponent extends React.Component {
                                         showWeekNumbers={false}
                                         />
                                 </div>
+
                             </div>
                             <div className="booking-right">
                                 <div className="booking-timetable">
-                                    <div>{displayDate}</div>
-                                    <h3>{this.props.currentNode.info.name}</h3>
+                                    <div className="booking-date">{displayDate}</div>
+                                    <hr></hr>
                                     <div className="booking-table-container">
-                                        <table>
-                                            <tbody>
-                                                {tableContent}
-                                            </tbody>
-                                        </table>
+                                        {tableContent}
                                     </div>
                                 </div>
                             </div>

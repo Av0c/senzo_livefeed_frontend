@@ -56,19 +56,29 @@
                     border-right: 1px solid @border-color-dark;
 
                     &.is-booked {
+                        white-space: nowrap;
                         margin: 10px;
-                        color: #F2F2F2;
-                        border: 1px solid @border-color-dark;
+                        color: #F2F2F2 !important;
+                        border: 1px solid @border-color-dark !important;
                         background-color: rgba(100, 100, 100, 0.65);
+                        cursor: pointer;
+
+                        p {
+                            margin: 0;
+
+                            &.booked-time {
+                                margin: 8px 0;
+                            }
+                        }
+
                         &.mine {
-                            cursor: pointer;
-                            background-color: @color-green;
+                            background-color: @color-green !important;
                         }
                     }
 
                     &.is-allowed:hover {
-                        // box-shadow: inset 0px 0px 0px 1px @color-green;
-                        background-color: #bdbdbd;
+                        box-shadow: inset 0px 0px 0px 2px @color-green;
+                        // background-color: #bdbdbd;
                         cursor: pointer;
                     }
 

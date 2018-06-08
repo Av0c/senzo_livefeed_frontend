@@ -51,7 +51,6 @@ class BookingComponent extends React.Component {
         if (nextProps.bookings) {
             var tree = [];
             for (var i = 0; i < nextProps.bookings.length; i++) {
-                console.log();
                 if (i != -2) {
                     tree.push(nextProps.bookings[i]);
                 }
@@ -135,6 +134,21 @@ class BookingComponent extends React.Component {
             booking.purpose
         );
     }
+    openView(booking, roomId) {
+        this.viewForm.open(
+            roomId,
+
+            booking.startTime,
+            booking.startSlot,
+
+            booking.endTime,
+            booking.endSlot,
+
+            booking.id,
+            booking.booker,
+            booking.purpose
+        );
+    }
     calculateRowSpan(tree) {
         var allBookings = [];
 
@@ -170,19 +184,26 @@ class BookingComponent extends React.Component {
             timeString += endTime + ":";
             timeString += (endSlot*15 < 10) ? ("0" + endSlot*15) : (endSlot*15);
 
-            var innerHtml = [
-                <h4 key={"time-"+idCheck}><b>{timeString}</b></h4>,
-                <p key={"booker-"+idCheck}>by <b>{booker}</b></p>,
-                <p key={"purpose-"+idCheck}>"{purpose}"</p>,
-            ];
+            var innerHtml = [];
+
+            if (rowSpan < 4) {
+                innerHtml = [
+                    <p className="booked-purpose" key={"purpose-"+idCheck}>{purpose}</p>,
+                ];
+            } else {
+                innerHtml = [
+                    <p className="booked-purpose" key={"purpose-"+idCheck}>{purpose}</p>,
+                    <p className="booked-time" key={"time-"+idCheck}><b>{timeString}</b></p>,
+                    <p className="booked-booker" key={"booker-"+idCheck}>{booker}</p>,
+                ];
+            }
             if (mine || this.props.user.role == "ADMIN") {
-                let booking = allBookings[i];
-                innerHtml.push(<div key={"delete-"+idCheck} className="delete-button" onClick={
-                    (e) => {
-                        e.stopPropagation();
-                        this.openDelete(booking)
-                    }
-                }>x</div>)
+                // innerHtml.push(<div key={"delete-"+idCheck} className="delete-button" onMouseEnter={() => {console.log(idCheck)}} onClick={
+                //     (e) => {
+                //         e.stopPropagation();
+                //         this.openDelete(allBookings[i])
+                //     }
+                // }>x</div>)
             }
 
             specialCells.push({
@@ -205,7 +226,6 @@ class BookingComponent extends React.Component {
 
                 idCheck = "hour-td-" + roomId + "-" + startTime + "-" + startSlot;
                 rowSpan = 0;
-                innerHtml = [];
 
                 specialCells.push({
                     idCheck: idCheck,
@@ -273,15 +293,16 @@ class BookingComponent extends React.Component {
                     // If current hour is allowed
                     if (tree[ii].minHour <= i && i <= tree[ii].maxHour) {
 
-                        var id = "hour-td-"+ii+"-"+i+"-"+n;
+                        var roomId = tree[ii].id;
+                        var id = "hour-td-"+roomId+"-"+i+"-"+n;
 
                         var rowSpan = 1;
                         var className = "booking-hour is-allowed";
                         var innerHtml =
-                        [<p className="hour-guide">
+                        [<p className="hour-guide" key={"hour-guide-"+id}>
                             { ((i <= 9) ? "0"+i : i) + ":" + ((n*15 <= 9) ? "0"+n*15 : n*15)}
                         </p>];
-                        var onClick = this.makeHandler(tree[ii].id, i, n);
+                        var onClick = this.makeHandler(roomId, i, n);
                         if (moment().unix() >= timestamp) { // this is the past
                             className = "booking-hour not-allowed";
                             onClick = () => {};
@@ -296,12 +317,14 @@ class BookingComponent extends React.Component {
                                 innerHtml = specialCells[s].innerHtml;
 
                                 let booking = specialCells[s].booking;
-                                if (booking && specialCells[s].mine) {
-                                    let roomId = tree[ii].id;
-                                    onClick = () => this.openUpdate(booking, roomId);
-                                } else {
-                                    onClick = () => {};
+                                if (booking) {
+                                    if (specialCells[s].mine) {
+                                        onClick = () => this.openUpdate(booking, roomId);
+                                    } else {
+                                        onClick = () => this.openView(booking, roomId);
+                                    }
                                 }
+
                                 break;
                             }
                         }
@@ -461,6 +484,11 @@ class BookingComponent extends React.Component {
                     mode="edit"
                     ref={(elem) => {this.updateForm = elem}}
                     onSubmit={(e, states, fClose) => {this.onUpdate(e, states, fClose)}}
+                />
+                <BookingForm
+                    mode="view"
+                    ref={(elem) => {this.viewForm = elem}}
+                    onSubmit={(e, states, fClose) => {fClose()}}
                 />
                 <Modal
                     ref={(elem) => {this.deleteModal = elem}}

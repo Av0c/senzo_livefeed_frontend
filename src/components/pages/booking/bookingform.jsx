@@ -66,6 +66,10 @@ export default class BookingForm extends React.Component {
 			header = "Edit reservation"
 			button = "Edit"
 		}
+		if (this.props.mode == "view") {
+			header = "View reservation"
+			button = "Got it"
+		}
 		return (
 			<Modal
 				ref={(elem) => {this.modal = elem}}
@@ -77,21 +81,31 @@ export default class BookingForm extends React.Component {
 				onClose={this.props.onClose}
 			>
 				<div>
-					<span>Name of booker</span>
-					<input type="username" id="booker" placeholder="e.g. Your name" value={this.state.booker} onChange={this.changeHandler.bind(this)} required />
+					<p>Name of booker: <b>{this.state.booker}</b></p>
+					<p>Purpose: <b>{this.state.purpose}</b></p>
+					<p>Time: <b>{this.state.startTime} – {this.state.endTime}</b></p>
 				</div>
-				<div>
-					<span>Purpose</span>
-					<input type="username" id="purpose" value={this.state.purpose} onChange={this.changeHandler.bind(this)} placeholder="e.g. Team meeting" required />
-				</div>
-                <div style={{marginTop: "10px"}}>
-                    <span style={{width: "80px", display: "inline-block"}}>Start time: </span>
-					<input type="time" id="startTime" value={this.state.startTime} step="900" onChange={this.changeHandler.bind(this)} required />
-				</div>
-                <div>
-                    <span style={{width: "80px", display: "inline-block"}}>End time: </span>
-					<input type="time" id="endTime" value={this.state.endTime} step="900" onChange={this.changeHandler.bind(this)} min={this.state.startTime} required />
-				</div>
+				{(this.props.mode == "edit") &&
+					<div>
+						<hr></hr>
+						<div>
+							<span>Name of booker</span>
+							<input type="username" id="booker" placeholder="e.g. Your name" value={this.state.booker} onChange={this.changeHandler.bind(this)} required />
+						</div>
+						<div>
+							<span>Purpose</span>
+							<input type="username" id="purpose" value={this.state.purpose} onChange={this.changeHandler.bind(this)} placeholder="e.g. Team meeting" required />
+						</div>
+						<div style={{marginTop: "10px"}}>
+							<span style={{width: "80px", display: "inline-block"}}>Start time: </span>
+							<input type="time" id="startTime" value={this.state.startTime} step="900" onChange={this.changeHandler.bind(this)} required />
+						</div>
+						<div>
+							<span style={{width: "80px", display: "inline-block"}}>End time: </span>
+							<input type="time" id="endTime" value={this.state.endTime} step="900" onChange={this.changeHandler.bind(this)} min={this.state.startTime} required />
+						</div>
+					</div>
+				}
 			</Modal>
 		);
 	}

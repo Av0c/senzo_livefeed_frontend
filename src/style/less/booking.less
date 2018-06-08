@@ -1,3 +1,15 @@
+.booking-block {
+    .booking-delete {
+        margin-top: 14px;
+        margin-bottom: -14px;
+        font-size: 13px;
+        color: @color-red;
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+}
 .booking-container {
     width: 100%;
     margin: 0;
@@ -89,7 +101,7 @@
 
         hr {
             border-top: 1px solid #BBB;
-            margin: 16px 0px;
+            margin: 14px 0px;
         }
 
         .booking-timetable {
@@ -99,9 +111,15 @@
             border-radius: 2px;
 
             @border-color-dark: #444;
+
+
             table {
                 border-collapse: collapse;
 
+                .td-container {
+                    vertical-align: middle;
+                    text-align: center;
+                }
                 td {
                     padding: 6px;
                     width: 150px;
@@ -157,18 +175,7 @@
                         background-color: rgba(100, 100, 100, 0.15);
                     }
 
-                    .delete-button {
-                        font-family: sans-serif;
-                        position: absolute;
-                        top: -2px;
-                        right: 2px;
-                        font-size: 10px;
-                        font-weight: bold;
-                        &:hover {
-                            cursor: pointer;
-                            opacity: 0.75;
-                        }
-                    }
+
                 }
 
                 td.booking-hour-header {

@@ -106,17 +106,17 @@ class BookingComponent extends React.Component {
             this.bookingForm.open(roomId, startHour, startSlot, endHour, endSlot);
         }
     }
-    openDelete(booking) {
+    openDelete(id, fClose) {
         this.setState({
-            deletedBooking: booking,
+            deletedBooking: {id, fClose},
         }, () => {
             this.deleteModal.open();
         })
     }
-    delete(booking) {
-        this.props.dispatch(deleteBooking(booking.id)).then(() => {
+    delete(id, fClose) {
+        this.props.dispatch(deleteBooking(id)).then(() => {
             this.deleteModal.close();
-        });
+        }).then(fClose);
     }
     openUpdate(booking, roomId) {
         this.updateForm.open(
@@ -289,6 +289,7 @@ class BookingComponent extends React.Component {
                     var timeStr = this.props.selectedDate + " " + window.custom.lpad(i, 2) + ":" + window.custom.lpad(n*15, 2) + ":00";
                     var timestamp = momentTZ.tz(timeStr, "DD-MM-YYYY hh:mm:ss", timezone).add(15, "minutes").unix();
 
+
                     // If current hour is allowed
                     if (tree[ii].minHour <= i && i <= tree[ii].maxHour) {
 
@@ -296,6 +297,7 @@ class BookingComponent extends React.Component {
                         var id = "hour-td-"+roomId+"-"+i+"-"+n;
 
                         var rowSpan = 1;
+                        var height = 28 + "px";
                         var className = "booking-hour is-allowed";
                         var innerHtml =
                         [<p className="hour-guide" key={"hour-guide-"+id}>
@@ -312,6 +314,7 @@ class BookingComponent extends React.Component {
                         for (var s = 0; s < specialCells.length; s++) {
                             if (id == specialCells[s].idCheck) {
                                 rowSpan = specialCells[s].rowSpan;
+                                height = (rowSpan*28) + "px";
                                 className = "booking-hour is-booked" + (specialCells[s].mine ? " mine" : "");
                                 innerHtml = specialCells[s].innerHtml;
 
@@ -323,8 +326,6 @@ class BookingComponent extends React.Component {
                                         onClick = () => this.openView(booking, roomId);
                                     }
                                 }
-
-                                break;
                             }
                         }
 
@@ -335,6 +336,7 @@ class BookingComponent extends React.Component {
                                     onClick={onClick}
                                     id={"hour-td-"+ii+"-"+i+"-"+n} key={"key-hour-td-"+ii+"-"+i+"-"+n}
                                     className={className}
+                                    style={{height: height}}
                                 >
                                     {innerHtml}
                                 </td>
@@ -477,6 +479,7 @@ class BookingComponent extends React.Component {
         var displayDate;
         if (this.state.selectedDate) {
             displayDate = moment(this.state.selectedDate).format("dddd, MMMM Do YYYY");
+            displayDate += " " + moment().format('LT');
         } else {
             displayDate = "";
         }
@@ -555,6 +558,7 @@ class BookingComponent extends React.Component {
                     mode="edit"
                     ref={(elem) => {this.updateForm = elem}}
                     onSubmit={(e, states, fClose) => {this.onUpdate(e, states, fClose)}}
+                    onDelete={(id, fClose) => {this.openDelete(id, fClose)}}
                 />
                 <BookingForm
                     mode="view"
@@ -563,13 +567,13 @@ class BookingComponent extends React.Component {
                 />
                 <Modal
                     ref={(elem) => {this.deleteModal = elem}}
-                    clickButton={(e) => { this.delete(this.state.deletedBooking)}}
+                    clickButton={(e) => { this.delete(this.state.deletedBooking.id, this.state.deletedBooking.fClose)}}
                     header="Delete Reservation"
                     buttonText="Delete"
                     buttonClass="btn-danger"
                     entry={ null }
                     >
-                    <p>Are you sure you want to delete the reservation of <b>{this.state.deletedBooking.booker}</b> ({this.state.deletedBooking.purpose}) ?</p>
+                    <p>Are you sure you want to delete this reservation ?</p>
                 </Modal>
             </div>
         )

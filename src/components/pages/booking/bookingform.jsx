@@ -80,14 +80,24 @@ export default class BookingForm extends React.Component {
 				entry={ null }
 				onClose={this.props.onClose}
 			>
-				<div>
-					<p>Name of booker: <b>{this.state.booker}</b></p>
-					<p>Purpose: <b>{this.state.purpose}</b></p>
-					<p>Time: <b>{this.state.startTime} – {this.state.endTime}</b></p>
-				</div>
+				{(this.props.mode == "view" || this.props.mode == "edit") &&
+					<div>
+						<p>Name of booker: <b>{this.state.booker}</b></p>
+						<p>Purpose: <b>{this.state.purpose}</b></p>
+						<p>Time: <b>{this.state.startTime} – {this.state.endTime}</b></p>
+					</div>
+				}
 				{(this.props.mode == "edit") &&
 					<div>
+						<div className="booking-delete"
+							onClick={(e) => {this.props.onDelete(this.state.id, (e) => this.close(e))}}>
+							Delete this booking
+						</div>
 						<hr></hr>
+					</div>
+				}
+				{(this.props.mode == "edit" || this.props.mode == "create") &&
+					<div>
 						<div>
 							<span>Name of booker</span>
 							<input type="username" id="booker" placeholder="e.g. Your name" value={this.state.booker} onChange={this.changeHandler.bind(this)} required />

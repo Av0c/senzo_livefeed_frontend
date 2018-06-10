@@ -253,7 +253,7 @@ export class Settings extends React.Component {
                         <hr className="setting-divider"></hr>
                         <div className="row">
                             <div className="col-md-12">
-                                <h2 className="account-title">Location Settings</h2>
+                                <h2 style={{marginBottom: "20px"}}>Location Settings</h2>
                                 <div className="popup-container" style={{width: "50%"}}>
                                     <div className="heading clearfix">
                                         <h3 className="pull-left">{this.props.tree.info.name}</h3><a onClick={() => this.openAddLocationForm(this.props.tree)} className="button btn-green add-loc-button" data-toggle="modal">Add {this.props.tree.type == "root" ? "Customer" : "Location"}   </a>

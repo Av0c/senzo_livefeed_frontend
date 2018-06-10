@@ -110,7 +110,7 @@ export default class BookingForm extends React.Component {
 							<span style={{width: "80px", display: "inline-block"}}>Start time: </span>
 							<input type="time" id="startTime" value={this.state.startTime} step="900" onChange={this.changeHandler.bind(this)} required />
 						</div>
-						<div>
+						<div style={{marginTop: "6px"}}>
 							<span style={{width: "80px", display: "inline-block"}}>End time: </span>
 							<input type="time" id="endTime" value={this.state.endTime} step="900" onChange={this.changeHandler.bind(this)} min={this.state.startTime} required />
 						</div>

@@ -38,7 +38,7 @@ class API extends React.Component {
 	render() {
 		return (
 			<div className="row">
-				<div className="col-md-6">
+				<div className="col-md-12">
 					<div className="senzo-api">
 						<h3>SenzoAPI </h3>
 						<div className="current-api-key">

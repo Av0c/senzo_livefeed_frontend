@@ -2284,6 +2284,7 @@ textarea.input-lg {
     }
 }
 .btn {
+    outline: none;
     display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
@@ -2310,8 +2311,8 @@ textarea.input-lg {
 .btn:active.focus,
 .btn:active:focus,
 .btn:focus {
-    outline: 5px auto -webkit-focus-ring-color;
-    outline-offset: -2px
+    /* outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px */
 }
 .btn.focus,
 .btn:focus,
@@ -5224,6 +5225,8 @@ button.close {
     line-height: 1.42857143
 }
 .modal-body {
+    max-height: 55vh;
+    overflow-y: auto;
     position: relative;
     padding: 15px
 }

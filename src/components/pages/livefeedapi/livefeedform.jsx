@@ -12,7 +12,7 @@ export default class LiveFeedForm extends React.Component {
 			themeColor: "#123456",
             locations: [],
             slideDuration: 20,
-            userEmail: "",
+            userEmail: [],
 			options: [],
 		}
 	}
@@ -78,8 +78,8 @@ export default class LiveFeedForm extends React.Component {
         });
     }
 
-	handleSelectChange(locations) {
-		this.setState({locations: locations});
+	handleChange(key, value) {
+		this.setState({[key]: value});
 	}
 
 	render() {
@@ -117,7 +117,7 @@ export default class LiveFeedForm extends React.Component {
 						<Select
 							multi
 							closeOnSelect={false}
-							onChange={(value) => {this.handleSelectChange(value)}}
+							onChange={(value) => {this.handleChange("locations", value)}}
 							options={this.state.options}
 							placeholder="Select rooms for slideshow"
 					        removeSelected={true}
@@ -130,7 +130,17 @@ export default class LiveFeedForm extends React.Component {
 					</div>
 					<div>
 						<span className="input-label">Viewing user</span>
-						<input type="email" id="userEmail" value={this.state.userEmail} placeholder="current@user.com" onChange={this.changeHandler.bind(this)} required />
+						<Select.Creatable
+							multi
+							closeOnSelect={false}
+							onChange={(value) => {this.handleChange("userEmail", value)}}
+							options={[]}
+							placeholder="viewing@user.com"
+					        removeSelected={true}
+							value={this.state.userEmail}
+							arrowRenderer={() => {}}
+							noResultsText={"Enter each email then press 'Enter'"}
+						/>
 					</div>
 				</div>
 			</Modal>

@@ -55,7 +55,7 @@ class LiveFeedAPI extends React.Component {
 				<LiveFeedForm
 					tree={this.props.tree}
                     ref={(elem) => {this.feedForm = elem}}
-                    onSubmit={(e, states, fClose) => {console.log(states).then(fClose)}}
+                    onSubmit={(e, states, fClose) => {console.log(states); fClose();}}
                 />
 			</div>
 		);

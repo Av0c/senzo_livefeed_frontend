@@ -6,55 +6,14 @@ import { CLEAR_TOKEN } from 'actions/authentication';
 import axios from 'axios';
 
 import authReducer from 'reducers/auth';
-
-import overviewReducer from 'reducers/overview';
-import nodeReducer from 'reducers/node';
-
-import comparisonReducer from 'reducers/comparison';
-import bookingReducer from 'reducers/booking';
-import statsReducer from 'reducers/stats';
-import querySettingsReducer from 'reducers/querysettings';
-import liveReducer from 'reducers/live';
-
-import floorPlanSensorReducer from 'reducers/floorplansensor';
-import floorPlanReducer from 'reducers/floorplan';
-
-import myAccountReducer from 'reducers/myaccount';
-
-import userAdminReducer from 'reducers/user/administration';
-import userInviteReducer from 'reducers/user/invite';
-import userRegisterReducer from 'reducers/user/register';
-
-import sensorSettingsReducer from 'reducers/sensorsettings';
-import defaultSettingsReducer from 'reducers/defaultsettings';
-import livefeedAPIReducer from 'reducers/livefeedapi';
+import dataReducer from 'reducers/auth';
 
 import { clearToken } from 'actions/authentication';
 import appHistory from 'components/common/appHistory';
 
 const appReducer = combineReducers({
   authReducer,
-  overviewReducer,
-  nodeReducer,
-
-  comparisonReducer,
-  bookingReducer,
-  statsReducer,
-  querySettingsReducer,
-  liveReducer,
-
-
-  floorPlanSensorReducer,
-  floorPlanReducer,
-
-  myAccountReducer,
-  userAdminReducer,
-  userInviteReducer,
-  userRegisterReducer,
-
-  sensorSettingsReducer,
-  defaultSettingsReducer,
-  livefeedAPIReducer,
+  dataReducer,
 });
 
 const reducer = (state, action) => {

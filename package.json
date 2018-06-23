@@ -1,7 +1,7 @@
 {
-  "name": "senzoit-client",
+  "name": "senzoit-livefeed",
   "version": "0.0.1",
-  "description": "SenzoIT front-end stack",
+  "description": "SenzoIT LiveFeed front-end stack",
   "main": "webpack.config.js",
   "scripts": {
     "start": "npm-run-all --parallel develop lint:watch",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/susan-Senzo/senzolive-frontend.git"
+    "url": "https://github.com/Av0c/senzo_livefeed_frontend.git"
   },
   "devDependencies": {
     "babel-core": "^5.8.22",

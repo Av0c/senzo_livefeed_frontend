@@ -25,7 +25,7 @@ var config = {
       components: PATHS.input + '/components',
       containers: PATHS.input + '/containers',
       images: PATHS.input + '/img',
-      assets: PATHS.input + '/assets'
+      // assets: PATHS.input + '/assets'
     }
   },
   module: {

@@ -27,6 +27,7 @@ ReactDOM.render((
 			<Route path="/" >
 				<IndexRoute component={Main} />
 			</Route>
+			<Route path="/login" component={LoginForm} />
 		</Router>
 	</Provider>
 ), document.getElementById('app'));

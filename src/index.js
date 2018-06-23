@@ -16,7 +16,7 @@ import ResetPWForm from './containers/resetpassword';
 import { requireAuthentication } from 'components/common/authenticatedComponent';
 
 // Pages
-import Main from 'components/pages/main';
+import Main from 'components/main';
 
 // Stylesheets
 import './style/main.less';

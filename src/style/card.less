@@ -1,10 +1,115 @@
 .card-container {
-    padding: 20px;
-    
-    .card-title {
-        font-size: 24px;
+    padding: 16px;
+    position: relative;
+
+    &.card-disabled {
+        background-color: #DDD;
     }
-    .card-category {
-        font-size: 20px;
+
+    .card-top {
+        .card-title {
+            display: inline-block;
+            font-size: 30px;
+            font-weight: 300;
+        }
+        .card-status {
+            display: inline-block;
+            float: right;
+
+            h1 {
+                margin: 4px 0;
+                font-size: 17px;
+                font-weight: normal;
+            }
+            p {
+                text-align: right;
+                margin: 0;
+                font-size: 30px;
+                font-weight: normal;
+            }
+        }
+    }
+
+    .card-chart {
+        display: inline-block;
+        text-align: center;
+        position: absolute;
+        top: 52%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+
+        .card-chart-svg {
+            display: inline-block;
+            margin: auto;
+            svg {
+                @svg-size: 150px;
+                width: @svg-size;
+                height: @svg-size;
+                overflow: visible;
+
+                text {
+                    font-weight: 300;
+                    font-size: 16px;
+                    fill: #000;
+                    text-anchor: middle;
+                    alignment-baseline: middle;
+                }
+
+                circle {
+                    fill: none;
+                    transform-origin: center;
+                    transform: rotateZ(90deg) scaleX(-1);
+
+                    transition: all 0.8s ease;
+                }
+                .circle-occupied {
+                    stroke: @color-red;
+                }
+                .circle-available {
+                    box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.4);
+                    stroke: @color-green;
+                }
+            }
+        }
+    }
+
+    .card-bottom {
+        font-size: 18px;
+        @legend-size: 10px;
+        position: absolute;
+        bottom: 16px;
+
+        .card-legend-available {
+            &:before {
+                content: "";
+                display: inline-block;
+                border-radius: 50%;
+                background-color: @color-green;
+                width: @legend-size;
+                height: @legend-size;
+                margin-right: 5px;
+            }
+        }
+        .card-legend-occupied {
+            &:before {
+                content: "";
+                display: inline-block;
+                border-radius: 50%;
+                background-color: @color-red;
+                width: @legend-size;
+                height: @legend-size;
+                margin-right: 5px;
+            }
+        }
+    }
+
+    .card-warning {
+        color: #909090;
+        font-size: 40px;
+        white-space: nowrap;
+        position: absolute;
+        top: 52%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
     }
 }

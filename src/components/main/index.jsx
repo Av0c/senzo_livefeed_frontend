@@ -11,12 +11,16 @@ export default class Main extends React.Component {
                 owner: "fnb",
                 logo: "https://www.launchaco.com/static/twitter.png",
                 color: "#DF8461",
-                duration: 20,
+                duration: 5,
                 details: null,
                 subscribers: null,
                 locations: [
                     185,
-                    478
+                    478,
+                    185,
+                    478,
+                    185,
+                    185,
                 ],
                 treeMap: {
                     "185": {
@@ -4880,7 +4884,7 @@ export default class Main extends React.Component {
                                 "children": []
                             }
                         ]
-                    }
+                    },
                 },
                 sensorsData: [
                     {
@@ -8287,9 +8291,12 @@ export default class Main extends React.Component {
                     }
                 ],
                 floorplan: [
-                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180617%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180617T004510Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=11090b24ac0a0975d21f0986a61c8c59e40c92789e97e6e40a2ce10172db69a8",
-                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180617%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180617T004510Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=11090b24ac0a0975d21f0986a61c8c59e40c92789e97e6e40a2ce10172db69a8",
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Long_March_2D_launching_VRSS-1.jpg/1200px-Long_March_2D_launching_VRSS-1.jpg",
+                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
+                    "https://static1.squarespace.com/static/59ea3191ace8642168c202fa/t/59ea3ce40abd047d1b327d97/1508523379548/Enclave+Cottage+Floorplan+insert.jpg",
+                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
+                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
+                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
+                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
                 ],
             }
         };

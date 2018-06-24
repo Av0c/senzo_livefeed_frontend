@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 export default class Floorplan extends React.Component {
     constructor(props) {
@@ -17,6 +18,19 @@ export default class Floorplan extends React.Component {
     }
 
     componentDidMount() {
+        this.calculateScrollFloorplan();
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.int);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.resetScrollFloorplan();
+        this.calculateScrollFloorplan();
+    }
+
+    calculateScrollFloorplan() {
         var imageHeight = ReactDOM.findDOMNode(this.refs.floorplanImage).clientHeight;
         var containerHeight = ReactDOM.findDOMNode(this.refs.floorplanContainer).clientHeight;
 
@@ -31,8 +45,15 @@ export default class Floorplan extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        clearInterval(this.state.int);
+    resetScrollFloorplan() {
+        if (this.state.int) {
+            clearInterval(this.state.int);
+        }
+        this.setState({
+            scrolledMarginTop: 0,
+            scrollToBottom: true,
+            scrollCount: 0,
+        });
     }
 
     reverseScroll() {
@@ -88,13 +109,19 @@ export default class Floorplan extends React.Component {
         return (
             <div className="floorplan-container flat-popup" ref={"floorplanContainer"}>
                 <div className="floorplan-scroll" ref={"floorplanScroll"} style={containerStyle}>
-                    <img
+                    <CSSTransitionGroup
+                        transitionName="floorplan-image"
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={300}
+                    >
+                    </CSSTransitionGroup>
+                    {<img
                         className="floorplan-image"
                         src={this.props.url}
                         alt="Floorplan"
                         ref={"floorplanImage"}
                         draggable="false"
-                    />
+                        />}
                     {sensorsRender}
                 </div>
             </div>

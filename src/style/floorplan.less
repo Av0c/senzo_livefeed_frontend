@@ -12,6 +12,24 @@
             width: 100%;
         }
 
+        .floorplan-image-enter {
+            opacity: 0.01;
+        }
+
+        .floorplan-image-enter.floorplan-image-enter-active {
+            opacity: 1;
+            transition: opacity 500ms ease-in;
+        }
+
+        .floorplan-image-leave {
+            opacity: 1;
+        }
+
+        .floorplan-image-leave.floorplan-image-leave-active {
+            opacity: 0.01;
+            transition: opacity 300ms ease-in;
+        }
+
         .floorplan-sensor {
             @sensor-size: 12px;
             position: absolute;
@@ -20,19 +38,19 @@
             margin-top: -@sensor-size/2;
             margin-left: -@sensor-size/2;
             border-radius: 50%;
-            background-color: #7ec443; //green
+            background-color: @color-green; //green
 
             &.inuse {
-                background-color: #ef5350; //red
+                background-color: @color-red; //red
             }
             &.standby {
-                background-color: #fbc02d; //yellow
+                background-color: @color-yellow; //yellow
             }
             &.offline {
-                background-color: #1a237e; //blue
+                background-color: @color-blue; //blue
             }
             &.unregistered {
-                background-color: #795548; //brown
+                background-color: @color-brown; //brown
             }
             &.hidden {
                 display: none;

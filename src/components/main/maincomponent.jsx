@@ -1,4 +1,7 @@
 import React from "react";
+import ReactDOM from 'react-dom';
+import { CSSTransitionGroup } from 'react-transition-group';
+
 import Card from "components/card";
 import Floorplan from "components/floorplan";
 
@@ -6,8 +9,72 @@ export default class MainComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentId: 1,
+            nextId: 0,
+            prevId: 0,
+            currentId: 0,
         };
+        this.scrollLocation = this.scrollLocation.bind(this);
+        this.scrollAnimate = this.scrollAnimate.bind(this);
+    }
+
+    componentDidMount() {
+        this.checkNextPrev();
+        this.bringOnTheShow();
+    }
+
+    bringOnTheShow() {
+        var int = setInterval(() => {
+            this.setState({
+                currentId: this.state.nextId,
+            });
+            this.checkNextPrev();
+            this.scrollLocation();
+        }, this.props.duration*1000);
+
+        this.setState({
+            int: int,
+        });
+    }
+
+    scrollAnimate() {
+        const container = ReactDOM.findDOMNode(this.refs.locationNameContainer);
+        const current = ReactDOM.findDOMNode(this.refs.locationNameCurrent);
+
+        var finalScroll = current.offsetLeft+(current.offsetWidth/2)-(viewWidth/2);
+        if (current.scrollLeft < finalScroll) {
+            var viewWidth = document.documentElement.clientWidth || document.body.clientWidth;
+            container.scrollTo(current.scrollLeft + (finalScroll-current.scrollLeft)/8, 0);
+        }
+        requestAnimationFrame(this.scrollAnimate);
+    }
+
+    scrollLocation() {
+        // requestAnimationFrame(this.scrollAnimate);
+
+        const container = ReactDOM.findDOMNode(this.refs.locationNameContainer);
+        const current = ReactDOM.findDOMNode(this.refs.locationNameCurrent);
+        if (true) {
+            var viewWidth = document.documentElement.clientWidth || document.body.clientWidth;
+            container.scrollTo(current.offsetLeft+(current.offsetWidth/2)-(viewWidth/2), 0);
+        }
+    }
+
+    checkNextPrev() {
+        var nextId, prevId;
+        if (this.state.currentId < this.props.locations.length-1) {
+            nextId = this.state.currentId+1;
+        } else {
+            nextId = 0;
+        }
+        if (this.state.currentId > 0) {
+            prevId = this.state.currentId-1;
+        } else {
+            prevId = this.props.locations.length-1;
+        }
+        this.setState({
+            nextId: nextId,
+            prevId: prevId,
+        });
     }
 
     listNodes(parent, node, areas, sensors, meeting, open) {
@@ -22,10 +89,10 @@ export default class MainComponent extends React.Component {
 				if (node.type=="sensor") {
 					sensors.push(node);
                     if (parent) {
-                        if (parent.type = "meeting_room") {
-                            meeting.push(node);
-                        } else if (parent.type = "open_area") {
+                        if (parent.type == "open_area") {
                             open.push(node);
+                        } else if (parent.type == "meeting_room") {
+                            meeting.push(node);
                         }
                     }
 				}
@@ -38,7 +105,7 @@ export default class MainComponent extends React.Component {
 		}
 	}
 
-    getDesksStatus(sensors) {
+    getDesksData(sensors) {
         var result = [0, 0]; // [Available (Not inuse), All]
         for (var i = 0; i < sensors.length; i++) {
             var ss = sensors[i];
@@ -52,22 +119,65 @@ export default class MainComponent extends React.Component {
         return result;
     }
 
+    deskDataCheck(desks) {
+        if (desks[1] <= 0 || desks[0] < 0 || desks[0] > desks[1]) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     render() {
         var areas = [], sensors = [], meeting = [], open = [];
         var treeMapKey = this.props.locations[this.state.currentId];
         var node = this.props.treeMap[treeMapKey];
-        var parent = null;
+
+        var nextNode, prevNode;
+        nextNode = this.props.treeMap[this.props.locations[this.state.nextId]];
+        prevNode = this.props.treeMap[this.props.locations[this.state.prevId]];
+
+        var namesRender = [];
+        for (var i = 0; i < this.props.locations.length; i++) {
+            var n = this.props.treeMap[this.props.locations[i]]
+            var className = "location-name-span";
+            var ref = "";
+            var dividerClassName = "location-divider";
+            if (i == this.state.currentId) {
+                className += " current";
+                ref = "locationNameCurrent"
+                dividerClassName += " current";
+            } else if (i == this.state.prevId) {
+                className += " prev";
+                dividerClassName += " current";
+            } else if (i == this.state.nextId) {
+                className += " next";
+            }
+            var divider = "";
+            if (i < this.props.locations.length-1) {
+                divider = <span key={"divider-"+i} className={dividerClassName}>|</span>;
+            }
+            namesRender.push(
+                <span key={"location-"+i} className={className} ref={ref}>{n.info.name}</span>
+            );
+            namesRender.push(divider);
+        }
+
+        var parent = {};
 		this.listNodes(parent, node, areas, sensors, meeting, open);
 
-        var meetingDesks = this.getDesksStatus(meeting);
-        var openDesks = this.getDesksStatus(open);
+        var meetingDesks = this.getDesksData(meeting);
+        var openDesks = this.getDesksData(open);
+        var meetingDisabled = this.deskDataCheck(meetingDesks);
+        var openDisabled = this.deskDataCheck(openDesks);
 
         return (
             <div className="main">
                 <div className="logo-bar"><img src={this.props.logo}></img></div>
                 <div className="location-details">
                     <div className="location-location">{node.info.location}</div>
-                    <div className="location-name">{node.info.name}</div>
+                    <div className="location-name" ref="locationNameContainer">
+                        {namesRender}
+                    </div>
                 </div>
                 <div className="content">
                     <div className="grid-floorplan grid-item">
@@ -82,12 +192,14 @@ export default class MainComponent extends React.Component {
                         <Card
                             title={"Open Area"}
                             desks={openDesks}
+                            disabled={openDisabled}
                         />
                     </div>
                     <div className="grid-card grid-item">
                         <Card
                             title={"Meeting Room"}
                             desks={meetingDesks}
+                            disabled={meetingDisabled}
                         />
                     </div>
                 </div>

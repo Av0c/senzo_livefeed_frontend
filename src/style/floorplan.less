@@ -1,0 +1,42 @@
+.floorplan-container {
+    overflow: hidden;
+    padding: 4px;
+
+    .floorplan-scroll {
+        margin-top: 0;
+        transition-property: all;
+        transition-timing-function: ease;
+        position: relative;
+
+        .floorplan-image {
+            width: 100%;
+        }
+
+        .floorplan-sensor {
+            @sensor-size: 12px;
+            position: absolute;
+            width: @sensor-size;
+            height: @sensor-size;
+            margin-top: -@sensor-size/2;
+            margin-left: -@sensor-size/2;
+            border-radius: 50%;
+            background-color: #7ec443; //green
+
+            &.inuse {
+                background-color: #ef5350; //red
+            }
+            &.standby {
+                background-color: #fbc02d; //yellow
+            }
+            &.offline {
+                background-color: #1a237e; //blue
+            }
+            &.unregistered {
+                background-color: #795548; //brown
+            }
+            &.hidden {
+                display: none;
+            }
+        }
+    }
+}

@@ -12,7 +12,8 @@ export function fetchSummary() {
 		dispatch({ type: FETCH_SUMMARY });
 		return axios.get(config.api.root + `/myurl`)
 			.then((response) => {
-				dispatch(receiveSummary(response.data));
+				console.log(response)
+				dispatch(receiveSummary(response));
 				return response;
 			})
 			.catch(function (response) {
@@ -38,7 +39,7 @@ export function fetchStructure(key) {
 		dispatch({type: FETCH_STRUCTURE, key});
 		return axios.get(config.api.root + `/structure/${key}`)
 			.then((response) => {
-				dispatch(receiveStructure(response.data));
+				dispatch(receiveStructure(response));
 				return response;
 			})
 			.catch(function (response) {
@@ -64,7 +65,7 @@ export function fetchLive(key) {
 		dispatch({type: FETCH_LIVE, key});
 		return axios.get(config.api.root + `/live/${key}`)
 			.then((response) => {
-				dispatch(receiveLive(response.data));
+				dispatch(receiveLive(response));
 				return response;
 			})
 			.catch(function (response) {

@@ -100,9 +100,9 @@ var config = {
         template: 'src/index.html'
       }
     ),
-    new CopyWebpackPlugin([
-      { from: 'src/assets', to: 'src/assets' }
-    ])
+    // new CopyWebpackPlugin([
+    //   { from: 'src/assets', to: 'src/assets' }
+    // ])
   ]
 };
 

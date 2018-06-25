@@ -130,6 +130,7 @@ export default class Floorplan extends React.Component {
         return (
             <div className="floorplan-container flat-popup" ref={this.setFloorplanContainerRef}>
                 <div className="floorplan-scroll" ref={"floorplanScroll"} style={containerStyle}>
+                {
                     <CSSTransitionGroup
                         transitionName="floorplan-animated"
                         transitionEnterTimeout={500}
@@ -145,6 +146,7 @@ export default class Floorplan extends React.Component {
                             draggable="false"
                         />
                     </CSSTransitionGroup>
+                }
                     {sensorsRender}
                 </div>
             </div>

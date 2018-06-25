@@ -25,8 +25,13 @@ ReactDOM.render((
 	<Provider store={Store}>
 		<Router history={appHistory} onUpdate={() => window.scrollTo(0, 0)}>
 			<Route path="/" >
+				<IndexRoute component={LoginForm} />
+			</Route>
+
+			<Route path="/url" >
 				<IndexRoute component={Main} />
 			</Route>
+
 			<Route path="/login" component={LoginForm} />
 		</Router>
 	</Provider>

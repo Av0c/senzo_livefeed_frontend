@@ -51,7 +51,13 @@ export function login(credentials) {
     return axios.post(config.api.root + '/login', credentials)
       .then((response) => {
         dispatch(loginOk(response.data.token));
-        appHistory.push('/');
+
+        var old = localStorage.getItem("redirect")
+        if (!old) {
+          old = "/";
+        }
+        appHistory.push(old);
+
       })
     .catch((response) => {
       dispatch(loginFailed(response.data || response.statusText))

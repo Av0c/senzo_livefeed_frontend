@@ -31,12 +31,12 @@ class Login extends React.Component {
           <Link to="/">
             <img src="/src/assets/images/header-logo.svg" className="login-logo" />
           </Link>
-          <h2 className="welcome-message">Welcome to Senzo Live!</h2>
+          <h2 className="welcome-message">Welcome to Senzo Live Feed!</h2>
           <div className="login-box-wrapper">
             <div className="login-box">
               <form action="#">
                 <div>
-                  <input type="username" id="username" placeholder="Username" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
+                  <input type="username" id="username" placeholder="Email" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
                 </div>
                 <div>
                   <input type="password" placeholder="Password" id="password" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
@@ -45,9 +45,6 @@ class Login extends React.Component {
                   <input type="button" name="user_submit" value="Log in" onClick={this.submit} />
                 </div>
                 {/**<div className='red-500' >{this.props.auth.errorMessage}</div>**/}
-                <div className='forgot-password'>
-                  <Link to='/forgot'> Forgot your password?</Link>
-                </div>
               </form>
             </div>
           </div>

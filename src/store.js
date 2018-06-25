@@ -6,7 +6,7 @@ import { CLEAR_TOKEN } from 'actions/authentication';
 import axios from 'axios';
 
 import authReducer from 'reducers/auth';
-import dataReducer from 'reducers/auth';
+import dataReducer from 'reducers/data';
 
 import { clearToken } from 'actions/authentication';
 import appHistory from 'components/common/appHistory';

@@ -3,16 +3,15 @@ import config from 'config';
 import { Effects, loop } from 'redux-loop';
 import store from '../store';
 
-import * as a from 'actions/booking'
+import * as a from 'actions/data'
 
 const initialState = {
 	summary: null,
 	url: null,
-	sensorMap: null,
+	sensorsData: null,
 };
 
 export default (state = initialState, action) => {
-	console.log(action)
 	switch (action.type) {
 
 		case a.RECEIVE_SUMMARY: {
@@ -23,17 +22,13 @@ export default (state = initialState, action) => {
 
 		case a.RECEIVE_STRUCTURE: {
 			return Object.assign({}, state, {
-				structure: action.data,
+				url: action.data,
 			})
 		}
 
 		case a.RECEIVE_LIVE: {
-			let map = new Map();
-			action.data.forEach(function (element) {
-				map.set(element.id, element);
-			})
 			return Object.assign({}, state, {
-				map: map
+				sensorsData: action.data,
 			});
 		}
 

@@ -33,6 +33,7 @@ const initialState = {
 
 // Reducing function
 export default (state = initialState, action ) => {
+	console.log(action)
 	switch (action.type) {
 		// Login
 		case LOGIN: {
@@ -107,7 +108,11 @@ export default (state = initialState, action ) => {
 		// ---
 		case CLEAR_TOKEN: {
 			localStorage.removeItem("token");
-			appHistory.push('/login');
+			var old = window.location.hash.slice(1);
+			if (old != "/login") {
+				localStorage.setItem("redirect", old);
+				appHistory.push('/login');
+			}
 			return Object.assign({}, initialState);
 		}
 		

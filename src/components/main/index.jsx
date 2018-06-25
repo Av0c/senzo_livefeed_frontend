@@ -11,11 +11,13 @@ export default class Main extends React.Component {
                 owner: "fnb",
                 logo: "https://www.launchaco.com/static/twitter.png",
                 color: "#DF8461",
-                duration: 5,
+                duration: 10,
                 details: null,
                 subscribers: null,
                 locations: [
-                    185,
+                    10010,
+                    10020,
+                    10030,
                     478,
                     185,
                     478,
@@ -4797,6 +4799,270 @@ export default class Main extends React.Component {
                             }
                         ]
                     },
+                    "10010": {
+                        "id": 10010,
+                        "info": {
+                            "name": "Test Chart 1",
+                            "details": {},
+                            "location": "Africa/Johannesburg",
+                            "xpercent": -1,
+                            "ypercent": -1,
+                            "hasfloorplan": true,
+                            "useownfp": false,
+                            "cardid": 30
+                        },
+                        "type": "meeting_room",
+                        "children": [
+                            {
+                                "id": 10010,
+                                "info": {
+                                    "name": "SS - 1",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:7e:2d",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 69.77502,
+                                    "ypercent": 76.310425,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            },
+                            {
+                                "id": 10011,
+                                "info": {
+                                    "name": "SS - 4",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:fd:20",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 72.37524,
+                                    "ypercent": 78.03456,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            },
+                            {
+                                "id": 10012,
+                                "info": {
+                                    "name": "SS - 3",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:7e:37",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 69.88336,
+                                    "ypercent": 78.03456,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            },
+                            {
+                                "id": 10013,
+                                "info": {
+                                    "name": "SS - 2",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:fc:ed",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 72.48358,
+                                    "ypercent": 76.310425,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            }
+                        ]
+                    },
+                    "10020": {
+                        "id": 10020,
+                        "info": {
+                            "name": "Test Chart 1",
+                            "details": {},
+                            "location": "Africa/Johannesburg",
+                            "xpercent": -1,
+                            "ypercent": -1,
+                            "hasfloorplan": true,
+                            "useownfp": false,
+                            "cardid": 30
+                        },
+                        "type": "meeting_room",
+                        "children": [
+                            {
+                                "id": 10020,
+                                "info": {
+                                    "name": "SS - 1",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:7e:2d",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 69.77502,
+                                    "ypercent": 76.310425,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            },
+                            {
+                                "id": 10021,
+                                "info": {
+                                    "name": "SS - 4",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:fd:20",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 72.37524,
+                                    "ypercent": 78.03456,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            },
+                            {
+                                "id": 10022,
+                                "info": {
+                                    "name": "SS - 3",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:7e:37",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 69.88336,
+                                    "ypercent": 78.03456,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            },
+                            {
+                                "id": 10023,
+                                "info": {
+                                    "name": "SS - 2",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:fc:ed",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 72.48358,
+                                    "ypercent": 76.310425,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            }
+                        ]
+                    },
+                    "10030": {
+                        "id": 10030,
+                        "info": {
+                            "name": "Test Chart 1",
+                            "details": {},
+                            "location": "Africa/Johannesburg",
+                            "xpercent": -1,
+                            "ypercent": -1,
+                            "hasfloorplan": true,
+                            "useownfp": false,
+                            "cardid": 30
+                        },
+                        "type": "meeting_room",
+                        "children": [
+                            {
+                                "id": 10030,
+                                "info": {
+                                    "name": "SS - 1",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:7e:2d",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 69.77502,
+                                    "ypercent": 76.310425,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            },
+                            {
+                                "id": 10031,
+                                "info": {
+                                    "name": "SS - 4",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:fd:20",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 72.37524,
+                                    "ypercent": 78.03456,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            },
+                            {
+                                "id": 10032,
+                                "info": {
+                                    "name": "SS - 3",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:7e:37",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 69.88336,
+                                    "ypercent": 78.03456,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            },
+                            {
+                                "id": 10033,
+                                "info": {
+                                    "name": "SS - 2",
+                                    "details": {
+                                        "macaddress": "f8:f0:05:f7:fc:ed",
+                                        "redisid": 0
+                                    },
+                                    "location": "Africa/Johannesburg",
+                                    "xpercent": 72.48358,
+                                    "ypercent": 76.310425,
+                                    "hasfloorplan": false,
+                                    "useownfp": false,
+                                    "cardid": 30
+                                },
+                                "type": "sensor",
+                                "children": []
+                            }
+                        ]
+                    },
                     "478": {
                         "id": 478,
                         "info": {
@@ -4887,6 +5153,230 @@ export default class Main extends React.Component {
                     },
                 },
                 sensorsData: [
+                    {
+                        "id": 10010,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": false,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10011,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": false,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10012,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": false,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10013,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": false,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10020,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": true,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10021,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": false,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10022,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": false,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10023,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": false,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10030,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": true,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10031,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": true,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10032,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": false,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10033,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": false,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10040,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": true,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10041,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": true,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10042,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": true,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
+                    {
+                        "id": 10043,
+                        "name": "FNB57",
+                        "macaddress": "f8:f0:05:f7:7e:29",
+                        "xpercent": 20.479246,
+                        "ypercent": 88.37939,
+                        "inuse": false,
+                        "standby": false,
+                        "faulty": false,
+                        "registered": true,
+                        "lastocc": 1529071628,
+                        "lastonl": 1529089959,
+                        "hidden": false
+                    },
                     {
                         "id": 965,
                         "name": "FNB57",
@@ -8292,11 +8782,13 @@ export default class Main extends React.Component {
                 ],
                 floorplan: [
                     "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
+                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
+                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
                     "https://static1.squarespace.com/static/59ea3191ace8642168c202fa/t/59ea3ce40abd047d1b327d97/1508523379548/Enclave+Cottage+Floorplan+insert.jpg",
-                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
-                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
-                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
-                    "https://v3-floorplan.s3-eu-west-1.amazonaws.com/floorplans-v2/185?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJ7UXY5M3HYOL2N7A%2F20180624%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20180624T111310Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5f2e86d1f9f32d50539ddb23c837dabcba9dd899279109d0fa74f4aabc521a6c",
+                    "https://upload.wikimedia.org/wikipedia/commons/e/e0/Long_March_2D_launching_VRSS-1.jpg",
+                    "https://bellewoods.sg/wp-content/uploads/2015/01/CS4-1345sqft.jpg",
+                    "http://wvs.topleftpixel.com/photos/2008/12/san-fransisco_long-street_-01.jpg",
+                    "https://ipost.files.wordpress.com/2012/05/long_cat1_2.gif",
                 ],
             }
         };

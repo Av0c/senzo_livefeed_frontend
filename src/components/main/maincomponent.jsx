@@ -182,10 +182,12 @@ export default class MainComponent extends React.Component {
                 <div className="content">
                     <div className="grid-floorplan grid-item">
                         <Floorplan
+                            key={"floorplan-"+this.state.currentId}
                             url={this.props.floorplan[this.state.currentId]}
                             duration={this.props.duration}
                             sensors={sensors}
                             sensorsData={this.props.sensorsData}
+                            id={this.state.currentId}
                         />
                     </div>
                     <div className="grid-card grid-item">

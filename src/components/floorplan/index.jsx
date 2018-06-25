@@ -14,70 +14,92 @@ export default class Floorplan extends React.Component {
             scrollCount: 0,
             scrolls: scrolls,
             transitionDuration: this.props.duration/scrolls + "s",
+
+            animationName: "scroll-1",
+        };
+
+        this.floorplanImage = null;
+        this.setFloorplanImageRef = element => {
+            this.floorplanImage = element;
+        };
+        this.floorplanContainer = null;
+        this.setFloorplanContainerRef = element => {
+            this.floorplanContainer = element;
+        };
+        this.floorplanImageContainerRef = null;
+        this.setFloorplanImageContainerRef = element => {
+            this.floorplanImageContainerRef = element;
         };
     }
 
     componentDidMount() {
-        this.calculateScrollFloorplan();
+        // this.startScrollFloorplan();
+        if (!this.state.running && this.state.imageLoaded) {
+            var to = setTimeout(this.calculateMarginFloorplan(), 1000);
+        }
     }
 
     componentWillUnmount() {
         clearInterval(this.state.int);
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.resetScrollFloorplan();
-        this.calculateScrollFloorplan();
-    }
-
-    calculateScrollFloorplan() {
-        var imageHeight = ReactDOM.findDOMNode(this.refs.floorplanImage).clientHeight;
-        var containerHeight = ReactDOM.findDOMNode(this.refs.floorplanContainer).clientHeight;
-
-        var offsetHeight = imageHeight - containerHeight;
-        if (offsetHeight > 0) {
-            var int = setInterval(() => {this.reverseScroll()}, this.props.duration/this.state.scrolls * 1000);
-            var to = setTimeout(() => {clearInterval(int)}, this.props.duration * 1000);
-            this.setState({
-                scrolledMarginTop: -offsetHeight + "px",
-                int: int,
-            });
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.id !== this.props.id) {
+            if (!this.state.running && this.state.imageLoaded) {
+                var to = setTimeout(this.calculateMarginFloorplan(), 1000);
+            }
         }
     }
 
-    resetScrollFloorplan() {
-        if (this.state.int) {
-            clearInterval(this.state.int);
-        }
+    onImageLoad() {
         this.setState({
-            scrolledMarginTop: 0,
-            scrollToBottom: true,
-            scrollCount: 0,
+            imageLoaded: true,
         });
+        if (!this.state.running) {
+            var to = setTimeout(this.calculateMarginFloorplan(), 1000);
+        }
     }
 
-    reverseScroll() {
-        if (this.state.scrollCount < (this.state.scrolls-1)) {
-            this.setState({
-                scrollToBottom: !this.state.scrollToBottom,
-                scrollCount: this.state.scrollCount + 1,
-            });
+    calculateMarginFloorplan() {
+        this.setState({
+            running: true,
+        });
+        console.log("change");
+        var imageHeight = ReactDOM.findDOMNode(this.floorplanImage).clientHeight;
+        console.log(imageHeight);
+        var containerHeight = ReactDOM.findDOMNode(this.floorplanContainer).clientHeight;
+        if (imageHeight > 0 && containerHeight > 0) {
+            var offsetHeight = imageHeight - containerHeight;
+            if (offsetHeight > 0) {
+                var { animationName } = this.state;
+                if (animationName == "scroll-1") {
+                    animationName = "scroll-2";
+                } else {
+                    animationName = "scroll-1";
+                }
+
+                this.setState({
+                    marginTop: -offsetHeight + "px",
+
+                    animationName: animationName,
+                    animationDuration: (this.props.duration-2)/this.state.scrolls + "s",
+                    animationIterationCount: this.state.scrolls,
+                    imageLoaded: false,
+                });
+            }
+        } else {
         }
     }
 
     render() {
         var containerStyle = {};
-        if (this.state.scrollToBottom) {
-            containerStyle = {
-                marginTop: this.state.scrolledMarginTop,
-                transitionDuration: this.state.transitionDuration,
-            }
-        } else {
-            containerStyle = {
-                marginTop: this.state.defaultMarginTop,
-                transitionDuration: this.state.transitionDuration,
-            }
-        }
+        containerStyle = {
+            marginTop: this.state.marginTop,
+
+            animationName: this.state.animationName,
+            animationDuration: this.state.animationDuration,
+            animationIterationCount: this.state.animationIterationCount,
+        };
 
         var sensorsRender = [];
         for (var i = 0; i < this.props.sensors.length; i++) {
@@ -105,23 +127,24 @@ export default class Floorplan extends React.Component {
                 ></div>
             );
         }
-
         return (
-            <div className="floorplan-container flat-popup" ref={"floorplanContainer"}>
+            <div className="floorplan-container flat-popup" ref={this.setFloorplanContainerRef}>
                 <div className="floorplan-scroll" ref={"floorplanScroll"} style={containerStyle}>
                     <CSSTransitionGroup
-                        transitionName="floorplan-image"
+                        transitionName="floorplan-animated"
                         transitionEnterTimeout={500}
-                        transitionLeaveTimeout={300}
+                        transitionLeaveTimeout={500}
                     >
+                        <img
+                            onLoad={() => {this.onImageLoad()}}
+                            key={this.props.url + this.props.id}
+                            className="floorplan-image"
+                            src={this.props.url}
+                            alt="Floorplan"
+                            ref={this.setFloorplanImageRef}
+                            draggable="false"
+                        />
                     </CSSTransitionGroup>
-                    {<img
-                        className="floorplan-image"
-                        src={this.props.url}
-                        alt="Floorplan"
-                        ref={"floorplanImage"}
-                        draggable="false"
-                        />}
                     {sensorsRender}
                 </div>
             </div>

@@ -2,8 +2,23 @@
     overflow: hidden;
     padding: 4px;
 
+    @keyframes scroll-1 {
+        0% { margin-top: 0; }
+    }
+
+    @keyframes scroll-2 {
+        0% { margin-top: 0; }
+    }
+
     .floorplan-scroll {
-        margin-top: 0;
+        animation-name: scroll-1;
+        // animation-duration: 2s;
+        animation-timing-function: ease;
+        animation-iteration-count: 2;
+        animation-direction: alternate;
+        animation-fill-mode: both;
+        animation-play-state: running;
+
         transition-property: all;
         transition-timing-function: ease;
         position: relative;
@@ -12,20 +27,20 @@
             width: 100%;
         }
 
-        .floorplan-image-enter {
+        .floorplan-animated-enter {
             opacity: 0.01;
         }
 
-        .floorplan-image-enter.floorplan-image-enter-active {
+        .floorplan-animated-enter.floorplan-animated-enter-active {
             opacity: 1;
             transition: opacity 500ms ease-in;
         }
 
-        .floorplan-image-leave {
+        .floorplan-animated-leave {
             opacity: 1;
         }
 
-        .floorplan-image-leave.floorplan-image-leave-active {
+        .floorplan-animated-leave.floorplan-animated-leave-active {
             opacity: 0.01;
             transition: opacity 300ms ease-in;
         }

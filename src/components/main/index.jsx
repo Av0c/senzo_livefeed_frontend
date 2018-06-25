@@ -10,7 +10,7 @@ export default class Main extends React.Component {
                 name: "New Live Feed",
                 owner: "fnb",
                 logo: "https://www.launchaco.com/static/twitter.png",
-                color: "#DF8461",
+                color: "#6197DF",
                 duration: 10,
                 details: null,
                 subscribers: null,

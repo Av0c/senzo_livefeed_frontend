@@ -141,9 +141,11 @@ export default class MainComponent extends React.Component {
             var n = this.props.treeMap[this.props.locations[i]]
             var className = "location-name-span";
             var ref = "";
+            var style = {};
             var dividerClassName = "location-divider";
             if (i == this.state.currentId) {
                 className += " current";
+                style = {color: this.props.color,}
                 ref = "locationNameCurrent"
                 dividerClassName += " current";
             } else if (i == this.state.prevId) {
@@ -157,7 +159,7 @@ export default class MainComponent extends React.Component {
                 divider = <span key={"divider-"+i} className={dividerClassName}>|</span>;
             }
             namesRender.push(
-                <span key={"location-"+i} className={className} ref={ref}>{n.info.name}</span>
+                <span key={"location-"+i} className={className} ref={ref} style={style}>{n.info.name}</span>
             );
             namesRender.push(divider);
         }

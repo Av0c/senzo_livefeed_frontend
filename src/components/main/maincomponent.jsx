@@ -174,7 +174,7 @@ export default class MainComponent extends React.Component {
 
         return (
             <div className="main">
-                <div className="logo-bar"><img src={this.props.logo}></img></div>
+                <div className="logo-bar" style={{ backgroundColor: this.props.color }}><img src={this.props.logo}></img></div>
                 <div className="location-details">
                     <div className="location-location">{node.info.location}</div>
                     <div className="location-name" ref="locationNameContainer">
@@ -192,20 +192,24 @@ export default class MainComponent extends React.Component {
                             id={this.state.currentId}
                         />
                     </div>
-                    <div className="grid-card grid-item">
+                    {
+                    !openDisabled && <div className="grid-card grid-item">
                         <Card
                             title={"Open Area"}
                             desks={openDesks}
                             disabled={openDisabled}
                         />
                     </div>
-                    <div className="grid-card grid-item">
+                    }
+                    {
+                    !meetingDisabled && <div className="grid-card grid-item">
                         <Card
                             title={"Meeting Room"}
                             desks={meetingDesks}
                             disabled={meetingDisabled}
                         />
                     </div>
+                    }
                 </div>
             </div>
         );

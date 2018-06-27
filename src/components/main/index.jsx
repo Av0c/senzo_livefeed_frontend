@@ -14,6 +14,7 @@ class Main extends React.Component {
         this.props.dispatch(a.fetchStructure(key));
         this.props.dispatch(a.fetchLive(key));
         var I = setInterval(() => {
+            let key = this.props.location.query["k"];
             this.props.dispatch(a.fetchLive(key));
         }, 5000);
         this.setState({I: I});

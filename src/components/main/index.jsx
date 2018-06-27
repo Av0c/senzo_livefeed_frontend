@@ -13,6 +13,14 @@ class Main extends React.Component {
         this.props.dispatch(a.fetchSummary());
         this.props.dispatch(a.fetchStructure(key));
         this.props.dispatch(a.fetchLive(key));
+        var I = setInterval(() => {
+            this.props.dispatch(a.fetchLive(key));
+        }, 5000);
+        this.setState({I: I});
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.I)
     }
 
     render() {

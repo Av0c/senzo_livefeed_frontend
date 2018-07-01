@@ -145,7 +145,6 @@ export default class MainComponent extends React.Component {
             var dividerClassName = "location-divider";
             if (i == this.state.currentId) {
                 className += " current";
-                style = {color: this.props.color,}
                 ref = "locationNameCurrent"
                 dividerClassName += " current";
             } else if (i == this.state.prevId) {

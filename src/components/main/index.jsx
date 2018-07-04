@@ -25,7 +25,6 @@ class Main extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         if (this.props.url && this.props.sensorsData) {
             return (
                 <MainComponent
@@ -50,7 +49,6 @@ class Main extends React.Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         url: state.dataReducer.url,
         sensorsData: state.dataReducer.sensorsData,

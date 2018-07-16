@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from 'react-dom';
 import { CSSTransitionGroup } from 'react-transition-group';
 
-import Card from "components/card";
+import DonutCard from "components/card/donutcard";
+import BarCard from "components/card/barcard";
 import Floorplan from "components/floorplan";
 
 export default class MainComponent extends React.Component {
@@ -12,6 +13,7 @@ export default class MainComponent extends React.Component {
             nextId: 0,
             prevId: 0,
             currentId: 0,
+            currentCard: true,
         };
         this.scrollLocation = this.scrollLocation.bind(this);
         this.scrollAnimate = this.scrollAnimate.bind(this);
@@ -26,13 +28,22 @@ export default class MainComponent extends React.Component {
         var int = setInterval(() => {
             this.setState({
                 currentId: this.state.nextId,
+                currentCard: true,
             });
             this.checkNextPrev();
             this.scrollLocation();
+            setTimeout(() => {this.changeCard()}, this.props.duration*1000/2)
         }, this.props.duration*1000);
 
         this.setState({
             int: int,
+        });
+    }
+
+    changeCard() {
+        console.log("Change from " + this.state.currentCard + " to " + !this.state.currentCard);
+        this.setState({
+            currentCard: !this.state.currentCard,
         });
     }
 
@@ -171,6 +182,49 @@ export default class MainComponent extends React.Component {
         var meetingDisabled = this.deskDataCheck(meetingDesks);
         var openDisabled = this.deskDataCheck(openDesks);
 
+        var cardRender;
+        if (meetingDisabled || openDisabled) {
+            if (meetingDisabled) {
+                cardRender = (
+                    <div className="grid-card grid-item">
+                        <DonutCard
+                            title={"Open Area"}
+                            desks={openDesks}
+                        />
+                    </div>
+                );
+            } else {
+                cardRender = (
+                    <div className="grid-card grid-item">
+                        <DonutCard
+                            title={"Meeting Room"}
+                            desks={meetingDesks}
+                        />
+                    </div>
+                );
+            }
+        } else {
+            if (this.state.currentCard) {
+                cardRender = (
+                    <div className="grid-card grid-item">
+                        <DonutCard
+                            title={"Meeting Room"}
+                            desks={meetingDesks}
+                        />
+                    </div>
+                );
+            } else {
+                cardRender = (
+                    <div className="grid-card grid-item">
+                        <DonutCard
+                            title={"Open Area"}
+                            desks={openDesks}
+                        />
+                    </div>
+                );
+            }
+        }
+
         return (
             <div className="main">
                 <div className="logo-bar" style={{ backgroundColor: this.props.color }}><img src={this.props.logo}></img></div>
@@ -179,6 +233,7 @@ export default class MainComponent extends React.Component {
                     <div className="location-name" ref="locationNameContainer">
                         {namesRender}
                     </div>
+                    <div className="watermark">Powered by <span className="company-name">Senzo<span>live</span></span></div>
                 </div>
                 <div className="content">
                     <div className="grid-floorplan grid-item">
@@ -191,24 +246,15 @@ export default class MainComponent extends React.Component {
                             id={this.state.currentId}
                         />
                     </div>
-                    {
-                    !openDisabled && <div className="grid-card grid-item">
-                        <Card
-                            title={"Open Area"}
-                            desks={openDesks}
-                            disabled={openDisabled}
-                        />
-                    </div>
-                    }
-                    {
-                    !meetingDisabled && <div className="grid-card grid-item">
-                        <Card
-                            title={"Meeting Room"}
-                            desks={meetingDesks}
-                            disabled={meetingDisabled}
-                        />
-                    </div>
-                    }
+                    {cardRender}
+                    <BarCard
+                        title={"Occupancy"}
+                        periodType={"This week"}
+                        startDate={"16/07/2018"}
+                        endDate={"22/07/2018"}
+                        average={0.4123}
+                        peak={0.9}
+                    />
                 </div>
             </div>
         );

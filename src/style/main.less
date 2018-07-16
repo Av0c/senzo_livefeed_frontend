@@ -43,6 +43,21 @@ body {
         height: 8vh;
         padding: 10px 16px;
 
+        .watermark {
+            right: 16px;
+            top: 10px;
+            position: absolute;
+
+            .company-name {
+                font-variant: small-caps;
+                color: #333;
+
+                span {
+                    color: @color-green;
+                }
+            }
+        }
+
         .location-name {
             margin: 4px 0px;
             font-weight: bold;
@@ -54,7 +69,7 @@ body {
 
             .location-name-span {
                 transition: all 0.4s ease;
-                font-size: 20px;
+                font-size: 24px;
                 color: #aaa;
 
                 &.current {

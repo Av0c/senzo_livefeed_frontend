@@ -14,6 +14,7 @@ export default class Floorplan extends React.Component {
             scrollCount: 0,
             scrolls: scrolls,
             transitionDuration: this.props.duration/scrolls + "s",
+            scrollDelay: 1500,
 
             animationName: "scroll-1",
         };
@@ -35,7 +36,7 @@ export default class Floorplan extends React.Component {
     componentDidMount() {
         // this.startScrollFloorplan();
         if (!this.state.running && this.state.imageLoaded) {
-            var to = setTimeout(this.calculateMarginFloorplan(), 1000);
+            var to = setTimeout(this.setScroll(), this.state.scrollDelay);
         }
     }
 
@@ -46,7 +47,7 @@ export default class Floorplan extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.id !== this.props.id) {
             if (!this.state.running && this.state.imageLoaded) {
-                var to = setTimeout(this.calculateMarginFloorplan(), 1000);
+                var to = setTimeout(this.setScroll(), this.state.scrollDelay);
             }
         }
     }
@@ -56,38 +57,37 @@ export default class Floorplan extends React.Component {
             imageLoaded: true,
         });
         if (!this.state.running) {
-            var to = setTimeout(this.calculateMarginFloorplan(), 1000);
+            var to = setTimeout(this.setScroll(), this.state.scrollDelay);
         }
     }
 
-    calculateMarginFloorplan() {
-        this.setState({
-            running: true,
-        });
-        console.log("change");
-        var imageHeight = ReactDOM.findDOMNode(this.floorplanImage).clientHeight;
-        console.log(imageHeight);
-        var containerHeight = ReactDOM.findDOMNode(this.floorplanContainer).clientHeight;
-        if (imageHeight > 0 && containerHeight > 0) {
-            var offsetHeight = imageHeight - containerHeight;
-            if (offsetHeight > 0) {
-                var { animationName } = this.state;
-                if (animationName == "scroll-1") {
-                    animationName = "scroll-2";
-                } else {
-                    animationName = "scroll-1";
+    setScroll() {
+        if (!this.props.noScroll) {
+            this.setState({
+                running: true,
+            });
+            var imageHeight = ReactDOM.findDOMNode(this.floorplanImage).clientHeight;
+            var containerHeight = ReactDOM.findDOMNode(this.floorplanContainer).clientHeight;
+            if (imageHeight > 0 && containerHeight > 0) {
+                var offsetHeight = imageHeight - containerHeight;
+                if (offsetHeight > 0) {
+                    var { animationName } = this.state;
+                    if (animationName == "scroll-1") {
+                        animationName = "scroll-2";
+                    } else {
+                        animationName = "scroll-1";
+                    }
+
+                    this.setState({
+                        marginTop: -offsetHeight + "px",
+
+                        animationName: animationName,
+                        animationDuration: (this.props.duration-(this.state.scrollDelay*2/1000))/this.state.scrolls + "s", // Scroll will start after a 1 second delay and will end 1 second before switching
+                        animationIterationCount: this.state.scrolls,
+                        imageLoaded: false,
+                    });
                 }
-
-                this.setState({
-                    marginTop: -offsetHeight + "px",
-
-                    animationName: animationName,
-                    animationDuration: (this.props.duration-2)/this.state.scrolls + "s",
-                    animationIterationCount: this.state.scrolls,
-                    imageLoaded: false,
-                });
             }
-        } else {
         }
     }
 
@@ -139,7 +139,7 @@ export default class Floorplan extends React.Component {
                         <img
                             onLoad={() => {this.onImageLoad()}}
                             key={this.props.url + this.props.id}
-                            className="floorplan-image"
+                            className={this.props.noScroll ? "floorplan-image-no-scroll" : "floorplan-image-scroll"}
                             src={this.props.url}
                             alt="Floorplan"
                             ref={this.setFloorplanImageRef}

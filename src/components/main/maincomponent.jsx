@@ -41,7 +41,6 @@ export default class MainComponent extends React.Component {
     }
 
     changeCard() {
-        console.log("Change from " + this.state.currentCard + " to " + !this.state.currentCard);
         this.setState({
             currentCard: !this.state.currentCard,
         });
@@ -227,7 +226,6 @@ export default class MainComponent extends React.Component {
                     />
                 </div>
             );
-            console.log(this.props.stats)
             barRender = (
                 <div className="grid-card grid-item">
                     <BarCard

@@ -183,48 +183,86 @@ export default class MainComponent extends React.Component {
         var meetingDisabled = this.deskDataCheck(meetingDesks);
         var openDisabled = this.deskDataCheck(openDesks);
 
-        var cardRender;
+        var periodString = "";
+        switch (this.props.period) {
+            case 1:
+                periodString = "Today"
+            break;
+            case 2:
+                periodString = "This week"
+            break;
+            case 3:
+                periodString = "This month"
+            break;
+            case 4:
+                periodString = "This year"
+            break;
+            default:
+                periodString = "Today";
+        }
+
+        var rendering = "mr";
         if (meetingDisabled || openDisabled) {
             if (meetingDisabled) {
-                cardRender = (
-                    <div className="grid-card grid-item">
-                        <DonutCard
-                            title={"Open Area"}
-                            desks={openDesks}
-                        />
-                    </div>
-                );
+                rendering = "oa";
             } else {
-                cardRender = (
-                    <div className="grid-card grid-item">
-                        <DonutCard
-                            title={"Meeting Room"}
-                            desks={meetingDesks}
-                        />
-                    </div>
-                );
+                rendering = "mr";
             }
         } else {
             if (this.state.currentCard) {
-                cardRender = (
-                    <div className="grid-card grid-item">
-                        <DonutCard
-                            title={"Meeting Room"}
-                            desks={meetingDesks}
-                        />
-                    </div>
-                );
+                rendering = "mr";
             } else {
-                cardRender = (
-                    <div className="grid-card grid-item">
-                        <DonutCard
-                            title={"Open Area"}
-                            desks={openDesks}
-                        />
-                    </div>
-                );
+                rendering = "oa";
             }
         }
+
+        var cardRender;
+        var barRender;
+        if (rendering == "mr") {
+            cardRender = (
+                <div className="grid-card grid-item">
+                    <DonutCard
+                        title={"Meeting Room"}
+                        desks={meetingDesks}
+                    />
+                </div>
+            );
+            console.log(this.props.stats)
+            barRender = (
+                <div className="grid-card grid-item">
+                    <BarCard
+                        title={"Occupancy"}
+                        periodType={periodString}
+                        startDate={this.props.startdate}
+                        endDate={this.props.enddate}
+                        average={this.props.stats.MRO_overview[treeMapKey].average}
+                        peak={this.props.stats.MRO_overview[treeMapKey].peak}
+                    />
+                </div>
+            )
+        } else {
+            cardRender = (
+                <div className="grid-card grid-item">
+                    <DonutCard
+                        title={"Open Area"}
+                        desks={openDesks}
+                    />
+                </div>
+            );
+            barRender = (
+                <div className="grid-card grid-item">
+                    <BarCard
+                        title={"Occupancy"}
+                        periodType={periodString}
+                        startDate={this.props.startdate}
+                        endDate={this.props.enddate}
+                        average={this.props.stats.OAO_overview[treeMapKey].average}
+                        peak={this.props.stats.OAO_overview[treeMapKey].peak}
+                    />
+                </div>
+            );
+        }
+
 
         return (
             <div className="main">
@@ -249,14 +287,7 @@ export default class MainComponent extends React.Component {
                         />
                     </div>
                     {cardRender}
-                    <BarCard
-                        title={"Occupancy"}
-                        periodType={"This week"}
-                        startDate={"16/07/2018"}
-                        endDate={"22/07/2018"}
-                        average={0.4123}
-                        peak={0.9}
-                    />
+                    {barRender}
                 </div>
             </div>
         );

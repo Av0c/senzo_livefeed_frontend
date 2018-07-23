@@ -82,3 +82,29 @@ export function receiveLive(result) {
 		data: result.data
 	}
 }
+
+// STATS
+
+export const FETCH_STATS = 'FETCH_STATS';
+export function fetchStats(key, startdate, enddate) {
+	return dispatch => {
+		dispatch({type: FETCH_STATS, key});
+		return axios.get(config.api.root + `/stats/${key}?startdate=${startdate}&enddate=${enddate}`)
+			.then((response) => {
+				dispatch(receiveStats(response));
+				return response;
+			})
+			.catch(function (response) {
+				console.log(response);
+				return response;
+			})
+	}
+}
+
+export const RECEIVE_STATS = 'RECEIVE_STATS';
+export function receiveStats(result) {
+	return {
+		type: RECEIVE_STATS,
+		data: result.data
+	}
+}

@@ -9,6 +9,7 @@ const initialState = {
 	summary: null,
 	url: null,
 	sensorsData: null,
+	stats: null,
 };
 
 export default (state = initialState, action) => {
@@ -29,6 +30,12 @@ export default (state = initialState, action) => {
 		case a.RECEIVE_LIVE: {
 			return Object.assign({}, state, {
 				sensorsData: action.data,
+			});
+		}
+
+		case a.RECEIVE_STATS: {
+			return Object.assign({}, state, {
+				stats: action.data,
 			});
 		}
 

@@ -90,7 +90,7 @@ export default class MainComponent extends React.Component {
 
     listNodes(parent, node, areas, sensors, meeting, open) {
 		var self = this;
-        var treeMapKey = this.props.locations[this.state.currentId];
+        var treeMapKey = this.props.locations[this.state.currentId].id;
 		if (node) {
 			// var isArea = (node.type=="meeting_room" && !this.props.showDetails)
 			var isArea = (node.id != this.props.treeMap[treeMapKey].id && node.info.useownfp && node.type!="sensor");
@@ -140,7 +140,8 @@ export default class MainComponent extends React.Component {
 
     render() {
         var areas = [], sensors = [], meeting = [], open = [];
-        var treeMapKey = this.props.locations[this.state.currentId];
+        var treeMapKey = this.props.locations[this.state.currentId].id;
+        var noScroll = this.props.locations[this.state.currentId].noScroll;
         var node = this.props.treeMap[treeMapKey];
 
         var nextNode, prevNode;
@@ -149,7 +150,7 @@ export default class MainComponent extends React.Component {
 
         var namesRender = [];
         for (var i = 0; i < this.props.locations.length; i++) {
-            var n = this.props.treeMap[this.props.locations[i]]
+            var n = this.props.treeMap[this.props.locations[i].id]
             var className = "location-name-span";
             var ref = "";
             var style = {};
@@ -244,6 +245,7 @@ export default class MainComponent extends React.Component {
                             sensors={sensors}
                             sensorsData={this.props.sensorsData}
                             id={this.state.currentId}
+                            noScroll={noScroll}
                         />
                     </div>
                     {cardRender}

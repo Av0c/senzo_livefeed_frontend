@@ -15,7 +15,6 @@ export default class BarCard extends React.Component {
 
     render() {
         const { svgSize, strokeWidth, ratio } = this.state;
-        console.log(this.props);
 
         return (
             <div className={(!this.props.disabled) ? "card-container flat-popup" : "card-container flat-popup card-disabled"}>

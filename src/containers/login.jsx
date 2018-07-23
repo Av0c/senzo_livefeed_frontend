@@ -35,11 +35,13 @@ class Login extends React.Component {
                     <div className="login-box-wrapper">
                         <div className="login-box">
                             <form action="#">
-                                <div>
+                                <div className="input-container">
                                     <input type="username" id="username" placeholder="Email" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
+                                    <img className="login-icon" src="/src/assets/images/email.svg"></img>
                                 </div>
-                                <div>
+                                <div className="input-container">
                                     <input type="password" placeholder="Password" id="password" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
+                                    <img className="login-icon" src="/src/assets/images/vpn_key.svg"></img>
                                 </div>
                                 <div>
                                     <input type="button" name="user_submit" value="Log in" onClick={this.submit} />

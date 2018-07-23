@@ -36,9 +36,6 @@
                 box-shadow: inset 0px 0px 0px 0px @color-green;
                 transition: border 0.1s, box-shadow 0.1s;
 
-                background-repeat: no-repeat;
-                background-position: 3px center;
-                background-size: auto 65%;
                 &:focus {
                     outline: none;
                     border: 1px solid @color-green;
@@ -46,13 +43,18 @@
                 }
             }
 
-            input[type="username"] {
-                background-image: url("/src/assets/images/email.svg");
+            .input-container {
+                position: relative;
+                display: inline-block;
+
+                .login-icon {
+                    position: absolute;
+                    left: 3px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
             }
 
-            input[type="password"] {
-                background-image: url("/src/assets/images/vpn_key.svg");
-            }
 
             input[type="button"] {
                 outline: none;

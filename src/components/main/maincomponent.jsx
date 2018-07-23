@@ -183,6 +183,7 @@ export default class MainComponent extends React.Component {
         var openDisabled = this.deskDataCheck(openDesks);
 
         var periodString = "";
+        console.log(this.props);
         switch (this.props.period) {
             case 1:
                 periodString = "Today"
@@ -197,7 +198,7 @@ export default class MainComponent extends React.Component {
                 periodString = "This year"
             break;
             default:
-                periodString = "Today";
+                periodString = "N/A";
         }
 
         var rendering = "mr";

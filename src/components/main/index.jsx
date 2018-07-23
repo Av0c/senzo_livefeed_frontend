@@ -30,7 +30,6 @@ class Main extends React.Component {
             }
             var startdate = moment().subtract(1, periodString).add(1, "days").format('DD-MM-YYYY');
             var enddate = moment().format('DD-MM-YYYY');
-
             if (this.state.startdate != startdate || this.state.enddate != enddate) {
                 this.setState({
                     startdate: startdate,
@@ -67,7 +66,7 @@ class Main extends React.Component {
                     owner={this.props.url.owner}
                     logo={this.props.url.logo}
                     color={this.props.url.color}
-                    period={this.props.url.perid}
+                    period={this.props.url.period}
                     duration={this.props.url.duration}
                     details={this.props.url.details}
                     subscribers={this.props.url.subscribers}

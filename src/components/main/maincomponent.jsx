@@ -41,7 +41,6 @@ export default class MainComponent extends React.Component {
     }
 
     changeCard() {
-        console.log("Change from " + this.state.currentCard + " to " + !this.state.currentCard);
         this.setState({
             currentCard: !this.state.currentCard,
         });
@@ -184,6 +183,7 @@ export default class MainComponent extends React.Component {
         var openDisabled = this.deskDataCheck(openDesks);
 
         var periodString = "";
+        console.log(this.props);
         switch (this.props.period) {
             case 1:
                 periodString = "Today"
@@ -198,7 +198,7 @@ export default class MainComponent extends React.Component {
                 periodString = "This year"
             break;
             default:
-                periodString = "Today";
+                periodString = "N/A";
         }
 
         var rendering = "mr";
@@ -227,7 +227,6 @@ export default class MainComponent extends React.Component {
                     />
                 </div>
             );
-            console.log(this.props.stats)
             barRender = (
                 <div className="grid-card grid-item">
                     <BarCard

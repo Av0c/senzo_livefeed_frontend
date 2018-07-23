@@ -20,7 +20,7 @@ export default class BarCard extends React.Component {
             <div className={(!this.props.disabled) ? "card-container flat-popup" : "card-container flat-popup card-disabled"}>
                 <div className="card-bar">
                     <div className="card-title">{this.props.title}</div>
-                    <div className="card-info">{this.props.periodType + " (" + this.props.startDate + " - " + this.props.endDate + ")"}</div>
+                    <div className="card-info">{this.props.periodType + " (" + this.props.startDate.replace(/-/g, "/") + " - " + this.props.endDate.replace(/-/g, "/") + ")"}</div>
                     <div className="card-chart">
                         <div className="card-chart-svg">
                             <svg viewBox={"0 0 " + svgSize + " " + svgSize*ratio} >

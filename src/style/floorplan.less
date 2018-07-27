@@ -1,6 +1,8 @@
 .floorplan-container {
     overflow: hidden;
     padding: 4px;
+    text-align: center;
+    position: relative;
 
     @keyframes scroll-1 {
         0% { margin-top: 0; }
@@ -22,60 +24,68 @@
         transition-property: all;
         transition-timing-function: ease;
         position: relative;
-        text-align: center;
 
-        .floorplan-image-scroll {
+        .floorplan-image {
             width: 100%;
         }
+    }
 
-        .floorplan-image-no-scroll {
+    .floorplan-no-scroll {
+        display: inline-block;
+        position: relative;
+        height: 100%;
+
+        .floorplan-image {
             height: 100%;
+            max-width: 100%;
             margin: auto;
         }
+    }
 
-        .floorplan-animated-enter {
-            opacity: 0.01;
+    .floorplan-animated-enter {
+        opacity: 0.01;
+    }
+
+    .floorplan-animated-enter.floorplan-animated-enter-active {
+        opacity: 1;
+        transition: opacity 500ms ease-in;
+    }
+
+    .floorplan-animated-leave {
+        opacity: 1;
+    }
+
+    .floorplan-animated-leave.floorplan-animated-leave-active {
+        opacity: 0.01;
+        transition: opacity 300ms ease-in;
+    }
+
+    .floorplan-sensor {
+        @sensor-size: 12px;
+        position: absolute;
+        width: @sensor-size;
+        height: @sensor-size;
+        margin-top: -@sensor-size/2;
+        margin-left: -@sensor-size/2;
+        border-radius: 50%;
+        background-color: @color-green; //green
+
+        &.inuse {
+            background-color: @color-red; //red
         }
-
-        .floorplan-animated-enter.floorplan-animated-enter-active {
-            opacity: 1;
-            transition: opacity 500ms ease-in;
+        &.standby {
+            background-color: @color-yellow; //yellow
         }
-
-        .floorplan-animated-leave {
-            opacity: 1;
+        &.offline {
+            background-color: @color-blue; //blue
         }
-
-        .floorplan-animated-leave.floorplan-animated-leave-active {
-            opacity: 0.01;
-            transition: opacity 300ms ease-in;
+        &.unregistered {
+            background-color: @color-brown; //brown
         }
-
-        .floorplan-sensor {
-            @sensor-size: 12px;
-            position: absolute;
-            width: @sensor-size;
-            height: @sensor-size;
-            margin-top: -@sensor-size/2;
-            margin-left: -@sensor-size/2;
-            border-radius: 50%;
-            background-color: @color-green; //green
-
-            &.inuse {
-                background-color: @color-red; //red
-            }
-            &.standby {
-                background-color: @color-yellow; //yellow
-            }
-            &.offline {
-                background-color: @color-blue; //blue
-            }
-            &.unregistered {
-                background-color: @color-brown; //brown
-            }
-            &.hidden {
-                display: none;
-            }
+        &.hidden {
+            display: none;
         }
     }
+
+
 }

@@ -129,25 +129,19 @@ export default class Floorplan extends React.Component {
         }
         return (
             <div className="floorplan-container flat-popup" ref={this.setFloorplanContainerRef}>
-                <div className="floorplan-scroll" ref={"floorplanScroll"} style={containerStyle}>
+                <div className={!this.props.noScroll ? "floorplan-scroll" : "floorplan-no-scroll"} ref={"floorplanScroll"} style={containerStyle}>
                 {
-                    <CSSTransitionGroup
-                        transitionName="floorplan-animated"
-                        transitionEnterTimeout={500}
-                        transitionLeaveTimeout={500}
-                    >
-                        <img
-                            onLoad={() => {this.onImageLoad()}}
-                            key={this.props.url + this.props.id}
-                            className={this.props.noScroll ? "floorplan-image-no-scroll" : "floorplan-image-scroll"}
-                            src={this.props.url}
-                            alt="Floorplan"
-                            ref={this.setFloorplanImageRef}
-                            draggable="false"
-                        />
-                    </CSSTransitionGroup>
+                    <img
+                        onLoad={() => {this.onImageLoad()}}
+                        key={this.props.url + this.props.id}
+                        className="floorplan-image"
+                        src={this.props.url}
+                        alt="Floorplan"
+                        ref={this.setFloorplanImageRef}
+                        draggable="false"
+                    />
                 }
-                    {sensorsRender}
+                {sensorsRender}
                 </div>
             </div>
         );

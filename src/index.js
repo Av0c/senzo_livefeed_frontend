@@ -33,6 +33,8 @@ ReactDOM.render((
 			</Route>
 
 			<Route path="/login" component={LoginForm} />
+			<Route path="/forgot" component={ForgotPWForm} />
+			<Route path="/resetpassword" component={ResetPWForm} />
 		</Router>
 	</Provider>
 ), document.getElementById('app'));

@@ -10,7 +10,7 @@ class ForgotForm extends React.Component {
     super();
     this.submit = this.submit.bind(this);
     this.displayName = 'LoginPage'
-    this.state = { username: '', response: null}
+    this.state = { email: '', response: null}
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,10 +52,10 @@ class ForgotForm extends React.Component {
               {
                 !done ? 
                 <form>
-                  <br/>
-                  <div>
-                    <input type="username" id="username" placeholder="Username" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
-                  </div>
+                    <div className="input-container">
+                      <input type="username" id="email" placeholder="Email" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
+                      <img className="login-icon" src="/src/assets/images/email.svg"></img>
+                    </div>
                   <div className="reset-pw-recaptcha">
                     <Recaptcha
                       ref={e => this.recaptcha = e}

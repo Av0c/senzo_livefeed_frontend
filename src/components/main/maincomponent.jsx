@@ -281,7 +281,7 @@ export default class MainComponent extends React.Component {
             barRender = (
                 <div className="grid-card grid-item">
                     <BarCard
-                        title={"Occupancy"}
+                        title={"Utilization"}
                         periodType={periodString}
                         startDate={this.props.startdate}
                         endDate={this.props.enddate}

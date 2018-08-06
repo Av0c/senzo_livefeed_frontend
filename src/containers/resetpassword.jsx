@@ -49,24 +49,9 @@ class ResetPasswordForm extends React.Component {
                 <h3>Reset Password</h3>
                 <form>
                   <br/>
-                  {
-                  // <div>
-                  //   <div className="center-horizonal" style={{width:230, textAlign:"left"}}>
-                  //     {this.props.auth.resetPWUser.username}
-                  //   </div>
-                  // </div>
-                  // <div>
-                  //   <div className="center-horizonal" style={{width:230, textAlign:"left"}}>
-                  //     {this.props.auth.resetPWUser.email}
-                  //   </div>
-                  // </div>
-                  }
-
-                  <div>
-                    <input type="username" value={this.props.auth.resetPWUser.username} disabled />
-                  </div>
-                  <div>
-                    <input type="email" value={this.props.auth.resetPWUser.email} disabled />
+                  <div className="input-container">
+                    <input type="username" value={this.props.auth.resetPWUser.email} disabled />
+                    <img className="login-icon" src="/src/assets/images/email.svg"></img>
                   </div>
                   <div>
                     <input type="password" id="new" placeholder="New Password" className={this.state["newError"] ? "has-error" : ""} onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />
@@ -139,7 +124,7 @@ class ResetPasswordForm extends React.Component {
       toastr.error("Password doesn't match.")
     } else {
       var key = this.props.location.query.k;
-      this.props.dispatch(resetPassword(key, this.props.auth.resetPWUser.username, this.state.new));
+      this.props.dispatch(resetPassword(key, this.props.auth.resetPWUser.email, this.state.new));
     }
   }
 }

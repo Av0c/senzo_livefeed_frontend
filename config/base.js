@@ -25,7 +25,7 @@ var config = {
       components: PATHS.input + '/components',
       containers: PATHS.input + '/containers',
       images: PATHS.input + '/img',
-      // assets: PATHS.input + '/assets'
+      assets: PATHS.input + '/assets'
     }
   },
   module: {
@@ -100,9 +100,9 @@ var config = {
         template: 'src/index.html'
       }
     ),
-    // new CopyWebpackPlugin([
-    //   { from: 'src/assets', to: 'src/assets' }
-    // ])
+    new CopyWebpackPlugin([
+      { from: 'src/assets', to: 'src/assets' }
+    ])
   ]
 };
 

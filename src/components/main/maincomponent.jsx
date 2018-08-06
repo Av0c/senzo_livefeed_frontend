@@ -14,6 +14,7 @@ export default class MainComponent extends React.Component {
             prevId: 0,
             currentId: 0,
             currentCard: true,
+            loadingWidth: 0,
         };
         this.scrollLocation = this.scrollLocation.bind(this);
         this.scrollAnimate = this.scrollAnimate.bind(this);
@@ -27,9 +28,11 @@ export default class MainComponent extends React.Component {
     bringOnTheShow() {
         var int = setInterval(() => {
             this.setState({
+                loadingWidth: 0,
                 currentId: this.state.nextId,
                 currentCard: true,
             });
+            this.loadingAnimate();
             this.checkNextPrev();
             this.scrollLocation();
             setTimeout(() => {this.changeCard()}, this.props.duration*1000/2)
@@ -44,6 +47,25 @@ export default class MainComponent extends React.Component {
         this.setState({
             currentCard: !this.state.currentCard,
         });
+    }
+
+    loadingAnimate() {
+        var fps = 60;
+        var timeStep = 1000/fps;
+        var noOfTimeSteps = this.props.duration*1000/timeStep;
+        console.log(noOfTimeSteps);
+        var speed = 100/noOfTimeSteps;
+
+        var count = 0;
+        var { loadingWidth } = this.state;
+        var loadingInt = setInterval(() => {
+            if (loadingWidth < 100) {
+                loadingWidth += speed;
+                this.setState({
+                    loadingWidth: loadingWidth,
+                });
+            }
+        }, timeStep);
     }
 
     scrollAnimate() {
@@ -147,32 +169,37 @@ export default class MainComponent extends React.Component {
         nextNode = this.props.treeMap[this.props.locations[this.state.nextId]];
         prevNode = this.props.treeMap[this.props.locations[this.state.prevId]];
 
-        var namesRender = [];
-        for (var i = 0; i < this.props.locations.length; i++) {
-            var n = this.props.treeMap[this.props.locations[i].id]
-            var className = "location-name-span";
-            var ref = "";
-            var style = {};
-            var dividerClassName = "location-divider";
-            if (i == this.state.currentId) {
-                className += " current";
-                ref = "locationNameCurrent"
-                dividerClassName += " current";
-            } else if (i == this.state.prevId) {
-                className += " prev";
-                dividerClassName += " current";
-            } else if (i == this.state.nextId) {
-                className += " next";
-            }
-            var divider = "";
-            if (i < this.props.locations.length-1) {
-                divider = <span key={"divider-"+i} className={dividerClassName}>|</span>;
-            }
-            namesRender.push(
-                <span key={"location-"+i} className={className} ref={ref} style={style}>{n.info.name}</span>
-            );
-            namesRender.push(divider);
-        }
+        console.log(this.props);
+
+        // var namesRender = [];
+        // for (var i = 0; i < this.props.locations.length; i++) {
+        //     var n = this.props.treeMap[this.props.locations[i].id]
+        //     var className = "location-name-span";
+        //     var ref = "";
+        //     var style = {};
+        //     var dividerClassName = "location-divider";
+        //     if (i == this.state.currentId) {
+        //         className += " current";
+        //         ref = "locationNameCurrent"
+        //         dividerClassName += " current";
+        //     } else if (i == this.state.prevId) {
+        //         className += " prev";
+        //         dividerClassName += " current";
+        //     } else if (i == this.state.nextId) {
+        //         className += " next";
+        //     }
+        //     var divider = "";
+        //     if (i < this.props.locations.length-1) {
+        //         divider = <span key={"divider-"+i} className={dividerClassName}>|</span>;
+        //     }
+        //     namesRender.push(
+        //         <span key={"location-"+i} className={className} ref={ref} style={style}>{n.info.name}</span>
+        //     );
+        //     namesRender.push(divider);
+        // }
+
+        var n = this.props.treeMap[this.props.locations[this.state.currentId].id];
+        var namesRender = <span className="location-name-span">{n.info.name + " (" + (this.state.currentId+1) + "/" + this.props.locations.length + ")"}</span>;
 
         var parent = {};
 		this.listNodes(parent, node, areas, sensors, meeting, open);
@@ -183,19 +210,18 @@ export default class MainComponent extends React.Component {
         var openDisabled = this.deskDataCheck(openDesks);
 
         var periodString = "";
-        console.log(this.props);
         switch (this.props.period) {
             case 1:
-                periodString = "Today"
+                periodString = "today"
             break;
             case 2:
-                periodString = "This week"
+                periodString = "this week"
             break;
             case 3:
-                periodString = "This month"
+                periodString = "this month"
             break;
             case 4:
-                periodString = "This year"
+                periodString = "this year"
             break;
             default:
                 periodString = "N/A";
@@ -222,7 +248,7 @@ export default class MainComponent extends React.Component {
             cardRender = (
                 <div className="grid-card grid-item">
                     <DonutCard
-                        title={"Meeting Room"}
+                        title={"Available Rooms"}
                         desks={meetingDesks}
                     />
                 </div>
@@ -230,7 +256,7 @@ export default class MainComponent extends React.Component {
             barRender = (
                 <div className="grid-card grid-item">
                     <BarCard
-                        title={"Occupancy"}
+                        title={"Utilization"}
                         periodType={periodString}
                         startDate={this.props.startdate}
                         endDate={this.props.enddate}
@@ -243,7 +269,7 @@ export default class MainComponent extends React.Component {
             cardRender = (
                 <div className="grid-card grid-item">
                     <DonutCard
-                        title={"Open Area"}
+                        title={"Available Desks"}
                         desks={openDesks}
                     />
                 </div>
@@ -266,12 +292,11 @@ export default class MainComponent extends React.Component {
         return (
             <div className="main">
                 <div className="logo-bar" style={{ backgroundColor: this.props.color }}><img src={this.props.logo}></img></div>
+                <div className="loading-bar" style={{width: this.state.loadingWidth + "%"}}></div>
                 <div className="location-details">
-                    <div className="location-location">{node.info.location}</div>
                     <div className="location-name" ref="locationNameContainer">
                         {namesRender}
                     </div>
-                    <div className="watermark">Powered by <span className="company-name">Senzo<span>live</span></span></div>
                 </div>
                 <div className="content">
                     <div className="grid-floorplan grid-item">
@@ -287,6 +312,9 @@ export default class MainComponent extends React.Component {
                     </div>
                     {cardRender}
                     {barRender}
+                </div>
+                <div className="watermark-container">
+                    <div className="watermark">Powered by <span className="company-name">Senzo<span>live</span></span></div>
                 </div>
             </div>
         );

@@ -2,7 +2,7 @@
 @import "floorplan.less";
 @import "login.less";
 @color-grey: #585e66;
-@color-green: #7ec443;
+@color-green: #3cb54a;
 @color-red: #ef5350;
 @color-yellow: #fbc02d;
 @color-blue: #1a237e;
@@ -13,17 +13,20 @@ body {
     margin: 0;
     background-color: #f2f2f2;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .main {
     max-height: 100vh;
+    overflow: hidden;
 
     @logo-height: 10vh;
-    @location-height: 11vh;
-    @content-height: 100vh - (@logo-height + @location-height);
+    @location-height: 9vh;
+    @watermark-height: 5vh;
+    @content-height: 100vh - (@logo-height + @location-height + @watermark-height);
 
     .logo-bar {
-        height: 10vh;
+        height: @logo-height;
         width: 100%;
         background-color: #fff;
         box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
@@ -36,33 +39,23 @@ body {
             margin: auto;
         }
     }
+    .loading-bar {
+        position: absolute;
+        top: @logo-height;
+        height: 2px;
+        background-color: @color-green;
+    }
 
     .location-details {
         position: relative;
         box-sizing: border-box;
-        height: 8vh;
-        padding: 10px 16px;
-
-        .watermark {
-            right: 16px;
-            top: 10px;
-            position: absolute;
-
-            .company-name {
-                font-variant: small-caps;
-                color: #333;
-
-                span {
-                    color: @color-green;
-                }
-            }
-        }
+        height: @location-height;
+        line-height: @location-height;
 
         .location-name {
-            margin: 4px 0px;
+            vertical-align: middle;
             font-weight: bold;
             text-align: center;
-            vertical-align: bottom;
             max-width: 100%;
             overflow-x: hidden;
             white-space: nowrap;
@@ -70,7 +63,7 @@ body {
             .location-name-span {
                 transition: all 0.4s ease;
                 font-size: 24px;
-                color: #aaa;
+                color: #000;
 
                 &.current {
                     color: #000;
@@ -94,7 +87,7 @@ body {
     .content {
         height: @content-height;
         box-sizing: border-box;
-        padding: 18px;
+        padding: 0 18px;
         padding-bottom: 0;
 
         display: grid;
@@ -110,6 +103,25 @@ body {
         }
 
         .grid-card {
+        }
+    }
+
+    .watermark-container {
+        height: @watermark-height;
+        line-height: @watermark-height;
+        text-align: right;
+        padding: 0 18px;
+
+        .watermark {
+            vertical-align: middle;
+            .company-name {
+                font-variant: small-caps;
+                color: #333;
+
+                span {
+                    color: @color-green;
+                }
+            }
         }
     }
 }

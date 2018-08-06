@@ -52,12 +52,14 @@ export default class MainComponent extends React.Component {
     loadingAnimate() {
         var fps = 60;
         var timeStep = 1000/fps;
-        var noOfTimeSteps = this.props.duration*1000/timeStep;
-        console.log(noOfTimeSteps);
+        var noOfTimeSteps = (this.props.duration*1000)/timeStep;
         var speed = 100/noOfTimeSteps;
 
         var count = 0;
         var { loadingWidth } = this.state;
+        if (this.state.loadingInt) {
+            clearInterval(this.state.loadingInt);
+        }
         var loadingInt = setInterval(() => {
             if (loadingWidth < 100) {
                 loadingWidth += speed;
@@ -66,6 +68,10 @@ export default class MainComponent extends React.Component {
                 });
             }
         }, timeStep);
+
+        this.setState({
+            loadingInt: loadingInt,
+        });
     }
 
     scrollAnimate() {
@@ -168,8 +174,6 @@ export default class MainComponent extends React.Component {
         var nextNode, prevNode;
         nextNode = this.props.treeMap[this.props.locations[this.state.nextId]];
         prevNode = this.props.treeMap[this.props.locations[this.state.prevId]];
-
-        console.log(this.props);
 
         // var namesRender = [];
         // for (var i = 0; i < this.props.locations.length; i++) {

@@ -241,7 +241,9 @@ export default class MainComponent extends React.Component {
         var meetingDisabled = this.disableCheck(availableMR) || (node.type == "open_area");
 
         // Measurements multiplier
-        var multiplier = 1920/templateData.containerWidth;
+        var multiplierAspect = 1920/templateData.containerWidth; // For px
+        var multiplierVw = 100/templateData.containerWidth; // For vw, vh unit
+        var multiplierVh = 100/templateData.containerHeight; // For vw, vh unit
 
         // Textboxes
         var textRender = [];
@@ -251,9 +253,9 @@ export default class MainComponent extends React.Component {
             var className = "text float align-" + currentText.align;
             textRender.push(
                 <div key={"key-text-"+i} className={className} style={{
-                    fontSize: currentText.size*multiplier + "px",
-                    top: currentText.top*multiplier + "px",
-                    left: currentText.left*multiplier + "px",}}
+                    fontSize: currentText.size*multiplierVh + "vh",
+                    top: currentText.top*multiplierVw + "vw",
+                    left: currentText.left*multiplierVh + "vh",}}
                 >{content}
                 </div>
             );
@@ -263,9 +265,9 @@ export default class MainComponent extends React.Component {
         var logo = templateData.logo;
         var logoRender = (
             <img className="logo float" src={logo.url} style={{
-                width: logo.width*multiplier + "px",
-                top: logo.top*multiplier + "px",
-                left: logo.left*multiplier + "px",
+                width: logo.width*multiplierVw + "vw",
+                top: logo.top*multiplierVh + "vh",
+                left: logo.left*multiplierVw + "vw",
                 transform: "translateX(-50%) translateY(-50%) rotateZ(" + logo.angle + "deg)"}}>
             </img>
         );
@@ -276,11 +278,11 @@ export default class MainComponent extends React.Component {
         if (line.show) {
             lineRender = (
                 <div className="line float" style={{
-                    width: line.length*multiplier + "px",
+                    width: line.length*multiplierVw + "vw",
                     height: line.thickness + "px",
                     backgroundColor: line.color,
-                    top: line.top*multiplier + "px",
-                    left: line.left*multiplier + "px"}}>
+                    top: line.top*multiplierVh + "vh",
+                    left: line.left*multiplierVw + "vw"}}>
                 </div>
             );
         }

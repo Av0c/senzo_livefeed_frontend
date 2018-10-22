@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { CSSTransitionGroup } from 'react-transition-group';
 
 import DonutCard from "./donutcard";
-import BarCard from "components/card/barcard";
 import Floorplan from "components/floorplan";
 
 export default class MainComponent extends React.Component {

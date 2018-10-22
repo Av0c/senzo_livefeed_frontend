@@ -86,7 +86,7 @@ export default class DonutCard extends React.Component {
                                 fontSize: "40px",
                             }}
                             x={svgSize/2}
-                            y={svgSize/2+46}
+                            y={svgSize/2+50}
                         >{this.props.desks[0]}
                         </text>
                     </svg>

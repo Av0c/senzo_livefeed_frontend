@@ -52,7 +52,7 @@ class Main extends React.Component {
             let key = this.props.location.query["k"];
             this.props.dispatch(a.fetchLive(key));
             this.props.dispatch(a.fetchStructure(key));
-        }, 30000);
+        }, 5*60*1000);
         this.setState({I: I});
     }
 

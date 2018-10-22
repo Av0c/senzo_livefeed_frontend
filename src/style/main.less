@@ -51,6 +51,44 @@ body {
             background-color: #3f5043;
         }
 
+        .counter {
+            bottom: 30px;
+            left: 50%;
+            transform: translate(-50%, 0);
+
+            .counter-child {
+                display: inline-block;
+                margin: 3px;
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background-color: #fff;
+                box-shadow: inset 0px 0px 0px 1.5px #3f5043;
+                transition: box-shadow 0.2s ease;
+
+                &.current {
+                    box-shadow: inset 0px 0px 0px 5px #3f5043;
+                }
+            }
+        }
+
+        .loading {
+            width: 150px;
+            height: 7px;
+
+            bottom: 20px;
+            left: 50%;
+            transform: translate(-50%, 0);
+
+            border-radius: 3px;
+            background-color: #e1e1e1;
+
+            .loading-child {
+                height: 100%;
+                border-radius: 3px;
+            }
+        }
+
         .floorplan-outer-container {
             position: absolute;
 
@@ -64,14 +102,16 @@ body {
         .card-outer-container {
             display: inline-block;
             width: 100%;
-            margin-top: 60px;
+            margin-top: 30px;
         }
 
         .logo-outer-container {
             display: inline-block;
             text-align: center;
             width: 100%;
-            margin-top: 110px;
+            position: absolute;
+            bottom: 80px;
+            left: 0px;
 
             img {
                 width: 110px;

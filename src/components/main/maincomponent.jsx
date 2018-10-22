@@ -118,16 +118,16 @@ export default class MainComponent extends React.Component {
         const { currentId } = this.state;
         const { slideContainer } = this.props;
 
-		var self = this;
+        var self = this;
         var treeMapKey = this.props.slideContainer[currentId].locationId;
-		if (node) {
-			// var isArea = (node.type=="meeting_room" && !this.props.showDetails)
-			var isArea = (node.id != this.props.treeMap[treeMapKey].id && node.info.useownfp && node.type!="sensor");
-			if (isArea) {
-				areas.push(node);
-			} else {
-				if (node.type=="sensor") {
-					sensors.push(node);
+        if (node) {
+            // var isArea = (node.type=="meeting_room" && !this.props.showDetails)
+            var isArea = (node.id != this.props.treeMap[treeMapKey].id && node.info.useownfp && node.type!="sensor");
+            if (isArea) {
+                areas.push(node);
+            } else {
+                if (node.type=="sensor") {
+                    sensors.push(node);
                     if (parent) {
                         if (parent.type == "open_area") {
                             open.push(node);
@@ -135,23 +135,78 @@ export default class MainComponent extends React.Component {
                             meeting.push(node);
                         }
                     }
-				}
-				if (node.children) {
-					node.children.forEach((child) => {
-						self.listNodes(node, child, areas, sensors, meeting, open);
-					});
-				}
+                }
+                if (node.children) {
+                    node.children.forEach((child) => {
+                        self.listNodes(node, child, areas, sensors, meeting, open);
+                    });
+                }
+            }
+        }
+    }
+
+    listClockNodes(parent, node, OAsensors, meetingRooms) {
+        // areas : result holder for meeting rooms / open areas with own floorplan. Those areas must be children of currently displayed location.
+        // OAsensors : result holder for all open area's sensors.
+        // meetingRooms : result holder for all meeting rooms.
+        const { currentId } = this.state;
+        const { slideContainer } = this.props;
+
+		var self = this;
+        var treeMapKey = this.props.slideContainer[currentId].locationId;
+		if (node) {
+			if (node.type == "meeting_room") {
+				meetingRooms.push(node);
+                // stop here, no need to travel further.
+                return;
+			}
+			if (node.type=="sensor" && parent &&parent.type == "open_area") {
+                OAsensors.push(node);
+                // stop here, no need to travel further.
+                return;
+			}
+            // travel further
+			if (node.children) {
+				node.children.forEach((child) => {
+					self.listClockNodes(node, child, OAsensors, meetingRooms);
+				});
 			}
 		}
 	}
 
-    getDesksData(sensors) {
+    getSensorStatus(id) {
+        var ssData = this.props.sensorsData;
+        var index = ssData.findIndex(s => (s.id == id));
+        return ssData[index];
+    }
+
+    getAvailableDesks(sensors) {
         var result = [0, 0]; // [Available (Not inuse), All]
         for (var i = 0; i < sensors.length; i++) {
             var ss = sensors[i];
-            var ssData = this.props.sensorsData;
-            var index = ssData.findIndex(s => (s.id == ss.id));
-            if (!ssData[index].inuse) {
+            var status = this.getSensorStatus(ss.id);
+            if (!status.inuse) {
+                result[0]++;
+            }
+            result[1]++;
+        }
+        return result;
+    }
+    getAvailableMR(meetingRooms) {
+        var result = [0, 0]; // [Available (Not inuse), All]
+        for (var i = 0; i < meetingRooms.length; i++) {
+            var mr = meetingRooms[i];
+            var available = true;
+            mr.children.forEach((x) => {
+                if (x.type == "sensor") {
+                    var status = this.getSensorStatus(x.id);
+                    if (status.inuse) {
+                        available = false;
+                    }
+                }
+            })
+
+            if (available) {
                 result[0]++;
             }
             result[1]++;
@@ -159,7 +214,8 @@ export default class MainComponent extends React.Component {
         return result;
     }
 
-    deskDataCheck(desks) {
+
+    disableCheck(desks) {
         if (desks[1] <= 0 || desks[0] < 0 || desks[0] > desks[1]) {
             return true;
         } else {
@@ -170,104 +226,21 @@ export default class MainComponent extends React.Component {
     render() {
         const { currentId } = this.state;
         const { templateData, slideContainer, floorplan, sensorsData, colorPrimary, colorSecondary } = this.props;
-
-        var areas = [], sensors = [], meeting = [], open = [];
-        var treeMapKey = this.props.slideContainer[currentId].locationId;
         var noScroll = this.props.slideContainer[currentId].lockScroll;
+
+        var treeMapKey = this.props.slideContainer[currentId].locationId;
         var node = this.props.treeMap[treeMapKey];
         var parent = {};
+
+        var areas = [], sensors = [], meeting = [], open = [];
         this.listNodes(parent, node, areas, sensors, meeting, open);
 
-        var meetingDesks = this.getDesksData(meeting);
-        var openDesks = this.getDesksData(open);
-        var meetingDisabled = this.deskDataCheck(meetingDesks);
-        var openDisabled = this.deskDataCheck(openDesks);
-
-        // OLD CODES FOR REFERENCE
-        // var nextNode, prevNode;
-        // nextNode = this.props.treeMap[this.props.locations[this.state.nextId]];
-        // prevNode = this.props.treeMap[this.props.locations[this.state.prevId]];
-        //
-        // var n = this.props.treeMap[this.props.locations[this.state.currentId].id];
-        // var namesRender = <span className="location-name-span">{n.info.name + " (" + (this.state.currentId+1) + "/" + this.props.locations.length + ")"}</span>;
-        // var periodString = "";
-        // switch (this.props.period) {
-        //     case 1:
-        //         periodString = "today"
-        //     break;
-        //     case 2:
-        //         periodString = "this week"
-        //     break;
-        //     case 3:
-        //         periodString = "this month"
-        //     break;
-        //     case 4:
-        //         periodString = "this year"
-        //     break;
-        //     default:
-        //         periodString = "N/A";
-        // }
-        //
-        // var rendering = "mr";
-        // if (meetingDisabled || openDisabled) {
-        //     if (meetingDisabled) {
-        //         rendering = "oa";
-        //     } else {
-        //         rendering = "mr";
-        //     }
-        // } else {
-        //     if (this.state.currentCard) {
-        //         rendering = "mr";
-        //     } else {
-        //         rendering = "oa";
-        //     }
-        // }
-        //
-        // var cardRender;
-        // var barRender;
-        // if (rendering == "mr") {
-        //     cardRender = (
-        //         <div className="grid-card grid-item">
-        //             <DonutCard
-        //                 title={"Available Rooms"}
-        //                 desks={meetingDesks}
-        //             />
-        //         </div>
-        //     );
-        //     barRender = (
-        //         <div className="grid-card grid-item">
-        //             <BarCard
-        //                 title={"Utilization"}
-        //                 periodType={periodString}
-        //                 startDate={this.props.startdate}
-        //                 endDate={this.props.enddate}
-        //                 average={this.props.stats.MRO_overview[treeMapKey].average}
-        //                 peak={this.props.stats.MRO_overview[treeMapKey].peak}
-        //             />
-        //         </div>
-        //     )
-        // } else {
-        //     cardRender = (
-        //         <div className="grid-card grid-item">
-        //             <DonutCard
-        //                 title={"Available Desks"}
-        //                 desks={openDesks}
-        //             />
-        //         </div>
-        //     );
-        //     barRender = (
-        //         <div className="grid-card grid-item">
-        //             <BarCard
-        //                 title={"Utilization"}
-        //                 periodType={periodString}
-        //                 startDate={this.props.startdate}
-        //                 endDate={this.props.enddate}
-        //                 average={this.props.stats.OAO_overview[treeMapKey].average}
-        //                 peak={this.props.stats.OAO_overview[treeMapKey].peak}
-        //             />
-        //         </div>
-        //     );
-        // }
+        var OAsensors = [], meetingRooms = [];
+        this.listClockNodes(parent, node, OAsensors, meetingRooms);
+        var availableDesks = this.getAvailableDesks(OAsensors);
+        var availableMR = this.getAvailableMR(meetingRooms);
+        var meetingDisabled = this.disableCheck(availableDesks) || (node.type == "open_area");
+        var openDisabled = this.disableCheck(availableMR) || (node.type == "meeting_room");
 
         // Textboxes
         var textRender = [];
@@ -331,18 +304,22 @@ export default class MainComponent extends React.Component {
                 </div>
                 <div className="pane right">
                     <div className="card-outer-container">
-                        <DonutCard
-                            title="Available desks"
-                            desks={[12,20]}
-                            colorPrimary={colorPrimary}
-                            colorSecondary={colorSecondary}
-                        />
-                        <DonutCard
-                            title="Available meeting rooms"
-                            desks={[12,20]}
-                            colorPrimary={colorPrimary}
-                            colorSecondary={colorSecondary}
-                        />
+                        {
+                            !openDisabled && <DonutCard
+                                title="Available desks"
+                                desks={availableDesks}
+                                colorPrimary={colorPrimary}
+                                colorSecondary={colorSecondary}
+                            />
+                        }
+                        {
+                            !meetingDisabled && <DonutCard
+                                title="Available meeting rooms"
+                                desks={availableMR}
+                                colorPrimary={colorPrimary}
+                                colorSecondary={colorSecondary}
+                            />
+                        }
                     </div>
                     <div className="logo-outer-container">
                         <img src="src\assets\images\logo.svg"></img>

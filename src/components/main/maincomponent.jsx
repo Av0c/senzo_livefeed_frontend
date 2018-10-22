@@ -237,8 +237,8 @@ export default class MainComponent extends React.Component {
         this.listClockNodes(parent, node, OAsensors, meetingRooms);
         var availableDesks = this.getAvailableDesks(OAsensors);
         var availableMR = this.getAvailableMR(meetingRooms);
-        var meetingDisabled = this.disableCheck(availableDesks) || (node.type == "open_area");
-        var openDisabled = this.disableCheck(availableMR) || (node.type == "meeting_room");
+        var openDisabled = this.disableCheck(availableDesks) || (node.type == "meeting_room");
+        var meetingDisabled = this.disableCheck(availableMR) || (node.type == "open_area");
 
         // Measurements multiplier
         var multiplier = 1920/templateData.containerWidth;
@@ -290,11 +290,11 @@ export default class MainComponent extends React.Component {
         for (var i = 0; i < slideContainer.length; i++) {
             if (i == currentId) {
                 counterRender.push(
-                    <div className="counter-child current"></div>
+                    <div className="counter-child current" key={i}></div>
                 );
             } else {
                 counterRender.push(
-                    <div className="counter-child"></div>
+                    <div className="counter-child" key={i}></div>
                 );
             }
         }
@@ -303,7 +303,7 @@ export default class MainComponent extends React.Component {
         // Loading bar render
         var loadingRender = [];
         loadingRender.push(
-            <div className="loading float">
+            <div className="loading float" key={0}>
                 <div className="loading-child" style={{width: loadingPercentage+"%", backgroundColor: colorPrimary}}>
                 </div>
             </div>

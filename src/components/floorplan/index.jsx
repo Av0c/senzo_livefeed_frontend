@@ -14,7 +14,7 @@ export default class Floorplan extends React.Component {
             scrollCount: 0,
             scrolls: scrolls,
             transitionDuration: this.props.duration/scrolls + "s",
-            scrollDelay: 1500,
+            scrollDelay: 500,
 
             animationName: "scroll-1",
         };
@@ -34,7 +34,6 @@ export default class Floorplan extends React.Component {
     }
 
     componentDidMount() {
-        // this.startScrollFloorplan();
         if (!this.state.running && this.state.imageLoaded) {
             var to = setTimeout(this.setScroll(), this.state.scrollDelay);
         }

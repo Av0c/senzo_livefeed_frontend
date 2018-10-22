@@ -2,137 +2,180 @@
 @import "floorplan.less";
 @import "login.less";
 @import "forgot.less";
-@color-grey: #585e66;
-@color-green: #3cb54a;
-@color-red: #ef5350;
-@color-yellow: #fbc02d;
-@color-blue: #1a237e;
-@color-brown: #795548;
+@import "variables.less";
 
 body {
-    font-family: "Roboto", sans-serif;
+    font-family: "Didact Gothic", sans-serif;
     margin: 0;
-    background-color: #f2f2f2;
+    background-color: #fff;
     box-sizing: border-box;
     overflow: hidden;
 }
 
 .main {
-    max-height: 100vh;
+    height: 100vh;
+    width: 100vw;
     overflow: hidden;
+    position: relative;
 
-    @logo-height: 10vh;
-    @location-height: 9vh;
-    @watermark-height: 5vh;
-    @content-height: 100vh - (@logo-height + @location-height + @watermark-height);
-
-    .logo-bar {
-        height: @logo-height;
-        width: 100%;
-        background-color: #fff;
-        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
-        text-align: center;
-
-        img {
-            max-width: 100%;
-            max-height: 100%;
-            display: block;
-            margin: auto;
-        }
-    }
-    .loading-bar {
+    .float {
         position: absolute;
-        top: @logo-height;
-        height: 2px;
-        background-color: @color-green;
+
+        &.text {
+            color: #3f5043;
+
+            &.align-left {
+            }
+            &.align-right {
+                transform: translateX(-100%);
+            }
+            &.align-center {
+                transform: translateX(-50%);
+            }
+        }
     }
 
-    .location-details {
+
+    .pane {
+        display: inline-block;
+        height: 100vh;
         position: relative;
-        box-sizing: border-box;
-        height: @location-height;
-        line-height: @location-height;
 
-        .location-name {
-            vertical-align: middle;
-            font-weight: bold;
+        &.left {
+            float: left;
+            width: 75%;
+        }
+        &.right {
+            float: right;
+            width: 25%;
+            background-color: #3f5043;
+        }
+
+        .floorplan-outer-container {
+            position: absolute;
+
+            top: 28%;
+            right: 0px;
+            left: 0px;
+            bottom: 80px;
+            margin: 0 80px;
+        }
+
+        .card-outer-container {
+            display: inline-block;
+            width: 100%;
+            margin-top: 60px;
+        }
+
+        .logo-outer-container {
+            display: inline-block;
             text-align: center;
-            max-width: 100%;
-            overflow-x: hidden;
-            white-space: nowrap;
+            width: 100%;
+            margin-top: 110px;
 
-            .location-name-span {
-                transition: all 0.4s ease;
-                font-size: 24px;
-                color: #000;
-
-                &.current {
-                    color: #000;
-                }
-            }
-            .location-divider {
-                transition: all 0.4s ease;
-                color: #aaa;
-                font-size: 24px;
-                margin: 0px 3px;
-                font-weight: 100;
-
-                &.current {
-                    color: #000;
-                    font-weight: 300;
-                }
+            img {
+                width: 110px;
             }
         }
     }
 
-    .content {
-        height: @content-height;
-        box-sizing: border-box;
-        padding: 0 18px;
-        padding-bottom: 0;
-
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        grid-gap: 18px;
-
-        .grid-floorplan {
-            grid-row-start: 1;
-            grid-row-end: 3;
-            grid-column-start: 1;
-            grid-column-end: 3;
-        }
-
-        .grid-card {
-        }
-    }
-
-    .watermark-container {
-        height: @watermark-height;
-        line-height: @watermark-height;
-        text-align: right;
-        padding: 0 18px;
-
-        .watermark {
-            vertical-align: middle;
-            .company-name {
-                font-variant: small-caps;
-                color: #333;
-
-                span {
-                    color: @color-green;
-                }
-            }
-        }
-    }
-}
-
-.flat-popup {
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-
-    border-radius: 4px;
-    background-color: #fff;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+    // .logo-bar {
+    //     height: @logo-height;
+    //     width: 100%;
+    //     background-color: #fff;
+    //     box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+    //     text-align: center;
+    //
+    //     img {
+    //         max-width: 100%;
+    //         max-height: 100%;
+    //         display: block;
+    //         margin: auto;
+    //     }
+    // }
+    // .loading-bar {
+    //     position: absolute;
+    //     top: @logo-height;
+    //     height: 2px;
+    //     background-color: @color-green;
+    // }
+    //
+    // .location-details {
+    //     position: relative;
+    //     box-sizing: border-box;
+    //     height: @location-height;
+    //     line-height: @location-height;
+    //
+    //     .location-name {
+    //         vertical-align: middle;
+    //         font-weight: bold;
+    //         text-align: center;
+    //         max-width: 100%;
+    //         overflow-x: hidden;
+    //         white-space: nowrap;
+    //
+    //         .location-name-span {
+    //             transition: all 0.4s ease;
+    //             font-size: 24px;
+    //             color: #000;
+    //
+    //             &.current {
+    //                 color: #000;
+    //             }
+    //         }
+    //         .location-divider {
+    //             transition: all 0.4s ease;
+    //             color: #aaa;
+    //             font-size: 24px;
+    //             margin: 0px 3px;
+    //             font-weight: 100;
+    //
+    //             &.current {
+    //                 color: #000;
+    //                 font-weight: 300;
+    //             }
+    //         }
+    //     }
+    // }
+    //
+    // .content {
+    //     height: @content-height;
+    //     box-sizing: border-box;
+    //     padding: 0 18px;
+    //     padding-bottom: 0;
+    //
+    //     display: grid;
+    //     grid-template-columns: 1fr 1fr 1fr;
+    //     grid-template-rows: 1fr 1fr;
+    //     grid-gap: 18px;
+    //
+    //     .grid-floorplan {
+    //         grid-row-start: 1;
+    //         grid-row-end: 3;
+    //         grid-column-start: 1;
+    //         grid-column-end: 3;
+    //     }
+    //
+    //     .grid-card {
+    //     }
+    // }
+    //
+    // .watermark-container {
+    //     height: @watermark-height;
+    //     line-height: @watermark-height;
+    //     text-align: right;
+    //     padding: 0 18px;
+    //
+    //     .watermark {
+    //         vertical-align: middle;
+    //         .company-name {
+    //             font-variant: small-caps;
+    //             color: #333;
+    //
+    //             span {
+    //                 color: @color-green;
+    //             }
+    //         }
+    //     }
+    // }
 }

@@ -13,7 +13,7 @@ export default class MainComponent extends React.Component {
             nextId: 0,
             prevId: 0,
             currentId: 0,
-            loadingWidth: 0,
+            loadingPercentage: 0,
         };
         this.scrollLocation = this.scrollLocation.bind(this);
         this.scrollAnimate = this.scrollAnimate.bind(this);
@@ -52,7 +52,7 @@ export default class MainComponent extends React.Component {
 
         var int = setInterval(() => {
             this.setState({
-                loadingWidth: 0,
+                loadingPercentage: 0,
                 currentId: this.state.nextId,
             });
             this.loadingAnimate();
@@ -70,23 +70,21 @@ export default class MainComponent extends React.Component {
         const { currentId } = this.state;
 
         var fps = 60;
-        var timeStep = 1000/fps;
-        var noOfTimeSteps = (slideContainer[currentId].duration*1000)/timeStep;
-        var speed = 100/noOfTimeSteps;
+        var stepInterval = (slideContainer[currentId].duration*1000)/100;
 
         var count = 0;
-        var { loadingWidth } = this.state;
+
         if (this.state.loadingInt) {
             clearInterval(this.state.loadingInt);
         }
+
         var loadingInt = setInterval(() => {
-            if (loadingWidth < 100) {
-                loadingWidth += speed;
+            if (this.state.loadingPercentage < 100) {
                 this.setState({
-                    loadingWidth: loadingWidth,
+                    loadingPercentage: this.state.loadingPercentage+1,
                 });
             }
-        }, timeStep);
+        }, stepInterval);
 
         this.setState({
             loadingInt: loadingInt,
@@ -168,7 +166,7 @@ export default class MainComponent extends React.Component {
     }
 
     render() {
-        const { currentId } = this.state;
+        const { currentId, loadingPercentage } = this.state;
         const { templateData, slideContainer, floorplan, sensorsData, colorPrimary, colorSecondary } = this.props;
 
         var areas = [], sensors = [], meeting = [], open = [];
@@ -182,6 +180,15 @@ export default class MainComponent extends React.Component {
         var openDesks = this.getDesksData(open);
         var meetingDisabled = this.deskDataCheck(meetingDesks);
         var openDisabled = this.deskDataCheck(openDesks);
+
+        var rendering = "mr";
+        if (meetingDisabled || openDisabled) {
+            if (meetingDisabled) {
+                rendering = "oa";
+            } else {
+                rendering = "mr";
+            }
+        }
 
         // OLD CODES FOR REFERENCE
         // var nextNode, prevNode;
@@ -269,6 +276,9 @@ export default class MainComponent extends React.Component {
         //     );
         // }
 
+        // Measurements multiplier
+        var multiplier = 1920/templateData.containerWidth;
+
         // Textboxes
         var textRender = [];
         for (var i = 0; i < templateData.textContainer.length; i++) {
@@ -277,9 +287,9 @@ export default class MainComponent extends React.Component {
             var className = "text float align-" + currentText.align;
             textRender.push(
                 <div key={"key-text-"+i} className={className} style={{
-                    fontSize: currentText.size + "px",
-                    top: currentText.top + "px",
-                    left: currentText.left + "px",}}
+                    fontSize: currentText.size*multiplier + "px",
+                    top: currentText.top*multiplier + "px",
+                    left: currentText.left*multiplier + "px",}}
                 >{content}
                 </div>
             );
@@ -289,9 +299,9 @@ export default class MainComponent extends React.Component {
         var logo = templateData.logo;
         var logoRender = (
             <img className="logo float" src={logo.url} style={{
-                width: logo.width + "px",
-                top: logo.top + "px",
-                left: logo.left + "px",
+                width: logo.width*multiplier + "px",
+                top: logo.top*multiplier + "px",
+                left: logo.left*multiplier + "px",
                 transform: "rotateZ(" + logo.angle + "deg)"}}>
             </img>
         );
@@ -302,14 +312,71 @@ export default class MainComponent extends React.Component {
         if (line.show) {
             lineRender = (
                 <div className="line float" style={{
-                        width: line.length + "px",
-                        height: line.thickness + "px",
-                        backgroundColor: line.color,
-                        top: line.top + "px",
-                        left: line.left + "px"}}>
-                    </div>
-                );
+                    width: line.length*multiplier + "px",
+                    height: line.thickness + "px",
+                    backgroundColor: line.color,
+                    top: line.top*multiplier + "px",
+                    left: line.left*multiplier + "px"}}>
+                </div>
+            );
         }
+
+        // Card render
+        var cardRender = [];
+        if (rendering == "mr") {
+            cardRender.push(
+                <DonutCard
+                    key={"key-card-0"}
+                    title="Available desks"
+                    desks={meetingDesks}
+                    colorPrimary={colorPrimary}
+                    colorSecondary={colorSecondary}
+                />
+            );
+        } else {
+            cardRender.push(
+                <React.Fragment>
+                    <DonutCard
+                        key={"key-card-0"}
+                        title="Available desks"
+                        desks={openDesks}
+                        colorPrimary={colorPrimary}
+                        colorSecondary={colorSecondary}
+                    />
+                    <DonutCard
+                        key={"key-card-1"}
+                        title="Available meeting rooms"
+                        desks={openDesks}
+                        colorPrimary={colorPrimary}
+                        colorSecondary={colorSecondary}
+                    />
+                </React.Fragment>
+            );
+        }
+
+        // Slide counter render
+        var counterRender = [];
+        for (var i = 0; i < slideContainer.length; i++) {
+            if (i == currentId) {
+                counterRender.push(
+                    <div className="counter-child current"></div>
+                );
+            } else {
+                counterRender.push(
+                    <div className="counter-child"></div>
+                );
+            }
+        }
+        counterRender = (<div className="counter float">{counterRender}</div>);
+
+        // Loading bar render
+        var loadingRender = [];
+        loadingRender.push(
+            <div className="loading float">
+                <div className="loading-child" style={{width: loadingPercentage+"%", backgroundColor: colorPrimary}}>
+                </div>
+            </div>
+        );
 
         return (
             <div className="main">
@@ -328,21 +395,12 @@ export default class MainComponent extends React.Component {
                             noScroll={noScroll}
                         />
                     </div>
+                    {counterRender}
+                    {loadingRender}
                 </div>
                 <div className="pane right">
                     <div className="card-outer-container">
-                        <DonutCard
-                            title="Available desks"
-                            desks={[12,20]}
-                            colorPrimary={colorPrimary}
-                            colorSecondary={colorSecondary}
-                        />
-                        <DonutCard
-                            title="Available meeting rooms"
-                            desks={[12,20]}
-                            colorPrimary={colorPrimary}
-                            colorSecondary={colorSecondary}
-                        />
+                        {cardRender}
                     </div>
                     <div className="logo-outer-container">
                         <img src="src\assets\images\logo.svg"></img>
@@ -350,30 +408,5 @@ export default class MainComponent extends React.Component {
                 </div>
             </div>
         );
-        // <div className="logo-bar" style={{ backgroundColor: this.props.color }}><img src={this.props.logo}></img></div>
-        // <div className="loading-bar" style={{width: this.state.loadingWidth + "%"}}></div>
-        // <div className="location-details">
-        //     <div className="location-name" ref="locationNameContainer">
-        //         {namesRender}
-        //     </div>
-        // </div>
-        // <div className="content">
-        //     <div className="grid-floorplan grid-item">
-        //         <Floorplan
-        //             key={"floorplan-"+this.state.currentId}
-        //             url={this.props.floorplan[this.state.currentId]}
-        //             duration={this.props.duration}
-        //             sensors={sensors}
-        //             sensorsData={this.props.sensorsData}
-        //             id={this.state.currentId}
-        //             noScroll={noScroll}
-        //         />
-        //     </div>
-        //     {cardRender}
-        //     {barRender}
-        // </div>
-        // <div className="watermark-container">
-        //     <div className="watermark">Powered by <span className="company-name">Senzo<span>live</span></span></div>
-        // </div>
     }
 }

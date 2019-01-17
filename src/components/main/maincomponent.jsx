@@ -221,6 +221,7 @@ export default class MainComponent extends React.Component {
     }
 
     render() {
+        console.log(this.props);
         const { currentId, loadingPercentage } = this.state;
         const { templateData, slideContainer, floorplan, sensorsData, colorPrimary, colorSecondary } = this.props;
         var noScroll = this.props.slideContainer[currentId].lockScroll;
@@ -263,11 +264,10 @@ export default class MainComponent extends React.Component {
         // Logos
         var logo = templateData.logo;
         var logoRender = (
-            <img className="logo float" src={logo.url} style={{
+            <img className={"logo float align-" + logo.align} src={logo.url} style={{
                 width: logo.width*multiplierVw + "vw",
                 top: logo.top*multiplierVh + "vh",
-                left: logo.left*multiplierVw + "vw",
-                transform: "translateX(-50%) translateY(-50%) rotateZ(" + logo.angle + "deg)"}}>
+                left: logo.left*multiplierVw + "vw",}}>
             </img>
         );
 
@@ -276,7 +276,7 @@ export default class MainComponent extends React.Component {
         var lineRender = null;
         if (line.show) {
             lineRender = (
-                <div className="line float" style={{
+                <div className={"line float align-" + line.align} style={{
                     width: line.length*multiplierVw + "vw",
                     height: line.thickness + "px",
                     backgroundColor: line.color,

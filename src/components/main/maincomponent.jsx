@@ -60,8 +60,6 @@ export default class MainComponent extends React.Component {
             // this.scrollLocation();
         }, slideContainer[currentId].duration*1000);
 
-        console.log(slideContainer[currentId].duration*1000);
-
         this.setState({
             int: int,
         });

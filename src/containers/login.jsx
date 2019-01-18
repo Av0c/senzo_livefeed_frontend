@@ -31,7 +31,7 @@ class Login extends React.Component {
                     <Link to="/">
                         <img src="/src/assets/images/header-logo.svg" className="login-logo" />
                     </Link>
-                    <div className="welcome-message">Welcome to Senzo Live Feed !</div>
+                    <div className="welcome-message">Welcome to SenzoLive Livefeed</div>
                     <div className="login-box-wrapper">
                         <div className="login-box">
                             <form action="#">

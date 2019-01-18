@@ -49,15 +49,18 @@ export default class MainComponent extends React.Component {
         const { slideContainer } = this.props;
         const { currentId } = this.state;
 
-        var int = setInterval(() => {
+        var int = setTimeout(() => {
             this.setState({
                 loadingPercentage: 0,
                 currentId: this.state.nextId,
             });
             this.loadingAnimate();
             this.checkNextPrev();
+            this.bringOnTheShow();
             // this.scrollLocation();
         }, slideContainer[currentId].duration*1000);
+
+        console.log(slideContainer[currentId].duration*1000);
 
         this.setState({
             int: int,
@@ -221,7 +224,6 @@ export default class MainComponent extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         const { currentId, loadingPercentage } = this.state;
         const { templateData, slideContainer, floorplan, sensorsData, colorPrimary, colorSecondary } = this.props;
         var noScroll = this.props.slideContainer[currentId].lockScroll;

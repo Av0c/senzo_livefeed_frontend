@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import MainComponent from './maincomponent';
 import moment from 'moment';
 import * as a from 'actions/data';
+import { setAPIKey } from 'actions/authentication';
 
 class Main extends React.Component {
     constructor(props) {
@@ -44,16 +45,25 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-        var key = this.props.location.query["k"];
-        this.props.dispatch(a.fetchSummary());
-        this.props.dispatch(a.fetchStructure(key));
-        this.props.dispatch(a.fetchLive(key));
-        var I = setInterval(() => {
-            let key = this.props.location.query["k"];
-            this.props.dispatch(a.fetchLive(key));
+        var chain = () => {
+            var key = this.props.location.query["k"];
+            this.props.dispatch(a.fetchSummary());
             this.props.dispatch(a.fetchStructure(key));
-        }, 5*60*1000);
-        this.setState({I: I});
+            this.props.dispatch(a.fetchLive(key));
+            var I = setInterval(() => {
+                let key = this.props.location.query["k"];
+                this.props.dispatch(a.fetchLive(key));
+                this.props.dispatch(a.fetchStructure(key));
+            }, 5*60*1000);
+            this.setState({I: I});
+        }
+        console.log(this.props.location.query);
+        if (this.props.apikey != this.props.location.query["apikey"]) {
+            this.props.dispatch(setAPIKey(this.props.location.query["apikey"])).then(() => chain());
+        } else {
+            chain();
+        }
+
     }
 
     componentWillUnmount() {

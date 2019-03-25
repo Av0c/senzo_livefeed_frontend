@@ -15,10 +15,12 @@ import {
 	RESET_PW_GET_USER_FAILED,
 
 	CLEAR_TOKEN,
+	SET_API_KEY,
 } from 'actions/authentication';
 
 const initialState = {
 	token: localStorage.getItem("token"),
+  	apikey: localStorage.getItem("apikey"),
 	loginInProgress: false,
 
 	sendResetPWInProgress: false,
@@ -56,6 +58,12 @@ export default (state = initialState, action ) => {
 				errorMessage: action.data,
 			})
 		}
+	    case SET_API_KEY: {
+	      localStorage.setItem("apikey",  action.apikey);
+	      return Object.assign({}, state, {
+	        apikey: action.apikey
+	      });
+	    }
 
 		// Reset password
 		case SEND_RESET_PW: {
@@ -108,12 +116,16 @@ export default (state = initialState, action ) => {
 		// ---
 		case CLEAR_TOKEN: {
 			localStorage.removeItem("token");
+     		localStorage.removeItem("apikey");
 			var old = window.location.hash.slice(1);
 			if (old != "/login") {
 				localStorage.setItem("redirect", old);
 				appHistory.push('/login');
 			}
-			return Object.assign({}, initialState);
+			return Object.assign({}, initialState, {
+		    	token: null,
+		      	apikey: null,
+		    });
 		}
 		
 		default: {

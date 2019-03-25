@@ -139,6 +139,15 @@ export function resetPassword(key, username, newPassword) {
   }
 }
 
+export const SET_API_KEY = "SET_API_KEY";
+export function setAPIKey(apikey) {
+  return {
+    type: SET_API_KEY,
+    apikey,
+  }
+}
+
+
 // ---
 export function redirectToLogin(){
   return dispatch => {

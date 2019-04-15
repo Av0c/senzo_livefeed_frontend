@@ -34,21 +34,33 @@ export default class Floorplan extends React.Component {
     }
 
     componentDidMount() {
-        if (!this.state.running && this.state.imageLoaded) {
-            var to = setTimeout(this.setScroll(), this.state.scrollDelay);
+        if (this.props.singleFloorplan) {
+            var int = setInterval( () => {this.startScroll()}, this.props.duration*1000);
+        } else {
+            if (!this.state.running && this.state.imageLoaded) {
+                this.startScroll();
+            }
         }
     }
 
     componentWillUnmount() {
         clearInterval(this.state.int);
+        clearInterval(this.state.to);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.id !== this.props.id) {
             if (!this.state.running && this.state.imageLoaded) {
-                var to = setTimeout(this.setScroll(), this.state.scrollDelay);
+                this.startScroll();
             }
         }
+    }
+
+    startScroll() {
+        var to = setTimeout(this.setScroll(), this.state.scrollDelay);
+        this.setState({
+            to: to,
+        });
     }
 
     onImageLoad() {
@@ -61,12 +73,18 @@ export default class Floorplan extends React.Component {
     }
 
     setScroll() {
+        // Function to scroll up and down once
         if (!this.props.noScroll) {
             this.setState({
                 running: true,
             });
-            var imageHeight = ReactDOM.findDOMNode(this.floorplanImage).clientHeight;
-            var containerHeight = ReactDOM.findDOMNode(this.floorplanContainer).clientHeight;
+            var imageHeight, containerHeight;
+            if (ReactDOM.findDOMNode(this.floorplanImage)) {
+                var imageHeight = ReactDOM.findDOMNode(this.floorplanImage).clientHeight;
+            }
+            if (ReactDOM.findDOMNode(this.floorplanContainer)) {
+                var containerHeight = ReactDOM.findDOMNode(this.floorplanContainer).clientHeight;
+            }
             if (imageHeight > 0 && containerHeight > 0) {
                 var offsetHeight = imageHeight - containerHeight;
                 if (offsetHeight > 0) {

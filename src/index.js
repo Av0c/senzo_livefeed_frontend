@@ -16,6 +16,7 @@ import { requireAuthentication } from 'components/common/authenticatedComponent'
 
 // Pages
 import Main from 'components/main';
+import Dashboard from 'components/dashboard';
 
 // Stylesheets
 import './style/main.less';
@@ -23,13 +24,10 @@ import './style/main.less';
 ReactDOM.render((
 	<Provider store={Store}>
 		<Router history={appHistory} onUpdate={() => window.scrollTo(0, 0)}>
-			<Route path="/" >
-				<IndexRoute component={LoginForm} />
-			</Route>
+			<Route path="/" component={requireAuthentication(Dashboard)} />
+			<Route path="/dashboard" component={requireAuthentication(Dashboard)} />
 
-			<Route path="/url" >
-				<IndexRoute component={Main} />
-			</Route>
+			<Route path="/url" component={requireAuthentication(Main)} />
 
 			<Route path="/login" component={LoginForm} />
 			<Route path="/forgot" component={ForgotPWForm} />

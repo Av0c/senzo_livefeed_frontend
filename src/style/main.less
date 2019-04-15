@@ -4,6 +4,7 @@
 @import "forgot.less";
 @import "variables.less";
 @import "font.less";
+@import "dashboard.less";
 
 body {
     font-family: "GTWalsheim", sans-serif;
@@ -13,11 +14,72 @@ body {
     overflow: hidden;
 }
 
+.login-logo {
+    width: 140px;
+}
+
 .main {
     height: 100vh;
     width: 100vw;
     overflow: hidden;
     position: relative;
+
+    .logout-modal-container {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+
+        .logout-modal {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform:  translate(-50%, -50%);
+            width: 300px;
+            background-color: white;
+            box-shadow: 14px 14px #e1e1e1;
+            text-align: left;
+            padding: 32px 26px;
+            font-size: 20px;
+
+            .title {
+                font-size: 28px;
+                font-weight: bold;
+                margin-bottom: 16px;
+                padding-bottom: 8px;
+                box-shadow: 0px 3px @color-green;
+            }
+
+            .button-container {
+                float: right;
+                margin-top: 32px;
+
+                .button {
+                    display: inline-block;
+                    padding: 8px 12px;
+                    margin: 0 8px;
+                    cursor: pointer;
+
+                    &.cancel {
+                        background-color: #e1e1e1;
+
+                        &:hover {
+                            background-color: darken(#e1e1e1, 10%);
+                        }
+                    }
+                    &.confirm {
+                        color: #fff;
+                        background-color: darken(@color-green, 5%);
+
+                        &:hover {
+                            background-color: darken(@color-green, 15%);
+                        }
+                    }
+
+                }
+            }
+        }
+    }
 
     .float {
         position: absolute;
@@ -50,6 +112,44 @@ body {
             float: right;
             width: 25%;
             background-color: #3f5043;
+
+            .button-container {
+                position: absolute;
+                right: 16px;
+                bottom: 3vh;
+
+                i {
+                    text-align: center;
+                    line-height: 50px;
+                    height: 50px;
+                    width: 50px;
+                    color: #3f5043;
+                    border-radius: 50%;
+                    // padding: 4px;
+                    vertical-align: middle;
+                    font-size: 38px;
+                    transition: color 0.2s ease;
+                    margin-right: 4px;
+
+                    &.logout-button {
+                        font-size: 32px;
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: darken(#3f5043, 5%);;
+                        color: white !important;
+                    }
+                }
+            }
+
+            &:hover {
+                .button-container {
+                    i {
+                        color: lighten(#3f5043, 10%);
+                    }
+                }
+            }
         }
 
         .counter {
@@ -101,9 +201,12 @@ body {
         }
 
         .card-outer-container {
-            display: inline-block;
+            display: inline-grid;
             width: 100%;
-            margin-top: 4vw;
+            margin-top: 5vh;
+            height: 84vh;
+            position: relative;
+            align-items: center;
         }
 
         .logo-outer-container {
@@ -111,112 +214,16 @@ body {
             text-align: center;
             width: 100%;
             position: absolute;
-            bottom: 2vw;
+            bottom: 3vh;
             left: 0px;
 
             img {
                 width: 110px;
+                height: 50px;
+                line-height: 50px;
+                vertical-align: middle;
+                display: inline-block;
             }
         }
     }
-
-    // .logo-bar {
-    //     height: @logo-height;
-    //     width: 100%;
-    //     background-color: #fff;
-    //     box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
-    //     text-align: center;
-    //
-    //     img {
-    //         max-width: 100%;
-    //         max-height: 100%;
-    //         display: block;
-    //         margin: auto;
-    //     }
-    // }
-    // .loading-bar {
-    //     position: absolute;
-    //     top: @logo-height;
-    //     height: 2px;
-    //     background-color: @color-green;
-    // }
-    //
-    // .location-details {
-    //     position: relative;
-    //     box-sizing: border-box;
-    //     height: @location-height;
-    //     line-height: @location-height;
-    //
-    //     .location-name {
-    //         vertical-align: middle;
-    //         font-weight: bold;
-    //         text-align: center;
-    //         max-width: 100%;
-    //         overflow-x: hidden;
-    //         white-space: nowrap;
-    //
-    //         .location-name-span {
-    //             transition: all 0.4s ease;
-    //             font-size: 24px;
-    //             color: #000;
-    //
-    //             &.current {
-    //                 color: #000;
-    //             }
-    //         }
-    //         .location-divider {
-    //             transition: all 0.4s ease;
-    //             color: #aaa;
-    //             font-size: 24px;
-    //             margin: 0px 3px;
-    //             font-weight: 100;
-    //
-    //             &.current {
-    //                 color: #000;
-    //                 font-weight: 300;
-    //             }
-    //         }
-    //     }
-    // }
-    //
-    // .content {
-    //     height: @content-height;
-    //     box-sizing: border-box;
-    //     padding: 0 18px;
-    //     padding-bottom: 0;
-    //
-    //     display: grid;
-    //     grid-template-columns: 1fr 1fr 1fr;
-    //     grid-template-rows: 1fr 1fr;
-    //     grid-gap: 18px;
-    //
-    //     .grid-floorplan {
-    //         grid-row-start: 1;
-    //         grid-row-end: 3;
-    //         grid-column-start: 1;
-    //         grid-column-end: 3;
-    //     }
-    //
-    //     .grid-card {
-    //     }
-    // }
-    //
-    // .watermark-container {
-    //     height: @watermark-height;
-    //     line-height: @watermark-height;
-    //     text-align: right;
-    //     padding: 0 18px;
-    //
-    //     .watermark {
-    //         vertical-align: middle;
-    //         .company-name {
-    //             font-variant: small-caps;
-    //             color: #333;
-    //
-    //             span {
-    //                 color: @color-green;
-    //             }
-    //         }
-    //     }
-    // }
 }

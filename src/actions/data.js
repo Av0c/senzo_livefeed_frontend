@@ -7,13 +7,14 @@ import store from '../store';
 // SUMMARY
 
 export const FETCH_SUMMARY = 'FETCH_SUMMARY';
-export function fetchSummary() {
+export function fetchSummary(callback) {
 	return dispatch => {
 		dispatch({ type: FETCH_SUMMARY });
 		return axios.get(config.api.root + `/myurl`)
 			.then((response) => {
-				console.log(response)
+				console.log(response);
 				dispatch(receiveSummary(response));
+				callback();
 				return response;
 			})
 			.catch(function (response) {
@@ -34,12 +35,13 @@ export function receiveSummary(result) {
 // STRUCTURE
 
 export const FETCH_STRUCTURE = 'FETCH_STRUCTURE';
-export function fetchStructure(key) {
+export function fetchStructure(key, callback) {
 	return dispatch => {
 		dispatch({type: FETCH_STRUCTURE, key});
 		return axios.get(config.api.root + `/structure/${key}`)
 			.then((response) => {
 				dispatch(receiveStructure(response));
+				callback();
 				return response;
 			})
 			.catch(function (response) {
@@ -60,12 +62,13 @@ export function receiveStructure(result) {
 // LIVE
 
 export const FETCH_LIVE = 'FETCH_LIVE';
-export function fetchLive(key) {
+export function fetchLive(key, callback) {
 	return dispatch => {
 		dispatch({type: FETCH_LIVE, key});
 		return axios.get(config.api.root + `/live/${key}`)
 			.then((response) => {
 				dispatch(receiveLive(response));
+				callback();
 				return response;
 			})
 			.catch(function (response) {

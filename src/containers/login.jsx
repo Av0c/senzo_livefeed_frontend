@@ -24,12 +24,15 @@ class Login extends React.Component {
         }
     }
 
+    componentDidMount() {
+    }
+
     render() {
         return (
             <div className="login-wrapper">
                 <div className="login-card">
                     <Link to="/">
-                        <img src="/src/assets/images/header-logo.svg" className="login-logo" />
+                        <img src="/src/assets/images/black-text-logo.svg" className="login-logo" />
                     </Link>
                     <div className="welcome-message">Welcome to SenzoLive Livefeed</div>
                     <div className="login-box-wrapper">

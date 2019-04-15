@@ -41,7 +41,7 @@ class ResetPasswordForm extends React.Component {
         <div className="login-wrapper">
           <div className="login-card text-center">
             <Link to="/">
-              <img src="/src/assets/images/header-logo.svg" className="login-logo" />
+              <img src="/src/assets/images/black-text-logo.svg" className="login-logo" />
             </Link>
             <h2 className="welcome-message">Welcome to Senzo Live!</h2>
             <div className="login-box-wrapper">
@@ -73,7 +73,7 @@ class ResetPasswordForm extends React.Component {
         <div>
           <div style={{ width: '100%', backgroundColor: 'white', paddingBottom: '15px' }} className="container-fluid">
             <div className="row" style={{textAlign:"center"}}>
-              <div className="header-logo"><Link to="/"><img src="src/assets/images/header-logo.svg" alt="SenzoLive" /></Link></div>
+              <div className="header-logo"><Link to="/"><img src="src/assets/images/black-text-logo.svg" alt="SenzoLive" /></Link></div>
             </div>
           </div>
 

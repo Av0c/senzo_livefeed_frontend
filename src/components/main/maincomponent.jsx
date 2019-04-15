@@ -4,6 +4,7 @@ import { CSSTransitionGroup } from 'react-transition-group';
 
 import DonutCard from "./donutcard";
 import Floorplan from "components/floorplan";
+import appHistory from 'components/common/appHistory';
 
 export default class MainComponent extends React.Component {
     constructor(props) {
@@ -13,6 +14,10 @@ export default class MainComponent extends React.Component {
             prevId: 0,
             currentId: 0,
             loadingPercentage: 0,
+
+            singleFloorplan: false,
+
+            logoutModalShowing: false,
         };
         this.scrollLocation = this.scrollLocation.bind(this);
         this.scrollAnimate = this.scrollAnimate.bind(this);
@@ -21,6 +26,12 @@ export default class MainComponent extends React.Component {
     componentDidMount() {
         this.checkNextPrev();
         this.bringOnTheShow();
+
+        if (this.props.slideContainer.length == 1) {
+            this.setState({
+                singleFloorplan: true,
+            });
+        }
     }
 
     checkNextPrev() {
@@ -111,6 +122,7 @@ export default class MainComponent extends React.Component {
             container.scrollTo(current.offsetLeft+(current.offsetWidth/2)-(viewWidth/2), 0);
         }
     }
+    // End of name row scrolling
 
     listNodes(parent, node, areas, sensors, meeting, open) {
         const { currentId } = this.state;
@@ -221,6 +233,10 @@ export default class MainComponent extends React.Component {
         }
     }
 
+    goToDashboard() {
+        appHistory.push("/dashboard");
+    }
+
     render() {
         const { currentId, loadingPercentage } = this.state;
         const { templateData, slideContainer, floorplan, sensorsData, colorPrimary, colorSecondary } = this.props;
@@ -325,6 +341,7 @@ export default class MainComponent extends React.Component {
                             sensorsData={sensorsData}
                             id={currentId}
                             noScroll={noScroll}
+                            singleFloorplan={true}
                         />
                     </div>
                     {counterRender}
@@ -352,7 +369,25 @@ export default class MainComponent extends React.Component {
                     <div className="logo-outer-container">
                         <img src="src\assets\images\logo.svg"></img>
                     </div>
+                    <div className="button-container">
+                        <i className="material-icons dashboard-button" onClick={() => {this.goToDashboard()}}>&#xe5d3;</i>
+                        <i className="material-icons logout-button" onClick={() => {this.setState({logoutModalShowing: true})}}>&#xe8ac;</i>
+                    </div>
                 </div>
+                {this.state.logoutModalShowing &&
+                    <div className="logout-modal-container">
+                        <div className="logout-modal">
+                            <div className="title">Logout</div>
+                            <div className="content">
+                                Are you sure you want to logout ?
+                            </div>
+                            <div className="button-container">
+                                <div className="button cancel" onClick={() => {this.setState({logoutModalShowing: false})}}>Cancel</div>
+                                <div className="button confirm" onClick={() => {this.props.logOut()}}>Logout</div>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         );
     }

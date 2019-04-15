@@ -54,7 +54,7 @@ export function login(credentials) {
 
         var old = localStorage.getItem("redirect")
         if (!old) {
-          old = "/";
+          old = "/dashboard";
         }
         appHistory.push(old);
 

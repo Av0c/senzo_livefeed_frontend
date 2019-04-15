@@ -43,14 +43,13 @@ class ForgotForm extends React.Component {
       <div className="login-wrapper">
         <div className="login-card text-center">
           <Link to="/">
-            <img src="/src/assets/images/header-logo.svg" className="login-logo" />
+            <img src="/src/assets/images/black-text-logo.svg" className="login-logo" />
           </Link>
-          <h2 className="welcome-message">Welcome to Senzo Live!</h2>
           <div className="login-box-wrapper">
             <div className="login-box">
               <h3>Reset Password</h3>
               {
-                !done ? 
+                !done ?
                 <form>
                     <div className="input-container">
                       <input type="username" id="email" placeholder="Email" onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleChange.bind(this)} required />

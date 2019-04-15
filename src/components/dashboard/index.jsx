@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as a from 'actions/data';
 import moment from 'moment';
+import { clearToken } from 'actions/authentication'
 
 import appHistory from 'components/common/appHistory';
 
@@ -10,6 +11,8 @@ class Dashboard extends React.Component {
         super(props);
         this.state = {
             fetched: false,
+
+            logoutModalShowing: false,
         };
     }
 
@@ -35,6 +38,9 @@ class Dashboard extends React.Component {
         clearInterval(this.state.I)
     }
 
+    logOut() {
+        this.props.dispatch(clearToken());
+    }
 
     render() {
         console.log(this.props.summary);
@@ -42,27 +48,50 @@ class Dashboard extends React.Component {
             if (this.props.summary) {
                 const { summary } = this.props;
 
-                var livefeedListRender = [];
-                for (var i = 0; i < summary.length; i++) {
-                    let key = summary[i].key;
-                    livefeedListRender.push(
-                        <div
-                            key={"livefeed-"+summary[i].name}
-                            className="livefeed-list-child"
-                            onClick={() => {this.goToLivefeed(key)}}
-                            >
-                            {summary[i].name}
-                        </div>
-                    );
+                if (summary.length <= 0) {
+                    livefeedListRender = <div>You haven't been invited to any livefeed.</div>
+                } else {
+                    var livefeedListRender = [];
+                    for (var i = 0; i < summary.length; i++) {
+                        let key = summary[i].key;
+                        livefeedListRender.push(
+                            <div
+                                key={"livefeed-"+summary[i].name}
+                                className="livefeed-list-child"
+                                onClick={() => {this.goToLivefeed(key)}}
+                                >
+                                {summary[i].name}
+                            </div>
+                        );
+                    }
                 }
                 return (
                     <div className="dashboard-container">
                         <div className="dashboard-popup">
-                            <div className="title">Available livefeeds:</div>
+                            <div className="title">Available livefeeds:
+                                <div className="logout-button">
+                                    <i className="material-icons logout-button" onClick={() => {this.setState({logoutModalShowing: true})}}>&#xe8ac;</i>
+                                </div>
+                            </div>
+
                             <div className="livefeed-list">
                                 {livefeedListRender}
                             </div>
                         </div>
+                        {this.state.logoutModalShowing &&
+                            <div className="logout-modal-container">
+                                <div className="logout-modal">
+                                    <div className="title">Logout</div>
+                                    <div className="content">
+                                        Are you sure you want to logout ?
+                                    </div>
+                                    <div className="button-container">
+                                        <div className="button cancel" onClick={() => {this.setState({logoutModalShowing: false})}}>Cancel</div>
+                                        <div className="button confirm" onClick={() => {this.logOut()}}>Logout</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </div>
                 );
             } else {

@@ -6,6 +6,7 @@ import moment from 'moment';
 import MainComponent from './maincomponent';
 
 import appHistory from 'components/common/appHistory';
+import { setAPIKey } from 'actions/authentication';
 
 class Main extends React.Component {
     constructor(props) {
@@ -49,19 +50,25 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-        var key = this.props.location.query["k"];
-        this.fetch(key);
-    }
-
-    fetch(key) {
-        this.props.dispatch(a.fetchStructure(key, () => {this.setState({fetchedStructure: true})}));
-        this.props.dispatch(a.fetchLive(     key, () => {this.setState({fetchedLive     : true})}));
-        var I = setInterval(() => {
-            let key = this.props.location.query["k"];
-            this.props.dispatch(a.fetchStructure(key, () => {this.setState({fetchedStructure: true})}));
+        var chain = () => {
+            var key = this.props.location.query["k"];
+            this.props.dispatch(a.fetchSummary());
             this.props.dispatch(a.fetchLive(     key, () => {this.setState({fetchedLive     : true})}));
-        }, 5*60*1000);
-        this.setState({I: I});
+            this.props.dispatch(a.fetchStructure(key, () => {this.setState({fetchedStructure: true})}));
+            var I = setInterval(() => {
+                let key = this.props.location.query["k"];
+                this.props.dispatch(a.fetchLive(     key, () => {this.setState({fetchedLive     : true})}));
+                this.props.dispatch(a.fetchStructure(key, () => {this.setState({fetchedStructure: true})}));
+            }, 5*60*1000);
+            this.setState({I: I});
+        }
+        console.log(this.props.location.query);
+        if (this.props.apikey != this.props.location.query["apikey"]) {
+            this.props.dispatch(setAPIKey(this.props.location.query["apikey"])).then(() => chain());
+        } else {
+            chain();
+        }
+
     }
 
     componentWillUnmount() {

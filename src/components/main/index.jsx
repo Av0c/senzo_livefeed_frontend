@@ -15,6 +15,7 @@ class Main extends React.Component {
         this.state = {
             fetchedLive: false,
             fetchedStructure: false,
+            isPreview: false,
         };
     }
 
@@ -35,12 +36,19 @@ class Main extends React.Component {
 
         // Check if preview or not
         if (this.props.location.query["apikey"] && this.props.location.query["apikey"] != 0) {
+            // This is a preview
             if (this.props.apikey != this.props.location.query["apikey"]) {
                 this.props.dispatch(setAPIKey(this.props.location.query["apikey"])).then(() => chain());
             } else {
                 chain();
             }
+            this.setState({
+                isPreview: true,
+            });
         } else {
+            this.setState({
+                isPreview: false,
+            });
             chain();
             let token = this.props.token;
             let localToken = localStorage.token;
@@ -87,6 +95,8 @@ class Main extends React.Component {
                             colorSecondary="#fff"
 
                             logOut={() => {this.logOut()}}
+
+                            isPreview={this.state.isPreview}
                         />
                     );
                 } else {

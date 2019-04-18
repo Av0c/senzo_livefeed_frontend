@@ -369,10 +369,12 @@ export default class MainComponent extends React.Component {
                     <div className="logo-outer-container">
                         <img src="src\assets\images\logo.svg"></img>
                     </div>
-                    <div className="button-container">
-                        <i className="material-icons dashboard-button" onClick={() => {this.goToDashboard()}}>&#xe5d3;</i>
-                        <i className="material-icons logout-button" onClick={() => {this.setState({logoutModalShowing: true})}}>&#xe8ac;</i>
-                    </div>
+                    {!this.props.isPreview &&
+                        <div className="button-container">
+                            <i className="material-icons dashboard-button" onClick={() => {this.goToDashboard()}}>&#xe5d3;</i>
+                            <i className="material-icons logout-button" onClick={() => {this.setState({logoutModalShowing: true})}}>&#xe8ac;</i>
+                        </div>
+                    }
                 </div>
                 {this.state.logoutModalShowing &&
                     <div className="logout-modal-container">

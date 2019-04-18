@@ -27,7 +27,7 @@ ReactDOM.render((
 			<Route path="/" component={requireAuthentication(Dashboard)} />
 			<Route path="/dashboard" component={requireAuthentication(Dashboard)} />
 
-			<Route path="/url" component={requireAuthentication(Main)} />
+			<Route path="/url" component={Main} />
 
 			<Route path="/login" component={LoginForm} />
 			<Route path="/forgot" component={ForgotPWForm} />

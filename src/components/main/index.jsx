@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as a from 'actions/data';
-import { clearToken } from 'actions/authentication'
 import moment from 'moment';
 import MainComponent from './maincomponent';
 
 import appHistory from 'components/common/appHistory';
 import { setAPIKey } from 'actions/authentication';
+import { clearToken } from 'actions/authentication'
+import { redirectToLogin } from 'actions/authentication';
 
 class Main extends React.Component {
     constructor(props) {
@@ -62,13 +63,21 @@ class Main extends React.Component {
             }, 5*60*1000);
             this.setState({I: I});
         }
-        console.log(this.props.location.query);
-        if (this.props.apikey != this.props.location.query["apikey"]) {
-            this.props.dispatch(setAPIKey(this.props.location.query["apikey"])).then(() => chain());
-        } else {
-            chain();
-        }
 
+        // Check if preview or not
+        if (this.props.location.query["apikey"] != "") {
+            if (this.props.apikey != this.props.location.query["apikey"]) {
+                this.props.dispatch(setAPIKey(this.props.location.query["apikey"])).then(() => chain());
+            } else {
+                chain();
+            }
+        } else {
+            let token = this.props.token;
+            let localToken = localStorage.token;
+            if (token == undefined || token === null || localToken == undefined || localToken === null ) {
+                this.props.dispatch(redirectToLogin());
+            }
+        }
     }
 
     componentWillUnmount() {
@@ -130,6 +139,7 @@ function mapStateToProps(state) {
         url: state.dataReducer.url,
         sensorsData: state.dataReducer.sensorsData,
         summary: state.dataReducer.summary,
+        token: state.authReducer.token,
     };
 }
 

@@ -18,40 +18,9 @@ class Main extends React.Component {
         };
     }
 
-    fetchStats() {
-        // Keep here for reference, remove if not used
-        // if (this.props.url) {
-        //     var periodString = "days";
-        //     switch (this.props.url.period) {
-        //         case 1:
-        //             periodString = "days"
-        //         break;
-        //         case 2:
-        //             periodString = "weeks"
-        //         break;
-        //         case 3:
-        //             periodString = "months"
-        //         break;
-        //         case 4:
-        //             periodString = "years"
-        //         break;
-        //         default:
-        //             periodString = "days";
-        //     }
-        //     var startdate = moment().subtract(1, periodString).add(1, "days").format('DD-MM-YYYY');
-        //     var enddate = moment().format('DD-MM-YYYY');
-        //     if (this.state.startdate != startdate || this.state.enddate != enddate) {
-        //         this.setState({
-        //             startdate: startdate,
-        //             enddate: enddate
-        //         });
-        //         this.props.dispatch(a.fetchStats(this.props.url.key, startdate, enddate));
-        //     }
-        // }
-    }
-
     componentDidMount() {
         var chain = () => {
+            console.log("Chain running");
             var key = this.props.location.query["k"];
             this.props.dispatch(a.fetchSummary());
             this.props.dispatch(a.fetchLive(     key, () => {this.setState({fetchedLive     : true})}));
@@ -65,16 +34,20 @@ class Main extends React.Component {
         }
 
         // Check if preview or not
-        if (this.props.location.query["apikey"] != "") {
+        if (this.props.location.query["apikey"] && this.props.location.query["apikey"] != 0) {
             if (this.props.apikey != this.props.location.query["apikey"]) {
                 this.props.dispatch(setAPIKey(this.props.location.query["apikey"])).then(() => chain());
             } else {
                 chain();
             }
         } else {
+            chain();
             let token = this.props.token;
             let localToken = localStorage.token;
             if (token == undefined || token === null || localToken == undefined || localToken === null ) {
+                this.props.dispatch(redirectToLogin());
+            }
+            if (!(this.props.url && this.props.sensorsData)) {
                 this.props.dispatch(redirectToLogin());
             }
         }
